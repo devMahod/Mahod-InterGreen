@@ -21,7 +21,7 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
 | O | AutoCAD 2026 adapter | NOT STARTED | | | |
 | P | Real example DWG scan/export | NOT STARTED | | | needs O; interactive if coreconsole fails |
 | Q | Real geometry regression | NOT STARTED | | | needs P |
-| R | Signal-group matrix | NOT STARTED | | | MUST implement Final Hotfix §9/§10/§17/§17A: BLOCKED propagation, explicit cell status, Tests A/B/C + Example2 acceptance (exactly 3 blocked cells: SG4→SG2, SG2→SG4, SG1→a) |
+| R | Signal-group matrix | PASS | SignalGroupMatrixService + Tests A/B/C + §17A acceptance: 4/4 incomplete detected, exactly 3 blocked cells (2→4, 4→2, 1→a), 0 unexpected, 0 missing; report test-results/EXAMPLE2_MATRIX_ACCEPTANCE.md | — | — |
 | S | Final Excel + JSON export | NOT STARTED | | | MUST enforce Final Hotfix §11 serialization invariant (no NaN/Inf/negative; INTERNAL_NUMERIC_INVARIANT_FAILURE) |
 | T | INTERGREEN workflow / basic UI | NOT STARTED | | | |
 | U | Bundle packaging | NOT STARTED | | | |
