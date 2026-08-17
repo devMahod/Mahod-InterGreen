@@ -12,8 +12,8 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
 | F | Production validation + 4-row test (18/26/34/60) | PASS | ProductionValidationRegressionTests: 18/60=IG-VAL-001, 26/34=IG-VAL-002 | — | — |
 | G | Rule Pack framework | PASS | rules/ packs load+validate; RulePackTests 24 tests | — | management commands at gate T |
 | H | Classification + parameter resolution | PASS | ParameterResolver + IG-CLS-001/002/003 tests | — | — |
-| I | Neutral line/arc/polycurve geometry | NOT STARTED | | | |
-| J | Synthetic geometry tests | NOT STARTED | | | |
+| I | Neutral line/arc/polycurve geometry | PASS | exact line/arc/polycurve, bulge conversion verified vs ezdxf + first-principles, JSON round-trip | — | — |
+| J | Synthetic geometry tests | PASS | 20 fixtures: line/arc/arc-arc, tangent, dedup, reversal invariance, transform invariance, mm/m, disconnection | — | — |
 | K | Legacy envelope strategy | NOT STARTED | | | |
 | L | 2025 lane-centreline strategy | NOT STARTED | | | |
 | M | 2025 formula engine (official §5.5–5.6) | PASS | Israel2025CalculationService, tables transcribed first-hand from §5.3 (pdf 148-153), 45 Core tests | — | — |
