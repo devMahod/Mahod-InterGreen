@@ -1,0 +1,33 @@
+{
+  "speedResolution": [
+    { "id": "T51-urb-thr-fast-low", "road": "urban", "maneuver": "through", "which": "fast", "postedKph": 40, "expectKph": 50 },
+    { "id": "T51-urb-thr-fast-high", "road": "urban", "maneuver": "through", "which": "fast", "postedKph": 70, "expectKph": 70 },
+    { "id": "T51-urb-thr-slow", "road": "urban", "maneuver": "through", "which": "slow", "postedKph": 70, "expectKph": 25 },
+    { "id": "T51-urb-turn-fast", "road": "urban", "maneuver": "turn", "which": "fast", "postedKph": 70, "expectKph": 50 },
+    { "id": "T51-urb-turn-slow", "road": "urban", "maneuver": "turn", "which": "slow", "postedKph": 70, "expectKph": 25 },
+    { "id": "T51-int-thr-fast", "road": "interurban", "maneuver": "through", "which": "fast", "postedKph": 90, "expectKph": 90 },
+    { "id": "T51-int-thr-slow-90", "road": "interurban", "maneuver": "through", "which": "slow", "postedKph": 90, "expectKph": 35 },
+    { "id": "T51-int-thr-slow-60", "road": "interurban", "maneuver": "through", "which": "slow", "postedKph": 60, "expectKph": 30 },
+    { "id": "T51-int-turn-fast-90", "road": "interurban", "maneuver": "turn", "which": "fast", "postedKph": 90, "expectKph": 70 },
+    { "id": "T51-int-turn-fast-60", "road": "interurban", "maneuver": "turn", "which": "fast", "postedKph": 60, "expectKph": 50 },
+    { "id": "T51-int-turn-slow-80", "road": "interurban", "maneuver": "turn", "which": "slow", "postedKph": 80, "expectKph": 35 }
+  ],
+  "finalIg": [
+    { "id": "F-min-1", "t2": 2.0, "t3": 0.5, "case": "vehicleVsVehicle", "expect": 3 },
+    { "id": "F-min-2", "t2": 3.4, "t3": 0.0, "case": "vehicleVsVehicle", "expect": 4 },
+    { "id": "F-ped-enter", "t2": 5.2, "t3": 0.0, "case": "vehicleClearsPedestrianEnters", "expect": 6 },
+    { "id": "F-neg", "t2": 1.0, "t3": 4.0, "case": "vehicleVsVehicle", "expect": 3 }
+  ],
+  "vehicleClearing": [
+    {
+      "id": "C-fast-50",
+      "note": "hand-computed (verified by independent script): Sx=50/3.6, L1X=Sx^2/7=27.557319223985893, T2X=1+(L1X+24+12)/Sx",
+      "sxKph": 50, "l2": 24.0, "lengthM": 12.0, "expectT2X": 5.576126984126984
+    },
+    {
+      "id": "C-slow-25",
+      "note": "hand-computed (verified by independent script): Sy=25/3.6, a1Y=1.5-1.5*25/50=0.75, L1Y=Sy^2/7=6.889329805996473, T2Y=1+(-Sy+sqrt(Sy^2+2*(L1Y+24+12)*0.75))/0.75",
+      "syKph": 25, "l2": 24.0, "lengthM": 12.0, "expectT2Y": 5.886603322411124
+    }
+  ]
+}

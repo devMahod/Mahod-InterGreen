@@ -1,0 +1,62 @@
+{
+  "reactionTimeSec": 1.0,
+  "decelerationMps2": 3.5,
+  "pedestrianSpeedMps": {
+    "standard": 1.2,
+    "crossesCoordinatedLane": 1.2,
+    "highDemand": 1.0,
+    "crossesLrt": 1.0,
+    "nearInstitutions": 1.0
+  },
+  "bicycle": {
+    "fastClearingKph": 25,
+    "slowClearingKph": 15,
+    "enteringKph": 25,
+    "lengthM": 2.0,
+    "decelerationMps2": 3.5,
+    "clearingModel": "constantSpeed"
+  },
+  "lrt": {
+    "lengthM": 15,
+    "maxAccelDecelMps2": 1.2,
+    "startAccelMps2": 1.2,
+    "speeds": {
+      "fast": { "kind": "posted" },
+      "slow": { "kind": "min", "of": [
+        { "kind": "max", "of": [ { "kind": "halfPosted" }, { "kind": "const", "kph": 25 } ] },
+        { "kind": "operationalProfile" }
+      ] },
+      "entering": { "kind": "posted" }
+    }
+  },
+  "vehicleLengthM": {
+    "standard": 12,
+    "articulatedBusHeavyIndustry": 19
+  },
+  "slowAccelerationRule": {
+    "kind": "guidelines2025",
+    "description": "a1Y = 1.5 - 1.5*SY/50 (SY in kph); §5.5.1(c). Within Table 5.1 SY <= 35 so a1Y > 0 always.",
+    "denominatorKph": 50
+  },
+  "pedestrianEnteringDistanceM": 0.0,
+  "vehicleEnteringNearSideZeroThresholdM": 1.5,
+  "vehicleSpeeds": {
+    "urban": {
+      "through": {
+        "fast": { "kind": "max", "of": [ { "kind": "posted" }, { "kind": "const", "kph": 50 } ] },
+        "slow": { "kind": "const", "kph": 25 }
+      },
+      "turn": { "fast": { "kind": "const", "kph": 50 }, "slow": { "kind": "const", "kph": 25 } }
+    },
+    "interurban": {
+      "through": {
+        "fast": { "kind": "posted" },
+        "slow": { "kind": "min", "of": [ { "kind": "const", "kph": 35 }, { "kind": "halfPosted" } ] }
+      },
+      "turn": {
+        "fast": { "kind": "max", "of": [ { "kind": "postedMinus", "kph": 20 }, { "kind": "const", "kph": 50 } ] },
+        "slow": { "kind": "min", "of": [ { "kind": "const", "kph": 35 }, { "kind": "halfPosted" } ] }
+      }
+    }
+  }
+}

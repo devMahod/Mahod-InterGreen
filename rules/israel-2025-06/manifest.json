@@ -1,0 +1,19 @@
+{
+  "id": "israel-2025-06",
+  "version": "1.0.0",
+  "displayName": "הנחיות לתכנון רמזורים - יוני 2025 (פרק 5)",
+  "status": "VALIDATED",
+  "effectiveDate": "2025-06-01",
+  "sourceDocuments": [
+    "הנחיות לתכנון רמזורים - יוני 2025.pdf (ch.5, printed pages 5-1..5-27, PDF pages 148-174)"
+  ],
+  "sourceHashes": "see docs/SOURCE_INVENTORY.md",
+  "geometryStrategyId": "lane-centreline",
+  "calculationStrategyId": "israel-2025-06",
+  "roundingStrategyId": "guidelines-ceil",
+  "minimumIntergreenSec": 3,
+  "createdAt": "2026-08-17",
+  "approvedAt": null,
+  "approvedBy": null,
+  "notes": "APPROVED requires human engineering sign-off (David). Lane-centreline geometry input is required; envelope geometry must never produce a 2025 result (v3 §16). Tables transcribed first-hand from §5.3 rendered pages."
+}

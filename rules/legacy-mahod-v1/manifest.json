@@ -1,0 +1,20 @@
+{
+  "id": "legacy-mahod-v1",
+  "version": "1.0.0",
+  "displayName": "Legacy Mahod workbook method",
+  "status": "APPROVED",
+  "effectiveDate": null,
+  "sourceDocuments": [
+    "05_PINES-HABAL- SHEM-TOM_IG_matrix_2026-07-28-maya.xlsx",
+    "Abarbanel-HaMaccabim_IG_matrix_2026-07-05.xlsx"
+  ],
+  "sourceHashes": "see docs/SOURCE_INVENTORY.md",
+  "geometryStrategyId": "legacy-envelope",
+  "calculationStrategyId": "legacy-mahod-v1",
+  "roundingStrategyId": "mahod-legacy-0.1",
+  "minimumIntergreenSec": null,
+  "createdAt": "2026-08-17",
+  "approvedAt": "2026-08-17",
+  "approvedBy": "verified 148/148 against both completed workbooks (see ENGINEERING_DECISIONS.md ED-006)",
+  "notes": "Minimum-3s question for Legacy is OPEN (OPEN_QUESTIONS.md OQ-001). Blank-as-zero is compatibility behaviour only and is NOT part of this pack's production semantics."
+}

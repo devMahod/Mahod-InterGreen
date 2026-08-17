@@ -10,13 +10,13 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
 | D | Legacy compatibility engine | PASS | LegacyWorkbookCompatibilityCalculator + 26 unit tests | — | — |
 | E | 148/148 golden (FINAL + intermediates) | PASS | GoldenLegacyTests 148/148+148/148; oracle GOLDEN_EXTRACTION_REPORT.md | — | re-verify via C# XLSX reader at gate N |
 | F | Production validation + 4-row test (18/26/34/60) | PASS | ProductionValidationRegressionTests: 18/60=IG-VAL-001, 26/34=IG-VAL-002 | — | — |
-| G | Rule Pack framework | NOT STARTED | | | |
-| H | Classification + parameter resolution | NOT STARTED | | | |
+| G | Rule Pack framework | PASS | rules/ packs load+validate; RulePackTests 24 tests | — | management commands at gate T |
+| H | Classification + parameter resolution | PASS | ParameterResolver + IG-CLS-001/002/003 tests | — | — |
 | I | Neutral line/arc/polycurve geometry | NOT STARTED | | | |
 | J | Synthetic geometry tests | NOT STARTED | | | |
 | K | Legacy envelope strategy | NOT STARTED | | | |
 | L | 2025 lane-centreline strategy | NOT STARTED | | | |
-| M | 2025 formula engine (official §5.5–5.6) | NOT STARTED | | | |
+| M | 2025 formula engine (official §5.5–5.6) | PASS | Israel2025CalculationService, tables transcribed first-hand from §5.3 (pdf 148-153), 45 Core tests | — | — |
 | N | Excel readers / template adapters V1+V2 | NOT STARTED | | | |
 | O | AutoCAD 2026 adapter | NOT STARTED | | | |
 | P | Real example DWG scan/export | NOT STARTED | | | needs O; interactive if coreconsole fails |
