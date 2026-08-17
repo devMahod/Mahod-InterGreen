@@ -93,9 +93,12 @@ Every non-trivial interpretation, with source, alternatives, impact and the test
   a WARNING with handles (IG-GEO-011 / IG-GEO-012); anything still ambiguous stays an ERROR.
 - **Why**: Example 2 reality — intergreen_E-L carried a 0.01 m fragment, intergreen_W-T a
   0.07 m fragment plus a 4.46 m leftover that does not reach the stop line.
-- **Impact**: Example 2 error conflicts dropped 78 → 32 (all remaining involve crossing 'b',
-  which is genuinely ambiguous). No silent guessing — the convention itself is the rule.
-- **Test**: real-DWG run evidence (EXAMPLE2 artifacts); crossing 'b' remains blocked.
+- **Impact**: Example 2 error conflicts dropped 78 → 32 at the time this decision landed.
+  No silent guessing — the convention itself is the rule. Subsequently, the multipart
+  N-edge crossing model + sidecar endpoint confirmations resolved crossing 'b' as well:
+  it computes with project W = 16.00 and is NOT generically blocked in the final
+  artifacts — final Example 2 matrix: 37 VALID / 7 REVIEW_REQUIRED / 0 BLOCKED.
+- **Test**: real-DWG run evidence (EXAMPLE2 final artifacts; 0 blocked cells).
 
 ## ED-011 — Boundary-termination candidates (Directive §21A)
 

@@ -79,3 +79,18 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
   INTEGRATION_VADIM updated (required diagram + host responsibilities).
 - STATUS: READY FOR ARTHUR GUI SMOKE (never APPROVED FOR DAVID PILOT; screenshots + GUI
   record = AWAITING_ARTHUR_GUI_SMOKE).
+
+## Productization round (Stage 1) — installer + role packages (2026-08-17)
+- Cowork GUI smoke on this machine: ENVIRONMENT-BLOCKED by Autodesk licensing (upi.exe
+  crashes before INTERGREEN) — evidence preserved; GUI gate moved to Lin.
+- ED-010 stale 'crossing b remains blocked' corrected (final: 37/7/0); sweep clean;
+  sealed 0.1.1 ZIP left byte-stable with correction record in master.
+- Built Mahod_Intergreen_Setup_0.1.0.exe (self-contained WinForms; per-user; Apps-list
+  uninstall; AutoCAD-running guard; unsigned+documented). File-level validation 16/16
+  PASS incl. silent install/uninstall/reinstall with full hash identity to dist.
+- Built role packages: LIN_PREPILOT (installer+TestKit+7 HE PDFs+return structure),
+  DAVID_PILOT_DRAFT (NOT FOR RELEASE; screenshots pending Lin), VADIM_INTEGRATION
+  (docs+real contract instances), ENGINEERING_MASTER_0.1.1-r1 (sealed 0.1.1 + Cowork
+  evidence + audits + manifests). 18 Hebrew/EN PDFs generated (Edge headless, RTL QA'd).
+- STATUS: READY FOR LIN GUI SMOKE. Machine residue: renamed locked bundle directory
+  awaiting cleanup after the machine's pending maintenance (documented).
