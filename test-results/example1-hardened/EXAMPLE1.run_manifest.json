@@ -1,7 +1,7 @@
 {
-  "runId": "9de7d2fb72134a81aa335f75e9b059e9",
-  "startedAt": "2026-08-17T13:42:53.6520162+03:00",
-  "durationSeconds": 0.946,
+  "runId": "83b1f67d16da4a4cb17eab7d92b02904",
+  "startedAt": "2026-08-17T13:53:58.8509095+03:00",
+  "durationSeconds": 0.895,
   "engineVersion": "0.1.0",
   "application": "Mahod.Intergreen.Cli/ig-analyze",
   "machine": "PC-ARTHURF",

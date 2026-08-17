@@ -264,6 +264,24 @@ var (analysisPath, validationPath, manifestPath) = AnalysisWriters.WriteAll(
     runId: Guid.NewGuid().ToString("N"), started, DateTimeOffset.Now - started,
     application: "Mahod.Intergreen.Cli/ig-analyze");
 
+// ---------- Excel export (Directive §22–§29) ----------
+if (Array.IndexOf(args_, "--export-excel") >= 0)
+{
+    var excelOut = Path.Combine(outDir,
+        Path.GetFileNameWithoutExtension(workbookPath) + "_MAHOD_INTERGREEN.xlsx");
+    var export = WorkbookWriter.Export(workbookPath, excelOut, output.Analysis, model);
+    Console.WriteLine($"  excel export: {export.OutputPath}");
+    Console.WriteLine($"    rows populated={export.RowsPopulated} >4-point rows={export.MoreThanFourPointRows} " +
+                      $"structural issues={export.StructuralIssues.Count}");
+    foreach (var issue in export.StructuralIssues.Take(10))
+        Console.WriteLine($"    STRUCTURAL: {issue}");
+    if (export.StructuralIssues.Count > 0)
+    {
+        Console.Error.WriteLine("EXCEL EXPORT VERIFICATION FAILED (structural issues above)");
+        return 3;
+    }
+}
+
 // ---------- golden comparison: ALL historical points, strict evidence (Directive §17–§19) ----------
 var report = new StringBuilder();
 report.AppendLine($"# {intersectionName} — real-DWG Legacy regression (Directive §17–§20)");
