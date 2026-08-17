@@ -14,8 +14,8 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
 | H | Classification + parameter resolution | PASS | ParameterResolver + IG-CLS-001/002/003 tests | — | — |
 | I | Neutral line/arc/polycurve geometry | PASS | exact line/arc/polycurve, bulge conversion verified vs ezdxf + first-principles, JSON round-trip | — | — |
 | J | Synthetic geometry tests | PASS | 20 fixtures: line/arc/arc-arc, tangent, dedup, reversal invariance, transform invariance, mm/m, disconnection | — | — |
-| K | Legacy envelope strategy | NOT STARTED | | | |
-| L | 2025 lane-centreline strategy | NOT STARTED | | | |
+| K | Legacy envelope strategy | PASS | LegacyEnvelopeConflictStrategy: all points kept, POSSIBLE_UNRESOLVED_CONFLICT, reversal invariant | — | — |
+| L | 2025 lane-centreline strategy | PASS | LaneCentrelineConflictStrategy: m×n lanes → 4/2/3 per §5.4 examples; 2025_GEOMETRY_MISSING blocks envelope input | — | — |
 | M | 2025 formula engine (official §5.5–5.6) | PASS | Israel2025CalculationService, tables transcribed first-hand from §5.3 (pdf 148-153), 45 Core tests | — | — |
 | N | Excel readers / template adapters V1+V2 | NOT STARTED | | | |
 | O | AutoCAD 2026 adapter | NOT STARTED | | | |
