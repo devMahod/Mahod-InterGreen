@@ -1,0 +1,853 @@
+{
+  "schemaVersion": "1.0",
+  "sourceFile": "ex2.dwg",
+  "units": {
+    "insunits": "Unitless",
+    "toMeters": null
+  },
+  "layerCount": 134,
+  "intergreenLayerCount": 21,
+  "layers": [
+    {
+      "name": "0",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {
+        "AlignedDimension": 7
+      }
+    },
+    {
+      "name": "0-XREF",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "1EVEN-SAFA",
+      "colorIndex": 9,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "2404",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "BL-TR-LIGT-7",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-Dim",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-EV-INSIDE",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|0-XREF",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|0-XREF1",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|0-vref-tnuha",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|0-xref2",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|1-1",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|1GADER-BETON",
+      "colorIndex": 9,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|6620haluka",
+      "colorIndex": 160,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|816",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|817",
+      "colorIndex": 140,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|818",
+      "colorIndex": 10,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|ARE-KIROT",
+      "colorIndex": 4,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|ASMADE",
+      "colorIndex": 190,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|A_S-PIR",
+      "colorIndex": 10,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|BLOCK",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-15",
+      "colorIndex": 20,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Borderline",
+      "colorIndex": 150,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Borderline 25m",
+      "colorIndex": 160,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-CL-20",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Cl-25",
+      "colorIndex": 21,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Cross",
+      "colorIndex": 151,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-D13",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-DIM2",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Dim",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Dim-pk",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-EV-INSIDE",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Kav-Parking",
+      "colorIndex": 9,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Kikar-a",
+      "colorIndex": 44,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Kir",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Kir-hd",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-L",
+      "colorIndex": 6,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-L-OLD",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-MAAVAR",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-MIS",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Midraha",
+      "colorIndex": 220,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-NORTH",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Nativ",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-OZAR",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Paint",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Park",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Parking",
+      "colorIndex": 123,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Pinuy",
+      "colorIndex": 51,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Road",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Rozeta",
+      "colorIndex": 9,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-SEVA",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-TEXT",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-TEXT1",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-TEXT2",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-TXT",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-TXT-M",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Tamrur",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-Txt-tnua",
+      "colorIndex": 80,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D-ev.sov.m",
+      "colorIndex": 1,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|D14",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|HALUKA",
+      "colorIndex": 10,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|HAL_APSHT_line",
+      "colorIndex": 160,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|HIDE",
+      "colorIndex": 1,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|IDAN_POINTS",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|IDAN_PTELEV",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|IDAN_PTNUM",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|KAYAM",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|Layer1",
+      "colorIndex": 10,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|Layer3",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|Layer4",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|Layer6",
+      "colorIndex": 11,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|M-SIMUN",
+      "colorIndex": 140,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|MAD0",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|MAD1",
+      "colorIndex": 4,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|MAD2",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|MADTXT",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|NEW",
+      "colorIndex": 5,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|TAMRUR",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|TR-MARK-T",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|TR-TXT",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|TREE",
+      "colorIndex": 100,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|ZEVA-811",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|am-dim",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|am-midraha",
+      "colorIndex": 191,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|am-text",
+      "colorIndex": 4,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|bl-tr-sign-7",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|cl",
+      "colorIndex": 1,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|d-amud",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|d-cl",
+      "colorIndex": 1,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|d-gova",
+      "colorIndex": 152,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|d-han",
+      "colorIndex": 115,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|d-horada",
+      "colorIndex": 253,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|d-sdwlk",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|d-zeva1-2",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|nikuz",
+      "colorIndex": 150,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|pCellK",
+      "colorIndex": 5,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|pl",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|row",
+      "colorIndex": 160,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|smr even safa",
+      "colorIndex": 1,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|srozeta",
+      "colorIndex": 9,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|stxt",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|zeva",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-GEOM- HAYARKON-11S-EX-MHD|\u05D1\u05E0\u05D9 \u05D1\u05E8\u05E7$0$BROS",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-MAAVAR",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-Nativ",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "D-Road",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "Defpoints",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "MAAVAR_HACIA",
+      "colorIndex": 220,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "Sections2",
+      "colorIndex": 9,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SIGN-BL",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "ZEVA-811",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "ZEVA-KLALI",
+      "colorIndex": 220,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "ZEVA-MKUVKAV",
+      "colorIndex": 220,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "intergreen_E-L",
+      "colorIndex": 220,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 3
+      }
+    },
+    {
+      "name": "intergreen_E-R",
+      "colorIndex": 10,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_E-T",
+      "colorIndex": 11,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_N-L",
+      "colorIndex": 2,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_N-R",
+      "colorIndex": 42,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_N-T",
+      "colorIndex": 52,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_S-L",
+      "colorIndex": 4,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_S-R",
+      "colorIndex": 176,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_S-T",
+      "colorIndex": 150,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_W-L",
+      "colorIndex": 3,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_W-R",
+      "colorIndex": 88,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_W-T",
+      "colorIndex": 102,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 5
+      }
+    },
+    {
+      "name": "intergreen_a",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_b",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {
+        "BlockReference": 1,
+        "Polyline": 6
+      }
+    },
+    {
+      "name": "intergreen_c",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_d",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_e",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {}
+    },
+    {
+      "name": "intergreen_f",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {}
+    },
+    {
+      "name": "intergreen_g",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {}
+    },
+    {
+      "name": "intergreen_h",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {}
+    },
+    {
+      "name": "intergreen_stopline",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 4
+      }
+    }
+  ]
+}

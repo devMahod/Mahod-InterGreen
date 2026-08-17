@@ -1,0 +1,1858 @@
+{
+  "schemaVersion": "1.0",
+  "sourceFile": "ex1.dwg",
+  "units": {
+    "insunits": "Unitless",
+    "toMeters": null
+  },
+  "layerCount": 302,
+  "intergreenLayerCount": 21,
+  "layers": [
+    {
+      "name": "0",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {
+        "BlockReference": 2,
+        "DBText": 4,
+        "Polyline": 4
+      }
+    },
+    {
+      "name": "0-TNUA",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "0-XREF",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {
+        "BlockReference": 4
+      }
+    },
+    {
+      "name": "0-mavar hatzya",
+      "colorIndex": 1,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "1201",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "1202",
+      "colorIndex": 4,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "B-RAMZOR",
+      "colorIndex": 10,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "B-TAMRUR",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "BL-TR-LIGT-255",
+      "colorIndex": 255,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "BL-TR-LIGT-7",
+      "colorIndex": 12,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "BL-TR-LIGT-SG",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "BL-TR-SIGN-1",
+      "colorIndex": 220,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "BL-TR-SIGN-2",
+      "colorIndex": 40,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "BL-TR-SIGN-5",
+      "colorIndex": 172,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "BL-TR-SIGN-NUMB",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "BL-TR-SIGN-POLE",
+      "colorIndex": 16,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "BL-TR-SIGN-RFLM",
+      "colorIndex": 16,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "BL-TR-SIGN-ROAD",
+      "colorIndex": 16,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "BL-TR-SIGN-SINC",
+      "colorIndex": 16,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "BL-TR-SIGN-SIZE",
+      "colorIndex": 16,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "BL-TR-SIGN-SPED",
+      "colorIndex": 16,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "Defpoints",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "HW-BLND-H",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "HW-CURB",
+      "colorIndex": 11,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "HW-CURB-GRDN",
+      "colorIndex": 134,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "HW-CURB-ILND",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "HW-MEDIAN",
+      "colorIndex": 96,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "HW-ROAD",
+      "colorIndex": 254,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "HW-SHETAH-NIDRASH",
+      "colorIndex": 36,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "HW-SIDEWALK",
+      "colorIndex": 33,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "Idkun",
+      "colorIndex": 42,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "KAV HFKAA",
+      "colorIndex": 170,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "M2204",
+      "colorIndex": 9,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "M2417",
+      "colorIndex": 70,
+      "isIntergreen": false,
+      "entities": {
+        "Polyline": 1
+      }
+    },
+    {
+      "name": "MAHOD_TITLE",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "MHD-TL-STATUS",
+      "colorIndex": 1,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "MHD-TRL-ACOUSTIC",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "MHD-TRL-BL",
+      "colorIndex": 250,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "MHD-TRL-LOOP",
+      "colorIndex": 172,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "MHD-TRL-LOOP-DIM",
+      "colorIndex": 172,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "MHD-TRL-POLE",
+      "colorIndex": 220,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "MHD-TRL-POLE-BL",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "MHD-TRL-POLE-BL-PERUK",
+      "colorIndex": 160,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "MHD-TRL-POLE-T",
+      "colorIndex": 220,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "MHD-TRL-Pb_POLE",
+      "colorIndex": 220,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "MHD-TRL-Pb_POLE-BL",
+      "colorIndex": 220,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "MHD_TITLE",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|C1603_0",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|C1610_0",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|C1660",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|CTEXT",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|CTR",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|CTRINDEX",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|DIS104",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|KAV HFKAA",
+      "colorIndex": 170,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M1000",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M1280",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M1502",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M2200",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M2204",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M2208",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M2298",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M2404",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M2408",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M2412",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M2417",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M2442",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M2519",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M2603",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M2605",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M2801",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M2812",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M4001",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M4402",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M4409",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M4602",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M4610",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M4611",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M4615",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M4617",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M4631",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M4635",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M4804",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M4903",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M5111",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M5202",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M5207",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M5232",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M6241",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M6251",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M6351",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|M6702",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|Mrozeta",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|PNT",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|PNTDESC",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|PNTELEV",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|PNTNO",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|PT_PNTSNO",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_200425copp-MHD|declaration",
+      "colorIndex": 8,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "PT_PNTSNO",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "T-TEXT",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|0-XREF",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-LIGT-255",
+      "colorIndex": 255,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-LIGT-7",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-LIGT-HIGT",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-LIGT-INST",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-LIGT-JUNC",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-LIGT-NUMB",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-LIGT-OPRT",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-LIGT-POLE",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-LIGT-ROAD",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-LIGT-SG",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-LIGT-SIGN",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-LIGT-TYPE",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-LIGT-UPS",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-LIGT-WAVE",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-SIGN-1",
+      "colorIndex": 220,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-SIGN-2",
+      "colorIndex": 40,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-SIGN-5",
+      "colorIndex": 172,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|BL-TR-SIGN-84",
+      "colorIndex": 116,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|DELT-INTERGRN",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|MHD-TRL-BL",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|MHD-TRL-LOOP",
+      "colorIndex": 172,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|MHD-TRL-LOOP-DIM",
+      "colorIndex": 172,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|MHD-TRL-LOOP-DIM_demand",
+      "colorIndex": 172,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|MHD-TRL-POLE",
+      "colorIndex": 220,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|MHD-TRL-POLE-BL",
+      "colorIndex": 220,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|MHD-TRL-POLE-BL-PERUK",
+      "colorIndex": 160,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|MHD-TRL-POLE-BL_existing",
+      "colorIndex": 181,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|MHD-TRL-POLE-T",
+      "colorIndex": 220,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|MHD-TRL-Pb_POLE-BL",
+      "colorIndex": 220,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|MHD-TRL-PedLamp",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|TR-MARK-WHT-810",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|TR-SIGN-BL",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TL-PINNES-BAAL SHEM TOV|objects for deletion from sheetfile",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-CURB-BLK",
+      "colorIndex": 16,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-CURB-RED",
+      "colorIndex": 29,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|-ZEVA-821",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|0-LINE",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|0-XREF",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|0-mavar hatzya",
+      "colorIndex": 1,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|ATR01",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|ATR02",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|ATR03",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|ATR04",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|ATR05",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|C1603_0",
+      "colorIndex": 210,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|DIS104",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|HW-CURB",
+      "colorIndex": 11,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|HW-CURB-GRDN",
+      "colorIndex": 134,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|HW-CURB-ILND",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|HW-CURB-IN",
+      "colorIndex": 1,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|HW-TX-NIKUZ",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|KAV HFKAA",
+      "colorIndex": 170,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|M2204",
+      "colorIndex": 9,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|M2519",
+      "colorIndex": 254,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|M2603",
+      "colorIndex": 100,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|TR-CURB-FLAT",
+      "colorIndex": 4,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|TR-CURB-FLAT-IN",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|TR-CURB-GRDN",
+      "colorIndex": 134,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|TR-DIM",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|TR-DIM-M34",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|TR-MARK-WHT-809",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|TR-WORK-LIMT-1",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-GM-PINNES-BAAL SHEM TOV|sup_ART",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|0-LINE",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|0-XREF",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|0-mavar hatzya",
+      "colorIndex": 1,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|ATR01",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|ATR02",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|ATR03",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|ATR04",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|C1603_0",
+      "colorIndex": 210,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|DIS104",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|HATCH-IVR-NEW",
+      "colorIndex": 130,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|HATCH-IVR-NEW-1",
+      "colorIndex": 130,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|HW-CURB-GRDN",
+      "colorIndex": 134,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|HW-CURB-IN",
+      "colorIndex": 1,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|HW-MEDIAN",
+      "colorIndex": 96,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|HW-SDWK-H",
+      "colorIndex": 149,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|HW-SDWK-H-Boundary",
+      "colorIndex": 149,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|HW-SHETAH-NIDRASH",
+      "colorIndex": 36,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|HW-SIDEWALK-LEHAZARA",
+      "colorIndex": 184,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|KAV HFKAA",
+      "colorIndex": 170,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|M2204",
+      "colorIndex": 9,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|M2417",
+      "colorIndex": 70,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|TR-DIM",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|asphalt exist",
+      "colorIndex": 254,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-HA-PINNES-BAAL SHEM TOV|sup_ART",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-MARK-WHT-1-1",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-MARK-WHT-808",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-MARK-WHT-809",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-MARK-WHT-810",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SIGN-BL",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {
+        "BlockReference": 12
+      }
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|-ZEVA-511",
+      "colorIndex": 40,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|-ZEVA-821",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|0-LINE",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|0-XREF",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|0-text",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|ATR01",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|ATR02",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|ATR03",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|ATR04",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-ARRW",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-SIGN-1",
+      "colorIndex": 220,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-SIGN-2",
+      "colorIndex": 40,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-SIGN-255",
+      "colorIndex": 255,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-SIGN-3",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-SIGN-5",
+      "colorIndex": 172,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-SIGN-7",
+      "colorIndex": 1,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-SIGN-NUMB",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-SIGN-POLE",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-SIGN-RFLM",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-SIGN-ROAD",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-SIGN-SINC",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-SIGN-SIZE",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-SIGN-SPED",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-SIGN-T",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|BL-TR-TEXT",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|HW-CURB",
+      "colorIndex": 11,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|HW-CURB-GRDN",
+      "colorIndex": 134,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|HW-CURB-ILND",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|HW-CURB-IN",
+      "colorIndex": 1,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|HW-STAG-NOTE",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|HW-TXT",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|M2204",
+      "colorIndex": 9,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|M2408",
+      "colorIndex": 41,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|M2417",
+      "colorIndex": 70,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|M2519",
+      "colorIndex": 254,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|M4903",
+      "colorIndex": 70,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-CURB-BLK",
+      "colorIndex": 16,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-CURB-RED",
+      "colorIndex": 29,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-CURB-YLW",
+      "colorIndex": 37,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-DIM",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-DIM-M34",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-GM-PINNES-BAAL SHEM TOVATR01",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-GM-PINNES-BAAL SHEM TOVATR02",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-GM-PINNES-BAAL SHEM TOVATR03",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-GM-PINNES-BAAL SHEM TOVATR04",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-GM-PINNES-BAAL SHEM TOVATR05",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-MARK-WHT",
+      "colorIndex": 11,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-MARK-WHT-1-1",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-MARK-WHT-808",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-MARK-WHT-808-3-1.5",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-MARK-WHT-809",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-MARK-WHT-810",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-MARK-WHT-811",
+      "colorIndex": 251,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-MARK-WHT-815",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-MARK-WHT-815-10",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-MARK-WHT-819",
+      "colorIndex": 15,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-MARK-WHT-820",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-MARK-YLW-1-1",
+      "colorIndex": 37,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-SIGN-BL",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-SIGN-POLE",
+      "colorIndex": 1,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-TX-PINNES-BAAL SHEM TOVATR01",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-TX-PINNES-BAAL SHEM TOVATR02",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-TX-PINNES-BAAL SHEM TOVATR03",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|TR-TX-PINNES-BAAL SHEM TOVATR04",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-SM-PINNES-BAAL SHEM TOV|sup_ART",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|-ZEVA-821",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|0-LINE",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|0-text",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|0-xref",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|ATR01",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|ATR02",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|ATR03",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|ATR04",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|CL_Cont_Minor",
+      "colorIndex": 4,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|HW-CURB",
+      "colorIndex": 11,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|HW-CURB-GRDN",
+      "colorIndex": 134,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|HW-STAG-NOTE",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|HW-TEXT-BORDER",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|HW-TX-NIKUZ",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|HW-TXT",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|HW-TXT-HW",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|M2204",
+      "colorIndex": 9,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|TR-DIM",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|TR-NOTE",
+      "colorIndex": 3,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|TR-WORK-LIMT-1",
+      "colorIndex": 7,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TR-TX-PINNES-BAAL SHEM TOV|sup_ART",
+      "colorIndex": 2,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "TZ-Inter",
+      "colorIndex": 10,
+      "isIntergreen": false,
+      "entities": {}
+    },
+    {
+      "name": "intergreen_E-L",
+      "colorIndex": 220,
+      "isIntergreen": true,
+      "entities": {}
+    },
+    {
+      "name": "intergreen_E-R",
+      "colorIndex": 10,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_E-T",
+      "colorIndex": 11,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_N-L",
+      "colorIndex": 2,
+      "isIntergreen": true,
+      "entities": {}
+    },
+    {
+      "name": "intergreen_N-R",
+      "colorIndex": 42,
+      "isIntergreen": true,
+      "entities": {}
+    },
+    {
+      "name": "intergreen_N-T",
+      "colorIndex": 52,
+      "isIntergreen": true,
+      "entities": {}
+    },
+    {
+      "name": "intergreen_S-L",
+      "colorIndex": 4,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_S-R",
+      "colorIndex": 176,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_S-T",
+      "colorIndex": 150,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_W-L",
+      "colorIndex": 3,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_W-R",
+      "colorIndex": 88,
+      "isIntergreen": true,
+      "entities": {}
+    },
+    {
+      "name": "intergreen_W-T",
+      "colorIndex": 102,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_a",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_b",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_c",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_d",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 2
+      }
+    },
+    {
+      "name": "intergreen_e",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {}
+    },
+    {
+      "name": "intergreen_f",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {}
+    },
+    {
+      "name": "intergreen_g",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {}
+    },
+    {
+      "name": "intergreen_h",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {}
+    },
+    {
+      "name": "intergreen_stopline",
+      "colorIndex": 7,
+      "isIntergreen": true,
+      "entities": {
+        "Polyline": 3
+      }
+    }
+  ]
+}

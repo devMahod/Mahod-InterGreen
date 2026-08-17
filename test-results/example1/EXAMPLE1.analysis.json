@@ -1,0 +1,3156 @@
+{
+  "SchemaVersion": "1.0",
+  "EngineVersion": "0.1.0",
+  "IntersectionName": "EXAMPLE1",
+  "SourceGeometry": {
+    "FileName": "ex1.dwg",
+    "Sha256": "9A82EE4A60EAF009FE95B702C53EC47B3A47EE52AC967DA2C26B475B3C43B609"
+  },
+  "RulePack": {
+    "Id": "legacy-mahod-v1",
+    "Version": "1.0.0",
+    "ContentSha256": "786F4A998217E814E29F9EB8A211627B9B5642562FD95B8EB7BC29AD981C1044",
+    "GeometryStrategyId": "legacy-envelope",
+    "CalculationStrategyId": "legacy-mahod-v1",
+    "RoundingStrategyId": "mahod-legacy-0.1"
+  },
+  "Classification": {
+    "RoadType": "Urban",
+    "PostedSpeedKph": 50,
+    "InbarMode": false,
+    "Crossings": []
+  },
+  "Movements": [
+    {
+      "Id": "E-R",
+      "Mode": "Vehicle",
+      "SignalGroup": "1",
+      "ReferenceStations": [
+        {
+          "CurveId": "E-R.b1",
+          "Station": 0,
+          "Method": "ExactIntersection"
+        },
+        {
+          "CurveId": "E-R.b2",
+          "Station": 0,
+          "Method": "ExactIntersection"
+        }
+      ],
+      "SourceHandles": [
+        "71CA",
+        "75CC"
+      ]
+    },
+    {
+      "Id": "E-T",
+      "Mode": "Vehicle",
+      "SignalGroup": "1",
+      "ReferenceStations": [
+        {
+          "CurveId": "E-T.b1",
+          "Station": 0,
+          "Method": "ExactIntersection"
+        },
+        {
+          "CurveId": "E-T.b2",
+          "Station": 28.802874,
+          "Method": "ExactIntersection"
+        }
+      ],
+      "SourceHandles": [
+        "75CD",
+        "75FF"
+      ]
+    },
+    {
+      "Id": "S-L",
+      "Mode": "Vehicle",
+      "SignalGroup": "2",
+      "ReferenceStations": [
+        {
+          "CurveId": "S-L.b1",
+          "Station": 0,
+          "Method": "ExactIntersection"
+        },
+        {
+          "CurveId": "S-L.b2",
+          "Station": 0,
+          "Method": "ExactIntersection"
+        }
+      ],
+      "SourceHandles": [
+        "710C",
+        "767A"
+      ]
+    },
+    {
+      "Id": "S-R",
+      "Mode": "Vehicle",
+      "SignalGroup": "2",
+      "ReferenceStations": [
+        {
+          "CurveId": "S-R.b1",
+          "Station": 15.935478,
+          "Method": "ExactIntersection"
+        },
+        {
+          "CurveId": "S-R.b2",
+          "Station": 0,
+          "Method": "ExactIntersection"
+        }
+      ],
+      "SourceHandles": [
+        "750F",
+        "7649"
+      ]
+    },
+    {
+      "Id": "S-T",
+      "Mode": "Vehicle",
+      "SignalGroup": "2",
+      "ReferenceStations": [
+        {
+          "CurveId": "S-T.b1",
+          "Station": 25.606078,
+          "Method": "ExactIntersection"
+        },
+        {
+          "CurveId": "S-T.b2",
+          "Station": 26.221696,
+          "Method": "ExactIntersection"
+        }
+      ],
+      "SourceHandles": [
+        "71CC",
+        "76C2"
+      ]
+    },
+    {
+      "Id": "W-L",
+      "Mode": "Vehicle",
+      "SignalGroup": "4",
+      "ReferenceStations": [
+        {
+          "CurveId": "W-L.b1",
+          "Station": 0,
+          "Method": "ExactIntersection"
+        },
+        {
+          "CurveId": "W-L.b2",
+          "Station": 0,
+          "Method": "ExactIntersection"
+        }
+      ],
+      "SourceHandles": [
+        "71BB",
+        "7780"
+      ]
+    },
+    {
+      "Id": "W-T",
+      "Mode": "Vehicle",
+      "SignalGroup": "3",
+      "ReferenceStations": [
+        {
+          "CurveId": "W-T.b1",
+          "Station": 25.31515,
+          "Method": "ExactIntersection"
+        },
+        {
+          "CurveId": "W-T.b2",
+          "Station": 0,
+          "Method": "ExactIntersection"
+        }
+      ],
+      "SourceHandles": [
+        "7661",
+        "7799"
+      ]
+    },
+    {
+      "Id": "a",
+      "Mode": "Pedestrian",
+      "SignalGroup": "a",
+      "ReferenceStations": [],
+      "SourceHandles": [
+        "75AC",
+        "75AD"
+      ]
+    },
+    {
+      "Id": "b",
+      "Mode": "Pedestrian",
+      "SignalGroup": "b",
+      "ReferenceStations": [],
+      "SourceHandles": [
+        "75AE",
+        "75AF"
+      ]
+    },
+    {
+      "Id": "c",
+      "Mode": "Pedestrian",
+      "SignalGroup": "c",
+      "ReferenceStations": [],
+      "SourceHandles": [
+        "75B0",
+        "75B1"
+      ]
+    },
+    {
+      "Id": "d",
+      "Mode": "Pedestrian",
+      "SignalGroup": "d",
+      "ReferenceStations": [],
+      "SourceHandles": [
+        "75B2",
+        "75B3"
+      ]
+    }
+  ],
+  "Conflicts": [
+    {
+      "Id": "E-R→E-T",
+      "Clearing": "E-R",
+      "Entering": "E-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 13.24691918998322,
+          "Ed": 12.252872436251392,
+          "X": 190135.261087,
+          "Y": 665381.828769,
+          "ClearingCurveId": "E-R.b2",
+          "EnteringCurveId": "E-T.b1",
+          "RawIg": 3.7602836067195096
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 3.7602836067195096,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "E-R→S-R",
+      "Clearing": "E-R",
+      "Entering": "S-R",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "E-R→S-T",
+      "Clearing": "E-R",
+      "Entering": "S-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 8.734569436914295,
+          "Ed": 18.424586761277823,
+          "X": 190139.723106,
+          "Y": 665382.079264,
+          "ClearingCurveId": "E-R.b2",
+          "EnteringCurveId": "S-T.b2",
+          "RawIg": 2.935026028892586
+        },
+        {
+          "Id": "P2",
+          "Cd": 9.31780644335535,
+          "Ed": 26.22169565826342,
+          "X": 190135.755429,
+          "Y": 665388.725326,
+          "ClearingCurveId": "E-R.b1",
+          "EnteringCurveId": "S-T.b2",
+          "RawIg": 2.410702855008244
+        },
+        {
+          "Id": "P3",
+          "Cd": 18.929697525993976,
+          "Ed": 25.579989780319266,
+          "X": 190130.314954,
+          "Y": 665384.447118,
+          "ClearingCurveId": "E-R.b2",
+          "EnteringCurveId": "S-T.b1",
+          "RawIg": 3.3188583227808763
+        }
+      ],
+      "DefiningPointId": "P3",
+      "RawIntergreenSec": 3.3188583227808763,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "E-R→W-L",
+      "Clearing": "E-R",
+      "Entering": "W-L",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 8.935618643719373,
+          "Ed": 20.742493003307064,
+          "X": 190139.530209,
+          "Y": 665382.022607,
+          "ClearingCurveId": "E-R.b2",
+          "EnteringCurveId": "W-L.b2",
+          "RawIg": 2.780920369285769
+        },
+        {
+          "Id": "P2",
+          "Cd": 9.317806443274632,
+          "Ed": 28.521786556373073,
+          "X": 190135.755429,
+          "Y": 665388.725326,
+          "ClearingCurveId": "E-R.b1",
+          "EnteringCurveId": "W-L.b2",
+          "RawIg": 2.2450963103392225
+        },
+        {
+          "Id": "P3",
+          "Cd": 18.92953101328091,
+          "Ed": 19.699580894271648,
+          "X": 190130.315071,
+          "Y": 665384.447,
+          "ClearingCurveId": "E-R.b2",
+          "EnteringCurveId": "W-L.b1",
+          "RawIg": 3.742232941782274
+        }
+      ],
+      "DefiningPointId": "P3",
+      "RawIntergreenSec": 3.742232941782274,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "E-R→W-T",
+      "Clearing": "E-R",
+      "Entering": "W-T",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "E-R→a",
+      "Clearing": "E-R",
+      "Entering": "a",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 5.1624436376607905,
+          "Ed": 0,
+          "X": 190139.835645,
+          "Y": 665388.104077,
+          "ClearingCurveId": "E-R.b1",
+          "EnteringCurveId": "a.b1",
+          "RawIg": 4.03348214417788
+        },
+        {
+          "Id": "P2",
+          "Cd": 9.317806443274632,
+          "Ed": 0,
+          "X": 190135.755429,
+          "Y": 665388.725326,
+          "ClearingCurveId": "E-R.b1",
+          "EnteringCurveId": "a.b2",
+          "RawIg": 4.298664942398084
+        },
+        {
+          "Id": "P3",
+          "Cd": 15.81661570138776,
+          "Ed": 0,
+          "X": 190132.830318,
+          "Y": 665382.637213,
+          "ClearingCurveId": "E-R.b2",
+          "EnteringCurveId": "a.b1",
+          "RawIg": 4.879915588660101
+        }
+      ],
+      "DefiningPointId": "P3",
+      "RawIntergreenSec": 4.879915588660101,
+      "FinalIg": 5,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "E-R→b",
+      "Clearing": "E-R",
+      "Entering": "b",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 0.7082959349080993,
+          "Ed": 0,
+          "X": 190144.098757,
+          "Y": 665389.269433,
+          "ClearingCurveId": "E-R.b1",
+          "EnteringCurveId": "b.b2",
+          "RawIg": 3.7463859200931307
+        },
+        {
+          "Id": "P2",
+          "Cd": 0.7312460848744733,
+          "Ed": 0,
+          "X": 190146.253101,
+          "Y": 665386.591275,
+          "ClearingCurveId": "E-R.b2",
+          "EnteringCurveId": "b.b2",
+          "RawIg": 3.747872892241639
+        },
+        {
+          "Id": "P3",
+          "Cd": 4.732304755561677,
+          "Ed": 0,
+          "X": 190143.190578,
+          "Y": 665384.016698,
+          "ClearingCurveId": "E-R.b2",
+          "EnteringCurveId": "b.b1",
+          "RawIg": 4.005886959195347
+        },
+        {
+          "Id": "P4",
+          "Cd": 5.098133898961532,
+          "Ed": 0,
+          "X": 190139.899862,
+          "Y": 665388.107532,
+          "ClearingCurveId": "E-R.b1",
+          "EnteringCurveId": "b.b1",
+          "RawIg": 4.02935815546237
+        }
+      ],
+      "DefiningPointId": "P4",
+      "RawIntergreenSec": 4.02935815546237,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "E-R→c",
+      "Clearing": "E-R",
+      "Entering": "c",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "E-T→E-R",
+      "Clearing": "E-T",
+      "Entering": "E-R",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 12.252872436251392,
+          "Ed": 13.24691918998322,
+          "X": 190135.261087,
+          "Y": 665381.828769,
+          "ClearingCurveId": "E-T.b1",
+          "EnteringCurveId": "E-R.b2",
+          "RawIg": 3.5953977133279214
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 3.5953977133279214,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "E-T→S-L",
+      "Clearing": "E-T",
+      "Entering": "S-L",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 16.372527793768807,
+          "Ed": 14.051245754974854,
+          "X": 190136.112366,
+          "Y": 665374.292626,
+          "ClearingCurveId": "E-T.b2",
+          "EnteringCurveId": "S-L.b2",
+          "RawIg": 3.9188935597408054
+        },
+        {
+          "Id": "P2",
+          "Cd": 26.474788519653345,
+          "Ed": 26.728600834048365,
+          "X": 190124.146709,
+          "Y": 665372.957017,
+          "ClearingCurveId": "E-T.b1",
+          "EnteringCurveId": "S-L.b2",
+          "RawIg": 3.888210707069378
+        },
+        {
+          "Id": "P3",
+          "Cd": 26.804150093858254,
+          "Ed": 27.057973759180864,
+          "X": 190123.8904,
+          "Y": 665372.750172,
+          "ClearingCurveId": "E-T.b1",
+          "EnteringCurveId": "S-L.b2",
+          "RawIg": 3.892122792322466
+        },
+        {
+          "Id": "P4",
+          "Cd": 26.811030535522907,
+          "Ed": 17.391184680623414,
+          "X": 190128.017031,
+          "Y": 665367.702791,
+          "ClearingCurveId": "E-T.b2",
+          "EnteringCurveId": "S-L.b1",
+          "RawIg": 4.588708036103974
+        },
+        {
+          "Id": "P5",
+          "Cd": 26.8975043214334,
+          "Ed": 17.4777663287293,
+          "X": 190127.950054,
+          "Y": 665367.648093,
+          "ClearingCurveId": "E-T.b2",
+          "EnteringCurveId": "S-L.b1",
+          "RawIg": 4.589716318328617
+        },
+        {
+          "Id": "P6",
+          "Cd": 28.802873772856277,
+          "Ed": 19.383227449036042,
+          "X": 190126.474286,
+          "Y": 665366.442879,
+          "ClearingCurveId": "E-T.b2",
+          "EnteringCurveId": "S-L.b1",
+          "RawIg": 4.610963792301412
+        }
+      ],
+      "DefiningPointId": "P6",
+      "RawIntergreenSec": 4.610963792301412,
+      "FinalIg": 5,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "E-T→S-R",
+      "Clearing": "E-T",
+      "Entering": "S-R",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "E-T→S-T",
+      "Clearing": "E-T",
+      "Entering": "S-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 7.903909627803159,
+          "Ed": 21.019548831069244,
+          "X": 190138.716774,
+          "Y": 665384.468875,
+          "ClearingCurveId": "E-T.b1",
+          "EnteringCurveId": "S-T.b2",
+          "RawIg": 2.6953096747997067
+        },
+        {
+          "Id": "P2",
+          "Cd": 10.086257250507167,
+          "Ed": 14.405975179431854,
+          "X": 190140.984205,
+          "Y": 665378.265331,
+          "ClearingCurveId": "E-T.b2",
+          "EnteringCurveId": "S-T.b2",
+          "RawIg": 3.3102001676509496
+        },
+        {
+          "Id": "P3",
+          "Cd": 15.460271172446832,
+          "Ed": 20.41406871139238,
+          "X": 190132.718184,
+          "Y": 665379.874344,
+          "ClearingCurveId": "E-T.b1",
+          "EnteringCurveId": "S-T.b1",
+          "RawIg": 3.3774966193020326
+        },
+        {
+          "Id": "P4",
+          "Cd": 15.581231858364177,
+          "Ed": 13.916294300903184,
+          "X": 190136.725618,
+          "Y": 665374.792698,
+          "ClearingCurveId": "E-T.b2",
+          "EnteringCurveId": "S-T.b1",
+          "RawIg": 3.8564157011627893
+        }
+      ],
+      "DefiningPointId": "P4",
+      "RawIntergreenSec": 3.8564157011627893,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "E-T→W-L",
+      "Clearing": "E-T",
+      "Entering": "W-L",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 7.953692415096116,
+          "Ed": 23.30639320556857,
+          "X": 190138.67814,
+          "Y": 665384.437478,
+          "ClearingCurveId": "E-T.b1",
+          "EnteringCurveId": "W-L.b2",
+          "RawIg": 2.5338288319413373
+        },
+        {
+          "Id": "P2",
+          "Cd": 11.369142510577774,
+          "Ed": 16.133318936171722,
+          "X": 190139.989973,
+          "Y": 665377.454592,
+          "ClearingCurveId": "E-T.b2",
+          "EnteringCurveId": "W-L.b2",
+          "RawIg": 3.3039013749787944
+        },
+        {
+          "Id": "P3",
+          "Cd": 15.523994749582164,
+          "Ed": 14.520778743540786,
+          "X": 190132.668594,
+          "Y": 665379.834324,
+          "ClearingCurveId": "E-T.b1",
+          "EnteringCurveId": "W-L.b1",
+          "RawIg": 3.8076516664343805
+        },
+        {
+          "Id": "P4",
+          "Cd": 20.034447005105747,
+          "Ed": 6.42377293904538,
+          "X": 190133.274391,
+          "Y": 665371.978421,
+          "ClearingCurveId": "E-T.b2",
+          "EnteringCurveId": "W-L.b1",
+          "RawIg": 4.795996501314018
+        }
+      ],
+      "DefiningPointId": "P4",
+      "RawIntergreenSec": 4.795996501314018,
+      "FinalIg": 5,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "E-T→W-T",
+      "Clearing": "E-T",
+      "Entering": "W-T",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "E-T→a",
+      "Clearing": "E-T",
+      "Entering": "a",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "E-T→b",
+      "Clearing": "E-T",
+      "Entering": "b",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 0.7004128371736086,
+          "Ed": 0,
+          "X": 190144.254752,
+          "Y": 665389.075509,
+          "ClearingCurveId": "E-T.b1",
+          "EnteringCurveId": "b.b2",
+          "RawIg": 3.745875144628266
+        },
+        {
+          "Id": "P2",
+          "Cd": 0.7621359685584679,
+          "Ed": 0,
+          "X": 190148.255503,
+          "Y": 665384.102002,
+          "ClearingCurveId": "E-T.b2",
+          "EnteringCurveId": "b.b2",
+          "RawIg": 3.7498741635744364
+        },
+        {
+          "Id": "P3",
+          "Cd": 4.700968435555349,
+          "Ed": 0,
+          "X": 190141.179786,
+          "Y": 665386.516403,
+          "ClearingCurveId": "E-T.b1",
+          "EnteringCurveId": "b.b1",
+          "RawIg": 4.003875530394399
+        },
+        {
+          "Id": "P4",
+          "Cd": 4.762145233937645,
+          "Ed": 0,
+          "X": 190145.13335,
+          "Y": 665381.601554,
+          "ClearingCurveId": "E-T.b2",
+          "EnteringCurveId": "b.b1",
+          "RawIg": 4.007802236517056
+        }
+      ],
+      "DefiningPointId": "P4",
+      "RawIntergreenSec": 4.007802236517056,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "E-T→c",
+      "Clearing": "E-T",
+      "Entering": "c",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "E-T→d",
+      "Clearing": "E-T",
+      "Entering": "d",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "S-L→E-T",
+      "Clearing": "S-L",
+      "Entering": "E-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 14.051245754974854,
+          "Ed": 16.372527793768807,
+          "X": 190136.112366,
+          "Y": 665374.292626,
+          "ClearingCurveId": "S-L.b2",
+          "EnteringCurveId": "E-T.b2",
+          "RawIg": 3.5385634829506527
+        },
+        {
+          "Id": "P2",
+          "Cd": 17.391184680623414,
+          "Ed": 26.811030535522907,
+          "X": 190128.017031,
+          "Y": 665367.702791,
+          "ClearingCurveId": "S-L.b1",
+          "EnteringCurveId": "E-T.b2",
+          "RawIg": 3.092413493979037
+        },
+        {
+          "Id": "P3",
+          "Cd": 17.4777663287293,
+          "Ed": 26.8975043214334,
+          "X": 190127.950054,
+          "Y": 665367.648093,
+          "ClearingCurveId": "S-L.b1",
+          "EnteringCurveId": "E-T.b2",
+          "RawIg": 3.093989647082626
+        },
+        {
+          "Id": "P4",
+          "Cd": 19.383227449036042,
+          "Ed": 28.802873771529313,
+          "X": 190126.474286,
+          "Y": 665366.442879,
+          "ClearingCurveId": "S-L.b1",
+          "EnteringCurveId": "E-T.b2",
+          "RawIg": 3.1271034679454637
+        },
+        {
+          "Id": "P5",
+          "Cd": 26.728600834048365,
+          "Ed": 26.474788519653345,
+          "X": 190124.146709,
+          "Y": 665372.957017,
+          "ClearingCurveId": "S-L.b2",
+          "EnteringCurveId": "E-T.b1",
+          "RawIg": 3.9277808691290996
+        },
+        {
+          "Id": "P6",
+          "Cd": 27.057973759180864,
+          "Ed": 26.804150093858254,
+          "X": 190123.8904,
+          "Y": 665372.750172,
+          "ClearingCurveId": "S-L.b2",
+          "EnteringCurveId": "E-T.b1",
+          "RawIg": 3.9316439830591063
+        }
+      ],
+      "DefiningPointId": "P6",
+      "RawIntergreenSec": 3.9316439830591063,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-L→S-R",
+      "Clearing": "S-L",
+      "Entering": "S-R",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 5.4215175001818565,
+          "Ed": 5.422850163495837,
+          "X": 190141.826043,
+          "Y": 665368.106386,
+          "ClearingCurveId": "S-L.b2",
+          "EnteringCurveId": "S-R.b2",
+          "RawIg": 3.6596443447380924
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 3.6596443447380924,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-L→S-T",
+      "Clearing": "S-L",
+      "Entering": "S-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 8.67806684915158,
+          "Ed": 8.675689198872426,
+          "X": 190140.262594,
+          "Y": 665370.957817,
+          "ClearingCurveId": "S-L.b2",
+          "EnteringCurveId": "S-T.b1",
+          "RawIg": 3.6333529186664837
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 3.6333529186664837,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-L→W-L",
+      "Clearing": "S-L",
+      "Entering": "W-L",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 9.21022209614734,
+          "Ed": 5.774073555639782,
+          "X": 190135.821798,
+          "Y": 665368.319881,
+          "ClearingCurveId": "S-L.b1",
+          "EnteringCurveId": "W-L.b2",
+          "RawIg": 3.876097625079918
+        },
+        {
+          "Id": "P2",
+          "Cd": 10.748912595399856,
+          "Ed": 10.99707003421388,
+          "X": 190138.853345,
+          "Y": 665372.471338,
+          "ClearingCurveId": "S-L.b2",
+          "EnteringCurveId": "W-L.b2",
+          "RawIg": 3.6145727760630812
+        },
+        {
+          "Id": "P3",
+          "Cd": 13.47132564950713,
+          "Ed": 3.038144828964045,
+          "X": 190131.668833,
+          "Y": 665369.016058,
+          "ClearingCurveId": "S-L.b1",
+          "EnteringCurveId": "W-L.b1",
+          "RawIg": 4.444693917224254
+        },
+        {
+          "Id": "P4",
+          "Cd": 16.499381233012826,
+          "Ed": 9.600469028833581,
+          "X": 190133.805062,
+          "Y": 665375.096947,
+          "ClearingCurveId": "S-L.b2",
+          "EnteringCurveId": "W-L.b1",
+          "RawIg": 4.250877629661652
+        }
+      ],
+      "DefiningPointId": "P3",
+      "RawIntergreenSec": 4.444693917224254,
+      "FinalIg": 5,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-L→W-T",
+      "Clearing": "S-L",
+      "Entering": "W-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 6.033659112216773,
+          "Ed": 6.547114678947011,
+          "X": 190138.369964,
+          "Y": 665366.45829,
+          "ClearingCurveId": "S-L.b1",
+          "EnteringCurveId": "W-T.b1",
+          "RawIg": 3.6178979723797395
+        },
+        {
+          "Id": "P2",
+          "Cd": 6.425621902672707,
+          "Ed": 10.470031841357603,
+          "X": 190141.361167,
+          "Y": 665368.996396,
+          "ClearingCurveId": "S-L.b2",
+          "EnteringCurveId": "W-T.b1",
+          "RawIg": 3.3605196498017946
+        },
+        {
+          "Id": "P3",
+          "Cd": 9.210222096045705,
+          "Ed": 5.774073555587039,
+          "X": 190135.821798,
+          "Y": 665368.319881,
+          "ClearingCurveId": "S-L.b1",
+          "EnteringCurveId": "W-T.b2",
+          "RawIg": 3.87609762507726
+        },
+        {
+          "Id": "P4",
+          "Cd": 9.895604116488826,
+          "Ed": 10.874486747146742,
+          "X": 190139.467046,
+          "Y": 665371.878743,
+          "ClearingCurveId": "S-L.b2",
+          "EnteringCurveId": "W-T.b2",
+          "RawIg": 3.552376512803803
+        }
+      ],
+      "DefiningPointId": "P3",
+      "RawIntergreenSec": 3.87609762507726,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-L→d",
+      "Clearing": "S-L",
+      "Entering": "d",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 0.5993877431718423,
+          "Ed": 0,
+          "X": 190141.295477,
+          "Y": 665361.889103,
+          "ClearingCurveId": "S-L.b1",
+          "EnteringCurveId": "d.b2",
+          "RawIg": 3.739328507974653
+        },
+        {
+          "Id": "P2",
+          "Cd": 0.6018083733434724,
+          "Ed": 0,
+          "X": 190144.057449,
+          "Y": 665363.834335,
+          "ClearingCurveId": "S-L.b2",
+          "EnteringCurveId": "d.b2",
+          "RawIg": 3.7394853881247925
+        },
+        {
+          "Id": "P3",
+          "Cd": 3.608803994982765,
+          "Ed": 0,
+          "X": 190139.761258,
+          "Y": 665364.47793,
+          "ClearingCurveId": "S-L.b1",
+          "EnteringCurveId": "d.b1",
+          "RawIg": 3.9336797187487402
+        },
+        {
+          "Id": "P4",
+          "Cd": 3.628236529386039,
+          "Ed": 0,
+          "X": 190142.656287,
+          "Y": 665366.516874,
+          "ClearingCurveId": "S-L.b2",
+          "EnteringCurveId": "d.b1",
+          "RawIg": 3.9349302490189935
+        }
+      ],
+      "DefiningPointId": "P4",
+      "RawIntergreenSec": 3.9349302490189935,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-R→E-R",
+      "Clearing": "S-R",
+      "Entering": "E-R",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "S-R→E-T",
+      "Clearing": "S-R",
+      "Entering": "E-T",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "S-R→S-L",
+      "Clearing": "S-R",
+      "Entering": "S-L",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 5.422850163495837,
+          "Ed": 5.4215175001818565,
+          "X": 190141.826043,
+          "Y": 665368.106386,
+          "ClearingCurveId": "S-R.b2",
+          "EnteringCurveId": "S-L.b2",
+          "RawIg": 3.6598256985137056
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 3.6598256985137056,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-R→S-T",
+      "Clearing": "S-R",
+      "Entering": "S-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 5.416485405302975,
+          "Ed": 5.416485405289524,
+          "X": 190141.826733,
+          "Y": 665368.100059,
+          "ClearingCurveId": "S-R.b2",
+          "EnteringCurveId": "S-T.b1",
+          "RawIg": 3.6597801296204175
+        },
+        {
+          "Id": "P2",
+          "Cd": 11.780526455574137,
+          "Ed": 10.135762534893853,
+          "X": 190142.673207,
+          "Y": 665374.344184,
+          "ClearingCurveId": "S-R.b2",
+          "EnteringCurveId": "S-T.b2",
+          "RawIg": 3.7747622076719054
+        }
+      ],
+      "DefiningPointId": "P2",
+      "RawIntergreenSec": 3.7747622076719054,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-R→W-T",
+      "Clearing": "S-R",
+      "Entering": "W-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 6.646187164436616,
+          "Ed": 10.98094748260735,
+          "X": 190141.750738,
+          "Y": 665369.326955,
+          "ClearingCurveId": "S-R.b2",
+          "EnteringCurveId": "W-T.b1",
+          "RawIg": 3.3378321407451015
+        },
+        {
+          "Id": "P2",
+          "Cd": 16.007081713194363,
+          "Ed": 18.99607476026099,
+          "X": 190144.837757,
+          "Y": 665377.952933,
+          "ClearingCurveId": "S-R.b2",
+          "EnteringCurveId": "W-T.b2",
+          "RawIg": 3.529585101810936
+        }
+      ],
+      "DefiningPointId": "P2",
+      "RawIntergreenSec": 3.529585101810936,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-R→b",
+      "Clearing": "S-R",
+      "Entering": "b",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "S-R→c",
+      "Clearing": "S-R",
+      "Entering": "c",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 11.934473667399402,
+          "Ed": 0,
+          "X": 190149.645748,
+          "Y": 665375.991995,
+          "ClearingCurveId": "S-R.b1",
+          "EnteringCurveId": "c.b2",
+          "RawIg": 4.519107151005071
+        },
+        {
+          "Id": "P2",
+          "Cd": 15.935477516566992,
+          "Ed": 0,
+          "X": 190152.706331,
+          "Y": 665378.568983,
+          "ClearingCurveId": "S-R.b1",
+          "EnteringCurveId": "c.b1",
+          "RawIg": 4.890769355661664
+        },
+        {
+          "Id": "P3",
+          "Cd": 18.526881376876243,
+          "Ed": 0,
+          "X": 190146.763334,
+          "Y": 665379.57525,
+          "ClearingCurveId": "S-R.b2",
+          "EnteringCurveId": "c.b2",
+          "RawIg": 5.124704971200063
+        },
+        {
+          "Id": "P4",
+          "Cd": 22.527242347096422,
+          "Ed": 0,
+          "X": 190149.846406,
+          "Y": 665382.124279,
+          "ClearingCurveId": "S-R.b2",
+          "EnteringCurveId": "c.b1",
+          "RawIg": 5.476251769606293
+        }
+      ],
+      "DefiningPointId": "P4",
+      "RawIntergreenSec": 5.476251769606293,
+      "FinalIg": 6,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-R→d",
+      "Clearing": "S-R",
+      "Entering": "d",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 0.6018736644765696,
+          "Ed": 0,
+          "X": 190144.052309,
+          "Y": 665363.830715,
+          "ClearingCurveId": "S-R.b2",
+          "EnteringCurveId": "d.b2",
+          "RawIg": 3.7394896196066614
+        },
+        {
+          "Id": "P2",
+          "Cd": 0.6147883075037068,
+          "Ed": 0,
+          "X": 190146.858434,
+          "Y": 665365.807044,
+          "ClearingCurveId": "S-R.b1",
+          "EnteringCurveId": "d.b2",
+          "RawIg": 3.7403265975744304
+        },
+        {
+          "Id": "P3",
+          "Cd": 3.628630162395454,
+          "Ed": 0,
+          "X": 190142.653177,
+          "Y": 665366.514683,
+          "ClearingCurveId": "S-R.b2",
+          "EnteringCurveId": "d.b1",
+          "RawIg": 3.9349555796638116
+        },
+        {
+          "Id": "P4",
+          "Cd": 3.94870582768794,
+          "Ed": 0,
+          "X": 190146.29061,
+          "Y": 665369.076495,
+          "ClearingCurveId": "S-R.b1",
+          "EnteringCurveId": "d.b1",
+          "RawIg": 3.9555450600324065
+        }
+      ],
+      "DefiningPointId": "P4",
+      "RawIntergreenSec": 3.9555450600324065,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-T→E-R",
+      "Clearing": "S-T",
+      "Entering": "E-R",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 18.424586761277823,
+          "Ed": 8.734569436914295,
+          "X": 190139.723106,
+          "Y": 665382.079264,
+          "ClearingCurveId": "S-T.b2",
+          "EnteringCurveId": "E-R.b2",
+          "RawIg": 4.486677084820538
+        },
+        {
+          "Id": "P2",
+          "Cd": 25.579989780319266,
+          "Ed": 18.929697525993976,
+          "X": 190130.314954,
+          "Y": 665384.447118,
+          "ClearingCurveId": "S-T.b1",
+          "EnteringCurveId": "E-R.b2",
+          "RawIg": 4.374339871390221
+        },
+        {
+          "Id": "P3",
+          "Cd": 26.22169565826342,
+          "Ed": 9.31780644335535,
+          "X": 190135.755429,
+          "Y": 665388.725326,
+          "ClearingCurveId": "S-T.b2",
+          "EnteringCurveId": "E-R.b1",
+          "RawIg": 5.120513411056813
+        }
+      ],
+      "DefiningPointId": "P3",
+      "RawIntergreenSec": 5.120513411056813,
+      "FinalIg": 6,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-T→E-T",
+      "Clearing": "S-T",
+      "Entering": "E-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 13.916294300903184,
+          "Ed": 15.581231858364177,
+          "X": 190136.725618,
+          "Y": 665374.792698,
+          "ClearingCurveId": "S-T.b1",
+          "EnteringCurveId": "E-T.b2",
+          "RawIg": 3.5830082682359823
+        },
+        {
+          "Id": "P2",
+          "Cd": 14.405975179431854,
+          "Ed": 10.086257250507167,
+          "X": 190140.984205,
+          "Y": 665378.265331,
+          "ClearingCurveId": "S-T.b2",
+          "EnteringCurveId": "E-T.b2",
+          "RawIg": 4.0240356688274845
+        },
+        {
+          "Id": "P3",
+          "Cd": 20.41406871139238,
+          "Ed": 15.460271172446832,
+          "X": 190132.718184,
+          "Y": 665379.874344,
+          "ClearingCurveId": "S-T.b1",
+          "EnteringCurveId": "E-T.b1",
+          "RawIg": 4.178805835426257
+        },
+        {
+          "Id": "P4",
+          "Cd": 21.019548831069244,
+          "Ed": 7.903909627803159,
+          "X": 190138.716774,
+          "Y": 665384.468875,
+          "ClearingCurveId": "S-T.b2",
+          "EnteringCurveId": "E-T.b1",
+          "RawIg": 4.775985924108486
+        }
+      ],
+      "DefiningPointId": "P4",
+      "RawIntergreenSec": 4.775985924108486,
+      "FinalIg": 5,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-T→S-L",
+      "Clearing": "S-T",
+      "Entering": "S-L",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 8.675689198872426,
+          "Ed": 8.67806684915158,
+          "X": 190140.262594,
+          "Y": 665370.957817,
+          "ClearingCurveId": "S-T.b1",
+          "EnteringCurveId": "S-L.b2",
+          "RawIg": 3.6330304919976855
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 3.6330304919976855,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-T→S-R",
+      "Clearing": "S-T",
+      "Entering": "S-R",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 5.416485405289524,
+          "Ed": 5.416485405302975,
+          "X": 190141.826733,
+          "Y": 665368.100059,
+          "ClearingCurveId": "S-T.b1",
+          "EnteringCurveId": "S-R.b2",
+          "RawIg": 3.6597801296185875
+        },
+        {
+          "Id": "P2",
+          "Cd": 10.135762534893853,
+          "Ed": 11.780526455574137,
+          "X": 190142.673207,
+          "Y": 665374.344184,
+          "ClearingCurveId": "S-T.b2",
+          "EnteringCurveId": "S-R.b2",
+          "RawIg": 3.502371144514747
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 3.6597801296185875,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-T→W-L",
+      "Clearing": "S-T",
+      "Entering": "W-L",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 10.860661454427978,
+          "Ed": 11.243350507241171,
+          "X": 190138.946318,
+          "Y": 665372.699393,
+          "ClearingCurveId": "S-T.b1",
+          "EnteringCurveId": "W-L.b2",
+          "RawIg": 3.6075212088000113
+        },
+        {
+          "Id": "P2",
+          "Cd": 22.12500129863306,
+          "Ed": 16.244780264133652,
+          "X": 190131.911686,
+          "Y": 665381.383268,
+          "ClearingCurveId": "S-T.b1",
+          "EnteringCurveId": "W-L.b1",
+          "RawIg": 4.271779230064929
+        },
+        {
+          "Id": "P3",
+          "Cd": 22.449172394083053,
+          "Ed": 24.745760820052833,
+          "X": 190138.023276,
+          "Y": 665385.718628,
+          "ClearingCurveId": "S-T.b2",
+          "EnteringCurveId": "W-L.b2",
+          "RawIg": 3.687801837424496
+        },
+        {
+          "Id": "P4",
+          "Cd": 25.606077893383176,
+          "Ed": 19.725828002326622,
+          "X": 190130.302936,
+          "Y": 665384.470273,
+          "ClearingCurveId": "S-T.b1",
+          "EnteringCurveId": "W-L.b1",
+          "RawIg": 4.319223559904868
+        },
+        {
+          "Id": "P5",
+          "Cd": 26.22169565826342,
+          "Ed": 28.521786556393376,
+          "X": 190135.755429,
+          "Y": 665388.725326,
+          "ClearingCurveId": "S-T.b2",
+          "EnteringCurveId": "W-L.b2",
+          "RawIg": 3.7378268429180754
+        }
+      ],
+      "DefiningPointId": "P4",
+      "RawIntergreenSec": 4.319223559904868,
+      "FinalIg": 5,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-T→W-T",
+      "Clearing": "S-T",
+      "Entering": "W-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 6.426179856159951,
+          "Ed": 10.468497691388547,
+          "X": 190141.359997,
+          "Y": 665368.995403,
+          "ClearingCurveId": "S-T.b1",
+          "EnteringCurveId": "W-T.b1",
+          "RawIg": 3.360665781715585
+        },
+        {
+          "Id": "P2",
+          "Cd": 6.74000608477505,
+          "Ed": 13.881482247814214,
+          "X": 190143.96238,
+          "Y": 665371.203585,
+          "ClearingCurveId": "S-T.b2",
+          "EnteringCurveId": "W-T.b1",
+          "RawIg": 3.1349883289615508
+        },
+        {
+          "Id": "P3",
+          "Cd": 9.91661742914266,
+          "Ed": 10.995643367881001,
+          "X": 190139.546092,
+          "Y": 665371.970561,
+          "ClearingCurveId": "S-T.b1",
+          "EnteringCurveId": "W-T.b2",
+          "RawIg": 3.544986112090465
+        },
+        {
+          "Id": "P4",
+          "Cd": 11.206042082007219,
+          "Ed": 15.299108394408742,
+          "X": 190142.242367,
+          "Y": 665375.323441,
+          "ClearingCurveId": "S-T.b2",
+          "EnteringCurveId": "W-T.b2",
+          "RawIg": 3.3484462939271618
+        }
+      ],
+      "DefiningPointId": "P3",
+      "RawIntergreenSec": 3.544986112090465,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-T→a",
+      "Clearing": "S-T",
+      "Entering": "a",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 23.21841800307422,
+          "Ed": 0,
+          "X": 190137.611037,
+          "Y": 665386.368023,
+          "ClearingCurveId": "S-T.b2",
+          "EnteringCurveId": "a.b1",
+          "RawIg": 5.5358804702242015
+        },
+        {
+          "Id": "P2",
+          "Cd": 25.606077893383176,
+          "Ed": 0,
+          "X": 190130.302936,
+          "Y": 665384.470273,
+          "ClearingCurveId": "S-T.b1",
+          "EnteringCurveId": "a.b2",
+          "RawIg": 5.739483176072385
+        },
+        {
+          "Id": "P3",
+          "Cd": 26.221695658223855,
+          "Ed": 0,
+          "X": 190135.755429,
+          "Y": 665388.725326,
+          "ClearingCurveId": "S-T.b2",
+          "EnteringCurveId": "a.b2",
+          "RawIg": 5.791395474975069
+        }
+      ],
+      "DefiningPointId": "P3",
+      "RawIntergreenSec": 5.791395474975069,
+      "FinalIg": 6,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "S-T→b",
+      "Clearing": "S-T",
+      "Entering": "b",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "S-T→c",
+      "Clearing": "S-T",
+      "Entering": "c",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "S-T→d",
+      "Clearing": "S-T",
+      "Entering": "d",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 0.601873664476571,
+          "Ed": 0,
+          "X": 190144.052309,
+          "Y": 665363.830715,
+          "ClearingCurveId": "S-T.b1",
+          "EnteringCurveId": "d.b2",
+          "RawIg": 3.7394896196066614
+        },
+        {
+          "Id": "P2",
+          "Cd": 0.6018736646067069,
+          "Ed": 0,
+          "X": 190146.774387,
+          "Y": 665365.747851,
+          "ClearingCurveId": "S-T.b2",
+          "EnteringCurveId": "d.b2",
+          "RawIg": 3.7394896196150955
+        },
+        {
+          "Id": "P3",
+          "Cd": 3.62863016248523,
+          "Ed": 0,
+          "X": 190142.653177,
+          "Y": 665366.514683,
+          "ClearingCurveId": "S-T.b1",
+          "EnteringCurveId": "d.b1",
+          "RawIg": 3.934955579669589
+        },
+        {
+          "Id": "P4",
+          "Cd": 3.62863016248523,
+          "Ed": 0,
+          "X": 190145.375255,
+          "Y": 665368.431819,
+          "ClearingCurveId": "S-T.b2",
+          "EnteringCurveId": "d.b1",
+          "RawIg": 3.934955579669589
+        }
+      ],
+      "DefiningPointId": "P3",
+      "RawIntergreenSec": 3.934955579669589,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "W-L→E-R",
+      "Clearing": "W-L",
+      "Entering": "E-R",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 19.699580894271648,
+          "Ed": 18.92953101328091,
+          "X": 190130.315071,
+          "Y": 665384.447,
+          "ClearingCurveId": "W-L.b1",
+          "EnteringCurveId": "E-R.b2",
+          "RawIg": 3.8660021433787035
+        },
+        {
+          "Id": "P2",
+          "Cd": 20.742493003307064,
+          "Ed": 8.935618643719373,
+          "X": 190139.530209,
+          "Y": 665382.022607,
+          "ClearingCurveId": "W-L.b2",
+          "EnteringCurveId": "E-R.b2",
+          "RawIg": 4.677426942389484
+        },
+        {
+          "Id": "P3",
+          "Cd": 28.521786556373073,
+          "Ed": 9.317806443274632,
+          "X": 190135.755429,
+          "Y": 665388.725326,
+          "ClearingCurveId": "W-L.b2",
+          "EnteringCurveId": "E-R.b1",
+          "RawIg": 5.312435061505821
+        }
+      ],
+      "DefiningPointId": "P3",
+      "RawIntergreenSec": 5.312435061505821,
+      "FinalIg": 6,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "W-L→E-T",
+      "Clearing": "W-L",
+      "Entering": "E-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 6.42377293904538,
+          "Ed": 20.034447005105747,
+          "X": 190133.274391,
+          "Y": 665371.978421,
+          "ClearingCurveId": "W-L.b1",
+          "EnteringCurveId": "E-T.b2",
+          "RawIg": 2.671763543002935
+        },
+        {
+          "Id": "P2",
+          "Cd": 14.520778743540786,
+          "Ed": 15.523994749582164,
+          "X": 190132.668594,
+          "Y": 665379.834324,
+          "ClearingCurveId": "W-L.b1",
+          "EnteringCurveId": "E-T.b1",
+          "RawIg": 3.643131471136826
+        },
+        {
+          "Id": "P3",
+          "Cd": 16.133318936171722,
+          "Ed": 11.369142510577774,
+          "X": 190139.989973,
+          "Y": 665377.454592,
+          "ClearingCurveId": "W-L.b2",
+          "EnteringCurveId": "E-T.b2",
+          "RawIg": 4.090232273499116
+        },
+        {
+          "Id": "P4",
+          "Cd": 23.30639320556857,
+          "Ed": 7.953692415096116,
+          "X": 190138.67814,
+          "Y": 665384.437478,
+          "ClearingCurveId": "W-L.b2",
+          "EnteringCurveId": "E-T.b1",
+          "RawIg": 4.970781742345182
+        }
+      ],
+      "DefiningPointId": "P4",
+      "RawIntergreenSec": 4.970781742345182,
+      "FinalIg": 5,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "W-L→S-L",
+      "Clearing": "W-L",
+      "Entering": "S-L",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 3.038144828964045,
+          "Ed": 13.47132564950713,
+          "X": 190131.668833,
+          "Y": 665369.016058,
+          "ClearingCurveId": "W-L.b1",
+          "EnteringCurveId": "S-L.b1",
+          "RawIg": 2.9269957099780406
+        },
+        {
+          "Id": "P2",
+          "Cd": 5.774073555639782,
+          "Ed": 9.21022209614734,
+          "X": 190135.821798,
+          "Y": 665368.319881,
+          "ClearingCurveId": "W-L.b2",
+          "EnteringCurveId": "S-L.b1",
+          "RawIg": 3.4095375097636005
+        },
+        {
+          "Id": "P3",
+          "Cd": 9.600469028833581,
+          "Ed": 16.499381233012826,
+          "X": 190133.805062,
+          "Y": 665375.096947,
+          "ClearingCurveId": "W-L.b1",
+          "EnteringCurveId": "S-L.b2",
+          "RawIg": 3.128656967544152
+        },
+        {
+          "Id": "P4",
+          "Cd": 10.99707003421388,
+          "Ed": 10.748912595399856,
+          "X": 190138.853345,
+          "Y": 665372.471338,
+          "ClearingCurveId": "W-L.b2",
+          "EnteringCurveId": "S-L.b2",
+          "RawIg": 3.656143057006415
+        }
+      ],
+      "DefiningPointId": "P4",
+      "RawIntergreenSec": 3.656143057006415,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "W-L→S-T",
+      "Clearing": "W-L",
+      "Entering": "S-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 11.243350507241171,
+          "Ed": 10.860661454427978,
+          "X": 190138.946318,
+          "Y": 665372.699393,
+          "ClearingCurveId": "W-L.b2",
+          "EnteringCurveId": "S-T.b1",
+          "RawIg": 3.671566280252841
+        },
+        {
+          "Id": "P2",
+          "Cd": 16.244780264133652,
+          "Ed": 22.12500129863306,
+          "X": 190131.911686,
+          "Y": 665381.383268,
+          "ClearingCurveId": "W-L.b1",
+          "EnteringCurveId": "S-T.b1",
+          "RawIg": 3.3259611546860373
+        },
+        {
+          "Id": "P3",
+          "Cd": 19.725828002326622,
+          "Ed": 25.606077893383176,
+          "X": 190130.302936,
+          "Y": 665384.470273,
+          "ClearingCurveId": "W-L.b1",
+          "EnteringCurveId": "S-T.b1",
+          "RawIg": 3.3876121396608947
+        },
+        {
+          "Id": "P4",
+          "Cd": 24.745760820052833,
+          "Ed": 22.449172394083053,
+          "X": 190138.023276,
+          "Y": 665385.718628,
+          "ClearingCurveId": "W-L.b2",
+          "EnteringCurveId": "S-T.b2",
+          "RawIg": 4.050200077271025
+        },
+        {
+          "Id": "P5",
+          "Cd": 28.521786556393376,
+          "Ed": 26.22169565826342,
+          "X": 190135.755429,
+          "Y": 665388.725326,
+          "ClearingCurveId": "W-L.b2",
+          "EnteringCurveId": "S-T.b2",
+          "RawIg": 4.095355038028307
+        }
+      ],
+      "DefiningPointId": "P5",
+      "RawIntergreenSec": 4.095355038028307,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "W-L→W-T",
+      "Clearing": "W-L",
+      "Entering": "W-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 6.136323834111775,
+          "Ed": 6.136268005273007,
+          "X": 190136.098851,
+          "Y": 665368.553262,
+          "ClearingCurveId": "W-L.b2",
+          "EnteringCurveId": "W-T.b2",
+          "RawIg": 3.654048019502727
+        },
+        {
+          "Id": "P2",
+          "Cd": 7.67501309455286,
+          "Ed": 7.670773918417861,
+          "X": 190137.246628,
+          "Y": 665369.571413,
+          "ClearingCurveId": "W-L.b2",
+          "EnteringCurveId": "W-T.b2",
+          "RawIg": 3.6418324903009074
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 3.654048019502727,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "W-L→a",
+      "Clearing": "W-L",
+      "Entering": "a",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 16.675411737769558,
+          "Ed": 0,
+          "X": 190131.713189,
+          "Y": 665381.765421,
+          "ClearingCurveId": "W-L.b1",
+          "EnteringCurveId": "a.b1",
+          "RawIg": 4.958088051382131
+        },
+        {
+          "Id": "P2",
+          "Cd": 19.725828002326622,
+          "Ed": 0,
+          "X": 190130.302936,
+          "Y": 665384.470273,
+          "ClearingCurveId": "W-L.b1",
+          "EnteringCurveId": "a.b2",
+          "RawIg": 5.231249747984483
+        },
+        {
+          "Id": "P3",
+          "Cd": 25.516644227321155,
+          "Ed": 0,
+          "X": 190137.622928,
+          "Y": 665386.377303,
+          "ClearingCurveId": "W-L.b2",
+          "EnteringCurveId": "a.b1",
+          "RawIg": 5.731922081695415
+        },
+        {
+          "Id": "P4",
+          "Cd": 28.521786556373073,
+          "Ed": 0,
+          "X": 190135.755429,
+          "Y": 665388.725326,
+          "ClearingCurveId": "W-L.b2",
+          "EnteringCurveId": "a.b2",
+          "RawIg": 5.983317125421594
+        }
+      ],
+      "DefiningPointId": "P4",
+      "RawIntergreenSec": 5.983317125421594,
+      "FinalIg": 6,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "W-L→b",
+      "Clearing": "W-L",
+      "Entering": "b",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "W-L→d",
+      "Clearing": "W-L",
+      "Entering": "d",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "W-T→E-R",
+      "Clearing": "W-T",
+      "Entering": "E-R",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "W-T→E-T",
+      "Clearing": "W-T",
+      "Entering": "E-T",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "W-T→S-L",
+      "Clearing": "W-T",
+      "Entering": "S-L",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 5.774073555587039,
+          "Ed": 9.210222096045705,
+          "X": 190135.821798,
+          "Y": 665368.319881,
+          "ClearingCurveId": "W-T.b2",
+          "EnteringCurveId": "S-L.b1",
+          "RawIg": 3.4095375097675413
+        },
+        {
+          "Id": "P2",
+          "Cd": 6.547114678947011,
+          "Ed": 6.033659112216773,
+          "X": 190138.369964,
+          "Y": 665366.45829,
+          "ClearingCurveId": "W-T.b1",
+          "EnteringCurveId": "S-L.b1",
+          "RawIg": 3.6877051256005435
+        },
+        {
+          "Id": "P3",
+          "Cd": 10.470031841357603,
+          "Ed": 6.425621902672707,
+          "X": 190141.361167,
+          "Y": 665368.996396,
+          "ClearingCurveId": "W-T.b1",
+          "EnteringCurveId": "S-L.b2",
+          "RawIg": 3.917013242046653
+        },
+        {
+          "Id": "P4",
+          "Cd": 10.874486747146742,
+          "Ed": 9.895604116488826,
+          "X": 190139.467046,
+          "Y": 665371.878743,
+          "ClearingCurveId": "W-T.b2",
+          "EnteringCurveId": "S-L.b2",
+          "RawIg": 3.7058795486304237
+        }
+      ],
+      "DefiningPointId": "P3",
+      "RawIntergreenSec": 3.917013242046653,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "W-T→S-R",
+      "Clearing": "W-T",
+      "Entering": "S-R",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 10.98094748260735,
+          "Ed": 6.646187164436616,
+          "X": 190141.750738,
+          "Y": 665369.326955,
+          "ClearingCurveId": "W-T.b1",
+          "EnteringCurveId": "S-R.b2",
+          "RawIg": 3.9500010095427203
+        },
+        {
+          "Id": "P2",
+          "Cd": 18.99607476026099,
+          "Ed": 16.007081713194363,
+          "X": 190144.837757,
+          "Y": 665377.952933,
+          "ClearingCurveId": "W-T.b2",
+          "EnteringCurveId": "S-R.b2",
+          "RawIg": 4.014014135819249
+        }
+      ],
+      "DefiningPointId": "P2",
+      "RawIntergreenSec": 4.014014135819249,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "W-T→S-T",
+      "Clearing": "W-T",
+      "Entering": "S-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 10.468497691388547,
+          "Ed": 6.426179856159951,
+          "X": 190141.359997,
+          "Y": 665368.995403,
+          "ClearingCurveId": "W-T.b1",
+          "EnteringCurveId": "S-T.b1",
+          "RawIg": 3.9168259742099107
+        },
+        {
+          "Id": "P2",
+          "Cd": 10.995643367881001,
+          "Ed": 9.91661742914266,
+          "X": 190139.546092,
+          "Y": 665371.970561,
+          "ClearingCurveId": "W-T.b2",
+          "EnteringCurveId": "S-T.b1",
+          "RawIg": 3.7159321978443853
+        },
+        {
+          "Id": "P3",
+          "Cd": 13.881482247814214,
+          "Ed": 6.74000608477505,
+          "X": 190143.96238,
+          "Y": 665371.203585,
+          "ClearingCurveId": "W-T.b1",
+          "EnteringCurveId": "S-T.b2",
+          "RawIg": 4.216342228161702
+        },
+        {
+          "Id": "P4",
+          "Cd": 15.299108394408742,
+          "Ed": 11.206042082007219,
+          "X": 190142.242367,
+          "Y": 665375.323441,
+          "ClearingCurveId": "W-T.b2",
+          "EnteringCurveId": "S-T.b2",
+          "RawIg": 4.025694874782532
+        }
+      ],
+      "DefiningPointId": "P3",
+      "RawIntergreenSec": 4.216342228161702,
+      "FinalIg": 5,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "W-T→W-L",
+      "Clearing": "W-T",
+      "Entering": "W-L",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 6.136268005273007,
+          "Ed": 6.136323834111775,
+          "X": 190136.098851,
+          "Y": 665368.553262,
+          "ClearingCurveId": "W-T.b2",
+          "EnteringCurveId": "W-L.b2",
+          "RawIg": 3.6540404279942202
+        },
+        {
+          "Id": "P2",
+          "Cd": 7.670773918417861,
+          "Ed": 7.67501309455286,
+          "X": 190137.246628,
+          "Y": 665369.571413,
+          "ClearingCurveId": "W-T.b2",
+          "EnteringCurveId": "W-L.b2",
+          "RawIg": 3.6412570089687106
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 3.6540404279942202,
+      "FinalIg": 4,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "W-T→a",
+      "Clearing": "W-T",
+      "Entering": "a",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "W-T→b",
+      "Clearing": "W-T",
+      "Entering": "b",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "W-T→c",
+      "Clearing": "W-T",
+      "Entering": "c",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 21.31377563719565,
+          "Ed": 0,
+          "X": 190149.629465,
+          "Y": 665376.012238,
+          "ClearingCurveId": "W-T.b1",
+          "EnteringCurveId": "c.b2",
+          "RawIg": 5.370789785290246
+        },
+        {
+          "Id": "P2",
+          "Cd": 21.514161290259125,
+          "Ed": 0,
+          "X": 190146.763334,
+          "Y": 665379.57525,
+          "ClearingCurveId": "W-T.b2",
+          "EnteringCurveId": "c.b2",
+          "RawIg": 5.388274167682593
+        },
+        {
+          "Id": "P3",
+          "Cd": 25.315150011362498,
+          "Ed": 0,
+          "X": 190152.680492,
+          "Y": 665378.601105,
+          "ClearingCurveId": "W-T.b1",
+          "EnteringCurveId": "c.b1",
+          "RawIg": 5.7148686232279555
+        },
+        {
+          "Id": "P4",
+          "Cd": 25.514522260486196,
+          "Ed": 0,
+          "X": 190149.846406,
+          "Y": 665382.124279,
+          "ClearingCurveId": "W-T.b2",
+          "EnteringCurveId": "c.b1",
+          "RawIg": 5.731742621230785
+        }
+      ],
+      "DefiningPointId": "P4",
+      "RawIntergreenSec": 5.731742621230785,
+      "FinalIg": 6,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "W-T→d",
+      "Clearing": "W-T",
+      "Entering": "d",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "a→E-R",
+      "Clearing": "a",
+      "Entering": "E-R",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 8.64051,
+          "Ed": 5.1624436376607905,
+          "X": 190139.835645,
+          "Y": 665388.104077,
+          "ClearingCurveId": "a.b1",
+          "EnteringCurveId": "E-R.b1",
+          "RawIg": 6.828729058088424
+        },
+        {
+          "Id": "P2",
+          "Cd": 8.64051,
+          "Ed": 9.317806443274632,
+          "X": 190135.755429,
+          "Y": 665388.725326,
+          "ClearingCurveId": "a.b2",
+          "EnteringCurveId": "E-R.b1",
+          "RawIg": 6.529542936084227
+        },
+        {
+          "Id": "P3",
+          "Cd": 8.64051,
+          "Ed": 15.81661570138776,
+          "X": 190132.830318,
+          "Y": 665382.637213,
+          "ClearingCurveId": "a.b1",
+          "EnteringCurveId": "E-R.b2",
+          "RawIg": 6.061628669500083
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 6.828729058088424,
+      "FinalIg": 7,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "a→E-T",
+      "Clearing": "a",
+      "Entering": "E-T",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "a→S-T",
+      "Clearing": "a",
+      "Entering": "S-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 8.64051,
+          "Ed": 23.21841800307422,
+          "X": 190137.611037,
+          "Y": 665386.368023,
+          "ClearingCurveId": "a.b1",
+          "EnteringCurveId": "S-T.b2",
+          "RawIg": 5.528698903778658
+        },
+        {
+          "Id": "P2",
+          "Cd": 8.64051,
+          "Ed": 25.606077893383176,
+          "X": 190130.302936,
+          "Y": 665384.470273,
+          "ClearingCurveId": "a.b2",
+          "EnteringCurveId": "S-T.b1",
+          "RawIg": 5.356787391676413
+        },
+        {
+          "Id": "P3",
+          "Cd": 8.64051,
+          "Ed": 26.221695658223855,
+          "X": 190135.755429,
+          "Y": 665388.725326,
+          "ClearingCurveId": "a.b2",
+          "EnteringCurveId": "S-T.b2",
+          "RawIg": 5.3124629126078835
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 5.528698903778658,
+      "FinalIg": 6,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "a→W-L",
+      "Clearing": "a",
+      "Entering": "W-L",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 8.64051,
+          "Ed": 16.675411737769558,
+          "X": 190131.713189,
+          "Y": 665381.765421,
+          "ClearingCurveId": "a.b1",
+          "EnteringCurveId": "W-L.b1",
+          "RawIg": 5.999795354880593
+        },
+        {
+          "Id": "P2",
+          "Cd": 8.64051,
+          "Ed": 19.725828002326622,
+          "X": 190130.302936,
+          "Y": 665384.470273,
+          "ClearingCurveId": "a.b2",
+          "EnteringCurveId": "W-L.b1",
+          "RawIg": 5.780165383832484
+        },
+        {
+          "Id": "P3",
+          "Cd": 8.64051,
+          "Ed": 25.516644227321155,
+          "X": 190137.622928,
+          "Y": 665386.377303,
+          "ClearingCurveId": "a.b1",
+          "EnteringCurveId": "W-L.b2",
+          "RawIg": 5.363226615632878
+        },
+        {
+          "Id": "P4",
+          "Cd": 8.64051,
+          "Ed": 28.521786556373073,
+          "X": 190135.755429,
+          "Y": 665388.725326,
+          "ClearingCurveId": "a.b2",
+          "EnteringCurveId": "W-L.b2",
+          "RawIg": 5.14685636794114
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 5.999795354880593,
+      "FinalIg": 6,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "a→W-T",
+      "Clearing": "a",
+      "Entering": "W-T",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "b→E-R",
+      "Clearing": "b",
+      "Entering": "E-R",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 7.523128,
+          "Ed": 0.7082959349080993,
+          "X": 190144.098757,
+          "Y": 665389.269433,
+          "ClearingCurveId": "b.b2",
+          "EnteringCurveId": "E-R.b1",
+          "RawIg": 6.21827602601995
+        },
+        {
+          "Id": "P2",
+          "Cd": 7.523128,
+          "Ed": 0.7312460848744733,
+          "X": 190146.253101,
+          "Y": 665386.591275,
+          "ClearingCurveId": "b.b2",
+          "EnteringCurveId": "E-R.b2",
+          "RawIg": 6.216623615222371
+        },
+        {
+          "Id": "P3",
+          "Cd": 7.523128,
+          "Ed": 4.732304755561677,
+          "X": 190143.190578,
+          "Y": 665384.016698,
+          "ClearingCurveId": "b.b1",
+          "EnteringCurveId": "E-R.b2",
+          "RawIg": 5.928547390932893
+        },
+        {
+          "Id": "P4",
+          "Cd": 7.523128,
+          "Ed": 5.098133898961532,
+          "X": 190139.899862,
+          "Y": 665388.107532,
+          "ClearingCurveId": "b.b1",
+          "EnteringCurveId": "E-R.b1",
+          "RawIg": 5.902207692608103
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 6.21827602601995,
+      "FinalIg": 7,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "b→E-T",
+      "Clearing": "b",
+      "Entering": "E-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 7.523128,
+          "Ed": 0.7004128371736086,
+          "X": 190144.254752,
+          "Y": 665389.075509,
+          "ClearingCurveId": "b.b2",
+          "EnteringCurveId": "E-T.b1",
+          "RawIg": 6.218843609056834
+        },
+        {
+          "Id": "P2",
+          "Cd": 7.523128,
+          "Ed": 0.7621359685584679,
+          "X": 190148.255503,
+          "Y": 665384.102002,
+          "ClearingCurveId": "b.b2",
+          "EnteringCurveId": "E-T.b2",
+          "RawIg": 6.214399543597124
+        },
+        {
+          "Id": "P3",
+          "Cd": 7.523128,
+          "Ed": 4.700968435555349,
+          "X": 190141.179786,
+          "Y": 665386.516403,
+          "ClearingCurveId": "b.b1",
+          "EnteringCurveId": "E-T.b1",
+          "RawIg": 5.930803605973348
+        },
+        {
+          "Id": "P4",
+          "Cd": 7.523128,
+          "Ed": 4.762145233937645,
+          "X": 190145.13335,
+          "Y": 665381.601554,
+          "ClearingCurveId": "b.b1",
+          "EnteringCurveId": "E-T.b2",
+          "RawIg": 5.926398876489823
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 6.218843609056834,
+      "FinalIg": 7,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "b→S-R",
+      "Clearing": "b",
+      "Entering": "S-R",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "b→S-T",
+      "Clearing": "b",
+      "Entering": "S-T",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "b→W-L",
+      "Clearing": "b",
+      "Entering": "W-L",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "b→W-T",
+      "Clearing": "b",
+      "Entering": "W-T",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "c→E-R",
+      "Clearing": "c",
+      "Entering": "E-R",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "c→E-T",
+      "Clearing": "c",
+      "Entering": "E-T",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "c→S-R",
+      "Clearing": "c",
+      "Entering": "S-R",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 4.580758,
+          "Ed": 11.934473667399402,
+          "X": 190149.645748,
+          "Y": 665375.991995,
+          "ClearingCurveId": "c.b2",
+          "EnteringCurveId": "S-R.b1",
+          "RawIg": 2.958016229280577
+        },
+        {
+          "Id": "P2",
+          "Cd": 4.580758,
+          "Ed": 15.935477516566992,
+          "X": 190152.706331,
+          "Y": 665378.568983,
+          "ClearingCurveId": "c.b1",
+          "EnteringCurveId": "S-R.b1",
+          "RawIg": 2.6699439521405104
+        },
+        {
+          "Id": "P3",
+          "Cd": 4.580758,
+          "Ed": 18.526881376869355,
+          "X": 190146.763334,
+          "Y": 665379.57525,
+          "ClearingCurveId": "c.b2",
+          "EnteringCurveId": "S-R.b2",
+          "RawIg": 2.4833628741987406
+        },
+        {
+          "Id": "P4",
+          "Cd": 4.580758,
+          "Ed": 22.527242347096422,
+          "X": 190149.846406,
+          "Y": 665382.124279,
+          "ClearingCurveId": "c.b1",
+          "EnteringCurveId": "S-R.b2",
+          "RawIg": 2.1953368843423915
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 2.958016229280577,
+      "FinalIg": 3,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "c→S-T",
+      "Clearing": "c",
+      "Entering": "S-T",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "c→W-T",
+      "Clearing": "c",
+      "Entering": "W-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 4.580758,
+          "Ed": 21.31377563719565,
+          "X": 190149.629465,
+          "Y": 665376.012238,
+          "ClearingCurveId": "c.b2",
+          "EnteringCurveId": "W-T.b1",
+          "RawIg": 2.282706487455247
+        },
+        {
+          "Id": "P2",
+          "Cd": 4.580758,
+          "Ed": 21.514161290259125,
+          "X": 190146.763334,
+          "Y": 665379.57525,
+          "ClearingCurveId": "c.b2",
+          "EnteringCurveId": "W-T.b2",
+          "RawIg": 2.268278720434677
+        },
+        {
+          "Id": "P3",
+          "Cd": 4.580758,
+          "Ed": 25.315150011362498,
+          "X": 190152.680492,
+          "Y": 665378.601105,
+          "ClearingCurveId": "c.b1",
+          "EnteringCurveId": "W-T.b1",
+          "RawIg": 1.9946075325152341
+        },
+        {
+          "Id": "P4",
+          "Cd": 4.580758,
+          "Ed": 25.514522260486196,
+          "X": 190149.846406,
+          "Y": 665382.124279,
+          "ClearingCurveId": "c.b1",
+          "EnteringCurveId": "W-T.b2",
+          "RawIg": 1.980252730578328
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 2.282706487455247,
+      "FinalIg": 3,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "d→E-T",
+      "Clearing": "d",
+      "Entering": "E-T",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "d→S-L",
+      "Clearing": "d",
+      "Entering": "S-L",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 7.418493,
+          "Ed": 0.5993877431718423,
+          "X": 190141.295477,
+          "Y": 665361.889103,
+          "ClearingCurveId": "d.b2",
+          "EnteringCurveId": "S-L.b1",
+          "RawIg": 6.138921582491627
+        },
+        {
+          "Id": "P2",
+          "Cd": 7.418493,
+          "Ed": 0.6018083733434724,
+          "X": 190144.057449,
+          "Y": 665363.834335,
+          "ClearingCurveId": "d.b2",
+          "EnteringCurveId": "S-L.b2",
+          "RawIg": 6.13874729711927
+        },
+        {
+          "Id": "P3",
+          "Cd": 7.418493,
+          "Ed": 3.608803994982765,
+          "X": 190139.761258,
+          "Y": 665364.47793,
+          "ClearingCurveId": "d.b1",
+          "EnteringCurveId": "S-L.b1",
+          "RawIg": 5.922243612361241
+        },
+        {
+          "Id": "P4",
+          "Cd": 7.418493,
+          "Ed": 3.628236529386039,
+          "X": 190142.656287,
+          "Y": 665366.516874,
+          "ClearingCurveId": "d.b1",
+          "EnteringCurveId": "S-L.b2",
+          "RawIg": 5.920844469884205
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 6.138921582491627,
+      "FinalIg": 7,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "d→S-R",
+      "Clearing": "d",
+      "Entering": "S-R",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 7.418493,
+          "Ed": 0.6018736644765696,
+          "X": 190144.052309,
+          "Y": 665363.830715,
+          "ClearingCurveId": "d.b2",
+          "EnteringCurveId": "S-R.b2",
+          "RawIg": 6.138742596157687
+        },
+        {
+          "Id": "P2",
+          "Cd": 7.418493,
+          "Ed": 0.6147883075037068,
+          "X": 190146.858434,
+          "Y": 665365.807044,
+          "ClearingCurveId": "d.b2",
+          "EnteringCurveId": "S-R.b1",
+          "RawIg": 6.137812741859733
+        },
+        {
+          "Id": "P3",
+          "Cd": 7.418493,
+          "Ed": 3.628630162395454,
+          "X": 190142.653177,
+          "Y": 665366.514683,
+          "ClearingCurveId": "d.b1",
+          "EnteringCurveId": "S-R.b2",
+          "RawIg": 5.920816128307528
+        },
+        {
+          "Id": "P4",
+          "Cd": 7.418493,
+          "Ed": 3.94870582768794,
+          "X": 190146.29061,
+          "Y": 665369.076495,
+          "ClearingCurveId": "d.b1",
+          "EnteringCurveId": "S-R.b1",
+          "RawIg": 5.8977706804064685
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 6.138742596157687,
+      "FinalIg": 7,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "d→S-T",
+      "Clearing": "d",
+      "Entering": "S-T",
+      "Status": "VALID",
+      "Points": [
+        {
+          "Id": "P1",
+          "Cd": 7.418493,
+          "Ed": 0.601873664476571,
+          "X": 190144.052309,
+          "Y": 665363.830715,
+          "ClearingCurveId": "d.b2",
+          "EnteringCurveId": "S-T.b1",
+          "RawIg": 6.138742596157687
+        },
+        {
+          "Id": "P2",
+          "Cd": 7.418493,
+          "Ed": 0.6018736646067069,
+          "X": 190146.774387,
+          "Y": 665365.747851,
+          "ClearingCurveId": "d.b2",
+          "EnteringCurveId": "S-T.b2",
+          "RawIg": 6.138742596148317
+        },
+        {
+          "Id": "P3",
+          "Cd": 7.418493,
+          "Ed": 3.62863016248523,
+          "X": 190142.653177,
+          "Y": 665366.514683,
+          "ClearingCurveId": "d.b1",
+          "EnteringCurveId": "S-T.b1",
+          "RawIg": 5.920816128301063
+        },
+        {
+          "Id": "P4",
+          "Cd": 7.418493,
+          "Ed": 3.62863016248523,
+          "X": 190145.375255,
+          "Y": 665368.431819,
+          "ClearingCurveId": "d.b1",
+          "EnteringCurveId": "S-T.b2",
+          "RawIg": 5.920816128301063
+        }
+      ],
+      "DefiningPointId": "P1",
+      "RawIntergreenSec": 6.138742596157687,
+      "FinalIg": 7,
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": []
+    },
+    {
+      "Id": "d→W-L",
+      "Clearing": "d",
+      "Entering": "W-L",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    },
+    {
+      "Id": "d→W-T",
+      "Clearing": "d",
+      "Entering": "W-T",
+      "Status": "REVIEW_REQUIRED",
+      "Points": [],
+      "CalculationTrace": "legacy-mahod-v1/legacy-envelope/mahod-legacy-0.1",
+      "FindingCodes": [
+        "IG-GEO-005"
+      ]
+    }
+  ],
+  "Matrix": [
+    {
+      "ClearingSignalGroup": "1",
+      "EnteringSignalGroup": "2",
+      "Value": 5,
+      "Status": "REVIEWREQUIRED",
+      "GoverningConflictId": "E-T→S-L"
+    },
+    {
+      "ClearingSignalGroup": "1",
+      "EnteringSignalGroup": "3",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "1",
+      "EnteringSignalGroup": "4",
+      "Value": 5,
+      "Status": "VALID",
+      "GoverningConflictId": "E-T→W-L"
+    },
+    {
+      "ClearingSignalGroup": "1",
+      "EnteringSignalGroup": "a",
+      "Value": 5,
+      "Status": "REVIEWREQUIRED",
+      "GoverningConflictId": "E-R→a"
+    },
+    {
+      "ClearingSignalGroup": "1",
+      "EnteringSignalGroup": "b",
+      "Value": 4,
+      "Status": "VALID",
+      "GoverningConflictId": "E-R→b"
+    },
+    {
+      "ClearingSignalGroup": "1",
+      "EnteringSignalGroup": "c",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "1",
+      "EnteringSignalGroup": "d",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "2",
+      "EnteringSignalGroup": "1",
+      "Value": 6,
+      "Status": "REVIEWREQUIRED",
+      "GoverningConflictId": "S-T→E-R"
+    },
+    {
+      "ClearingSignalGroup": "2",
+      "EnteringSignalGroup": "3",
+      "Value": 4,
+      "Status": "VALID",
+      "GoverningConflictId": "S-L→W-T"
+    },
+    {
+      "ClearingSignalGroup": "2",
+      "EnteringSignalGroup": "4",
+      "Value": 5,
+      "Status": "VALID",
+      "GoverningConflictId": "S-L→W-L"
+    },
+    {
+      "ClearingSignalGroup": "2",
+      "EnteringSignalGroup": "a",
+      "Value": 6,
+      "Status": "VALID",
+      "GoverningConflictId": "S-T→a"
+    },
+    {
+      "ClearingSignalGroup": "2",
+      "EnteringSignalGroup": "b",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "2",
+      "EnteringSignalGroup": "c",
+      "Value": 6,
+      "Status": "REVIEWREQUIRED",
+      "GoverningConflictId": "S-R→c"
+    },
+    {
+      "ClearingSignalGroup": "2",
+      "EnteringSignalGroup": "d",
+      "Value": 4,
+      "Status": "VALID",
+      "GoverningConflictId": "S-L→d"
+    },
+    {
+      "ClearingSignalGroup": "3",
+      "EnteringSignalGroup": "1",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "3",
+      "EnteringSignalGroup": "2",
+      "Value": 5,
+      "Status": "VALID",
+      "GoverningConflictId": "W-T→S-T"
+    },
+    {
+      "ClearingSignalGroup": "3",
+      "EnteringSignalGroup": "4",
+      "Value": 4,
+      "Status": "VALID",
+      "GoverningConflictId": "W-T→W-L"
+    },
+    {
+      "ClearingSignalGroup": "3",
+      "EnteringSignalGroup": "a",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "3",
+      "EnteringSignalGroup": "b",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "3",
+      "EnteringSignalGroup": "c",
+      "Value": 6,
+      "Status": "VALID",
+      "GoverningConflictId": "W-T→c"
+    },
+    {
+      "ClearingSignalGroup": "3",
+      "EnteringSignalGroup": "d",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "4",
+      "EnteringSignalGroup": "1",
+      "Value": 6,
+      "Status": "VALID",
+      "GoverningConflictId": "W-L→E-R"
+    },
+    {
+      "ClearingSignalGroup": "4",
+      "EnteringSignalGroup": "2",
+      "Value": 4,
+      "Status": "VALID",
+      "GoverningConflictId": "W-L→S-L"
+    },
+    {
+      "ClearingSignalGroup": "4",
+      "EnteringSignalGroup": "3",
+      "Value": 4,
+      "Status": "VALID",
+      "GoverningConflictId": "W-L→W-T"
+    },
+    {
+      "ClearingSignalGroup": "4",
+      "EnteringSignalGroup": "a",
+      "Value": 6,
+      "Status": "VALID",
+      "GoverningConflictId": "W-L→a"
+    },
+    {
+      "ClearingSignalGroup": "4",
+      "EnteringSignalGroup": "b",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "4",
+      "EnteringSignalGroup": "d",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "a",
+      "EnteringSignalGroup": "1",
+      "Value": 7,
+      "Status": "REVIEWREQUIRED",
+      "GoverningConflictId": "a→E-R"
+    },
+    {
+      "ClearingSignalGroup": "a",
+      "EnteringSignalGroup": "2",
+      "Value": 6,
+      "Status": "VALID",
+      "GoverningConflictId": "a→S-T"
+    },
+    {
+      "ClearingSignalGroup": "a",
+      "EnteringSignalGroup": "3",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "a",
+      "EnteringSignalGroup": "4",
+      "Value": 6,
+      "Status": "VALID",
+      "GoverningConflictId": "a→W-L"
+    },
+    {
+      "ClearingSignalGroup": "b",
+      "EnteringSignalGroup": "1",
+      "Value": 7,
+      "Status": "VALID",
+      "GoverningConflictId": "b→E-R"
+    },
+    {
+      "ClearingSignalGroup": "b",
+      "EnteringSignalGroup": "2",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "b",
+      "EnteringSignalGroup": "3",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "b",
+      "EnteringSignalGroup": "4",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "c",
+      "EnteringSignalGroup": "1",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "c",
+      "EnteringSignalGroup": "2",
+      "Value": 3,
+      "Status": "REVIEWREQUIRED",
+      "GoverningConflictId": "c→S-R"
+    },
+    {
+      "ClearingSignalGroup": "c",
+      "EnteringSignalGroup": "3",
+      "Value": 3,
+      "Status": "VALID",
+      "GoverningConflictId": "c→W-T"
+    },
+    {
+      "ClearingSignalGroup": "d",
+      "EnteringSignalGroup": "1",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "d",
+      "EnteringSignalGroup": "2",
+      "Value": 7,
+      "Status": "VALID",
+      "GoverningConflictId": "d→S-L"
+    },
+    {
+      "ClearingSignalGroup": "d",
+      "EnteringSignalGroup": "3",
+      "Status": "BLOCKED"
+    },
+    {
+      "ClearingSignalGroup": "d",
+      "EnteringSignalGroup": "4",
+      "Status": "BLOCKED"
+    }
+  ]
+}

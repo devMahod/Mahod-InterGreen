@@ -67,18 +67,26 @@ public sealed class LegacyEnvelopeConflictStrategy : IConflictPointStrategy
             if (m.Boundaries.Count != 2)
                 findings.Add(new ValidationFinding(CodeWrongBoundaryCount, Severity.Error, m.MovementId,
                     $"Movement '{m.MovementId}' ({role}) has {m.Boundaries.Count} envelope boundaries (expected 2)."));
-            if (m.StopLine is null)
+            // Pedestrian crossings carry no stop line in the legacy drawing convention:
+            // each side of the crossing acts as the start, and the clearing distance is the
+            // crossing length itself (workbook 'Pedestrian Xing' practice).
+            if (m.StopLine is null && m.Mode != MovementMode.Pedestrian)
                 findings.Add(new ValidationFinding(CodeNoStopLine, Severity.Error, m.MovementId,
                     $"Movement '{m.MovementId}' ({role}) has no stop/reference line."));
         }
         if (findings.Any(f => f.Severity == Severity.Error))
             return new ConflictPointResult(Array.Empty<ConflictPoint>(), findings);
 
-        // reference stations per boundary
-        var refA = ResolveReferences(clearing, findings);
-        var refB = ResolveReferences(entering, findings);
-        if (refA is null || refB is null)
+        // reference stations per boundary (vehicles only — pedestrians measure by length)
+        var refA = clearing.Mode == MovementMode.Pedestrian ? null : ResolveReferences(clearing, findings);
+        var refB = entering.Mode == MovementMode.Pedestrian ? null : ResolveReferences(entering, findings);
+        if ((clearing.Mode != MovementMode.Pedestrian && refA is null)
+            || (entering.Mode != MovementMode.Pedestrian && refB is null))
             return new ConflictPointResult(Array.Empty<ConflictPoint>(), findings);
+
+        var pedClearingLength = clearing.Mode == MovementMode.Pedestrian
+            ? Math.Round(clearing.Boundaries.Average(b => b.TotalLength), 6)
+            : 0.0;
 
         var points = new List<ConflictPoint>();
         for (var i = 0; i < 2; i++)
@@ -89,10 +97,14 @@ public sealed class LegacyEnvelopeConflictStrategy : IConflictPointStrategy
                 var bb = entering.Boundaries[j];
                 foreach (var hit in ba.IntersectionsWith(bb))
                 {
+                    var cd = clearing.Mode == MovementMode.Pedestrian
+                        ? pedClearingLength                                  // full crossing length
+                        : Math.Abs(hit.StationA - refA![i].Station);
+                    var ed = entering.Mode == MovementMode.Pedestrian
+                        ? 0.0                                                // pedestrian entering = 0 (§5.4)
+                        : Math.Abs(hit.StationB - refB![j].Station);
                     points.Add(new ConflictPoint(
-                        hit.Point,
-                        Math.Abs(hit.StationA - refA[i].Station),
-                        Math.Abs(hit.StationB - refB[j].Station),
+                        hit.Point, cd, ed,
                         $"{clearing.MovementId}.b{i + 1}",
                         $"{entering.MovementId}.b{j + 1}"));
                 }

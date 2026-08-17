@@ -18,9 +18,9 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
 | L | 2025 lane-centreline strategy | PASS | LaneCentrelineConflictStrategy: m×n lanes → 4/2/3 per §5.4 examples; 2025_GEOMETRY_MISSING blocks envelope input | — | — |
 | M | 2025 formula engine (official §5.5–5.6) | PASS | Israel2025CalculationService, tables transcribed first-hand from §5.3 (pdf 148-153), 45 Core tests | — | — |
 | N | Excel readers / template adapters V1+V2 | PASS (reader) | WorkbookReader: content-based V1/V2 detection, C# reads ORIGINAL xlsx → engine reproduces 148/148 FINAL+intermediates locally (Hotfix §13 closed in C#); SOURCE_WORKBOOK_EXISTING_ERROR surfaces AutoAdjusted #REF! | — | writer at gate S/G |
-| O | AutoCAD 2026 adapter | NOT STARTED | | | |
-| P | Real example DWG scan/export | NOT STARTED | | | needs O; interactive if coreconsole fails |
-| Q | Real geometry regression | NOT STARTED | | | needs P |
+| O | AutoCAD 2026 adapter | PASS | project builds; NETLOAD in real accoreconsole PASS; IG_SCAN PASS; IG_EXPORT_GEOMETRY PASS (exact bulge geometry + handles) | — | palette/UI = P1 |
+| P | Real example DWG scan/export | PASS | both DWGs ran end-to-end: scan+export in AutoCAD → ig-analyze → analysis/validation/run_manifest + §10 regression reports | — | STOP per Directive §16 |
+| Q | Real geometry regression | PASS | Ex1: 28/40 MATCH, 0 LOWER_ERROR; Ex2: 28/104 MATCH, 0 LOWER_ERROR, 4 INVALID_BASELINE; per-row deltas in EXAMPLE*_REPORT.md | — | review of unmatched rows = engineering session |
 | R | Signal-group matrix | PASS | SignalGroupMatrixService + Tests A/B/C + §17A acceptance: 4/4 incomplete detected, exactly 3 blocked cells (2→4, 4→2, 1→a), 0 unexpected, 0 missing; report test-results/EXAMPLE2_MATRIX_ACCEPTANCE.md | — | — |
 | S | Deterministic outputs (analysis/validation/run_manifest) | PASS | AnalysisPipeline + AnalysisWriters; determinism byte-identical test; INTERNAL_NUMERIC_INVARIANT_FAILURE on NaN/negative; env noise excluded; BLOCKED propagation in document | — | Excel writer deferred post-P per Directive §13 |
 | T | INTERGREEN workflow / basic UI | NOT STARTED | | | |
@@ -41,3 +41,5 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
   NOTE: doc #4 "HOTFIX NOTES" was never delivered — only #5 FINAL HOTFIX BLOCK (which supersedes it).
 
 - FINAL CONTINUATION DIRECTIVE received: scope frozen to S→O→P, stop after P. _scratch was never tracked (gitignored from commit 1). Baseline 143/143 re-verified before Gate S.
+
+- GATE P complete. STOP point reached per FINAL CONTINUATION DIRECTIVE §16. Suite 149/149.

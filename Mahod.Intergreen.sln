@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mahod.Intergreen.Regression
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mahod.Intergreen.Rules.Tests", "tests\Mahod.Intergreen.Rules.Tests\Mahod.Intergreen.Rules.Tests.csproj", "{03E448B7-2824-46EC-AB4D-CAE16DD219D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mahod.Intergreen.AutoCAD2026", "src\Mahod.Intergreen.AutoCAD2026\Mahod.Intergreen.AutoCAD2026.csproj", "{9950F2E2-CA15-4621-BC0C-715D6936875A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,6 +185,18 @@ Global
 		{03E448B7-2824-46EC-AB4D-CAE16DD219D1}.Release|x64.Build.0 = Release|Any CPU
 		{03E448B7-2824-46EC-AB4D-CAE16DD219D1}.Release|x86.ActiveCfg = Release|Any CPU
 		{03E448B7-2824-46EC-AB4D-CAE16DD219D1}.Release|x86.Build.0 = Release|Any CPU
+		{9950F2E2-CA15-4621-BC0C-715D6936875A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9950F2E2-CA15-4621-BC0C-715D6936875A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9950F2E2-CA15-4621-BC0C-715D6936875A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9950F2E2-CA15-4621-BC0C-715D6936875A}.Debug|x64.Build.0 = Debug|Any CPU
+		{9950F2E2-CA15-4621-BC0C-715D6936875A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9950F2E2-CA15-4621-BC0C-715D6936875A}.Debug|x86.Build.0 = Debug|Any CPU
+		{9950F2E2-CA15-4621-BC0C-715D6936875A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9950F2E2-CA15-4621-BC0C-715D6936875A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9950F2E2-CA15-4621-BC0C-715D6936875A}.Release|x64.ActiveCfg = Release|Any CPU
+		{9950F2E2-CA15-4621-BC0C-715D6936875A}.Release|x64.Build.0 = Release|Any CPU
+		{9950F2E2-CA15-4621-BC0C-715D6936875A}.Release|x86.ActiveCfg = Release|Any CPU
+		{9950F2E2-CA15-4621-BC0C-715D6936875A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -200,5 +214,6 @@ Global
 		{9563EBCB-E302-4C91-9CE9-A53C8134E5A5} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{ACACB95F-77EA-4651-9B48-4DA6FF19912C} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{03E448B7-2824-46EC-AB4D-CAE16DD219D1} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{9950F2E2-CA15-4621-BC0C-715D6936875A} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 	EndGlobalSection
 EndGlobal

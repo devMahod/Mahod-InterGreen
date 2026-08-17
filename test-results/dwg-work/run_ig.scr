@@ -1,0 +1,3 @@
+NETLOAD "C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\src\Mahod.Intergreen.AutoCAD2026\bin\Debug\net8.0\Mahod.Intergreen.AutoCAD2026.dll"
+IG_SCAN
+IG_EXPORT_GEOMETRY

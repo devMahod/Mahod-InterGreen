@@ -1,0 +1,78 @@
+Transmittal Report:
+Created by AutoCAD eTransmit 13 August, 2026, 10:28.
+
+Drawing:
+This is a transmittal based on PINNES-BAAL SHEM-TOV-04_intergreens_2026-07-28-maya.dwg.
+
+Files:
+
+Root Drawing:
+	PINNES-BAAL SHEM-TOV-04_intergreens_2026-07-28-maya.dwg
+
+AutoCAD Drawing (External) References:
+	BAAL SHEM TOV\PT_200425copp-MHD.dwg
+	PINNES-BAAL SHEM TOV\TR-GM-PINNES-BAAL SHEM TOV.dwg
+	PINNES-BAAL SHEM TOV\TR-SM-PINNES-BAAL SHEM TOV.dwg
+	PINNES-BAAL SHEM TOV\TR-TX-PINNES-BAAL SHEM TOV.dwg
+
+JPG File References:
+	PINETZ-BAAL SHEM TOV\TARSHIM SVIVA- PINES-BAAL SHEM TOV.jpg
+
+AutoCAD Color-dependent Plot Style Table File References:
+	PlotCfgs\NTI-Full_Size_Color.ctb
+
+AutoCAD Plotter Configuration File References:
+	PlotCfgs\DWG To PDF.pc3
+
+The following files were excluded from the transmittal:
+	acad.fmp
+	Fonts\simplex.shx
+	Fonts\arial.ttf
+	Fonts\h.shx
+	Fonts\MIRYM.SHX
+	Fonts\0-mirym_w.shx
+	Fonts\0-techno.shx
+	Fonts\0-simplex.shx
+	Fonts\miryl.shx
+	Fonts\0-oron.shx
+	Fonts\caes-w.shx
+	Fonts\romanc.shx
+	Fonts\0-monotxt.shx
+	Fonts\romans.shx
+	Fonts\TXT.shx
+	Fonts\hebtxt.shx
+	Fonts\miry.shx
+	Fonts\calibri.ttf
+	Fonts\romant.shx
+	Fonts\txt_____.ttf
+	Fonts\simpheb.shx
+	Fonts\0-miryl.shx
+	PINNES-BAAL SHEM TOV\TR-HA-PINNES-BAAL SHEM TOV.dwg
+	PINNES-BAAL SHEM TOV\TL-PINNES-BAAL SHEM TOV.dwg
+	PlotCfgs\DWF6 ePlot.pc3
+
+The following files could not be located:
+	logos\petach tikva.jpg
+	scadline.(shx,ttf)
+	PlotCfgs\color.ctb
+
+
+Notes for distribution:
+
+.DWG external reference files:
+External reference (xref) paths may be present.  Make sure these paths work or that the root drawing is using the correct references.
+eTransmit does not include files required by xrefs unless they are also required by the root drawing.  In particular, plot style tables and overlay xrefs that are not used by the root drawing are omitted
+
+Raster image files:
+Paths may be present on references to raster images.  Make sure these paths work or that the root drawing is using the correct references.
+
+.PC3 printer configuration files:
+Please copy these files to the AutoCAD Printer Configuration Search Path directory.
+
+.CTB/.STB plot style tables:
+Please copy these files to the AutoCAD Plot Style Table Search Path directory.
+
+The AutoCAD variable FONTALT was set to:
+C:\Users\david-s\AppData\Roaming\Autodesk\AutoCAD 2026\R25.1\enu\support\simplex.shx
+Please make sure that the FONTALT variable is set to this file or an equivalent before opening any drawings.  All text styles with missing fonts are automatically set to this font.
+

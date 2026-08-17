@@ -1,0 +1,51 @@
+Transmittal Report:
+Created by AutoCAD eTransmit 13 August, 2026, 10:31.
+
+Drawing:
+This is a transmittal based on 04_Aba-HaM_intergreens_2026-007-07-maya.dwg.
+
+Files:
+
+Root Drawing:
+	04_Aba-HaM_intergreens_2026-007-07-maya.dwg
+
+AutoCAD Drawing (External) References:
+	D-GEOM- HAYARKON-11S-EX - dwg\D-GEOM- HAYARKON-11S-EX-MHD.dwg
+
+The following files were excluded from the transmittal:
+	acad.fmp
+	Fonts\simplex.shx
+	Fonts\arial.ttf
+	Fonts\calibri.ttf
+	Fonts\0-oron.shx
+	Fonts\romanc.shx
+	Fonts\romans.shx
+	Fonts\romant.shx
+	Fonts\miryl.shx
+	Fonts\heb.shx
+	Fonts\mvt-nos.shx
+	Fonts\mirym.shx
+	Fonts\gil.shx
+	Fonts\ltypeshp.shx
+	Fonts\0-techno.shx
+	Fonts\romand.shx
+	Fonts\txt.shx
+	Fonts\oron.shx
+	Fonts\HEBTXT.shx
+	Fonts\mvt-ariallf.shx
+
+The following files could not be located:
+	mvt-oron.(shx,ttf)
+	mvt-oronm.(shx,ttf)
+
+
+Notes for distribution:
+
+.DWG external reference files:
+External reference (xref) paths may be present.  Make sure these paths work or that the root drawing is using the correct references.
+eTransmit does not include files required by xrefs unless they are also required by the root drawing.  In particular, plot style tables and overlay xrefs that are not used by the root drawing are omitted
+
+The AutoCAD variable FONTALT was set to:
+C:\Users\david-s\AppData\Roaming\Autodesk\AutoCAD 2026\R25.1\enu\support\simplex.shx
+Please make sure that the FONTALT variable is set to this file or an equivalent before opening any drawings.  All text styles with missing fonts are automatically set to this font.
+

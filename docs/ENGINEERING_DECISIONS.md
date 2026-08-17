@@ -83,3 +83,16 @@ Every non-trivial interpretation, with source, alternatives, impact and the test
   `MovementMode`, never from `speed == 1.2`. A 1.0 m/s pedestrian stays a pedestrian; an
   unknown vehicle movement blocks with IG-VAL-004 and never falls back to pedestrian speed.
 - **Test**: `PedestrianMetamorphicTests` (1.2 / 1.0 / synthetic 0.9 m/s).
+
+## ED-010 — Deterministic debris exclusion + convention-based boundary selection
+
+- **Decision**: (a) curves shorter than 0.5 m on a movement layer are drawing debris and are
+  excluded (envelope boundaries must span the conflict zone); (b) when more than 2 candidates
+  remain, the boundaries are the curves that resolve a stop-line reference (Appendix A: every
+  boundary starts at the stop line) — applied only when exactly 2 qualify. Every exclusion is
+  a WARNING with handles (IG-GEO-011 / IG-GEO-012); anything still ambiguous stays an ERROR.
+- **Why**: Example 2 reality — intergreen_E-L carried a 0.01 m fragment, intergreen_W-T a
+  0.07 m fragment plus a 4.46 m leftover that does not reach the stop line.
+- **Impact**: Example 2 error conflicts dropped 78 → 32 (all remaining involve crossing 'b',
+  which is genuinely ambiguous). No silent guessing — the convention itself is the rule.
+- **Test**: real-DWG run evidence (EXAMPLE2 artifacts); crossing 'b' remains blocked.

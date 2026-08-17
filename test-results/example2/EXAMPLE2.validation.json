@@ -1,0 +1,800 @@
+{
+  "schemaVersion": "1.0",
+  "findings": [
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (clearing) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (clearing) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (clearing) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (clearing) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (clearing) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (clearing) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (clearing) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (clearing) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (clearing) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (clearing) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (clearing) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (clearing) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (entering) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (entering) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (entering) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (entering) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (entering) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (entering) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (entering) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (entering) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (entering) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (entering) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (entering) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-001",
+      "severity": "ERROR",
+      "conflictRef": "b",
+      "message": "Movement 'b' (entering) has 6 envelope boundaries (expected 2)."
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "Boundary 1 of 'E-L' does not intersect its stop line; using the endpoint at station 20.892 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-004",
+      "severity": "WARNING",
+      "conflictRef": "S-L",
+      "message": "Boundary 2 of 'S-L' does not intersect its stop line; using the endpoint at station 15.186 (within 0.5 m).",
+      "sourceReference": "v3 §14"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-L × N-R",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-R × S-R",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-R × W-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-T × S-R",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "N-L × S-L",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "N-L × c",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "N-R × E-L",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "N-T × S-R",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-L × N-L",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-R × E-R",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-R × E-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-R × N-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-R × W-L",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-L × S-R",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-L × c",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-T × E-R",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-T × c",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "c × N-L",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "c × W-L",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "c × W-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-010",
+      "severity": "WARNING",
+      "conflictRef": "intergreen_W-T",
+      "message": "UNSUPPORTED entity LWPolyline (5773): polycurve needs at least one segment",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-010",
+      "severity": "WARNING",
+      "conflictRef": "intergreen_b",
+      "message": "UNSUPPORTED entity BlockReference(D-GEOM- HAYARKON-11S-EX-MHD) (6549): nested geometry not extracted in P0 — report, never silently ignore (Directive §7)",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-011",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "MICRO_DEBRIS_EXCLUDED: 5762 on 'intergreen_E-L' (length 0.009 m < 0.5 m).",
+      "sourceReference": "ENGINEERING_DECISIONS.md ED-010"
+    },
+    {
+      "code": "IG-GEO-011",
+      "severity": "WARNING",
+      "conflictRef": "W-T",
+      "message": "MICRO_DEBRIS_EXCLUDED: 57B5 on 'intergreen_W-T' (length 0.071 m < 0.5 m).",
+      "sourceReference": "ENGINEERING_DECISIONS.md ED-010"
+    },
+    {
+      "code": "IG-GEO-012",
+      "severity": "WARNING",
+      "conflictRef": "W-T",
+      "message": "BOUNDARY_AUTO_SELECTED: 'intergreen_W-T' had 3 candidate curves; selected 5771,58D6 (stop-line referenced), excluded 57B4(len 4.46m).",
+      "recommendedAction": "Review the excluded fragments; delete them or register boundaries explicitly.",
+      "sourceReference": "v3 §36; Appendix A drawing convention; ED-010"
+    },
+    {
+      "code": "IG-MTX-001",
+      "severity": "ERROR",
+      "conflictRef": "1→b",
+      "message": "Matrix cell 1→b is BLOCKED: contributing conflict(s) E-L→b, E-R→b, E-T→b have no valid result. The unknown result may be governing.",
+      "sourceReference": "Final Hotfix §9"
+    },
+    {
+      "code": "IG-MTX-001",
+      "severity": "ERROR",
+      "conflictRef": "2→b",
+      "message": "Matrix cell 2→b is BLOCKED: contributing conflict(s) S-L→b, S-R→b, S-T→b have no valid result. The unknown result may be governing.",
+      "sourceReference": "Final Hotfix §9"
+    },
+    {
+      "code": "IG-MTX-001",
+      "severity": "ERROR",
+      "conflictRef": "3→b",
+      "message": "Matrix cell 3→b is BLOCKED: contributing conflict(s) W-L→b, W-R→b, W-T→b have no valid result. The unknown result may be governing.",
+      "sourceReference": "Final Hotfix §9"
+    },
+    {
+      "code": "IG-MTX-001",
+      "severity": "ERROR",
+      "conflictRef": "4→b",
+      "message": "Matrix cell 4→b is BLOCKED: contributing conflict(s) N-L→b, N-R→b, N-T→b have no valid result. The unknown result may be governing.",
+      "sourceReference": "Final Hotfix §9"
+    },
+    {
+      "code": "IG-MTX-001",
+      "severity": "ERROR",
+      "conflictRef": "b→1",
+      "message": "Matrix cell b→1 is BLOCKED: contributing conflict(s) b→E-L, b→E-R, b→E-T have no valid result. The unknown result may be governing.",
+      "sourceReference": "Final Hotfix §9"
+    },
+    {
+      "code": "IG-MTX-001",
+      "severity": "ERROR",
+      "conflictRef": "b→2",
+      "message": "Matrix cell b→2 is BLOCKED: contributing conflict(s) b→S-L, b→S-R, b→S-T have no valid result. The unknown result may be governing.",
+      "sourceReference": "Final Hotfix §9"
+    },
+    {
+      "code": "IG-MTX-001",
+      "severity": "ERROR",
+      "conflictRef": "b→3",
+      "message": "Matrix cell b→3 is BLOCKED: contributing conflict(s) b→W-L, b→W-R, b→W-T have no valid result. The unknown result may be governing.",
+      "sourceReference": "Final Hotfix §9"
+    },
+    {
+      "code": "IG-MTX-001",
+      "severity": "ERROR",
+      "conflictRef": "b→4",
+      "message": "Matrix cell b→4 is BLOCKED: contributing conflict(s) b→N-L, b→N-R, b→N-T have no valid result. The unknown result may be governing.",
+      "sourceReference": "Final Hotfix §9"
+    },
+    {
+      "code": "IG-UNIT-001",
+      "severity": "WARNING",
+      "message": "Drawing INSUNITS is 'Unitless'; operator confirmed the drawing is in meters (--units meters).",
+      "technicalDetails": "Unit confirmation is external evidence, cross-checked by the golden CD/ED regression below.",
+      "sourceReference": "v3 §13"
+    }
+  ]
+}

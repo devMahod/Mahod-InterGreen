@@ -1,0 +1,1482 @@
+{
+  "schemaVersion": "1.0",
+  "sourceFile": "ex2.dwg",
+  "units": {
+    "insunits": "Unitless",
+    "toMeters": null
+  },
+  "curves": [
+    {
+      "handle": "5664",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_E-L",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 20.892289479,
+      "geometry": {
+        "segments": [
+          {
+            "type": "arc",
+            "center": [
+              184483.479112137,
+              667067.5507083236
+            ],
+            "radius": 13.81108610040793,
+            "startAngleRad": 2.7228544042210614,
+            "sweepRad": -1.21692431375639
+          },
+          {
+            "type": "line",
+            "a": [
+              184484.37435719385,
+              667081.3327486501
+            ],
+            "b": [
+              184488.44028714992,
+              667080.9359817255
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5762",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_E-L",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 0.008872524,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184488.43016289262,
+              667080.9237416711
+            ],
+            "b": [
+              184488.4389946134,
+              667080.92289174
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "576E",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_E-L",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 27.848157104,
+      "geometry": {
+        "segments": [
+          {
+            "type": "arc",
+            "center": [
+              184484.06508321717,
+              667069.7197562507
+            ],
+            "radius": 17.052008232675927,
+            "startAngleRad": 2.903253820472989,
+            "sweepRad": -1.4618002094350906
+          },
+          {
+            "type": "line",
+            "a": [
+              184486.2644917658,
+              667086.6293271147
+            ],
+            "b": [
+              184489.16117285058,
+              667086.2491114446
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5066",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_E-R",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 10.051513396,
+      "geometry": {
+        "segments": [
+          {
+            "type": "arc",
+            "center": [
+              184492.33438073235,
+              667097.5423571399
+            ],
+            "radius": 12.492215260345324,
+            "startAngleRad": -2.656043305402098,
+            "sweepRad": 0.2663317585238111
+          },
+          {
+            "type": "arc",
+            "center": [
+              184489.58423472385,
+              667094.9563218376
+            ],
+            "radius": 8.71720205750214,
+            "startAngleRad": -2.3909121546789844,
+            "sweepRad": 0.6104621029668107
+          },
+          {
+            "type": "line",
+            "a": [
+              184487.77,
+              667086.43
+            ],
+            "b": [
+              184489.16103246782,
+              667086.2477686724
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "565B",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_E-R",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 17.962858704,
+      "geometry": {
+        "segments": [
+          {
+            "type": "arc",
+            "center": [
+              184491.54076722937,
+              667096.7480422554
+            ],
+            "radius": 16.082039563979524,
+            "startAngleRad": -2.8712815476337874,
+            "sweepRad": 1.1169515304805264
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5642",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_E-T",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 27.243945183,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184461.57841940408,
+              667083.1097821328
+            ],
+            "b": [
+              184461.6712283956,
+              667083.0779886043
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184468.9497887788,
+              667101.1884167683
+            ],
+            "radius": 19.51832599214477,
+            "startAngleRad": -1.952938577206447,
+            "sweepRad": 0.2936216746203883
+          },
+          {
+            "type": "arc",
+            "center": [
+              184478.42372412773,
+              667223.8448250138
+            ],
+            "radius": 142.53897061010204,
+            "startAngleRad": -1.649448561332657,
+            "sweepRad": 0.09310719266969207
+          },
+          {
+            "type": "line",
+            "a": [
+              184480.484047229,
+              667081.3207456049
+            ],
+            "b": [
+              184481.4515535824,
+              667081.3443251575
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184482.78015052897,
+              667043.2453643682
+            ],
+            "radius": 38.122119341252514,
+            "startAngleRad": 1.6056544634470964,
+            "sweepRad": -0.18822775311487583
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5902",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_E-T",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 26.937557316,
+      "geometry": {
+        "segments": [
+          {
+            "type": "arc",
+            "center": [
+              184483.05280400312,
+              667155.0083191199
+            ],
+            "radius": 71.999999999971,
+            "startAngleRad": -1.8619493507961487,
+            "sweepRad": 0.038060798952512145
+          },
+          {
+            "type": "arc",
+            "center": [
+              184466.27607991936,
+              667090.1427540719
+            ],
+            "radius": 4.999999999974493,
+            "startAngleRad": -1.8238885518242147,
+            "sweepRad": 0.2604219166527735
+          },
+          {
+            "type": "line",
+            "a": [
+              184466.31272804932,
+              667085.1428883822
+            ],
+            "b": [
+              184470.83730072965,
+              667085.1379002436
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184470.8748513255,
+              667185.1378931935
+            ],
+            "radius": 100.00000000013615,
+            "startAngleRad": -1.57117183276223,
+            "sweepRad": 0.07796675411559661
+          },
+          {
+            "type": "line",
+            "a": [
+              184478.62619297544,
+              667085.4387622913
+            ],
+            "b": [
+              184478.71400508983,
+              667085.4455894491
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184501.1200420197,
+              666872.1298088244
+            ],
+            "radius": 214.48928354220382,
+            "startAngleRad": 1.6754495218326915,
+            "sweepRad": -0.04888702168419319
+          }
+        ]
+      }
+    },
+    {
+      "handle": "573B",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_N-L",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 20.475199533,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184488.6040307549,
+              667080.9200030816
+            ],
+            "b": [
+              184483.28081091912,
+              667081.4329185203
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184483.65480095928,
+              667089.2455862773
+            ],
+            "radius": 7.82161402996724,
+            "startAngleRad": -1.6186295096276118,
+            "sweepRad": -1.5994706774975134
+          },
+          {
+            "type": "line",
+            "a": [
+              184475.85606729364,
+              667089.8434150545
+            ],
+            "b": [
+              184476.04270080902,
+              667092.4536349891
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "573D",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_N-L",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 27.662729753,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184487.9456660416,
+              667075.9267746445
+            ],
+            "b": [
+              184484.12562194126,
+              667076.1967980716
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184484.40685444284,
+              667089.134138505
+            ],
+            "radius": 12.940396794866867,
+            "startAngleRad": -1.5925309497238536,
+            "sweepRad": -1.74709608627533
+          },
+          {
+            "type": "line",
+            "a": [
+              184471.71937521614,
+              667091.6800646784
+            ],
+            "b": [
+              184471.96775414865,
+              667092.8796582874
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5738",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_N-R",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 22.036938165,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184461.57989676006,
+              667083.1158401719
+            ],
+            "b": [
+              184465.20335097084,
+              667081.8797699417
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184467.7862432446,
+              667089.4513396272
+            ],
+            "radius": 8,
+            "startAngleRad": -1.899547712615683,
+            "sweepRad": 1.8222598028795485
+          },
+          {
+            "type": "line",
+            "a": [
+              184475.7623614522,
+              667088.8336517297
+            ],
+            "b": [
+              184476.06092925355,
+              667092.4517292606
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5903",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_N-R",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 14.67309213,
+      "geometry": {
+        "segments": [
+          {
+            "type": "arc",
+            "center": [
+              184483.0528040017,
+              667155.0083191209
+            ],
+            "radius": 72.0000000000045,
+            "startAngleRad": -1.8619493507767908,
+            "sweepRad": 0.03806079895522035
+          },
+          {
+            "type": "arc",
+            "center": [
+              184466.27607991942,
+              667090.1427540722
+            ],
+            "radius": 5.000000000003307,
+            "startAngleRad": -1.8238885518242147,
+            "sweepRad": 1.6140787318543166
+          },
+          {
+            "type": "line",
+            "a": [
+              184471.16643262916,
+              667089.1013846016
+            ],
+            "b": [
+              184471.8051002735,
+              667092.1006179512
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184373.99804607808,
+              667112.9280073612
+            ],
+            "radius": 100.0000000000818,
+            "startAngleRad": -0.20980981994045492,
+            "sweepRad": 0.007958413606649102
+          }
+        ]
+      }
+    },
+    {
+      "handle": "567C",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_N-T",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 19.661146518,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184471.9690086888,
+              667092.879527129
+            ],
+            "b": [
+              184471.31588662165,
+              667089.8049445106
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184441.97068115103,
+              667096.0386365715
+            ],
+            "radius": 30.000000013730435,
+            "startAngleRad": -0.20931483178280216,
+            "sweepRad": -0.0639254515616337
+          },
+          {
+            "type": "arc",
+            "center": [
+              184577.58863970567,
+              667055.2345183871
+            ],
+            "radius": 111.63035221562929,
+            "startAngleRad": 2.844221766286922,
+            "sweepRad": 0.1142610246085197
+          },
+          {
+            "type": "line",
+            "a": [
+              184467.8245037588,
+              667075.5611018586
+            ],
+            "b": [
+              184467.49510970974,
+              667073.7455434694
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "567D",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_N-T",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 20.015672896,
+      "geometry": {
+        "segments": [
+          {
+            "type": "arc",
+            "center": [
+              184445.30334268705,
+              667094.9485135532
+            ],
+            "radius": 30.862504075759983,
+            "startAngleRad": -0.08100141702927469,
+            "sweepRad": -0.22207327644251937
+          },
+          {
+            "type": "line",
+            "a": [
+              184474.75923693125,
+              667085.737408728
+            ],
+            "b": [
+              184471.26726416615,
+              667074.6314549521
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184490.34638646792,
+              667068.632530699
+            ],
+            "radius": 19.999999999986926,
+            "startAngleRad": 2.836956383535604,
+            "sweepRad": 0.07599694863179574
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5357",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_S-L",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 21.139354797,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184475.256496581,
+              667072.5125890672
+            ],
+            "b": [
+              184475.29346927427,
+              667072.6793498748
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184466.01868908392,
+              667074.7356699911
+            ],
+            "radius": 9.500000000006164,
+            "startAngleRad": -0.2181816591433534,
+            "sweepRad": 1.4614648080923534
+          },
+          {
+            "type": "line",
+            "a": [
+              184469.0747382868,
+              667083.7306999116
+            ],
+            "b": [
+              184462.3666910749,
+              667086.0097498443
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5630",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_S-L",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 15.18569353,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184461.57831862874,
+              667083.1093688941
+            ],
+            "b": [
+              184465.4353276907,
+              667081.8066634147
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184463.26745190207,
+              667074.4136670711
+            ],
+            "radius": 7.704289738206192,
+            "startAngleRad": 1.2855586341880985,
+            "sweepRad": -1.442654690675026
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5065",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_S-R",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 12.600236033,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184487.9456660416,
+              667075.9267746445
+            ],
+            "b": [
+              184485.51214264115,
+              667076.1611239011
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184484.5622939699,
+              667066.2063367361
+            ],
+            "radius": 9.999999999982629,
+            "startAngleRad": 1.4756680491065925,
+            "sweepRad": 0.8359999817558252
+          },
+          {
+            "type": "arc",
+            "center": [
+              184484.28934914735,
+              667065.9656506185
+            ],
+            "radius": 10.000000000486963,
+            "startAngleRad": 2.2752752705409067,
+            "sweepRad": 0.17954548928904634
+          }
+        ]
+      }
+    },
+    {
+      "handle": "534C",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_S-R",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 19.830909223,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184488.60253754648,
+              667080.9057204246
+            ],
+            "b": [
+              184486.53058195373,
+              667081.1223370895
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184485.36022883025,
+              667065.8962838004
+            ],
+            "radius": 15.270966740759235,
+            "startAngleRad": 1.4940820054050468,
+            "sweepRad": 1.1621832066892912
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5073",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_S-T",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 19.863503981,
+      "geometry": {
+        "segments": [
+          {
+            "type": "arc",
+            "center": [
+              184390.935758107,
+              667103.9147054241
+            ],
+            "radius": 85.63854134937966,
+            "startAngleRad": -0.3672516044861634,
+            "sweepRad": 0.10314196349791463
+          },
+          {
+            "type": "line",
+            "a": [
+              184473.60480971957,
+              667081.558773998
+            ],
+            "b": [
+              184475.182186102,
+              667086.4589960972
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184460.90371566135,
+              667091.0552208389
+            ],
+            "radius": 15.000000000000002,
+            "startAngleRad": -0.3114245600218225,
+            "sweepRad": 0.23567741623008515
+          },
+          {
+            "type": "line",
+            "a": [
+              184475.86070400922,
+              667089.920099893
+            ],
+            "b": [
+              184476.0383558794,
+              667092.2609402782
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5075",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_S-T",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 19.875325147,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184475.70105242054,
+              667072.4419680444
+            ],
+            "b": [
+              184476.01530297942,
+              667073.582581184
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184379.60735013994,
+              667100.1439559469
+            ],
+            "radius": 100.00000000000001,
+            "startAngleRad": -0.26884048168874497,
+            "sweepRad": 0.049781986998143464
+          },
+          {
+            "type": "line",
+            "a": [
+              184477.21759825147,
+              667078.4128845605
+            ],
+            "b": [
+              184479.03728733677,
+              667086.5864485761
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184459.51523771448,
+              667090.9326628534
+            ],
+            "radius": 20,
+            "startAngleRad": -0.2190584946930521,
+            "sweepRad": 0.16890374138955877
+          },
+          {
+            "type": "line",
+            "a": [
+              184479.49008799435,
+              667089.9299882819
+            ],
+            "b": [
+              184479.58846373166,
+              667091.8897872834
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5754",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_W-L",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 21.835661109,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184476.04270080902,
+              667092.4536349891
+            ],
+            "b": [
+              184475.8049123068,
+              667089.1633760952
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184467.62801453477,
+              667089.778471881
+            ],
+            "radius": 8.2,
+            "startAngleRad": -0.0750822052719134,
+            "sweepRad": -1.817515373494832
+          },
+          {
+            "type": "line",
+            "a": [
+              184465.0345524701,
+              667081.9994003092
+            ],
+            "b": [
+              184461.58785949482,
+              667083.1484921253
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5772",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_W-L",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 28.920759113,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184479.58846373152,
+              667091.8897872834
+            ],
+            "b": [
+              184479.34723647955,
+              667087.0841620296
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184469.35981133961,
+              667087.5854993153
+            ],
+            "radius": 9.999999999999998,
+            "startAngleRad": -0.05015475330335411,
+            "sweepRad": -1.6971507234760133
+          },
+          {
+            "type": "line",
+            "a": [
+              184467.60387095154,
+              667077.740872692
+            ],
+            "b": [
+              184460.58422886868,
+              667079.0330090296
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5AB6",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_W-R",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 13.488410538,
+      "geometry": {
+        "segments": [
+          {
+            "type": "arc",
+            "center": [
+              184456.932341975,
+              667070.6034923283
+            ],
+            "radius": 13.370000000002852,
+            "startAngleRad": 0.20649210514762767,
+            "sweepRad": 1.0088564351700389
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5AEF",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_W-R",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 6.674950189,
+      "geometry": {
+        "segments": [
+          {
+            "type": "arc",
+            "center": [
+              184454.2268770021,
+              667068.8553827249
+            ],
+            "radius": 11.999999998054163,
+            "startAngleRad": 0.4562101249416141,
+            "sweepRad": 0.5562458492112049
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5771",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_W-T",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 27.355508327,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184461.58000784862,
+              667083.1162957015
+            ],
+            "b": [
+              184464.94623021458,
+              667081.9418862336
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184468.2403164919,
+              667091.3837608143
+            ],
+            "radius": 10,
+            "startAngleRad": -1.9064735041630592,
+            "sweepRad": 0.232396124534279
+          },
+          {
+            "type": "line",
+            "a": [
+              184467.20934114532,
+              667081.4370483004
+            ],
+            "b": [
+              184472.14945372278,
+              667080.9250063299
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184473.18042906956,
+              667090.8717188438
+            ],
+            "radius": 9.999999999999998,
+            "startAngleRad": -1.6740773796488468,
+            "sweepRad": 0.16920661924336708
+          },
+          {
+            "type": "line",
+            "a": [
+              184473.83920729655,
+              667080.8934418759
+            ],
+            "b": [
+              184481.95293135554,
+              667081.4291200062
+            ]
+          },
+          {
+            "type": "arc",
+            "center": [
+              184482.61170958253,
+              667071.4508430383
+            ],
+            "radius": 10,
+            "startAngleRad": 1.6367218931841319,
+            "sweepRad": -0.16276795457912027
+          },
+          {
+            "type": "line",
+            "a": [
+              184483.57862045523,
+              667081.4039874341
+            ],
+            "b": [
+              184488.60359446588,
+              667080.9158299422
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "57B4",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_W-T",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 4.46091718,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184472.0513188629,
+              667077.4376517246
+            ],
+            "b": [
+              184470.8606097391,
+              667073.1385827707
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "57B5",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_W-T",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 0.070544985,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184473.4231202625,
+              667082.390556418
+            ],
+            "b": [
+              184473.4042903777,
+              667082.3225709028
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "58D6",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_W-T",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 27.537160647,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184460.5842288687,
+              667079.0330090296
+            ],
+            "b": [
+              184487.94587650438,
+              667075.9289060772
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "4309",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_a",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 13.697634903,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184471.16622584246,
+              667089.1004135151
+            ],
+            "b": [
+              184484.78961082458,
+              667087.6761299875
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "430A",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_a",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 10.137252983,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184471.79455034118,
+              667092.0510746414
+            ],
+            "b": [
+              184481.8768529446,
+              667090.9970005226
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "43BD",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_b",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 11.159012248,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184485.40172850434,
+              667087.3080374917
+            ],
+            "b": [
+              184484.3051935742,
+              667076.203031166
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "43BE",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_b",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 10.587480116,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184488.3391854285,
+              667086.5268867998
+            ],
+            "b": [
+              184487.29881182624,
+              667075.9906465795
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5AF7",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_b",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 4.964710351,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184464.99961979588,
+              667074.1419707221
+            ],
+            "b": [
+              184466.21752844745,
+              667069.3289625786
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5AF8",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_b",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 4.597651645,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184467.49510970977,
+              667073.7455434696
+            ],
+            "b": [
+              184466.21752844745,
+              667069.3289625786
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5AFA",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_b",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 3.042076099,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184470.01831171586,
+              667073.3447139433
+            ],
+            "b": [
+              184470.4019403908,
+              667070.3269240177
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "5AFB",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_b",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 2.84882476,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184470.8606097391,
+              667073.1385827707
+            ],
+            "b": [
+              184470.4019403908,
+              667070.3269240177
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "42A1",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_c",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 12.480397695,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184464.74198901633,
+              667074.8410478022
+            ],
+            "b": [
+              184477.0678301035,
+              667072.8829956807
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "42A2",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_c",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 19.2803651,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184480.55223180784,
+              667075.3670900901
+            ],
+            "b": [
+              184461.51063376476,
+              667078.3919904748
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "443E",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_d",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 9.254415041,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184465.91695906944,
+              667085.1556675262
+            ],
+            "b": [
+              184463.7483362594,
+              667076.158930737
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "443F",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_d",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 7.478136595,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184462.99861941228,
+              667085.8575441398
+            ],
+            "b": [
+              184461.2475193386,
+              667078.5873188702
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "6551",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_stopline",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 5.641221273,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184488.5921395213,
+              667080.8062624882
+            ],
+            "b": [
+              184489.17871513034,
+              667086.4169047428
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "6564",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_stopline",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 5.847492578,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184470.7863201142,
+              667073.1774621661
+            ],
+            "b": [
+              184476.57121545402,
+              667072.3241419727
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "6565",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_stopline",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 4.300473665,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184460.5842288687,
+              667079.0330090296
+            ],
+            "b": [
+              184461.60311303433,
+              667083.2110407188
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "handle": "6566",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_stopline",
+      "colorIndex": 256,
+      "lengthDrawingUnits": 4.202267095,
+      "geometry": {
+        "segments": [
+          {
+            "type": "line",
+            "a": [
+              184476.14724227463,
+              667092.4427054963
+            ],
+            "b": [
+              184471.96775414865,
+              667092.8796582874
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "unsupported": [
+    {
+      "handle": "5773",
+      "entityType": "LWPolyline",
+      "layer": "intergreen_W-T",
+      "reason": "polycurve needs at least one segment"
+    },
+    {
+      "handle": "6549",
+      "entityType": "BlockReference(D-GEOM- HAYARKON-11S-EX-MHD)",
+      "layer": "intergreen_b",
+      "reason": "nested geometry not extracted in P0 \u2014 report, never silently ignore (Directive \u00A77)"
+    }
+  ]
+}

@@ -1,0 +1,268 @@
+{
+  "schemaVersion": "1.0",
+  "findings": [
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-R × S-R",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-R × W-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-R × c",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-T × S-R",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-T × W-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-T × a",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-T × c",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-T × d",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-R × E-R",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-R × E-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-R × b",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-T × b",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-T × c",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-L × b",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-L × d",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-T × E-R",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-T × E-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-T × a",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-T × b",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-T × d",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "a × E-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "a × W-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × S-R",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × S-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × W-L",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × W-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "c × E-R",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "c × E-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "c × S-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "d × E-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "d × W-L",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-GEO-005",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "d × W-T",
+      "message": "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+      "technicalDetails": "A silently missing conflict is worse than a wrong number — review the drawing.",
+      "sourceReference": "v3 §15"
+    },
+    {
+      "code": "IG-UNIT-001",
+      "severity": "WARNING",
+      "message": "Drawing INSUNITS is 'Unitless'; operator confirmed the drawing is in meters (--units meters).",
+      "technicalDetails": "Unit confirmation is external evidence, cross-checked by the golden CD/ED regression below.",
+      "sourceReference": "v3 §13"
+    }
+  ]
+}
