@@ -94,3 +94,19 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
   evidence + audits + manifests). 18 Hebrew/EN PDFs generated (Edge headless, RTL QA'd).
 - STATUS: READY FOR LIN GUI SMOKE. Machine residue: renamed locked bundle directory
   awaiting cleanup after the machine's pending maintenance (documented).
+
+## Vadim r3 + CRITICAL discovery (2026-08-17 late)
+- Built VADIM_INTEGRATION_TEST_0.1.0-r3: RU role docs, real TEST_KIT (Ex1 golden +
+  Ex2 robustness), SDK (validated DLLs byte-identical + rules + contracts), and a
+  compile+RUN-verified adapter example that reproduces the golden numbers end-to-end
+  (11 movements / 50 conflicts / matrix 24-0-0 / W-L->S-T IG 5, governing X/Y exact).
+- CRITICAL: the run-verified example exposed that dist/Mahod.Intergreen.bundle (and the
+  installer payload) is MISSING ClosedXML runtime dependencies SixLabors.Fonts.dll and
+  RBush.dll (present in CLI/AutoCAD build outputs, dropped during bundle curation).
+  The palette Setup (WorkbookReader.Read) would crash with FileNotFoundException inside
+  AutoCAD -> Lin's GUI smoke would FAIL at step 6. Never caught because: CLI ran from
+  its own bin (deps present) and the GUI path was never executed (Cowork env-blocked).
+- Per directive stop conditions: NO fix applied (installer/payload locked) — reported
+  to Arthur for a respin decision (third-party DLLs only; zero Mahod DLL changes;
+  full installer revalidation required after).
+- LIN r3 email is ON HOLD until the respin decision.
