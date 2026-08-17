@@ -43,3 +43,11 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
 - FINAL CONTINUATION DIRECTIVE received: scope frozen to S→O→P, stop after P. _scratch was never tracked (gitignored from commit 1). Baseline 143/143 re-verified before Gate S.
 
 - GATE P complete. STOP point reached per FINAL CONTINUATION DIRECTIVE §16. Suite 149/149.
+
+## Pilot hardening round (branch pilot-hardening)
+- §21B CHECKPOINT: CORE HARDENING PASS — 167/167; IG-GEO-005 32→0; ped W exact (ΔCD=0.000);
+  N-edge crossings; BlockRef recursion (DBText label found); 0 unsafe; Ex1 matrix 24V/0B;
+  Ex2 REVISION_MISMATCH detected, 0 blocked. Residuals 11/11 classified.
+- NEXT: Excel writer (§22-29) → 2025 pipeline+conformance (§33-39) → overrides (§40-41) →
+  Legacy <3s floor (§42) → INTERGREEN workflow (§43-46) → bundle (§47) → docs (§48-50) →
+  final acceptance (§51-60) → Pilot Candidate ZIP (READY FOR INDEPENDENT VERIFICATION).
