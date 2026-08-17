@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mahod.Intergreen.Contracts\Mahod.Intergreen.Contracts.csproj" />
+    <ProjectReference Include="..\Mahod.Intergreen.Core\Mahod.Intergreen.Core.csproj" />
+    <ProjectReference Include="..\Mahod.Intergreen.Rules\Mahod.Intergreen.Rules.csproj" />
+    <ProjectReference Include="..\Mahod.Intergreen.Geometry\Mahod.Intergreen.Geometry.csproj" />
+    <ProjectReference Include="..\Mahod.Intergreen.Excel\Mahod.Intergreen.Excel.csproj" />
+    <ProjectReference Include="..\Mahod.Intergreen.Reporting\Mahod.Intergreen.Reporting.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
