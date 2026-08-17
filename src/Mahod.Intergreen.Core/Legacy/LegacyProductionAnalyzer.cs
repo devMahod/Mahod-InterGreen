@@ -54,6 +54,137 @@ public sealed class LegacyProductionAnalyzer
         _calc = new LegacyProductionCalculator(constants.ReactionTimeSec, constants.DecelerationMps2);
     }
 
+    /// <summary>Result of a geometry-driven production analysis over N candidate points (never truncated).</summary>
+    public sealed record GeometryConflictResult(
+        string ConflictId,
+        RowStatus Status,
+        IReadOnlyList<ValidationFinding> Findings,
+        IReadOnlyList<GeometryPointResult> Points,
+        int? DefiningPointIndex,
+        double? RawMaxIntergreenSec,
+        int? FinalIg);
+
+    public sealed record GeometryPointResult(
+        double ClearingDistanceMeters,
+        double EnteringDistanceMeters,
+        double ClearFastSec,
+        double ClearSlowSec,
+        double EnterSec,
+        double IntergreenSec);
+
+    /// <summary>
+    /// Production analysis over geometry-derived candidate points. Unlike the workbook shape
+    /// this path has no 4-point cap — every retained point is evaluated and the governing
+    /// point is selected by computed time (v3 §15, Final Hotfix §17).
+    /// </summary>
+    public GeometryConflictResult AnalyzeGeometryConflict(
+        string conflictId,
+        string clearingMovement,
+        string enteringMovement,
+        MovementMode clearingMode,
+        MovementMode enteringMode,
+        IReadOnlyList<(double CdMeters, double EdMeters)> points,
+        double? pedestrianSpeedMpsOverride = null)
+    {
+        var findings = new List<ValidationFinding>();
+        var conflictRef = $"{conflictId} ({clearingMovement} → {enteringMovement})";
+
+        if (points.Count == 0)
+        {
+            findings.Add(new ValidationFinding(CodeMissingMeasurement, Severity.Error, conflictRef,
+                "No candidate conflict points to analyze.", SourceReference: "v3 §26"));
+            return new GeometryConflictResult(conflictId, RowStatus.Error, findings,
+                Array.Empty<GeometryPointResult>(), null, null, null);
+        }
+
+        var pedSpeed = pedestrianSpeedMpsOverride ?? _c.PedestrianSpeedMps;
+        double clearFastMps = 0, clearSlowMps = 0, vehLen = 0;
+        if (clearingMode != MovementMode.Pedestrian)
+        {
+            if (!_params.TryGetValue(clearingMovement, out var pc)
+                || pc.FastClearingKph is not double fk || pc.SlowClearingKph is not double sk)
+            {
+                findings.Add(new ValidationFinding(CodeUnknownMovementParameters, Severity.Error, conflictRef,
+                    $"Clearing movement '{clearingMovement}' (mode {clearingMode}) has no speed parameters.",
+                    SourceReference: "Final Hotfix §4"));
+                return new GeometryConflictResult(conflictId, RowStatus.Error, findings,
+                    Array.Empty<GeometryPointResult>(), null, null, null);
+            }
+            clearFastMps = fk / 3.6;
+            clearSlowMps = sk / 3.6;
+            var len = _variant == LegacyTemplateVariant.V2GlobalVehicleLength
+                ? _c.GlobalVehicleLengthMeters
+                : pc.VehicleLengthMeters;
+            if (len is not double l)
+            {
+                findings.Add(new ValidationFinding(CodeUnknownMovementParameters, Severity.Error, conflictRef,
+                    $"Clearing movement '{clearingMovement}' has no vehicle length.", SourceReference: "Addendum §C.2"));
+                return new GeometryConflictResult(conflictId, RowStatus.Error, findings,
+                    Array.Empty<GeometryPointResult>(), null, null, null);
+            }
+            vehLen = l;
+        }
+
+        double enterMps = 0;
+        if (enteringMode != MovementMode.Pedestrian)
+        {
+            if (_params.TryGetValue(enteringMovement, out var pe) && pe.FastClearingKph is double ek)
+                enterMps = ek / 3.6;
+            else
+            {
+                findings.Add(new ValidationFinding(CodeUnknownMovementParameters, Severity.Error, conflictRef,
+                    $"Entering movement '{enteringMovement}' (mode {enteringMode}) has no speed parameters.",
+                    SourceReference: "Final Hotfix §4"));
+                return new GeometryConflictResult(conflictId, RowStatus.Error, findings,
+                    Array.Empty<GeometryPointResult>(), null, null, null);
+            }
+        }
+
+        var results = new List<GeometryPointResult>();
+        foreach (var (cd, ed) in points)
+        {
+            LegacyProductionCalculator.Outcome fast, slow;
+            if (clearingMode == MovementMode.Pedestrian)
+                fast = slow = _calc.PedestrianClearingTimeSec(cd, pedSpeed);
+            else
+            {
+                fast = _calc.VehicleClearingTimeSec(cd, clearFastMps, vehLen);
+                slow = _calc.VehicleClearingTimeSec(cd, clearSlowMps, vehLen);
+            }
+            // pedestrian entering distance is 0 by definition (§5.4)
+            var enter = _calc.EnteringTimeSec(enteringMode == MovementMode.Pedestrian ? 0.0 : ed, enterMps);
+
+            var bad = new[] { fast.Finding, slow.Finding, enter.Finding }.FirstOrDefault(f => f is not null);
+            if (bad is not null)
+            {
+                findings.Add(bad with { ConflictRef = conflictRef });
+                return new GeometryConflictResult(conflictId, RowStatus.Error, findings,
+                    Array.Empty<GeometryPointResult>(), null, null, null);
+            }
+
+            var ig = Math.Max(fast.Value!.Value, slow.Value!.Value) - enter.Value!.Value;
+            results.Add(new GeometryPointResult(cd, ed, fast.Value.Value, slow.Value.Value, enter.Value.Value, ig));
+        }
+
+        var definingIdx = 0;
+        for (var i = 1; i < results.Count; i++)
+            if (results[i].IntergreenSec > results[definingIdx].IntergreenSec)
+                definingIdx = i;
+        var raw = results[definingIdx].IntergreenSec;
+
+        if (raw < 1.0)
+        {
+            findings.Add(new ValidationFinding(CodeSubOneSecondResult, Severity.ReviewRequired, conflictRef,
+                $"Raw intergreen {raw:F3} s is below 1 s — workbook rounding is undefined here.",
+                SourceReference: "Addendum §C.1"));
+            return new GeometryConflictResult(conflictId, RowStatus.ReviewRequired, findings,
+                results, definingIdx, raw, (int)Math.Ceiling(raw));
+        }
+
+        return new GeometryConflictResult(conflictId, RowStatus.Valid, findings,
+            results, definingIdx, raw, _policy.Resolve(raw));
+    }
+
     public LegacyProductionRowResult AnalyzeRow(
         ConflictRowInput row,
         MovementMode clearingMode,

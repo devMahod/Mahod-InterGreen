@@ -3,6 +3,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Mahod.Intergreen.Contracts\Mahod.Intergreen.Contracts.csproj" />
     <ProjectReference Include="..\Mahod.Intergreen.Core\Mahod.Intergreen.Core.csproj" />
+    <ProjectReference Include="..\Mahod.Intergreen.Geometry\Mahod.Intergreen.Geometry.csproj" />
+    <ProjectReference Include="..\Mahod.Intergreen.Rules\Mahod.Intergreen.Rules.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

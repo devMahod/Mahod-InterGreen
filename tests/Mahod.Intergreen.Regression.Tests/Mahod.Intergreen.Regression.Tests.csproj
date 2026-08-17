@@ -24,6 +24,8 @@
     <ProjectReference Include="..\..\src\Mahod.Intergreen.Core\Mahod.Intergreen.Core.csproj" />
     <ProjectReference Include="..\..\src\Mahod.Intergreen.Rules\Mahod.Intergreen.Rules.csproj" />
     <ProjectReference Include="..\..\src\Mahod.Intergreen.Excel\Mahod.Intergreen.Excel.csproj" />
+    <ProjectReference Include="..\..\src\Mahod.Intergreen.Reporting\Mahod.Intergreen.Reporting.csproj" />
+    <ProjectReference Include="..\..\src\Mahod.Intergreen.Geometry\Mahod.Intergreen.Geometry.csproj" />
   </ItemGroup>
 
 </Project>

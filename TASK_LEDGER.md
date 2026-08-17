@@ -22,7 +22,7 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
 | P | Real example DWG scan/export | NOT STARTED | | | needs O; interactive if coreconsole fails |
 | Q | Real geometry regression | NOT STARTED | | | needs P |
 | R | Signal-group matrix | PASS | SignalGroupMatrixService + Tests A/B/C + §17A acceptance: 4/4 incomplete detected, exactly 3 blocked cells (2→4, 4→2, 1→a), 0 unexpected, 0 missing; report test-results/EXAMPLE2_MATRIX_ACCEPTANCE.md | — | — |
-| S | Final Excel + JSON export | NOT STARTED | | | MUST enforce Final Hotfix §11 serialization invariant (no NaN/Inf/negative; INTERNAL_NUMERIC_INVARIANT_FAILURE) |
+| S | Deterministic outputs (analysis/validation/run_manifest) | PASS | AnalysisPipeline + AnalysisWriters; determinism byte-identical test; INTERNAL_NUMERIC_INVARIANT_FAILURE on NaN/negative; env noise excluded; BLOCKED propagation in document | — | Excel writer deferred post-P per Directive §13 |
 | T | INTERGREEN workflow / basic UI | NOT STARTED | | | |
 | U | Bundle packaging | NOT STARTED | | | |
 | V | Vadim integration docs | NOT STARTED | | | |
@@ -39,3 +39,5 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
   metamorphic ped tests, continuity tests, full intermediate-column comparison (P/Q/R + AL)
   over all 148 rows. Suite: 98/98 (61 Core + 24 Rules + 13 Regression).
   NOTE: doc #4 "HOTFIX NOTES" was never delivered — only #5 FINAL HOTFIX BLOCK (which supersedes it).
+
+- FINAL CONTINUATION DIRECTIVE received: scope frozen to S→O→P, stop after P. _scratch was never tracked (gitignored from commit 1). Baseline 143/143 re-verified before Gate S.
