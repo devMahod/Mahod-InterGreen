@@ -19,16 +19,13 @@ public sealed class Israel2025CalculationService
         _decelMps2 = decelerationMps2;
     }
 
-    /// <summary>§5.5.1(c) — slow-clearing acceleration a1Y = 1.5 − 1.5·SY/50 (SY in km/h). SR-5.5.1.</summary>
+    /// <summary>
+    /// §5.5.1(c) — slow-clearing acceleration a1Y = 1.5 − 1.5·SY/50 (SY in km/h). SR-5.5.1.
+    /// At SY ≥ 50 the acceleration term vanishes and the official conformance case list
+    /// (נספח 1 תוספת א', case א.1.ב) requires the WITHOUT-acceleration formula.
+    /// </summary>
     public static double SlowAccelerationMps2(double syKph)
-    {
-        var a1 = 1.5 - 1.5 * syKph / 50.0;
-        if (a1 <= 0)
-            throw new NotSupportedException(
-                $"a1Y = 1.5-1.5*{syKph}/50 is non-positive. Table 5.1 caps SY at 35 km/h; " +
-                "a slow speed of 50+ is outside the guidelines' model. See OPEN_QUESTIONS.md.");
-        return a1;
-    }
+        => Math.Max(0.0, 1.5 - 1.5 * syKph / 50.0);
 
     /// <summary>§5.5.1 fast case (SR-5.5.1): T2X = t + LX/Sx, LX = L1X + L2 + l, L1X = Sx²/2a.</summary>
     public double VehicleClearingFastSec(double sxKph, double l2Meters, double vehicleLengthMeters)
@@ -40,7 +37,12 @@ public sealed class Israel2025CalculationService
         return _reactionSec + lx / sx;
     }
 
-    /// <summary>§5.5.1 slow case (SR-5.5.1): quadratic acceleration model with a1Y.</summary>
+    /// <summary>
+    /// §5.5.1 slow case (SR-5.5.1): acceleration model with a1Y, in the numerically stable
+    /// conjugate form t = 2·LY / (√(Sy² + 2·LY·a1) + Sy) (Directive §33 — algebraically
+    /// identical, no cancellation, exact constant-speed limit LY/Sy at a1 → 0).
+    /// At SY ≥ 50 km/h (a1 = 0) this IS the official without-acceleration case (א.1.ב).
+    /// </summary>
     public double VehicleClearingSlowSec(double syKph, double l2Meters, double vehicleLengthMeters)
     {
         var sy = syKph / 3.6;
@@ -48,7 +50,16 @@ public sealed class Israel2025CalculationService
         var a1 = SlowAccelerationMps2(syKph);
         var l1y = sy * sy / (2.0 * _decelMps2);
         var ly = l1y + l2Meters + vehicleLengthMeters;
-        return _reactionSec + (-sy + Math.Sqrt(sy * sy + 2.0 * ly * a1)) / a1;
+        return _reactionSec + 2.0 * ly / (Math.Sqrt(sy * sy + 2.0 * ly * a1) + sy);
+    }
+
+    /// <summary>§ד.4 of the conformance list: LRT governing clearing = max(case I, case II).</summary>
+    public double LrtClearingSec(double sxKph, double syKph, double l2Meters, double lrtLengthMeters,
+        bool startsFromStop, double lrtDecelMps2 = 1.2, double startAccelMps2 = 1.2)
+    {
+        var moving = LrtClearingMovingSec(sxKph, syKph, l2Meters, lrtLengthMeters, lrtDecelMps2);
+        if (!startsFromStop) return moving;
+        return Math.Max(moving, LrtClearingFromStopSec(sxKph, l2Meters, lrtLengthMeters, startAccelMps2));
     }
 
     /// <summary>§5.5.1(d): T2 = max(T2X, T2Y).</summary>

@@ -45,10 +45,13 @@ public class Israel2025CalculationTests
     }
 
     [Fact]
-    public void Slow_speed_at_or_above_50_is_outside_the_model_and_throws()
+    public void Slow_speed_at_or_above_50_uses_the_without_acceleration_model()
     {
-        Assert.Throws<NotSupportedException>(() => Israel2025CalculationService.SlowAccelerationMps2(50));
-        Assert.Throws<NotSupportedException>(() => Israel2025CalculationService.SlowAccelerationMps2(60));
+        // Official conformance list (נספח 1 תוספת א', case א.1.ב): SY ≥ 50 km/h → the
+        // WITHOUT-acceleration formula. a1Y clamps to 0 and the conjugate form reduces
+        // to the exact constant-speed model (covered by Israel2025ConformanceTests.A1b).
+        Assert.Equal(0.0, Israel2025CalculationService.SlowAccelerationMps2(50));
+        Assert.Equal(0.0, Israel2025CalculationService.SlowAccelerationMps2(60));
     }
 
     [Fact]

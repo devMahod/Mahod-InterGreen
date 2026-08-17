@@ -46,11 +46,23 @@ public static class AnalysisPipeline
     {
         var findings = new List<ValidationFinding>();
         var strategy = CreateStrategy(input.RulePack.Manifest.GeometryStrategyId);
+
+        // §36: calculation selection follows the Rule Pack's CalculationStrategyId — a 2025
+        // pack must never route into the Legacy calculators (and vice versa).
+        var is2025 = input.RulePack.Manifest.CalculationStrategyId == "israel-2025-06";
         var analyzer = new LegacyProductionAnalyzer(
             input.Constants, input.Variant, input.MovementParameters,
             input.RulePack.Manifest.RoundingStrategyId == "guidelines-ceil"
                 ? FinalIgPolicy.Guidelines2025
                 : FinalIgPolicy.MahodLegacy);
+        var analyzer2025 = is2025 ? new Mahod.Intergreen.Core.Israel2025.Israel2025ProductionAnalyzer(
+            input.RulePack.ReactionTimeSec, input.RulePack.DecelerationMps2) : null;
+        var resolver2025 = is2025 ? new ParameterResolver(input.RulePack) : null;
+        var params2025 = is2025
+            ? input.Movements.ToDictionary(m => m.Id,
+                m => Resolve2025Parameters(m, resolver2025!, input.RulePack, input.Classification, findings),
+                StringComparer.Ordinal)
+            : null;
 
         var movements = input.Movements.OrderBy(m => m.Id, StringComparer.Ordinal).ToList();
         var conflicts = new List<ConflictRecord>();
@@ -96,9 +108,15 @@ public static class AnalysisPipeline
                 var orderedPoints = strat.Points
                     .OrderBy(p => p.ClearingDistanceMeters).ThenBy(p => p.EnteringDistanceMeters)
                     .ToList();
-                var result = analyzer.AnalyzeGeometryConflict(
-                    conflictId, clearing.Id, entering.Id, clearing.Mode, entering.Mode,
-                    orderedPoints.Select(p => (p.ClearingDistanceMeters, p.EnteringDistanceMeters)).ToList());
+                var pointTuples = orderedPoints
+                    .Select(p => (p.ClearingDistanceMeters, p.EnteringDistanceMeters)).ToList();
+                var result = is2025
+                    ? analyzer2025!.Analyze(conflictId, clearing.Mode, entering.Mode,
+                        params2025![clearing.Id] ?? new Mahod.Intergreen.Core.Israel2025.Israel2025MovementParameters(null, null, null, null, null, null),
+                        params2025[entering.Id] ?? new Mahod.Intergreen.Core.Israel2025.Israel2025MovementParameters(null, null, null, null, null, null),
+                        pointTuples)
+                    : analyzer.AnalyzeGeometryConflict(
+                        conflictId, clearing.Id, entering.Id, clearing.Mode, entering.Mode, pointTuples);
                 findings.AddRange(result.Findings);
 
                 var pointRecords = orderedPoints.Select((p, i) => new ConflictPointRecord(
@@ -172,6 +190,53 @@ public static class AnalysisPipeline
         IReadOnlyList<ValidationFinding> findings)
         => new(id, clearing.Id, entering.Id, clearing.SignalGroup, entering.SignalGroup,
             status, finalIg, findings);
+
+    /// <summary>
+    /// Resolves 2025 movement parameters from the Rule Pack + explicit project classification
+    /// (Directive §16/§36). Missing classification yields null → the affected conflicts block
+    /// with MISSING_ENGINEERING_CLASSIFICATION; nothing is guessed.
+    /// </summary>
+    private static Mahod.Intergreen.Core.Israel2025.Israel2025MovementParameters? Resolve2025Parameters(
+        PipelineMovement m, ParameterResolver resolver, RulePack pack,
+        ProjectClassification cls, List<ValidationFinding> findings)
+    {
+        switch (Mahod.Intergreen.Core.Israel2025.ModePairPolicy.EngineeringClass(m.Mode))
+        {
+            case MovementMode.Pedestrian:
+            {
+                var (speed, f) = resolver.ResolvePedestrianSpeed(m.Id, cls);
+                findings.AddRange(f);
+                if (speed is null || m.Geometry.PedestrianWidthMeters is not double w) return null;
+                return new(null, null, null, null, speed.Value, w);
+            }
+            case MovementMode.Bicycle:
+            {
+                var b = pack.Parameters.RootElement.GetProperty("bicycle");
+                return new(
+                    b.GetProperty("fastClearingKph").GetDouble(),
+                    b.GetProperty("slowClearingKph").GetDouble(),
+                    b.GetProperty("enteringKph").GetDouble(),
+                    b.GetProperty("lengthM").GetDouble(),
+                    null, null);
+            }
+            case MovementMode.Lrt:
+            {
+                if (cls.PostedSpeedKph is not double posted) return null;
+                var lrt = pack.Parameters.RootElement.GetProperty("lrt");
+                var slow = Math.Min(Math.Max(posted / 2.0, 25.0), posted);
+                return new(posted, slow, posted, lrt.GetProperty("lengthM").GetDouble(), null, null);
+            }
+            default:
+            {
+                var maneuver = m.Id.Split('-').ElementAtOrDefault(1) == "T" ? Maneuver.Through : Maneuver.Turn;
+                var (p, f) = resolver.ResolveVehicle(maneuver, VehicleLengthClass.Standard12, cls);
+                findings.AddRange(f);
+                if (p is null) return null;
+                return new(p.FastClearingKph.Value, p.SlowClearingKph.Value, p.EnteringKph.Value,
+                    p.VehicleLengthMeters.Value, null, null);
+            }
+        }
+    }
 
     private static IConflictPointStrategy CreateStrategy(string id) => id switch
     {
