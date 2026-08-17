@@ -1,0 +1,6474 @@
+{
+ "schemaVersion": "1.0",
+ "example": "example2",
+ "sourceFile": "Abarbanel-HaMaccabim_IG_matrix_2026-07-05.xlsx",
+ "variant": "V2",
+ "constants": {
+  "pedSpeed": 1.2,
+  "reaction": 1,
+  "decel": 3.5,
+  "vehLenGlobal": 12,
+  "inbarFlag": null,
+  "inbarDefaultVehicleLength": null
+ },
+ "parameters": {
+  "N-L": {
+   "interurban": 0,
+   "fastKph": 50,
+   "slowKph": 25,
+   "colE": 0,
+   "colF": null
+  },
+  "N-T": {
+   "interurban": 0,
+   "fastKph": 50,
+   "slowKph": 25,
+   "colE": 0,
+   "colF": null
+  },
+  "N-R": {
+   "interurban": 0,
+   "fastKph": 50,
+   "slowKph": 25,
+   "colE": 0,
+   "colF": null
+  },
+  "S-L": {
+   "interurban": 0,
+   "fastKph": 50,
+   "slowKph": 25,
+   "colE": 0,
+   "colF": null
+  },
+  "S-T": {
+   "interurban": 0,
+   "fastKph": 50,
+   "slowKph": 25,
+   "colE": 0,
+   "colF": null
+  },
+  "S-R": {
+   "interurban": 0,
+   "fastKph": 50,
+   "slowKph": 25,
+   "colE": 0,
+   "colF": null
+  },
+  "E-L": {
+   "interurban": 0,
+   "fastKph": 50,
+   "slowKph": 25,
+   "colE": 0,
+   "colF": null
+  },
+  "E-T": {
+   "interurban": 0,
+   "fastKph": 50,
+   "slowKph": 25,
+   "colE": 0,
+   "colF": null
+  },
+  "E-R": {
+   "interurban": 0,
+   "fastKph": 50,
+   "slowKph": 25,
+   "colE": 0,
+   "colF": null
+  },
+  "W-L": {
+   "interurban": 0,
+   "fastKph": 50,
+   "slowKph": 25,
+   "colE": 0,
+   "colF": null
+  },
+  "W-T": {
+   "interurban": 0,
+   "fastKph": 50,
+   "slowKph": 25,
+   "colE": 0,
+   "colF": null
+  },
+  "W-R": {
+   "interurban": 0,
+   "fastKph": 50,
+   "slowKph": 25,
+   "colE": 0,
+   "colF": null
+  }
+ },
+ "rows": [
+  {
+   "conflictNo": 1,
+   "clearing": "N-R",
+   "entering": "d",
+   "points": [
+    {
+     "cd": 4,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 3.958843230551617,
+      "tSlow": 3.7390220422710327,
+      "tEnter": 0,
+      "ig": 3.958843230551617
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": "d",
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 2,
+   "clearing": "N-R",
+   "entering": "E-T",
+   "points": [
+    {
+     "cd": 21.75,
+     "ed": 27
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.077457393510197,
+      "tSlow": 5.408816813928908,
+      "tEnter": 1.944,
+      "ig": 3.464816813928908
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": 1,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 3,
+   "clearing": "N-R",
+   "entering": "S-L",
+   "points": [
+    {
+     "cd": 21.75,
+     "ed": 15
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.077457393510197,
+      "tSlow": 5.408816813928908,
+      "tEnter": 1.08,
+      "ig": 4.328816813928908
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": 2,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 4,
+   "clearing": "N-R",
+   "entering": "c",
+   "points": [
+    {
+     "cd": 21.75,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 5.077457393510197,
+      "tSlow": 5.408816813928908,
+      "tEnter": 0,
+      "ig": 5.408816813928908
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": "c",
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 5,
+   "clearing": "N-T",
+   "entering": "d",
+   "points": [
+    {
+     "cd": 4,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 3.958843230551617,
+      "tSlow": 3.7390220422710327,
+      "tEnter": 0,
+      "ig": 3.958843230551617
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": "d",
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 6,
+   "clearing": "N-T",
+   "entering": "E-T",
+   "points": [
+    {
+     "cd": 11.22,
+     "ed": 15
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.419222555697784,
+      "tSlow": 4.451311053799932,
+      "tEnter": 1.08,
+      "ig": 3.371311053799932
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": 1,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 7,
+   "clearing": "N-T",
+   "entering": "E-L",
+   "points": [
+    {
+     "cd": 19.78,
+     "ed": 20.85
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.955461975478065,
+      "tSlow": 5.236039326052587,
+      "tEnter": 1.5012,
+      "ig": 3.7348393260525867
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": 1,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 8,
+   "clearing": "N-T",
+   "entering": "S-L",
+   "points": [
+    {
+     "cd": 19.79,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.956082553441663,
+      "tSlow": 5.236923240212269,
+      "tEnter": 0,
+      "ig": 5.236923240212269
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": 2,
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 8,
+   "clearing": "N-T",
+   "entering": "W-R",
+   "points": [
+    {
+     "cd": 24.067999999999998,
+     "ed": 11.47
+    },
+    {
+     "cd": 22.580000000000002,
+     "ed": 16.45
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.220344075744184,
+      "tSlow": 5.608745655600659,
+      "tEnter": 0.82584,
+      "ig": 4.782905655600659
+     },
+     {
+      "tFast": 5.128701858620169,
+      "tSlow": 5.480814423288912,
+      "tEnter": 1.1844,
+      "ig": 4.296414423288912
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": 3,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 10,
+   "clearing": "N-T",
+   "entering": "W-T",
+   "points": [
+    {
+     "cd": 15,
+     "ed": 7.7
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.657270523556814,
+      "tSlow": 4.805044813904017,
+      "tEnter": 0.5544,
+      "ig": 4.2506448139040165
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": 3,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 11,
+   "clearing": "N-T",
+   "entering": "W-L",
+   "points": [
+    {
+     "cd": 15.5,
+     "ed": 7.75
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.688608824202758,
+      "tSlow": 4.85094978452545,
+      "tEnter": 0.5579999999999999,
+      "ig": 4.29294978452545
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": 3,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 12,
+   "clearing": "N-T",
+   "entering": "b",
+   "points": [
+    {
+     "cd": 19.1,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 4.913231088671708,
+      "tSlow": 5.175765155498342,
+      "tEnter": 0,
+      "ig": 5.175765155498342
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": "b",
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 13,
+   "clearing": "N-L",
+   "entering": "d",
+   "points": [
+    {
+     "cd": 4,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 3.958843230551617,
+      "tSlow": 3.7390220422710327,
+      "tEnter": 0,
+      "ig": 3.958843230551617
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": "d",
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 14,
+   "clearing": "N-L",
+   "entering": "E-T",
+   "points": [
+    {
+     "cd": 20.1,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.9753138068953096,
+      "tSlow": 5.264289344042314,
+      "tEnter": 0,
+      "ig": 5.264289344042314
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": 1,
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 15,
+   "clearing": "N-L",
+   "entering": "E-L",
+   "points": [
+    {
+     "cd": 20.1,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.9753138068953096,
+      "tSlow": 5.264289344042314,
+      "tEnter": 0,
+      "ig": 5.264289344042314
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": 1,
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 16,
+   "clearing": "N-L",
+   "entering": "S-R",
+   "points": [
+    {
+     "cd": 27.5,
+     "ed": 12.6
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.430612805096172,
+      "tSlow": 5.898449230747408,
+      "tEnter": 0.9071999999999999,
+      "ig": 4.991249230747409
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": 2,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 17,
+   "clearing": "N-L",
+   "entering": "S-T",
+   "points": [
+    {
+     "cd": 16.3,
+     "ed": 6.16
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.73867825366702,
+      "tSlow": 4.9239864941170355,
+      "tEnter": 0.44352,
+      "ig": 4.480466494117035
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": 2,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 18,
+   "clearing": "N-L",
+   "entering": "S-L",
+   "points": [
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 3.700454752728431,
+      "tSlow": 3.3203125909679994,
+      "tEnter": 0,
+      "ig": 3.700454752728431
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": null,
+    "clearingSg": 4,
+    "enteringSg": 2,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 19,
+   "clearing": "N-L",
+   "entering": "W-T",
+   "points": [
+    {
+     "cd": 27.5,
+     "ed": 27.5
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.430612805096172,
+      "tSlow": 5.898449230747408,
+      "tEnter": 1.98,
+      "ig": 3.918449230747408
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": 3,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 20,
+   "clearing": "N-L",
+   "entering": "W-L",
+   "points": [
+    {
+     "cd": 14.14,
+     "ed": 15.45
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.603287454423121,
+      "tSlow": 4.725617004046237,
+      "tEnter": 1.1123999999999998,
+      "ig": 3.613217004046237
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": 3,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 21,
+   "clearing": "N-L",
+   "entering": "a",
+   "points": [
+    {
+     "cd": 27.5,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 5.430612805096172,
+      "tSlow": 5.898449230747408,
+      "tEnter": 0,
+      "ig": 5.898449230747408
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 4,
+    "enteringSg": "a",
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 22,
+   "clearing": "E-R",
+   "entering": "a",
+   "points": [
+    {
+     "cd": 3.75,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 3.9427647326271993,
+      "tSlow": 3.7133963859695798,
+      "tEnter": 0,
+      "ig": 3.9427647326271993
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": "a",
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 23,
+   "clearing": "E-R",
+   "entering": "S-T",
+   "points": [
+    {
+     "cd": 17.6,
+     "ed": 19.78
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.8198535421816935,
+      "tSlow": 5.041615372022424,
+      "tEnter": 1.42416,
+      "ig": 3.6174553720224236
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": 2,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 24,
+   "clearing": "E-R",
+   "entering": "W-L",
+   "points": [
+    {
+     "cd": 17.63,
+     "ed": 21.55
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.821724089974227,
+      "tSlow": 5.04431473040163,
+      "tEnter": 1.5516,
+      "ig": 3.4927147304016297
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": 3,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 25,
+   "clearing": "E-R",
+   "entering": "d",
+   "points": [
+    {
+     "cd": 17.63,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 4.821724089974227,
+      "tSlow": 5.04431473040163,
+      "tEnter": 0,
+      "ig": 5.04431473040163
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": "d",
+    "finalIg": 5,
+    "manualRoundingFlag": 5.04431473040163
+   }
+  },
+  {
+   "conflictNo": 26,
+   "clearing": "E-T",
+   "entering": "a",
+   "points": [
+    {
+     "cd": null,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 3.700454752728431,
+      "tSlow": 3.3203125909679994,
+      "tEnter": 0,
+      "ig": 3.700454752728431
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": null,
+    "clearingSg": 1,
+    "enteringSg": "a",
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 27,
+   "clearing": "E-T",
+   "entering": "S-T",
+   "points": [
+    {
+     "cd": 14.9,
+     "ed": 8.6
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.6509987053160415,
+      "tSlow": 4.795839805026045,
+      "tEnter": 0.6192,
+      "ig": 4.176639805026045
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": 2,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 28,
+   "clearing": "E-T",
+   "entering": "S-L",
+   "points": [
+    {
+     "cd": 27,
+     "ed": 15.1
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.4000738278871285,
+      "tSlow": 5.856693624567257,
+      "tEnter": 1.0872,
+      "ig": 4.769493624567257
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": 2,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 29,
+   "clearing": "E-T",
+   "entering": "W-L",
+   "points": [
+    {
+     "cd": 27,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.4000738278871285,
+      "tSlow": 5.856693624567257,
+      "tEnter": 0,
+      "ig": 5.856693624567257
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": 3,
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 30,
+   "clearing": "E-T",
+   "entering": "N-R",
+   "points": [
+    {
+     "cd": 26,
+     "ed": 13.84
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.338899495311152,
+      "tSlow": 5.772727853305746,
+      "tEnter": 0.9964799999999999,
+      "ig": 4.776247853305746
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": 4,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 31,
+   "clearing": "E-T",
+   "entering": "N-T",
+   "points": [
+    {
+     "cd": 18.97,
+     "ed": 7.78
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.905150435645309,
+      "tSlow": 5.164204195724527,
+      "tEnter": 0.56016,
+      "ig": 4.604044195724527
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": 4,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 32,
+   "clearing": "E-T",
+   "entering": "N-L",
+   "points": [
+    {
+     "cd": 16.91,
+     "ed": 7.65
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.77679702051068,
+      "tSlow": 4.979342413377682,
+      "tEnter": 0.5508,
+      "ig": 4.4285424133776825
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": 4,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 33,
+   "clearing": "E-T",
+   "entering": "c",
+   "points": [
+    {
+     "cd": 27,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 5.4000738278871285,
+      "tSlow": 5.856693624567257,
+      "tEnter": 0,
+      "ig": 5.856693624567257
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": "c",
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 34,
+   "clearing": "E-L",
+   "entering": "a",
+   "points": [
+    {
+     "cd": null,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 3.700454752728431,
+      "tSlow": 3.3203125909679994,
+      "tEnter": 0,
+      "ig": 3.700454752728431
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": null,
+    "clearingSg": 1,
+    "enteringSg": "a",
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 35,
+   "clearing": "E-L",
+   "entering": "S-T",
+   "points": [
+    {
+     "cd": 20.85,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.021787755012947,
+      "tSlow": 5.330217688652748,
+      "tEnter": 0,
+      "ig": 5.330217688652748
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": 2,
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 36,
+   "clearing": "E-L",
+   "entering": "S-L",
+   "points": [
+    {
+     "cd": 20.85,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.021787755012947,
+      "tSlow": 5.330217688652748,
+      "tEnter": 0,
+      "ig": 5.330217688652748
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": 2,
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 37,
+   "clearing": "E-L",
+   "entering": "W-R",
+   "points": [
+    {
+     "cd": 32.2,
+     "ed": 11.530000000000001
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.716129051257631,
+      "tSlow": 6.283862598245791,
+      "tEnter": 0.83016,
+      "ig": 5.4537025982457905
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": 3,
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 38,
+   "clearing": "E-L",
+   "entering": "W-T",
+   "points": [
+    {
+     "cd": 23,
+     "ed": 8.5
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.1545981045652285,
+      "tSlow": 5.517071394095991,
+      "tEnter": 0.612,
+      "ig": 4.905071394095991
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": 3,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 39,
+   "clearing": "E-L",
+   "entering": "W-L",
+   "points": [
+    {
+     "cd": 23.5,
+     "ed": 8.38
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.185396688897453,
+      "tSlow": 5.560082694290196,
+      "tEnter": 0.60336,
+      "ig": 4.956722694290196
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": 3,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 40,
+   "clearing": "E-L",
+   "entering": "N-T",
+   "points": [
+    {
+     "cd": 27.65,
+     "ed": 19.468
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.439768255360518,
+      "tSlow": 5.910946716430641,
+      "tEnter": 1.401696,
+      "ig": 4.509250716430641
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": 4,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 41,
+   "clearing": "E-L",
+   "entering": "N-L",
+   "points": [
+    {
+     "cd": 16.8,
+     "ed": 10.2
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.7699269176044,
+      "tSlow": 4.969381356706837,
+      "tEnter": 0.7343999999999999,
+      "ig": 4.234981356706837
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": 4,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 42,
+   "clearing": "E-L",
+   "entering": "b",
+   "points": [
+    {
+     "cd": 27.65,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 5.439768255360518,
+      "tSlow": 5.910946716430641,
+      "tEnter": 0,
+      "ig": 5.910946716430641
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 1,
+    "enteringSg": "b",
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 43,
+   "clearing": "S-R",
+   "entering": "b",
+   "points": [
+    {
+     "cd": 5,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 4.023063943139682,
+      "tSlow": 3.8408388592955727,
+      "tEnter": 0,
+      "ig": 4.023063943139682
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": "b",
+    "finalIg": 4,
+    "manualRoundingFlag": 4.023063943139682
+   }
+  },
+  {
+   "conflictNo": 44,
+   "clearing": "S-R",
+   "entering": "W-T",
+   "points": [
+    {
+     "cd": 19.318,
+     "ed": 27.1
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.926776601021763,
+      "tSlow": 5.195124547107197,
+      "tEnter": 1.9512,
+      "ig": 3.2439245471071967
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": 3,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 45,
+   "clearing": "S-R",
+   "entering": "N-L",
+   "points": [
+    {
+     "cd": 19.63,
+     "ed": 20.11
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.9461516922650635,
+      "tSlow": 5.22277205671976,
+      "tEnter": 1.4479199999999999,
+      "ig": 3.7748520567197605
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": 4,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 46,
+   "clearing": "S-R",
+   "entering": "a",
+   "points": [
+    {
+     "cd": 19.63,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 4.9461516922650635,
+      "tSlow": 5.22277205671976,
+      "tEnter": 0,
+      "ig": 5.22277205671976
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": "a",
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 47,
+   "clearing": "S-T",
+   "entering": "b",
+   "points": [
+    {
+     "cd": 3.7,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 3.9395479103078306,
+      "tSlow": 3.7082629091653176,
+      "tEnter": 0,
+      "ig": 3.9395479103078306
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": "b",
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 48,
+   "clearing": "S-T",
+   "entering": "W-T",
+   "points": [
+    {
+     "cd": 8,
+     "ed": 12
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.214839345743445,
+      "tSlow": 4.139991947062776,
+      "tEnter": 0.864,
+      "ig": 3.350839345743445
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": 3,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 49,
+   "clearing": "S-T",
+   "entering": "W-L",
+   "points": [
+    {
+     "cd": 19.78,
+     "ed": 21.5
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.955461975478065,
+      "tSlow": 5.236039326052587,
+      "tEnter": 1.548,
+      "ig": 3.6880393260525866
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": 3,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 50,
+   "clearing": "S-T",
+   "entering": "N-L",
+   "points": [
+    {
+     "cd": 19.8,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.9567031179622205,
+      "tSlow": 5.237807083161825,
+      "tEnter": 0,
+      "ig": 5.237807083161825
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": 4,
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 51,
+   "clearing": "S-T",
+   "entering": "E-R",
+   "points": [
+    {
+     "cd": 19.87,
+     "ed": 9
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.9610466932744055,
+      "tSlow": 5.243991991369784,
+      "tEnter": 0.648,
+      "ig": 4.595991991369784
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": 1,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 52,
+   "clearing": "S-T",
+   "entering": "E-T",
+   "points": [
+    {
+     "cd": 13.37,
+     "ed": 10.28
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.5548662364554,
+      "tSlow": 4.653986113907046,
+      "tEnter": 0.7401599999999999,
+      "ig": 3.9138261139070463
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": 1,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 53,
+   "clearing": "S-T",
+   "entering": "E-L",
+   "points": [
+    {
+     "cd": 13.9,
+     "ed": 10.2
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.5882040202809815,
+      "tSlow": 4.703343226408823,
+      "tEnter": 0.7343999999999999,
+      "ig": 3.9689432264088227
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": 1,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 54,
+   "clearing": "S-T",
+   "entering": "d",
+   "points": [
+    {
+     "cd": 19.9,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 4.962908023992796,
+      "tSlow": 5.246641599882768,
+      "tEnter": 0,
+      "ig": 5.246641599882768
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": "d",
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 55,
+   "clearing": "S-L",
+   "entering": "b",
+   "points": [
+    {
+     "cd": 3.6,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 3.9331131418887897,
+      "tSlow": 3.697987573690291,
+      "tEnter": 0,
+      "ig": 3.9331131418887897
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": "b",
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 56,
+   "clearing": "S-L",
+   "entering": "W-T",
+   "points": [
+    {
+     "cd": 15.09,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.6629139738373855,
+      "tSlow": 4.81332245323614,
+      "tEnter": 0,
+      "ig": 4.81332245323614
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": 3,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 57,
+   "clearing": "S-L",
+   "entering": "W-L",
+   "points": [
+    {
+     "cd": 15.09,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.6629139738373855,
+      "tSlow": 4.81332245323614,
+      "tEnter": 0,
+      "ig": 4.81332245323614
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": 3,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 58,
+   "clearing": "S-L",
+   "entering": "N-R",
+   "points": [
+    {
+     "cd": 21.139,
+     "ed": 14.48
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.039675651842226,
+      "tSlow": 5.355517463336422,
+      "tEnter": 1.04256,
+      "ig": 4.3129574633364225
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": 4,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 59,
+   "clearing": "S-L",
+   "entering": "N-T",
+   "points": [
+    {
+     "cd": 13.489,
+     "ed": 9.45
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.562354937008152,
+      "tSlow": 4.665088576985262,
+      "tEnter": 0.6803999999999999,
+      "ig": 3.9846885769852625
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": 4,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 60,
+   "clearing": "S-L",
+   "entering": "N-L",
+   "points": [
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 3.700454752728431,
+      "tSlow": 3.3203125909679994,
+      "tEnter": 0,
+      "ig": 3.700454752728431
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": null,
+    "clearingSg": 2,
+    "enteringSg": 4,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 61,
+   "clearing": "S-L",
+   "entering": "E-T",
+   "points": [
+    {
+     "cd": 21.139,
+     "ed": 26.7397
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.039675651842226,
+      "tSlow": 5.355517463336422,
+      "tEnter": 1.9252584,
+      "ig": 3.4302590633364227
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": 1,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 62,
+   "clearing": "S-L",
+   "entering": "E-L",
+   "points": [
+    {
+     "cd": 10.44,
+     "ed": 18.067
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.3698502036301345,
+      "tSlow": 4.376778159654272,
+      "tEnter": 1.300824,
+      "ig": 3.075954159654272
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": 1,
+    "finalIg": 3,
+    "manualRoundingFlag": 3.075954159654272
+   }
+  },
+  {
+   "conflictNo": 63,
+   "clearing": "S-L",
+   "entering": "c",
+   "points": [
+    {
+     "cd": 21.139,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 5.039675651842226,
+      "tSlow": 5.355517463336422,
+      "tEnter": 0,
+      "ig": 5.355517463336422
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 2,
+    "enteringSg": "c",
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 64,
+   "clearing": "W-R",
+   "entering": "c",
+   "points": [
+    {
+     "cd": 3.8,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 3.9459811805275296,
+      "tSlow": 3.718527074888522,
+      "tEnter": 0,
+      "ig": 3.9459811805275296
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": "c",
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 65,
+   "clearing": "W-R",
+   "entering": "N-T",
+   "points": [
+    {
+     "cd": 13.4,
+     "ed": 19.7
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.556754331316829,
+      "tSlow": 4.6567861725278625,
+      "tEnter": 1.4183999999999999,
+      "ig": 3.2383861725278624
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": 4,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 66,
+   "clearing": "W-R",
+   "entering": "E-L",
+   "points": [
+    {
+     "cd": 16.4,
+     "ed": 22.580000000000002
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.744930733589479,
+      "tSlow": 4.9330809212378535,
+      "tEnter": 1.62576,
+      "ig": 3.3073209212378534
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": 1,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 67,
+   "clearing": "W-R",
+   "entering": "b",
+   "points": [
+    {
+     "cd": 19.78,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 4.955461975478065,
+      "tSlow": 5.236039326052587,
+      "tEnter": 0,
+      "ig": 5.236039326052587
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": "b",
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 68,
+   "clearing": "W-T",
+   "entering": "c",
+   "points": [
+    {
+     "cd": 3.7,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 3.9395479103078306,
+      "tSlow": 3.7082629091653176,
+      "tEnter": 0,
+      "ig": 3.9395479103078306
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": "c",
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 69,
+   "clearing": "W-T",
+   "entering": "N-T",
+   "points": [
+    {
+     "cd": 11.89,
+     "ed": 11.76
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.461563010056944,
+      "tSlow": 4.514900152974182,
+      "tEnter": 0.8467199999999999,
+      "ig": 3.6681801529741818
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": 4,
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 70,
+   "clearing": "W-T",
+   "entering": "N-L",
+   "points": [
+    {
+     "cd": 27.1,
+     "ed": 20.1
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.406184187474488,
+      "tSlow": 5.865056771129647,
+      "tEnter": 1.4472,
+      "ig": 4.417856771129648
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": 4,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 71,
+   "clearing": "W-T",
+   "entering": "E-L",
+   "points": [
+    {
+     "cd": 27.1,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.406184187474488,
+      "tSlow": 5.865056771129647,
+      "tEnter": 0,
+      "ig": 5.865056771129647
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": 1,
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 72,
+   "clearing": "W-T",
+   "entering": "S-L",
+   "points": [
+    {
+     "cd": 14.67,
+     "ed": 4.9
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.636568253686626,
+      "tSlow": 4.774637685209284,
+      "tEnter": 0.3528,
+      "ig": 4.421837685209284
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": 2,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 73,
+   "clearing": "W-T",
+   "entering": "S-T",
+   "points": [
+    {
+     "cd": 16.35,
+     "ed": 4.87
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.741804665494046,
+      "tSlow": 4.928534677293943,
+      "tEnter": 0.35064,
+      "ig": 4.577894677293942
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": 2,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 74,
+   "clearing": "W-T",
+   "entering": "S-R",
+   "points": [
+    {
+     "cd": 27.4,
+     "ed": 12.6
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.424507572186235,
+      "tSlow": 5.890110108919648,
+      "tEnter": 0.9071999999999999,
+      "ig": 4.982910108919649
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": 2,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 75,
+   "clearing": "W-T",
+   "entering": "a",
+   "points": [
+    {
+     "cd": 27.4,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 5.424507572186235,
+      "tSlow": 5.890110108919648,
+      "tEnter": 0,
+      "ig": 5.890110108919648
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": "a",
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 76,
+   "clearing": "W-L",
+   "entering": "c",
+   "points": [
+    {
+     "cd": 3.7,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 3.9395479103078306,
+      "tSlow": 3.7082629091653176,
+      "tEnter": 0,
+      "ig": 3.9395479103078306
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": "c",
+    "finalIg": 4,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 77,
+   "clearing": "W-L",
+   "entering": "N-T",
+   "points": [
+    {
+     "cd": 21.577,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.066764818349701,
+      "tSlow": 5.393751417072662,
+      "tEnter": 0,
+      "ig": 5.393751417072662
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": 4,
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 78,
+   "clearing": "W-L",
+   "entering": "N-L",
+   "points": [
+    {
+     "cd": 21.577,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.066764818349701,
+      "tSlow": 5.393751417072662,
+      "tEnter": 0,
+      "ig": 5.393751417072662
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": 4,
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 79,
+   "clearing": "W-L",
+   "entering": "E-R",
+   "points": [
+    {
+     "cd": 28.8,
+     "ed": 9.85
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.50986467630556,
+      "tSlow": 6.006318810591949,
+      "tEnter": 0.7091999999999999,
+      "ig": 5.297118810591949
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": 1,
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 80,
+   "clearing": "W-L",
+   "entering": "E-T",
+   "points": [
+    {
+     "cd": 22.4,
+     "ed": 9.86
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.11759634157578,
+      "tSlow": 5.465239788908775,
+      "tEnter": 0.7099199999999999,
+      "ig": 4.755319788908775
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": 1,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 81,
+   "clearing": "W-L",
+   "entering": "E-L",
+   "points": [
+    {
+     "cd": 22.99866,
+     "ed": 9.818
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.154515520177264,
+      "tSlow": 5.516955902887618,
+      "tEnter": 0.706896,
+      "ig": 4.810059902887618
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": 1,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 82,
+   "clearing": "W-L",
+   "entering": "S-T",
+   "points": [
+    {
+     "cd": 28.8236,
+     "ed": 19.8753
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 5.511301414892717,
+      "tSlow": 6.00826790041253,
+      "tEnter": 1.4310216,
+      "ig": 4.57724630041253
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": 2,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 83,
+   "clearing": "W-L",
+   "entering": "S-L",
+   "points": [
+    {
+     "cd": 14.2,
+     "ed": 6.6
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 4.607057056759877,
+      "tSlow": 4.731178041141998,
+      "tEnter": 0.47519999999999996,
+      "ig": 4.255978041141998
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": 2,
+    "finalIg": 5,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 84,
+   "clearing": "W-L",
+   "entering": "d",
+   "points": [
+    {
+     "cd": 28.8,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 13.88888888888889,
+    "vSlow": 6.944444444444445,
+    "vEnter": 0,
+    "pointTimes": [
+     {
+      "tFast": 5.50986467630556,
+      "tSlow": 6.006318810591949,
+      "tEnter": 0,
+      "ig": 6.006318810591949
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": 3,
+    "enteringSg": "d",
+    "finalIg": 6,
+    "manualRoundingFlag": 6.006318810591949
+   }
+  },
+  {
+   "conflictNo": 85,
+   "clearing": "d",
+   "entering": "N-L",
+   "points": [
+    {
+     "cd": 11.8,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 9.833333333333334,
+      "tSlow": 9.833333333333334,
+      "tEnter": 0,
+      "ig": 9.833333333333334
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "d",
+    "enteringSg": 4,
+    "finalIg": 10,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 86,
+   "clearing": "d",
+   "entering": "N-R",
+   "points": [
+    {
+     "cd": 11.8,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 9.833333333333334,
+      "tSlow": 9.833333333333334,
+      "tEnter": 0,
+      "ig": 9.833333333333334
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "d",
+    "enteringSg": 4,
+    "finalIg": 10,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 87,
+   "clearing": "d",
+   "entering": "N-T",
+   "points": [
+    {
+     "cd": 11.8,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 9.833333333333334,
+      "tSlow": 9.833333333333334,
+      "tEnter": 0,
+      "ig": 9.833333333333334
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "d",
+    "enteringSg": 4,
+    "finalIg": 10,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 88,
+   "clearing": "d",
+   "entering": "E-R",
+   "points": [
+    {
+     "cd": 11.8,
+     "ed": 4.4
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 9.833333333333334,
+      "tSlow": 9.833333333333334,
+      "tEnter": 0.3168,
+      "ig": 9.516533333333333
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "d",
+    "enteringSg": 1,
+    "finalIg": 10,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 89,
+   "clearing": "d",
+   "entering": "S-T",
+   "points": [
+    {
+     "cd": 11.8,
+     "ed": 16.17
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 9.833333333333334,
+      "tSlow": 9.833333333333334,
+      "tEnter": 1.1642400000000002,
+      "ig": 8.669093333333334
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "d",
+    "enteringSg": 2,
+    "finalIg": 9,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 90,
+   "clearing": "d",
+   "entering": "W-L",
+   "points": [
+    {
+     "cd": 11.8,
+     "ed": 17.9
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 9.833333333333334,
+      "tSlow": 9.833333333333334,
+      "tEnter": 1.2888,
+      "ig": 8.544533333333334
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "d",
+    "enteringSg": 3,
+    "finalIg": 9,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 91,
+   "clearing": "a",
+   "entering": "E-L",
+   "points": [
+    {
+     "cd": 10.8,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 9.000000000000002,
+      "tSlow": 9.000000000000002,
+      "tEnter": 0,
+      "ig": 9.000000000000002
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "a",
+    "enteringSg": 1,
+    "finalIg": 9,
+    "manualRoundingFlag": 9.000000000000002
+   }
+  },
+  {
+   "conflictNo": 92,
+   "clearing": "a",
+   "entering": "E-R",
+   "points": [
+    {
+     "cd": 10.8,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 9.000000000000002,
+      "tSlow": 9.000000000000002,
+      "tEnter": 0,
+      "ig": 9.000000000000002
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "a",
+    "enteringSg": 1,
+    "finalIg": 9,
+    "manualRoundingFlag": 9.000000000000002
+   }
+  },
+  {
+   "conflictNo": 93,
+   "clearing": "a",
+   "entering": "E-T",
+   "points": [
+    {
+     "cd": 10.8,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 9.000000000000002,
+      "tSlow": 9.000000000000002,
+      "tEnter": 0,
+      "ig": 9.000000000000002
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "a",
+    "enteringSg": 1,
+    "finalIg": 9,
+    "manualRoundingFlag": 9.000000000000002
+   }
+  },
+  {
+   "conflictNo": 94,
+   "clearing": "a",
+   "entering": "N-L",
+   "points": [
+    {
+     "cd": 10.8,
+     "ed": 16.5
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 9.000000000000002,
+      "tSlow": 9.000000000000002,
+      "tEnter": 1.188,
+      "ig": 7.812000000000002
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "a",
+    "enteringSg": 4,
+    "finalIg": 8,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 95,
+   "clearing": "a",
+   "entering": "S-R",
+   "points": [
+    {
+     "cd": 10.8,
+     "ed": 8.75
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 9.000000000000002,
+      "tSlow": 9.000000000000002,
+      "tEnter": 0.63,
+      "ig": 8.370000000000001
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "a",
+    "enteringSg": 2,
+    "finalIg": 9,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 96,
+   "clearing": "a",
+   "entering": "W-T",
+   "points": [
+    {
+     "cd": 10.8,
+     "ed": 23.5
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 9.000000000000002,
+      "tSlow": 9.000000000000002,
+      "tEnter": 1.692,
+      "ig": 7.308000000000002
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "a",
+    "enteringSg": 3,
+    "finalIg": 8,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 97,
+   "clearing": "b",
+   "entering": "S-L",
+   "points": [
+    {
+     "cd": 16,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 13.333333333333334,
+      "tSlow": 13.333333333333334,
+      "tEnter": 0,
+      "ig": 13.333333333333334
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "b",
+    "enteringSg": 2,
+    "finalIg": 14,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 98,
+   "clearing": "b",
+   "entering": "S-R",
+   "points": [
+    {
+     "cd": 16,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 13.333333333333334,
+      "tSlow": 13.333333333333334,
+      "tEnter": 0,
+      "ig": 13.333333333333334
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "b",
+    "enteringSg": 2,
+    "finalIg": 14,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 99,
+   "clearing": "b",
+   "entering": "S-T",
+   "points": [
+    {
+     "cd": 16,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 13.333333333333334,
+      "tSlow": 13.333333333333334,
+      "tEnter": 0,
+      "ig": 13.333333333333334
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "b",
+    "enteringSg": 2,
+    "finalIg": 14,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 100,
+   "clearing": "b",
+   "entering": "E-L",
+   "points": [
+    {
+     "cd": 16,
+     "ed": 16.85
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 13.333333333333334,
+      "tSlow": 13.333333333333334,
+      "tEnter": 1.2132,
+      "ig": 12.120133333333333
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "b",
+    "enteringSg": 1,
+    "finalIg": 13,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 101,
+   "clearing": "b",
+   "entering": "N-T",
+   "points": [
+    {
+     "cd": 16,
+     "ed": 15.8
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 13.333333333333334,
+      "tSlow": 13.333333333333334,
+      "tEnter": 1.1376,
+      "ig": 12.195733333333333
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "b",
+    "enteringSg": 4,
+    "finalIg": 13,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 102,
+   "clearing": "b",
+   "entering": "W-R",
+   "points": [
+    {
+     "cd": 16,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 13.333333333333334,
+      "tSlow": 13.333333333333334,
+      "tEnter": 0,
+      "ig": 13.333333333333334
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "b",
+    "enteringSg": 3,
+    "finalIg": 14,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 103,
+   "clearing": "c",
+   "entering": "W-L",
+   "points": [
+    {
+     "cd": 8.3,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 6.916666666666668,
+      "tSlow": 6.916666666666668,
+      "tEnter": 0,
+      "ig": 6.916666666666668
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "c",
+    "enteringSg": 3,
+    "finalIg": 7,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 104,
+   "clearing": "c",
+   "entering": "W-R",
+   "points": [
+    {
+     "cd": 8.3,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 6.916666666666668,
+      "tSlow": 6.916666666666668,
+      "tEnter": 0,
+      "ig": 6.916666666666668
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "c",
+    "enteringSg": 3,
+    "finalIg": 7,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 105,
+   "clearing": "c",
+   "entering": "W-T",
+   "points": [
+    {
+     "cd": 8.3,
+     "ed": 0
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 6.916666666666668,
+      "tSlow": 6.916666666666668,
+      "tEnter": 0,
+      "ig": 6.916666666666668
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "c",
+    "enteringSg": 3,
+    "finalIg": 7,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 106,
+   "clearing": "c",
+   "entering": "E-T",
+   "points": [
+    {
+     "cd": 8.3,
+     "ed": 23.1
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 6.916666666666668,
+      "tSlow": 6.916666666666668,
+      "tEnter": 1.6632,
+      "ig": 5.253466666666668
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "c",
+    "enteringSg": 1,
+    "finalIg": 6,
+    "manualRoundingFlag": null
+   }
+  },
+  {
+   "conflictNo": 107,
+   "clearing": "c",
+   "entering": "S-L",
+   "points": [
+    {
+     "cd": 8.3,
+     "ed": 11.4
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 6.916666666666668,
+      "tSlow": 6.916666666666668,
+      "tEnter": 0.8208,
+      "ig": 6.095866666666668
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "c",
+    "enteringSg": 2,
+    "finalIg": 6,
+    "manualRoundingFlag": 6.095866666666668
+   }
+  },
+  {
+   "conflictNo": 108,
+   "clearing": "c",
+   "entering": "N-R",
+   "points": [
+    {
+     "cd": 8.3,
+     "ed": 10.8
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    },
+    {
+     "cd": null,
+     "ed": null
+    }
+   ],
+   "cached": {
+    "vFast": 1.2,
+    "vSlow": 1.2,
+    "vEnter": 13.88888888888889,
+    "pointTimes": [
+     {
+      "tFast": 6.916666666666668,
+      "tSlow": 6.916666666666668,
+      "tEnter": 0.7776000000000001,
+      "ig": 6.139066666666668
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     },
+     {
+      "tFast": null,
+      "tSlow": null,
+      "tEnter": null,
+      "ig": null
+     }
+    ],
+    "definingPoint": "Point 1",
+    "clearingSg": "c",
+    "enteringSg": 4,
+    "finalIg": 7,
+    "manualRoundingFlag": null
+   }
+  }
+ ]
+}

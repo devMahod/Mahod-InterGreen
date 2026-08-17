@@ -5,11 +5,11 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
 | Gate | Deliverable | Status | Evidence | Blocking issue | Next action |
 |---|---|---|---|---|---|
 | A | Inventory + hash all source material | PASS | docs/SOURCE_INVENTORY.md (15 files hashed) | — | — |
-| B | Source-reference map | ACTIVE | docs/SOURCE_REFERENCES.md | — | write map |
-| C | Solution / contracts skeleton | NOT STARTED | | | dotnet new sln + projects |
-| D | Legacy compatibility engine | NOT STARTED | | | implement per Addendum §C |
-| E | 148/148 golden (FINAL + intermediates) | NOT STARTED | | | independent extraction + C# compare |
-| F | Production validation + 4-row test (18/26/34/60) | NOT STARTED | | | MISSING_CLEARING_MEASUREMENT distinction |
+| B | Source-reference map | PASS | ENGINEERING_DECISIONS.md + OPEN_QUESTIONS.md source refs | — | — |
+| C | Solution / contracts skeleton | PASS | build clean, commit 4ef2c64 | — | — |
+| D | Legacy compatibility engine | PASS | LegacyWorkbookCompatibilityCalculator + 26 unit tests | — | — |
+| E | 148/148 golden (FINAL + intermediates) | PASS | GoldenLegacyTests 148/148+148/148; oracle GOLDEN_EXTRACTION_REPORT.md | — | re-verify via C# XLSX reader at gate N |
+| F | Production validation + 4-row test (18/26/34/60) | PASS | ProductionValidationRegressionTests: 18/60=IG-VAL-001, 26/34=IG-VAL-002 | — | — |
 | G | Rule Pack framework | NOT STARTED | | | |
 | H | Classification + parameter resolution | NOT STARTED | | | |
 | I | Neutral line/arc/polycurve geometry | NOT STARTED | | | |
@@ -31,3 +31,5 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
 ## Checkpoint log
 
 - T+0: pre-flight PASS (SDK 8.0.415, ACAD_OK, CORECONSOLE_OK, git 2.52.0). Working root confirmed: `C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen`.
+
+- T+60 checkpoint written: test-results/T60_CHECKPOINT.md — 39/39 tests, 148/148 golden, 4/4 findings, 13-row delta. Next: Gate G.
