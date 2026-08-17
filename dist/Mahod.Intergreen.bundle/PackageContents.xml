@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApplicationPackage SchemaVersion="1.0" AutodeskProduct="AutoCAD"
+    Name="Mahod Intergreen" AppVersion="0.1.0"
+    Description="Mahod Engineering - intergreen calculation for signalized intersections (Pilot Candidate)"
+    Author="Mahod Engineering Ltd."
+    ProductCode="{7A1C4E2B-9D3F-4B4E-A2F3-6C1D2E3F4A5C}">
+  <CompanyDetails Name="Mahod Engineering Ltd." Url="https://mahodeng.co.il" />
+  <Components Description="AutoCAD 2026 plugin">
+    <RuntimeRequirements OS="Win64" Platform="AutoCAD" SeriesMin="R25.1" SeriesMax="R25.1" />
+    <ComponentEntry AppName="MahodIntergreen" Version="0.1.0"
+        ModuleName="./Contents/Mahod.Intergreen.AutoCAD2026.dll"
+        AppDescription="INTERGREEN pilot workflow" LoadOnAutoCADStartup="True" />
+  </Components>
+</ApplicationPackage>

@@ -1,0 +1,30 @@
+{
+  "reactionTimeSec": 1.0,
+  "decelerationMps2": 3.5,
+  "pedestrianSpeedMps": { "standard": 1.2 },
+  "vehicleLengthM": { "standard": 12 },
+  "inbarDefaultVehicleLengthM": 12,
+  "slowAccelerationRule": {
+    "kind": "legacyExcel",
+    "description": "a = 1.5 - 1.5*kph/80 for kph <= 80, otherwise constant-speed model",
+    "denominatorKph": 80,
+    "constantModelAboveKph": 80
+  },
+  "vehicleSpeeds": {
+    "urban": {
+      "through": { "fast": { "kind": "const", "kph": 50 }, "slow": { "kind": "const", "kph": 25 } },
+      "turn":    { "fast": { "kind": "const", "kph": 50 }, "slow": { "kind": "const", "kph": 25 } }
+    },
+    "interurban": {
+      "through": {
+        "fast": { "kind": "posted" },
+        "slow": { "kind": "min", "of": [ { "kind": "const", "kph": 35 }, { "kind": "halfPosted" } ] }
+      },
+      "turn": {
+        "fast": { "kind": "max", "of": [ { "kind": "postedMinus", "kph": 20 }, { "kind": "const", "kph": 50 } ] },
+        "slow": { "kind": "min", "of": [ { "kind": "const", "kph": 35 }, { "kind": "halfPosted" } ] }
+      }
+    }
+  },
+  "notes": "Workbook practice computes with the urban 50/25 row regardless of the interurban column (FINDINGS.md F-005 / OQ-005). The interurban rules here mirror the workbook's own Parameters-sheet formulas: fast=IF(interurban,MAX(50,posted-20),50), slow=IF(interurban,MIN(35,posted/2),25)."
+}

@@ -1,0 +1,10 @@
+{
+  "document": "David's completed IG_matrix workbooks (golden evidence)",
+  "references": {
+    "SR-WB-AK": { "source": "Input Distances!AK column formula", "covers": "mahod-legacy-0.1 rounding: floor when MOD(max,INT(max))<0.1 else floor+1; blank when INT=0" },
+    "SR-WB-PQ": { "source": "Input Distances!P/Q column formulas", "covers": "clearing time incl. 1.5-1.5*kph/80 acceleration term for kph<=80, constant model above" },
+    "SR-WB-LMN": { "source": "Input Distances!L/M/N column formulas", "covers": "speed resolution via VLOOKUP with pedestrian-speed fallback (clearing) and 0 fallback (entering)" },
+    "SR-WB-PARAMS": { "source": "Parameters sheet", "covers": "constants blocks (variant V1/V2 wiring per Addendum §C.2) and per-movement speed table" },
+    "SR-WB-GOLDEN": { "source": "148 completed conflict rows", "covers": "verified 148/148 FINAL IG + intermediates (ENGINEERING_DECISIONS.md ED-006)" }
+  }
+}

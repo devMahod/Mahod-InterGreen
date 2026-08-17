@@ -51,3 +51,11 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
 - NEXT: Excel writer (§22-29) → 2025 pipeline+conformance (§33-39) → overrides (§40-41) →
   Legacy <3s floor (§42) → INTERGREEN workflow (§43-46) → bundle (§47) → docs (§48-50) →
   final acceptance (§51-60) → Pilot Candidate ZIP (READY FOR INDEPENDENT VERIFICATION).
+
+## Pilot Candidate (branch pilot-hardening)
+- Directive completed through §60: core hardening PASS, Excel writer PASS (both examples,
+  0 structural issues), 2025 conformance 27/27 + e2e, overrides+floor, INTERGREEN palette,
+  bundle+install scripts, Vadim doc, 5 Hebrew docs, rule packs VALIDATED with structured
+  source hashes. Suite 210/210. FINAL_PILOT_VERIFICATION_REPORT.md issued.
+- STATUS: READY FOR INDEPENDENT VERIFICATION (never auto-approved; §56 GUI smoke =
+  AWAITING_ARTHUR_MANUAL_SMOKE).

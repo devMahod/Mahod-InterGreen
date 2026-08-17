@@ -1,0 +1,48 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Mahod.Intergreen.Contracts -> C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\src\Mahod.Intergreen.Contracts\bin\Debug\net8.0\Mahod.Intergreen.Contracts.dll
+  Mahod.Intergreen.Geometry -> C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\src\Mahod.Intergreen.Geometry\bin\Debug\net8.0\Mahod.Intergreen.Geometry.dll
+  Mahod.Intergreen.Rules -> C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\src\Mahod.Intergreen.Rules\bin\Debug\net8.0\Mahod.Intergreen.Rules.dll
+  Mahod.Intergreen.Core -> C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\src\Mahod.Intergreen.Core\bin\Debug\net8.0\Mahod.Intergreen.Core.dll
+  Mahod.Intergreen.Rules.Tests -> C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\tests\Mahod.Intergreen.Rules.Tests\bin\Debug\net8.0\Mahod.Intergreen.Rules.Tests.dll
+  Mahod.Intergreen.Geometry.Tests -> C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\tests\Mahod.Intergreen.Geometry.Tests\bin\Debug\net8.0\Mahod.Intergreen.Geometry.Tests.dll
+Test run for C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\tests\Mahod.Intergreen.Rules.Tests\bin\Debug\net8.0\Mahod.Intergreen.Rules.Tests.dll (.NETCoreApp,Version=v8.0)
+Test run for C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\tests\Mahod.Intergreen.Geometry.Tests\bin\Debug\net8.0\Mahod.Intergreen.Geometry.Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.14.1 (x64)
+
+VSTest version 17.14.1 (x64)
+
+  Mahod.Intergreen.Reporting -> C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\src\Mahod.Intergreen.Reporting\bin\Debug\net8.0\Mahod.Intergreen.Reporting.dll
+Starting test execution, please wait...
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+A total of 1 test files matched the specified pattern.
+  Mahod.Intergreen.Core.Tests -> C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\tests\Mahod.Intergreen.Core.Tests\bin\Debug\net8.0\Mahod.Intergreen.Core.Tests.dll
+Test run for C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\tests\Mahod.Intergreen.Core.Tests\bin\Debug\net8.0\Mahod.Intergreen.Core.Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.14.1 (x64)
+
+  Mahod.Intergreen.Excel -> C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\src\Mahod.Intergreen.Excel\bin\Debug\net8.0\Mahod.Intergreen.Excel.dll
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+  Mahod.Intergreen.Excel.Tests -> C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\tests\Mahod.Intergreen.Excel.Tests\bin\Debug\net8.0\Mahod.Intergreen.Excel.Tests.dll
+  Mahod.Intergreen.Regression.Tests -> C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\tests\Mahod.Intergreen.Regression.Tests\bin\Debug\net8.0\Mahod.Intergreen.Regression.Tests.dll
+Test run for C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\tests\Mahod.Intergreen.Excel.Tests\bin\Debug\net8.0\Mahod.Intergreen.Excel.Tests.dll (.NETCoreApp,Version=v8.0)
+Test run for C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\tests\Mahod.Intergreen.Regression.Tests\bin\Debug\net8.0\Mahod.Intergreen.Regression.Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.14.1 (x64)
+VSTest version 17.14.1 (x64)
+
+
+
+Passed!  - Failed:     0, Passed:    24, Skipped:     0, Total:    24, Duration: 33 ms - Mahod.Intergreen.Rules.Tests.dll (net8.0)
+
+Passed!  - Failed:     0, Passed:    49, Skipped:     0, Total:    49, Duration: 45 ms - Mahod.Intergreen.Geometry.Tests.dll (net8.0)
+Starting test execution, please wait...
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    93, Skipped:     0, Total:    93, Duration: 31 ms - Mahod.Intergreen.Core.Tests.dll (net8.0)
+
+Passed!  - Failed:     0, Passed:    30, Skipped:     0, Total:    30, Duration: 856 ms - Mahod.Intergreen.Regression.Tests.dll (net8.0)
+
+Passed!  - Failed:     0, Passed:    14, Skipped:     0, Total:    14, Duration: 3 s - Mahod.Intergreen.Excel.Tests.dll (net8.0)

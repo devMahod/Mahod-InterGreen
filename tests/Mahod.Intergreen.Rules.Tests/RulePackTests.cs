@@ -12,7 +12,7 @@ namespace Mahod.Intergreen.Rules.Tests;
 public class RulePackLoadTests
 {
     [Theory]
-    [InlineData("legacy-mahod-v1", RulePackStatus.Approved, "legacy-envelope", "mahod-legacy-0.1", null)]
+    [InlineData("legacy-mahod-v1", RulePackStatus.Validated, "legacy-envelope", "mahod-legacy-0.1", null)]
     [InlineData("israel-2025-06", RulePackStatus.Validated, "lane-centreline", "guidelines-ceil", 3)]
     public void Packs_load_with_expected_manifest(string id, RulePackStatus status,
         string geometry, string rounding, int? minimum)
@@ -42,7 +42,7 @@ public class RulePackLoadTests
         var pack = RulePackLoader.Load(Path.Combine(RulePackLoader.RulesRoot(), "legacy-mahod-v1"));
         var patched = new RulePack
         {
-            Manifest = pack.Manifest with { ApprovedBy = null },
+            Manifest = pack.Manifest with { Status = RulePackStatus.Approved, ApprovedBy = null },
             Parameters = pack.Parameters,
             ContentSha256 = pack.ContentSha256,
             SourceDirectory = pack.SourceDirectory,
