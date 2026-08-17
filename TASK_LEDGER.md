@@ -110,3 +110,19 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
   to Arthur for a respin decision (third-party DLLs only; zero Mahod DLL changes;
   full installer revalidation required after).
 - LIN r3 email is ON HOLD until the respin decision.
+
+## EMERGENCY Lin replacement (authorized respin, 2026-08-17 night)
+- Bundle runtime closure FIXED: added SixLabors.Fonts.dll (e1e2f107...c45d9f) +
+  RBush.dll (047e48ab...ab6a1) to dist bundle Contents (exact validated bytes from the
+  0.1.0 build output). ZERO Mahod DLL changes (7/7 byte-identical incl. AutoCAD host).
+- Runtime closure test (new, mandatory): runner executed FROM a clean copy of the exact
+  shipping bundle (WindowsDesktop framework = AutoCAD-faithful; Private=false refs so
+  nothing resolves from bin/NuGet/SDK) AND from the installed ApplicationPlugins path.
+  Both PASS with golden numbers (11 movements / 50 conflicts / 24-0-0 / W-L->S-T IG 5);
+  ClosedXML+SixLabors.Fonts+RBush all loaded from the shipping folder.
+- Installer r2 (Mahod_Intergreen_Setup_0.1.0-r2.exe, 5862975d...) validated 13/13;
+  old installer + LIN r3 SUPERSEDED - DO NOT DISTRIBUTE (retained in superseded/).
+- LIN r4 built (73c6d2b7...): identical docs/kit to r3 except installer refs + Hebrew
+  superseded notice; urgent correction email produced (exact directive text).
+- LESSON (added to validation doctrine): file-hash identity of a package is NOT runtime
+  closure - always execute the real workload from the exact shipping folder.
