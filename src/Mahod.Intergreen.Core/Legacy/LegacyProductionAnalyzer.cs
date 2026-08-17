@@ -34,6 +34,7 @@ public sealed class LegacyProductionAnalyzer
     public const string CodeMissingClearingMeasurement = "IG-VAL-002";   // ED defined, CD absent
     public const string CodeSubOneSecondResult = "IG-VAL-003";           // raw IG < 1 s
     public const string CodeUnknownMovementParameters = "IG-VAL-004";    // vehicle movement absent from the parameter table
+    public const string CodeBelowSafetyFloor = "IG-VAL-005";             // Legacy production <3 s safety floor (Directive §42)
 
     private readonly LegacyConstants _c;
     private readonly LegacyTemplateVariant _variant;
@@ -181,8 +182,34 @@ public sealed class LegacyProductionAnalyzer
                 results, definingIdx, raw, (int)Math.Ceiling(raw));
         }
 
+        var resolved = _policy.Resolve(raw);
+        if (resolved is int rInt)
+        {
+            var (floored, floorFinding, floorStatus) = ApplySafetyFloor(rInt, conflictRef);
+            if (floorFinding is not null) findings.Add(floorFinding);
+            return new GeometryConflictResult(conflictId, floorStatus, findings,
+                results, definingIdx, raw, floored);
+        }
         return new GeometryConflictResult(conflictId, RowStatus.Valid, findings,
-            results, definingIdx, raw, _policy.Resolve(raw));
+            results, definingIdx, raw, resolved);
+    }
+
+
+    /// <summary>
+    /// Directive §42 — Pilot production safety floor: the historical Legacy minimum rule is
+    /// unresolved (OQ-001), so a Legacy production value below 3 s is never issued silently.
+    /// The conservative candidate (≥3 s) is emitted with REVIEW_REQUIRED; compatibility
+    /// mode remains untouched.
+    /// </summary>
+    private (int Final, ValidationFinding? Finding, RowStatus Status) ApplySafetyFloor(int final, string conflictRef)
+    {
+        if (final >= 3)
+            return (final, null, RowStatus.Valid);
+        return (3, new ValidationFinding(CodeBelowSafetyFloor, Severity.ReviewRequired, conflictRef,
+            $"Legacy production result {final} s is below 3 s. The historical Legacy minimum rule is unresolved " +
+            "(OPEN_QUESTIONS.md OQ-001) and the current official method mandates a 3-second minimum — " +
+            "the conservative 3 s candidate is issued for review.",
+            SourceReference: "Directive §42; SR-5.6"), RowStatus.ReviewRequired);
     }
 
     public LegacyProductionRowResult AnalyzeRow(
@@ -342,8 +369,19 @@ public sealed class LegacyProductionAnalyzer
             return new LegacyProductionRowResult(row.ConflictNo, RowStatus.ReviewRequired, findings, calcRow, emitted);
         }
 
+        var finalIg = calcRow.FinalIg;
         var status = findings.Any(f => f.Severity == Severity.ReviewRequired)
             ? RowStatus.ReviewRequired : RowStatus.Valid;
-        return new LegacyProductionRowResult(row.ConflictNo, status, findings, calcRow, calcRow.FinalIg);
+        if (finalIg is int fi)
+        {
+            var (floored, floorFinding, floorStatus) = ApplySafetyFloor(fi, conflictRef);
+            if (floorFinding is not null)
+            {
+                findings.Add(floorFinding);
+                status = RowStatus.ReviewRequired;
+            }
+            finalIg = floored;
+        }
+        return new LegacyProductionRowResult(row.ConflictNo, status, findings, calcRow, finalIg);
     }
 }

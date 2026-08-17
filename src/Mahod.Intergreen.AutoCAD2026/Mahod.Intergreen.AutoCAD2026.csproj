@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
     <EnableDynamicLoading>true</EnableDynamicLoading>
+    <UseWPF>true</UseWPF>
     <!-- Autodesk assemblies are referenced from the local installation and are NEVER
          copied or shipped (execution prompt §13 / Directive §7). -->
     <AutoCadDir>C:\Program Files\Autodesk\AutoCAD 2026</AutoCadDir>
@@ -32,6 +33,7 @@
     <ProjectReference Include="..\Mahod.Intergreen.Geometry\Mahod.Intergreen.Geometry.csproj" />
     <ProjectReference Include="..\Mahod.Intergreen.Rules\Mahod.Intergreen.Rules.csproj" />
     <ProjectReference Include="..\Mahod.Intergreen.Reporting\Mahod.Intergreen.Reporting.csproj" />
+    <ProjectReference Include="..\Mahod.Intergreen.Excel\Mahod.Intergreen.Excel.csproj" />
   </ItemGroup>
 
 </Project>

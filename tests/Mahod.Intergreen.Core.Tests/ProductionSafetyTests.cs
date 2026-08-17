@@ -158,3 +158,78 @@ public class PedestrianMetamorphicTests
         Assert.Contains(result.Findings, f => f.Code == LegacyProductionAnalyzer.CodeUnknownMovementParameters);
     }
 }
+
+/// <summary>Directive §40–§42 — approved-exception provenance and the Legacy production safety floor.</summary>
+public class OverrideAndFloorTests
+{
+    [Fact]
+    public void Safety_reducing_override_without_full_approval_is_refused()
+    {
+        var o = new Mahod.Intergreen.Core.ProjectOverride("OV1",
+            Mahod.Intergreen.Core.OverrideScope.Conflict, "finalIg", 7, 6, "reason", null, null, null);
+        var r = Mahod.Intergreen.Core.ProjectOverrideService.Resolve("finalIg", 7, new[] { o });
+        Assert.Equal(7, r.EffectiveValue); // base stays in force
+        Assert.Null(r.Applied);
+        Assert.Contains(r.Findings, f => f.Code == Mahod.Intergreen.Core.ProjectOverrideService.CodeSafetyReducing
+            && f.Severity == Severity.Error);
+    }
+
+    [Fact]
+    public void Fully_approved_safety_reducing_override_applies_with_review_and_visible_base()
+    {
+        var o = new Mahod.Intergreen.Core.ProjectOverride("OV2",
+            Mahod.Intergreen.Core.OverrideScope.Conflict, "finalIg", 7, 6,
+            "approved engineering exception", "APPROVAL-123", "D. Suchinsky", "2026-08-01");
+        var r = Mahod.Intergreen.Core.ProjectOverrideService.Resolve("finalIg", 7, new[] { o });
+        Assert.Equal(6, r.EffectiveValue);
+        Assert.NotNull(r.Applied);
+        Assert.Equal(7, r.Applied!.BaseValue); // base value permanently retained
+        Assert.Contains(r.Findings, f => f.Severity == Severity.ReviewRequired);
+    }
+
+    [Fact]
+    public void Non_whitelisted_override_target_is_rejected()
+    {
+        var o = new Mahod.Intergreen.Core.ProjectOverride("OV3",
+            Mahod.Intergreen.Core.OverrideScope.Project, "formula", 1, 2, "r", "a", "x", "d");
+        var r = Mahod.Intergreen.Core.ProjectOverrideService.Resolve("formula", 1, new[] { o });
+        Assert.Equal(1, r.EffectiveValue);
+        Assert.Contains(r.Findings, f => f.Code == Mahod.Intergreen.Core.ProjectOverrideService.CodeUnknownTarget);
+    }
+
+    [Fact]
+    public void Legacy_production_below_3s_is_floored_with_review()
+    {
+        // synthetic geometry conflict yielding a small raw IG (short CD, long ED)
+        var analyzer = new LegacyProductionAnalyzer(
+            new LegacyConstants(GlobalVehicleLengthMeters: 12),
+            LegacyTemplateVariant.V2GlobalVehicleLength,
+            new Dictionary<string, LegacyMovementParameters>
+            {
+                ["A-T"] = new(50, 25, 12, null),
+                ["B-T"] = new(50, 25, 12, null),
+            });
+        var result = analyzer.AnalyzeGeometryConflict("t", "A-T", "B-T",
+            MovementMode.Vehicle, MovementMode.Vehicle,
+            new List<(double, double)> { (2.0, 25.0) }); // raw ≈ 2.6 − 1.8 ≈ 1.2 → legacy 2 → floor 3
+        Assert.Equal(RowStatus.ReviewRequired, result.Status);
+        Assert.Equal(3, result.FinalIg);
+        Assert.Contains(result.Findings, f => f.Code == LegacyProductionAnalyzer.CodeBelowSafetyFloor);
+    }
+
+    [Fact]
+    public void Compatibility_calculator_is_not_floored()
+    {
+        var calc = new LegacyWorkbookCompatibilityCalculator(
+            new LegacyConstants(GlobalVehicleLengthMeters: 12),
+            LegacyTemplateVariant.V2GlobalVehicleLength,
+            new Dictionary<string, LegacyMovementParameters>
+            {
+                ["A-T"] = new(50, 25, 12, null),
+                ["B-T"] = new(50, 25, 12, null),
+            });
+        var row = calc.ComputeRow(new ConflictRowInput(1, "A-T", "B-T",
+            new MeasuredPoint(2.0, 25.0), default, default, default));
+        Assert.True(row.FinalIg < 3); // historical behaviour preserved for regression
+    }
+}
