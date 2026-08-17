@@ -63,8 +63,26 @@ public class GoldenLegacyTests
                 var got = result.PointResults[i]?.IntergreenSec;
                 if (expected is null && got is null) continue;
                 if (expected is null || got is null || Math.Abs(expected.Value - got.Value) > IntermediateTolerance)
+                {
                     mismatches.Add($"conflict {row.Input.ConflictNo} P{i + 1}: expected {expected?.ToString() ?? "blank"}, got {got?.ToString() ?? "blank"}");
+                    continue;
+                }
+
+                // Final Hotfix §12: also compare the raw time columns (P/Q/R, T/U/V, X/Y/Z, AB/AC/AD),
+                // because integer rounding can conceal compensating errors.
+                var (eFast, eSlow, eEnter) = row.ExpectedPointTimes[i];
+                var pr = result.PointResults[i]!;
+                if (eFast is double f && Math.Abs(f - pr.ClearFastSec) > IntermediateTolerance)
+                    mismatches.Add($"conflict {row.Input.ConflictNo} P{i + 1} tFast: expected {f}, got {pr.ClearFastSec}");
+                if (eSlow is double s && Math.Abs(s - pr.ClearSlowSec) > IntermediateTolerance)
+                    mismatches.Add($"conflict {row.Input.ConflictNo} P{i + 1} tSlow: expected {s}, got {pr.ClearSlowSec}");
+                if (eEnter is double en && Math.Abs(en - pr.EnterSec) > IntermediateTolerance)
+                    mismatches.Add($"conflict {row.Input.ConflictNo} P{i + 1} tEnter: expected {en}, got {pr.EnterSec}");
             }
+
+            // column AL: manual-rounding flag
+            if (result.FinalIg is not null && row.ExpectedManualRoundingFlag != result.ManualRoundingCandidate)
+                mismatches.Add($"conflict {row.Input.ConflictNo} AL flag: expected {row.ExpectedManualRoundingFlag}, got {result.ManualRoundingCandidate}");
         }
 
         Assert.True(mismatches.Count == 0,
@@ -133,12 +151,13 @@ public class ProductionValidationRegressionTests
     public void Example2_rows_18_26_34_60_are_blocked_with_correct_classification()
     {
         var fx = GoldenFixture.Load("example2");
-        var analyzer = new LegacyProductionAnalyzer(fx.CreateCalculator());
+        var analyzer = fx.CreateProductionAnalyzer();
 
         var blocked = new Dictionary<int, string>();
         foreach (var row in fx.Rows)
         {
-            var result = analyzer.AnalyzeRow(row.Input);
+            var result = analyzer.AnalyzeRow(row.Input,
+                fx.ModeOf(row.Input.ClearingMovement), fx.ModeOf(row.Input.EnteringMovement));
             foreach (var f in result.Findings.Where(f => f.Severity == Severity.Error))
                 blocked[row.Input.ConflictNo] = f.Code;
         }
@@ -154,21 +173,27 @@ public class ProductionValidationRegressionTests
         // and the blocked rows carry no engineering number
         foreach (var no in new[] { 18, 26, 34, 60 })
         {
-            var r = analyzer.AnalyzeRow(fx.Rows.Single(x => x.Input.ConflictNo == no).Input);
+            var g = fx.Rows.Single(x => x.Input.ConflictNo == no);
+            var r = analyzer.AnalyzeRow(g.Input,
+                fx.ModeOf(g.Input.ClearingMovement), fx.ModeOf(g.Input.EnteringMovement));
             Assert.True(r.IsBlocked);
             Assert.Null(r.FinalIg);
         }
     }
 
     [Fact]
-    public void Example1_has_no_blocked_rows()
+    public void Example1_has_no_blocked_rows_and_production_matches_workbook_final()
     {
+        // The stable production formulation is algebraically identical to the historical
+        // formula away from the 80 km/h singularity; golden speeds are 50/25, so the
+        // production analyzer must reproduce every Example 1 FINAL IG exactly.
         var fx = GoldenFixture.Load("example1");
-        var analyzer = new LegacyProductionAnalyzer(fx.CreateCalculator());
+        var analyzer = fx.CreateProductionAnalyzer();
 
         foreach (var row in fx.Rows)
         {
-            var result = analyzer.AnalyzeRow(row.Input);
+            var result = analyzer.AnalyzeRow(row.Input,
+                fx.ModeOf(row.Input.ClearingMovement), fx.ModeOf(row.Input.EnteringMovement));
             Assert.False(result.IsBlocked, $"conflict {row.Input.ConflictNo} unexpectedly blocked");
             Assert.Equal((int?)row.ExpectedFinalIg!.Value, result.FinalIg);
         }

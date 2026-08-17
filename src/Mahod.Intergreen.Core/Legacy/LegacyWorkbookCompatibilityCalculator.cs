@@ -55,6 +55,13 @@ public sealed class LegacyWorkbookCompatibilityCalculator
                        + (d + vehicleLengthMeters) / speedMps;
             }
 
+            // At exactly 80 km/h the historical workbook formula divides by coeff == 0:
+            // Excel yields #DIV/0! → IFERROR → -1. Reproduce that faithfully
+            // (LEGACY_SOURCE_FORMULA_SINGULARITY — Final Hotfix §3). Without this guard,
+            // IEEE arithmetic would produce 0/0 = NaN instead of the workbook's -1.
+            if (coeff == 0.0)
+                return -1.0;
+
             var brake = speedMps * speedMps / (2.0 * _c.DecelerationMps2);
             var discriminant = speedMps * speedMps + 2.0 * (brake + d + vehicleLengthMeters) * coeff;
             if (discriminant < 0)

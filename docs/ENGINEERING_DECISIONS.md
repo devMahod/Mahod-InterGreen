@@ -58,3 +58,28 @@ Every non-trivial interpretation, with source, alternatives, impact and the test
 
 - **Decision**: `tests/fixtures/golden-example*.json` are produced by `scripts/extract_golden.py` directly from the source workbooks (hashes in docs/SOURCE_INVENTORY.md). The independent Python oracle in the same script re-verified every baseline claim before any C# existed: 148/148 FINAL, 148/148 intermediates, worst delta 2.665e-15, 13 delta rows, 4 incomplete rows with the 18/60-vs-26/34 distinction, single multi-point row (Ex2 conflict 8, N-T→W-R).
 - **Gate N follow-up**: the C# Excel readers must re-read the original XLSX files and agree with the fixtures.
+
+## ED-007 — Continuous zero-acceleration extension for Legacy Production (Final Hotfix §1–§2)
+
+- **Decision**: Production vehicle clearing uses `a = max(0, 1.5 − 1.5·kph/80)` and the stable
+  form `t = reaction + 2L/(sqrt(v² + 2·L·a) + v)`, `L = v²/(2·decel) + d + len`.
+- **Reason**: the workbook formula is singular at exactly 80 km/h (division by a=0 → #DIV/0!).
+  The stable form is algebraically equivalent away from the singularity and has the exact
+  constant-speed limit L/v at a=0.
+- **Compatibility behaviour**: preserved separately (ED-008). **Production behaviour**: finite,
+  continuous. **Impact**: Legacy Production only; NOT an official guideline formula.
+- **Test**: `ProductionNumericsTests` — continuity at 79.9…80.1, equality with the historical
+  form at 25/50/70/79/90 kph to 1e-9, constant-speed identity at exactly 80.
+
+## ED-008 — Compatibility calculator reproduces the 80 km/h workbook singularity
+
+- **Decision**: at exactly coeff==0 the compatibility calculator returns the workbook's
+  IFERROR result (-1) instead of IEEE NaN (LEGACY_SOURCE_FORMULA_SINGULARITY, Final Hotfix §3).
+- **Test**: `Compatibility_reproduces_the_workbook_singularity_at_exactly_80`.
+
+## ED-009 — Production movement branching by Movement.Mode only (Final Hotfix §4)
+
+- **Decision**: `LegacyProductionAnalyzer` selects the pedestrian/vehicle algorithm from
+  `MovementMode`, never from `speed == 1.2`. A 1.0 m/s pedestrian stays a pedestrian; an
+  unknown vehicle movement blocks with IG-VAL-004 and never falls back to pedestrian speed.
+- **Test**: `PedestrianMetamorphicTests` (1.2 / 1.0 / synthetic 0.9 m/s).

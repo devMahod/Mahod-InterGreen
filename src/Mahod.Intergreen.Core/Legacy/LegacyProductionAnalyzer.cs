@@ -1,45 +1,69 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Mahod.Intergreen.Contracts;
 
 namespace Mahod.Intergreen.Core.Legacy;
 
+/// <summary>Row status per Final Hotfix §18 semantics.</summary>
+public enum RowStatus { Valid, ReviewRequired, Error }
+
 /// <summary>Production result for one conflict row: findings first, numbers only when safe.</summary>
 public sealed record LegacyProductionRowResult(
     int ConflictNo,
+    RowStatus Status,
     IReadOnlyList<ValidationFinding> Findings,
     LegacyRowResult? Calculation,
     int? FinalIg)
 {
-    public bool IsBlocked => Calculation is null;
+    public bool IsBlocked => Status == RowStatus.Error;
 }
 
 /// <summary>
-/// Production analysis over the Legacy method (v3 §25/§26, Addendum §C.1/§C.3).
+/// Production analysis over the Legacy method (v3 §25/§26, Addendum §C, Final Hotfix §1–§8).
 ///
-/// Unlike <see cref="LegacyWorkbookCompatibilityCalculator"/>, this analyzer:
-///  - treats a missing required clearing measurement as an ERROR, never as zero;
-///  - distinguishes MISSING_CLEARING_MEASUREMENT (defined ED present, e.g. pedestrian ED=0)
-///    from MISSING_MEASUREMENT (nothing measured at all);
-///  - always surfaces sub-1-second results with a finding instead of a silent blank.
+/// Contract:
+///  - the calculation model is selected by <see cref="MovementMode"/>, never by speed equality;
+///  - a missing required clearing measurement is an ERROR, never zero;
+///  - vehicle numerics use the stable continuous formulation (no 80 km/h singularity);
+///  - invalid inputs / NaN / Infinity are blocking findings; independent rows keep processing.
 /// </summary>
 public sealed class LegacyProductionAnalyzer
 {
     public const string CodeMissingMeasurement = "IG-VAL-001";           // no CD and no ED at all
     public const string CodeMissingClearingMeasurement = "IG-VAL-002";   // ED defined, CD absent
     public const string CodeSubOneSecondResult = "IG-VAL-003";           // raw IG < 1 s
-    public const string CodeUnknownMovementParameters = "IG-VAL-004";    // clearing movement resolves to ped fallback unexpectedly
+    public const string CodeUnknownMovementParameters = "IG-VAL-004";    // vehicle movement absent from the parameter table
 
-    private readonly LegacyWorkbookCompatibilityCalculator _calculator;
+    private readonly LegacyConstants _c;
+    private readonly LegacyTemplateVariant _variant;
+    private readonly IReadOnlyDictionary<string, LegacyMovementParameters> _params;
+    private readonly FinalIgPolicy _policy;
+    private readonly LegacyProductionCalculator _calc;
 
-    public LegacyProductionAnalyzer(LegacyWorkbookCompatibilityCalculator calculator)
-        => _calculator = calculator;
+    public LegacyProductionAnalyzer(
+        LegacyConstants constants,
+        LegacyTemplateVariant variant,
+        IReadOnlyDictionary<string, LegacyMovementParameters> movementParameters,
+        FinalIgPolicy? policy = null)
+    {
+        _c = constants;
+        _variant = variant;
+        _params = movementParameters;
+        _policy = policy ?? FinalIgPolicy.MahodLegacy;
+        _calc = new LegacyProductionCalculator(constants.ReactionTimeSec, constants.DecelerationMps2);
+    }
 
-    public LegacyProductionRowResult AnalyzeRow(ConflictRowInput row)
+    public LegacyProductionRowResult AnalyzeRow(
+        ConflictRowInput row,
+        MovementMode clearingMode,
+        MovementMode enteringMode,
+        double? pedestrianSpeedMpsOverride = null)
     {
         var findings = new List<ValidationFinding>();
         var conflictRef = $"conflict {row.ConflictNo} ({row.ClearingMovement} → {row.EnteringMovement})";
 
+        // --- required measurement (Addendum §C.3/§D) ---
         var p1 = row.Point1;
         if (p1.ClearingDistanceMeters is null)
         {
@@ -49,7 +73,7 @@ public sealed class LegacyProductionAnalyzer
                     CodeMissingMeasurement, Severity.Error, conflictRef,
                     "No measured distances at all for this conflict.",
                     "Point 1 CD and ED cells are both blank. Historical workbooks treated blank as 0 and still emitted a final intergreen.",
-                    "Measure the conflict or mark it not applicable. A result must not be issued from blank cells.",
+                    "Measure the conflict or mark it not applicable.",
                     "v3 §26; Addendum §D"));
             }
             else
@@ -61,16 +85,122 @@ public sealed class LegacyProductionAnalyzer
                     "Measure the clearing distance. Do not allow blank CD to become zero.",
                     "v3 §26; Addendum §D"));
             }
-            return new LegacyProductionRowResult(row.ConflictNo, findings, null, null);
+            return new LegacyProductionRowResult(row.ConflictNo, RowStatus.Error, findings, null, null);
         }
 
-        var calc = _calculator.ComputeRow(row);
+        // --- parameter resolution by MODE (Final Hotfix §4) ---
+        double clearFastMps, clearSlowMps;
+        double vehLen = 0.0;
+        var pedSpeed = pedestrianSpeedMpsOverride ?? _c.PedestrianSpeedMps;
 
-        if (calc.RawMaxIntergreenSec is double raw && raw < 1.0)
+        if (clearingMode == MovementMode.Pedestrian)
         {
-            // Addendum §C.1: the workbook silently yields blank here and nothing reaches the
-            // matrix. Production must always emit a value and raise a finding. We emit the
-            // conservative ceiling (never smaller than the raw value) and flag for review.
+            clearFastMps = clearSlowMps = pedSpeed; // used only inside the pedestrian branch below
+        }
+        else
+        {
+            if (!_params.TryGetValue(row.ClearingMovement, out var pc)
+                || pc.FastClearingKph is not double fk || pc.SlowClearingKph is not double sk)
+            {
+                findings.Add(new ValidationFinding(CodeUnknownMovementParameters, Severity.Error, conflictRef,
+                    $"Clearing movement '{row.ClearingMovement}' (mode {clearingMode}) has no speed parameters.",
+                    RecommendedAction: "Add the movement to the parameter table. Production never falls back to pedestrian speed.",
+                    SourceReference: "Final Hotfix §4"));
+                return new LegacyProductionRowResult(row.ConflictNo, RowStatus.Error, findings, null, null);
+            }
+            clearFastMps = fk / 3.6;
+            clearSlowMps = sk / 3.6;
+            var len = _variant == LegacyTemplateVariant.V2GlobalVehicleLength
+                ? _c.GlobalVehicleLengthMeters
+                : (_params.TryGetValue(row.ClearingMovement, out var plen) ? plen.VehicleLengthMeters : null);
+            if (len is not double l)
+            {
+                findings.Add(new ValidationFinding(CodeUnknownMovementParameters, Severity.Error, conflictRef,
+                    $"Clearing movement '{row.ClearingMovement}' has no vehicle length.",
+                    SourceReference: "Addendum §C.2"));
+                return new LegacyProductionRowResult(row.ConflictNo, RowStatus.Error, findings, null, null);
+            }
+            vehLen = l;
+        }
+
+        double enterMps;
+        if (enteringMode == MovementMode.Pedestrian)
+        {
+            enterMps = 0.0; // pedestrian entering time is 0 by definition
+        }
+        else if (_params.TryGetValue(row.EnteringMovement, out var pe) && pe.FastClearingKph is double ek)
+        {
+            enterMps = ek / 3.6;
+        }
+        else
+        {
+            findings.Add(new ValidationFinding(CodeUnknownMovementParameters, Severity.Error, conflictRef,
+                $"Entering movement '{row.EnteringMovement}' (mode {enteringMode}) has no speed parameters.",
+                SourceReference: "Final Hotfix §4"));
+            return new LegacyProductionRowResult(row.ConflictNo, RowStatus.Error, findings, null, null);
+        }
+
+        // --- per-point calculation (structured outcomes, Final Hotfix §8) ---
+        var points = row.Points;
+        var results = new PointTimes?[4];
+        var igs = new double?[4];
+        for (var i = 0; i < 4; i++)
+        {
+            var pt = points[i];
+            if (pt.ClearingDistanceMeters is not double cd)
+                continue; // unpopulated point (P1 handled above)
+
+            LegacyProductionCalculator.Outcome fast, slow;
+            if (clearingMode == MovementMode.Pedestrian)
+            {
+                fast = slow = _calc.PedestrianClearingTimeSec(cd, pedSpeed);
+            }
+            else
+            {
+                fast = _calc.VehicleClearingTimeSec(cd, clearFastMps, vehLen);
+                slow = _calc.VehicleClearingTimeSec(cd, clearSlowMps, vehLen);
+            }
+            var enter = _calc.EnteringTimeSec(pt.EnteringDistanceMeters ?? 0.0, enterMps);
+
+            var bad = new[] { fast.Finding, slow.Finding, enter.Finding }.FirstOrDefault(f => f is not null);
+            if (bad is not null)
+            {
+                findings.Add(bad with { ConflictRef = conflictRef });
+                return new LegacyProductionRowResult(row.ConflictNo, RowStatus.Error, findings, null, null);
+            }
+
+            var ig = Math.Max(fast.Value!.Value, slow.Value!.Value) - enter.Value!.Value;
+            results[i] = new PointTimes(fast.Value.Value, slow.Value.Value, enter.Value.Value, ig);
+            igs[i] = ig;
+        }
+
+        double? rawMax = null;
+        int? defining = null;
+        for (var i = 0; i < 4; i++)
+        {
+            if (igs[i] is not double v) continue;
+            if (rawMax is null || v > rawMax) { rawMax = v; defining = i; }
+        }
+
+        if (rawMax is not double raw)
+        {
+            findings.Add(new ValidationFinding(CodeMissingMeasurement, Severity.Error, conflictRef,
+                "No computable point on this conflict.", SourceReference: "v3 §26"));
+            return new LegacyProductionRowResult(row.ConflictNo, RowStatus.Error, findings, null, null);
+        }
+
+        var calcRow = new LegacyRowResult(
+            clearingMode == MovementMode.Pedestrian ? pedSpeed : clearFastMps,
+            clearingMode == MovementMode.Pedestrian ? pedSpeed : clearSlowMps,
+            enterMps,
+            clearingMode == MovementMode.Pedestrian ? null : vehLen,
+            results, raw, defining, _policy.Resolve(raw),
+            ManualRoundingCandidate: false);
+
+        if (raw < 1.0)
+        {
+            // Addendum §C.1: the workbook yields blank here and the pair silently vanishes.
+            // Production always emits the conservative ceiling plus a REVIEW REQUIRED finding.
             var emitted = (int)Math.Ceiling(raw);
             findings.Add(new ValidationFinding(
                 CodeSubOneSecondResult, Severity.ReviewRequired, conflictRef,
@@ -78,9 +208,11 @@ public sealed class LegacyProductionAnalyzer
                 "The legacy rounding rule (MOD by INT) is undefined below 1 s; the source workbook leaves the cell blank and the matrix silently omits the pair.",
                 "Review the conflict. The emitted value is the conservative ceiling of the raw result.",
                 "Addendum §C.1"));
-            return new LegacyProductionRowResult(row.ConflictNo, findings, calc, emitted);
+            return new LegacyProductionRowResult(row.ConflictNo, RowStatus.ReviewRequired, findings, calcRow, emitted);
         }
 
-        return new LegacyProductionRowResult(row.ConflictNo, findings, calc, calc.FinalIg);
+        var status = findings.Any(f => f.Severity == Severity.ReviewRequired)
+            ? RowStatus.ReviewRequired : RowStatus.Valid;
+        return new LegacyProductionRowResult(row.ConflictNo, status, findings, calcRow, calcRow.FinalIg);
     }
 }

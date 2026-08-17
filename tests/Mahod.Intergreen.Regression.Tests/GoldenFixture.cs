@@ -22,6 +22,23 @@ public sealed class GoldenFixture
     public LegacyWorkbookCompatibilityCalculator CreateCalculator(FinalIgPolicy? policy = null)
         => new(Constants, Variant, Parameters, policy);
 
+    public LegacyProductionAnalyzer CreateProductionAnalyzer(FinalIgPolicy? policy = null)
+        => new(Constants, Variant, Parameters, policy);
+
+    /// <summary>
+    /// Movement mode from the workbook's own structure: a movement present in the
+    /// Parameters table is a vehicle; a single-lowercase-letter name is a pedestrian
+    /// crossing. Never inferred from speed values (Final Hotfix §4).
+    /// </summary>
+    public Contracts.MovementMode ModeOf(string movement)
+    {
+        if (Parameters.ContainsKey(movement))
+            return Contracts.MovementMode.Vehicle;
+        if (movement.Length <= 2 && movement.ToLowerInvariant() == movement)
+            return Contracts.MovementMode.Pedestrian;
+        throw new InvalidOperationException($"cannot classify movement '{movement}' — unknown name");
+    }
+
     public static string FixturesDirectory()
     {
         var dir = AppContext.BaseDirectory;
@@ -74,8 +91,12 @@ public sealed class GoldenFixture
 
             var cached = r.GetProperty("cached");
             var pointIgs = new List<double?>();
+            var pointTimes = new List<(double? Fast, double? Slow, double? Enter)>();
             foreach (var t in cached.GetProperty("pointTimes").EnumerateArray())
+            {
                 pointIgs.Add(Num(t, "ig"));
+                pointTimes.Add((Num(t, "tFast"), Num(t, "tSlow"), Num(t, "tEnter")));
+            }
 
             rows.Add(new GoldenRow
             {
@@ -85,9 +106,11 @@ public sealed class GoldenFixture
                     r.GetProperty("entering").GetString()!,
                     pts[0], pts[1], pts[2], pts[3]),
                 ExpectedPointIgs = pointIgs,
+                ExpectedPointTimes = pointTimes,
                 ExpectedFinalIg = Num(cached, "finalIg"),
                 ExpectedDefiningPoint = cached.TryGetProperty("definingPoint", out var dp) && dp.ValueKind == JsonValueKind.String
                     ? dp.GetString() : null,
+                ExpectedManualRoundingFlag = Num(cached, "manualRoundingFlag") is not null,
             });
         }
 
@@ -109,6 +132,8 @@ public sealed class GoldenRow
 {
     public required ConflictRowInput Input { get; init; }
     public required List<double?> ExpectedPointIgs { get; init; }
+    public required List<(double? Fast, double? Slow, double? Enter)> ExpectedPointTimes { get; init; }
     public required double? ExpectedFinalIg { get; init; }
     public string? ExpectedDefiningPoint { get; init; }
+    public bool ExpectedManualRoundingFlag { get; init; }
 }

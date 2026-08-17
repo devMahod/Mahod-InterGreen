@@ -21,8 +21,8 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
 | O | AutoCAD 2026 adapter | NOT STARTED | | | |
 | P | Real example DWG scan/export | NOT STARTED | | | needs O; interactive if coreconsole fails |
 | Q | Real geometry regression | NOT STARTED | | | needs P |
-| R | Signal-group matrix | NOT STARTED | | | |
-| S | Final Excel + JSON export | NOT STARTED | | | |
+| R | Signal-group matrix | NOT STARTED | | | MUST implement Final Hotfix §9/§10/§17/§17A: BLOCKED propagation, explicit cell status, Tests A/B/C + Example2 acceptance (exactly 3 blocked cells: SG4→SG2, SG2→SG4, SG1→a) |
+| S | Final Excel + JSON export | NOT STARTED | | | MUST enforce Final Hotfix §11 serialization invariant (no NaN/Inf/negative; INTERNAL_NUMERIC_INVARIANT_FAILURE) |
 | T | INTERGREEN workflow / basic UI | NOT STARTED | | | |
 | U | Bundle packaging | NOT STARTED | | | |
 | V | Vadim integration docs | NOT STARTED | | | |
@@ -33,3 +33,9 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
 - T+0: pre-flight PASS (SDK 8.0.415, ACAD_OK, CORECONSOLE_OK, git 2.52.0). Working root confirmed: `C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen`.
 
 - T+60 checkpoint written: test-results/T60_CHECKPOINT.md — 39/39 tests, 148/148 golden, 4/4 findings, 13-row delta. Next: Gate G.
+
+- FINAL HOTFIX BLOCK applied (before gate I): stable production numerics + max(0,a) clamp,
+  compat 80km/h singularity reproduction, Movement.Mode branching, structured outcomes,
+  metamorphic ped tests, continuity tests, full intermediate-column comparison (P/Q/R + AL)
+  over all 148 rows. Suite: 98/98 (61 Core + 24 Rules + 13 Regression).
+  NOTE: doc #4 "HOTFIX NOTES" was never delivered — only #5 FINAL HOTFIX BLOCK (which supersedes it).
