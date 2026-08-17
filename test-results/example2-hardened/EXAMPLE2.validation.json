@@ -1,0 +1,613 @@
+{
+  "schemaVersion": "1.0",
+  "findings": [
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-L × b",
+      "message": "Vehicle boundary E-L.b1 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-L × b",
+      "message": "Vehicle boundary E-L.b1 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-L × b",
+      "message": "Vehicle boundary E-L.b2 terminates inside crossing 'b' (intersects 3 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-L × b",
+      "message": "Vehicle boundary E-L.b2 terminates inside crossing 'b' (intersects 3 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-R × b",
+      "message": "Vehicle boundary E-R.b1 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-R × b",
+      "message": "Vehicle boundary E-R.b1 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-R × b",
+      "message": "Vehicle boundary E-R.b2 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-R × b",
+      "message": "Vehicle boundary E-R.b2 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-T × b",
+      "message": "Vehicle boundary E-T.b1 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-T × b",
+      "message": "Vehicle boundary E-T.b1 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-T × b",
+      "message": "Vehicle boundary E-T.b2 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "E-T × b",
+      "message": "Vehicle boundary E-T.b2 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "N-L × b",
+      "message": "Vehicle boundary N-L.b1 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "N-L × b",
+      "message": "Vehicle boundary N-L.b1 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "N-R × a",
+      "message": "Vehicle boundary N-R.b2 terminates inside crossing 'a' (intersects 1 of 2 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "N-R × a",
+      "message": "Vehicle boundary N-R.b2 terminates inside crossing 'a' (intersects 1 of 2 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-R × b",
+      "message": "Vehicle boundary S-R.b1 terminates inside crossing 'b' (intersects 1 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-R × b",
+      "message": "Vehicle boundary S-R.b1 terminates inside crossing 'b' (intersects 1 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-R × b",
+      "message": "Vehicle boundary S-R.b2 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-R × b",
+      "message": "Vehicle boundary S-R.b2 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-R × c",
+      "message": "Vehicle boundary S-R.b1 terminates inside crossing 'c' (intersects 1 of 2 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "S-R × c",
+      "message": "Vehicle boundary S-R.b1 terminates inside crossing 'c' (intersects 1 of 2 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-R × b",
+      "message": "Vehicle boundary W-R.b1 terminates inside crossing 'b' (intersects 1 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-R × b",
+      "message": "Vehicle boundary W-R.b1 terminates inside crossing 'b' (intersects 1 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-R × b",
+      "message": "Vehicle boundary W-R.b2 terminates inside crossing 'b' (intersects 1 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-R × b",
+      "message": "Vehicle boundary W-R.b2 terminates inside crossing 'b' (intersects 1 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-R × c",
+      "message": "Vehicle boundary W-R.b2 terminates inside crossing 'c' (intersects 1 of 2 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-R × c",
+      "message": "Vehicle boundary W-R.b2 terminates inside crossing 'c' (intersects 1 of 2 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-T × b",
+      "message": "Vehicle boundary W-T.b1 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-T × b",
+      "message": "Vehicle boundary W-T.b1 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-T × b",
+      "message": "Vehicle boundary W-T.b2 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "W-T × b",
+      "message": "Vehicle boundary W-T.b2 terminates inside crossing 'b' (intersects 2 of 6 edges). Its drawn end was added as a termination candidate; the drawing may be incomplete.",
+      "recommendedAction": "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+      "sourceReference": "Directive §21A"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "a × E-L",
+      "message": "Crossing edge a.e1 ends 0.92 m short of boundary E-L.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "a × E-L",
+      "message": "Crossing edge a.e1 ends 0.92 m short of boundary E-L.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "a × N-T",
+      "message": "Crossing edge a.e1 ends 0.01 m short of boundary N-T.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "a × N-T",
+      "message": "Crossing edge a.e1 ends 0.01 m short of boundary N-T.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "a × N-T",
+      "message": "Crossing edge a.e2 ends 0.00 m short of boundary N-T.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "a × N-T",
+      "message": "Crossing edge a.e2 ends 0.00 m short of boundary N-T.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × E-L",
+      "message": "Crossing edge b.e5 ends 0.86 m short of boundary E-L.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × E-L",
+      "message": "Crossing edge b.e5 ends 0.86 m short of boundary E-L.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × E-L",
+      "message": "Crossing edge b.e6 ends 0.03 m short of boundary E-L.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × E-L",
+      "message": "Crossing edge b.e6 ends 0.03 m short of boundary E-L.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × N-L",
+      "message": "Crossing edge b.e1 ends 0.02 m short of boundary N-L.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × N-L",
+      "message": "Crossing edge b.e1 ends 0.02 m short of boundary N-L.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × N-L",
+      "message": "Crossing edge b.e2 ends 0.02 m short of boundary N-L.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × N-L",
+      "message": "Crossing edge b.e2 ends 0.02 m short of boundary N-L.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × N-T",
+      "message": "Crossing edge b.e5 ends 0.87 m short of boundary N-T.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × N-T",
+      "message": "Crossing edge b.e5 ends 0.87 m short of boundary N-T.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × N-T",
+      "message": "Crossing edge b.e6 ends 0.03 m short of boundary N-T.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × N-T",
+      "message": "Crossing edge b.e6 ends 0.03 m short of boundary N-T.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × S-L",
+      "message": "Crossing edge b.e5 ends 0.87 m short of boundary S-L.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × S-L",
+      "message": "Crossing edge b.e5 ends 0.87 m short of boundary S-L.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × S-L",
+      "message": "Crossing edge b.e6 ends 0.07 m short of boundary S-L.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × S-L",
+      "message": "Crossing edge b.e6 ends 0.07 m short of boundary S-L.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × S-R",
+      "message": "Crossing edge b.e2 ends 0.00 m short of boundary S-R.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × S-R",
+      "message": "Crossing edge b.e2 ends 0.00 m short of boundary S-R.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × S-R",
+      "message": "Crossing edge b.e6 ends 1.00 m short of boundary S-R.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × S-R",
+      "message": "Crossing edge b.e6 ends 1.00 m short of boundary S-R.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × S-T",
+      "message": "Crossing edge b.e5 ends 0.86 m short of boundary S-T.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × S-T",
+      "message": "Crossing edge b.e5 ends 0.86 m short of boundary S-T.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × S-T",
+      "message": "Crossing edge b.e6 ends 0.03 m short of boundary S-T.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × S-T",
+      "message": "Crossing edge b.e6 ends 0.03 m short of boundary S-T.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × W-R",
+      "message": "Crossing edge b.e6 ends 0.87 m short of boundary W-R.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "b × W-R",
+      "message": "Crossing edge b.e6 ends 0.87 m short of boundary W-R.b1 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "c × W-L",
+      "message": "Crossing edge c.e2 ends 0.46 m short of boundary W-L.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "c × W-L",
+      "message": "Crossing edge c.e2 ends 0.46 m short of boundary W-L.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "c × W-R",
+      "message": "Crossing edge c.e1 ends 0.10 m short of boundary W-R.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "c × W-R",
+      "message": "Crossing edge c.e1 ends 0.10 m short of boundary W-R.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "c × W-T",
+      "message": "Crossing edge c.e2 ends 0.53 m short of boundary W-T.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-008",
+      "severity": "REVIEWREQUIRED",
+      "conflictRef": "c × W-T",
+      "message": "Crossing edge c.e2 ends 0.53 m short of boundary W-T.b2 (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+      "recommendedAction": "Correct the drawing or confirm the intended edge in Project Setup.",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-010",
+      "severity": "WARNING",
+      "conflictRef": "intergreen_W-T",
+      "message": "UNSUPPORTED entity LWPolyline (5773): DEGENERATE_GEOMETRY_EXCLUDED: polycurve needs at least one segment",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-010",
+      "severity": "WARNING",
+      "conflictRef": "intergreen_b",
+      "message": "UNSUPPORTED entity DBText (6549/6602): UNSUPPORTED_GEOMETRY",
+      "sourceReference": "Directive §7"
+    },
+    {
+      "code": "IG-GEO-011",
+      "severity": "WARNING",
+      "conflictRef": "E-L",
+      "message": "DEGENERATE_GEOMETRY_EXCLUDED: 5762 on 'intergreen_E-L' (length 0.009 m).",
+      "sourceReference": "Directive §11; ED-010"
+    },
+    {
+      "code": "IG-GEO-011",
+      "severity": "WARNING",
+      "conflictRef": "W-T",
+      "message": "DEGENERATE_GEOMETRY_EXCLUDED: 57B5 on 'intergreen_W-T' (length 0.071 m).",
+      "sourceReference": "Directive §11; ED-010"
+    },
+    {
+      "code": "IG-GEO-012",
+      "severity": "WARNING",
+      "conflictRef": "W-T",
+      "message": "BOUNDARY_AUTO_SELECTED: 'intergreen_W-T' — selected 5771,58D6 (stop-line referenced), excluded 57B4(len 4.46m).",
+      "recommendedAction": "Review the excluded fragments; delete them or register boundaries explicitly.",
+      "sourceReference": "v3 §36; ED-010"
+    },
+    {
+      "code": "IG-PRJ-001",
+      "severity": "WARNING",
+      "message": "Project sidecar loaded: ex2.intergreen-project.json.",
+      "sourceReference": "Directive §12"
+    },
+    {
+      "code": "IG-UNIT-001",
+      "severity": "WARNING",
+      "message": "Drawing INSUNITS is 'Unitless'; unit METERS explicitly confirmed via project sidecar ex2.intergreen-project.json.",
+      "sourceReference": "Directive §13"
+    }
+  ]
+}

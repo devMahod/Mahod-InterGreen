@@ -1,0 +1,10 @@
+{
+  "runId": "ac3f059ae1364158bed6f1cb9c2b0770",
+  "startedAt": "2026-08-17T13:46:06.5094463+03:00",
+  "durationSeconds": 0.935,
+  "engineVersion": "0.1.0",
+  "application": "Mahod.Intergreen.Cli/ig-analyze",
+  "machine": "PC-ARTHURF",
+  "sourceFile": "ex2.dwg",
+  "sourceSha256": "B57C7D8EE9DF5EA18C7F69B59BFA706547DFCA66389E9394B81EC5A3805B3293"
+}

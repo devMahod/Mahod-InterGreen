@@ -62,9 +62,10 @@ public class LegacyEnvelopeStrategyTests
     [Fact]
     public void Overlapping_envelopes_without_boundary_crossing_raise_review_required()
     {
-        // entering movement fully inside the clearing movement's x-range, parallel — no crossings
+        // entering strip inside the clearing strip's x-range but extending beyond it vertically:
+        // no boundary crossings, no endpoint inside the other region — true containment overlap
         var inside = new MovementGeometry("S-R", MovementMode.Vehicle,
-            new[] { Vertical(1.0), Vertical(2.0) },
+            new[] { Vertical(1.0, -40, 40), Vertical(2.0, -40, 40) },
             Array.Empty<PolyCurve2D>(),
             Horizontal(0, -2, 6));
         var result = new LegacyEnvelopeConflictStrategy().FindConflictPoints(Northbound(), inside);

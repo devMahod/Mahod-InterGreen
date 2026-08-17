@@ -40,18 +40,73 @@ public static class GeometryExtraction
         {
             if (tr.GetObject(id, OpenMode.ForRead) is not Entity ent) continue;
             if (!layerFilter(ent.Layer)) continue;
+            ExtractEntity(tr, ent, ent.Layer, ent.Handle.ToString(), depth: 0, curves, unsupported);
+        }
 
-            var handle = ent.Handle.ToString();
-            var color = ent.ColorIndex;
-            switch (ent)
+        var (insName, toMeters) = Units(db);
+        return new ExtractionResult(curves, unsupported, insName, toMeters);
+    }
+
+    /// <summary>
+    /// Extracts one entity, recursing into relevant BlockReferences (Directive §10):
+    /// nested supported geometry is transformed by the full block transform via AutoCAD's
+    /// own exact entity math, provenance is preserved as parentHandle/childHandle path,
+    /// and the effective layer follows the ByBlock convention (child on layer "0" inherits
+    /// the reference's layer). Recursion is loop-guarded by depth.
+    /// </summary>
+    private static void ExtractEntity(Transaction tr, Entity ent, string effectiveLayer,
+        string handlePath, int depth, List<ExtractedCurve> curves, List<UnsupportedEntity> unsupported)
+    {
+        const int maxDepth = 8;
+        var handle = handlePath;
+        var color = ent.ColorIndex;
+
+        if (ent is BlockReference br)
+        {
+            if (depth >= maxDepth)
+            {
+                unsupported.Add(new(handle, $"BlockReference({br.Name})", effectiveLayer,
+                    $"recursion depth {maxDepth} exceeded — possible block loop"));
+                return;
+            }
+            var btr = (BlockTableRecord)tr.GetObject(br.BlockTableRecord, OpenMode.ForRead);
+            foreach (ObjectId childId in btr)
+            {
+                if (tr.GetObject(childId, OpenMode.ForRead) is not Entity child) continue;
+                var childLayer = child.Layer == "0" ? effectiveLayer : child.Layer;
+                Entity clone;
+                try
+                {
+                    clone = (Entity)child.Clone();
+                    clone.TransformBy(br.BlockTransform);
+                }
+                catch (Autodesk.AutoCAD.Runtime.Exception ex)
+                {
+                    unsupported.Add(new($"{handle}/{child.Handle}", child.GetType().Name, childLayer,
+                        $"block transform failed: {ex.ErrorStatus} (e.g. non-uniform scale)"));
+                    continue;
+                }
+                try
+                {
+                    ExtractEntity(tr, clone, childLayer, $"{handle}/{child.Handle}", depth + 1, curves, unsupported);
+                }
+                finally
+                {
+                    clone.Dispose();
+                }
+            }
+            return;
+        }
+
+        switch (ent)
             {
                 case AcDb.Line line:
                     if (HasZ(line.StartPoint.Z, line.EndPoint.Z))
                     {
-                        unsupported.Add(new(handle, "Line", ent.Layer, "NON_PLANAR_GEOMETRY"));
+                        unsupported.Add(new(handle, "Line", effectiveLayer, "NON_PLANAR_GEOMETRY"));
                         break;
                     }
-                    curves.Add(new(handle, "Line", ent.Layer, color, new PolyCurve2D(new ISegment2D[]
+                    curves.Add(new(handle, "Line", effectiveLayer, color, new PolyCurve2D(new ISegment2D[]
                     {
                         new LineSegment2D(P(line.StartPoint), P(line.EndPoint)),
                     })));
@@ -60,13 +115,13 @@ public static class GeometryExtraction
                 case AcDb.Arc arc:
                     if (HasZ(arc.Center.Z))
                     {
-                        unsupported.Add(new(handle, "Arc", ent.Layer, "NON_PLANAR_GEOMETRY"));
+                        unsupported.Add(new(handle, "Arc", effectiveLayer, "NON_PLANAR_GEOMETRY"));
                         break;
                     }
                     // AutoCAD arcs are always CCW from StartAngle to EndAngle
                     var sweep = arc.EndAngle - arc.StartAngle;
                     if (sweep <= 0) sweep += Math.Tau;
-                    curves.Add(new(handle, "Arc", ent.Layer, color, new PolyCurve2D(new ISegment2D[]
+                    curves.Add(new(handle, "Arc", effectiveLayer, color, new PolyCurve2D(new ISegment2D[]
                     {
                         new CircularArcSegment2D(new Point2D(arc.Center.X, arc.Center.Y),
                             arc.Radius, arc.StartAngle, sweep),
@@ -77,7 +132,7 @@ public static class GeometryExtraction
                 {
                     if (Math.Abs(lw.Elevation) > 1e-9)
                     {
-                        unsupported.Add(new(handle, "LWPolyline", ent.Layer, "NON_PLANAR_GEOMETRY"));
+                        unsupported.Add(new(handle, "LWPolyline", effectiveLayer, "NON_PLANAR_GEOMETRY"));
                         break;
                     }
                     var vertices = new List<(Point2D, double)>();
@@ -88,12 +143,12 @@ public static class GeometryExtraction
                     }
                     try
                     {
-                        curves.Add(new(handle, "LWPolyline", ent.Layer, color,
+                        curves.Add(new(handle, "LWPolyline", effectiveLayer, color,
                             PolyCurve2D.FromVertices(vertices, lw.Closed)));
                     }
                     catch (ArgumentException ex)
                     {
-                        unsupported.Add(new(handle, "LWPolyline", ent.Layer, ex.Message));
+                        unsupported.Add(new(handle, "LWPolyline", effectiveLayer, "DEGENERATE_GEOMETRY_EXCLUDED: " + ex.Message));
                     }
                     break;
                 }
@@ -109,31 +164,23 @@ public static class GeometryExtraction
                     try
                     {
                         if (vertices.Count >= 2)
-                            curves.Add(new(handle, "Polyline2d", ent.Layer, color,
+                            curves.Add(new(handle, "Polyline2d", effectiveLayer, color,
                                 PolyCurve2D.FromVertices(vertices, p2d.Closed)));
                         else
-                            unsupported.Add(new(handle, "Polyline2d", ent.Layer, "fewer than 2 vertices"));
+                            unsupported.Add(new(handle, "Polyline2d", effectiveLayer, "DEGENERATE_GEOMETRY_EXCLUDED: fewer than 2 distinct vertices"));
                     }
                     catch (ArgumentException ex)
                     {
-                        unsupported.Add(new(handle, "Polyline2d", ent.Layer, ex.Message));
+                        unsupported.Add(new(handle, "Polyline2d", effectiveLayer, "DEGENERATE_GEOMETRY_EXCLUDED: " + ex.Message));
                     }
                     break;
                 }
 
-                case BlockReference br:
-                    unsupported.Add(new(handle, $"BlockReference({br.Name})", ent.Layer,
-                        "nested geometry not extracted in P0 — report, never silently ignore (Directive §7)"));
-                    break;
 
                 default:
-                    unsupported.Add(new(handle, ent.GetType().Name, ent.Layer, "UNSUPPORTED_GEOMETRY"));
+                    unsupported.Add(new(handle, ent.GetType().Name, effectiveLayer, "UNSUPPORTED_GEOMETRY"));
                     break;
             }
-        }
-
-        var (insName, toMeters) = Units(db);
-        return new ExtractionResult(curves, unsupported, insName, toMeters);
     }
 
     private static bool HasZ(params double[] zs) => zs.Any(z => Math.Abs(z) > 1e-6);

@@ -19,7 +19,9 @@ public sealed record WorkbookModel(
     IReadOnlyDictionary<string, LegacyMovementParameters> MovementParameters,
     IReadOnlyList<WorkbookConflictRow> Rows,
     IReadOnlyDictionary<string, string> SignalGroups,          // movement → SG label
-    IReadOnlyList<string> SourceErrors);                       // pre-existing #REF!/etc (v3 §33)
+    IReadOnlyList<string> SourceErrors,                        // pre-existing #REF!/etc (v3 §33)
+    IReadOnlyDictionary<string, double> PedestrianWidths,      // crossing SG name → W [m] (authoritative, Directive §6)
+    IReadOnlyList<string> PedestrianWidthConflicts);           // SG names with disagreeing W rows
 
 public sealed record WorkbookConflictRow(
     ConflictRowInput Input,
@@ -138,6 +140,30 @@ public static class WorkbookReader
                 igs));
         }
 
+        // ---- pedestrian crossing widths (Pedestrian Xing sheet — authoritative W, Directive §6) ----
+        var pedWidths = new Dictionary<string, double>(StringComparer.Ordinal);
+        var pedConflicts = new List<string>();
+        var pedSheet = wb.Worksheets.FirstOrDefault(ws => ws.Name == "Pedestrian Xing");
+        if (pedSheet is not null)
+        {
+            var last = pedSheet.LastRowUsed()?.RowNumber() ?? 2;
+            for (var r = 3; r <= last; r++)
+            {
+                var sg = CellText(pedSheet.Cell(r, 2)).Trim();
+                var w = NumOrNull(pedSheet.Cell(r, 3));
+                if (string.IsNullOrWhiteSpace(sg) || w is not double width) continue;
+                if (pedWidths.TryGetValue(sg, out var existing))
+                {
+                    if (Math.Abs(existing - width) > 1e-9 && !pedConflicts.Contains(sg))
+                        pedConflicts.Add(sg); // PEDESTRIAN_WIDTH_CONFLICT — never pick one arbitrarily
+                }
+                else
+                {
+                    pedWidths[sg] = width;
+                }
+            }
+        }
+
         // ---- signal groups ----
         var signalGroups = new Dictionary<string, string>(StringComparer.Ordinal);
         var sgSheet = wb.Worksheets.FirstOrDefault(ws => ws.Name == "Signal group key");
@@ -166,7 +192,8 @@ public static class WorkbookReader
             }
         }
 
-        return new WorkbookModel(variant, constants, movementParams, rows, signalGroups, sourceErrors);
+        return new WorkbookModel(variant, constants, movementParams, rows, signalGroups, sourceErrors,
+            pedWidths, pedConflicts);
     }
 
     /// <summary>Cached numeric value or null. Formula cells contribute their cached value.</summary>

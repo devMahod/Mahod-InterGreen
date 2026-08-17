@@ -5,7 +5,7 @@ Every non-trivial interpretation, with source, alternatives, impact and the test
 ## ED-001 — Two named rounding strategies; neither chosen for David
 
 - **Decision**: implement `mahod-legacy-0.1` (floor when fraction < 0.1, else floor+1; undefined below 1 s) and `guidelines-ceil` (§5.7 plain ceiling). Legacy policy carries the workbook rule; 2025 policy carries the ceiling + 3 s minimum.
-- **Why**: David's workbook deviates from §5.7 in 13 of 148 rows (8.8%), always yielding a *shorter* intergreen. His `Consider for manual rounding?` column flags them, so the practice is deliberate.
+- **Why**: the workbook's `<0.1 → round down` rule is a **superseded official historical requirement** (Directive §30) — not an ad-hoc engineer deviation. It differs from the current §5.7 ceiling in 13 of 148 rows (8.8%), always yielding a shorter intergreen; the workbook's `Consider for manual rounding?` column flags them.
 - **Source**: workbook column AK formula `IF(MOD(MAX,INT(MAX))<0.1,INT(MAX),INT(MAX)+1)`; guidelines §5.7 "יעוגלו כלפי מעלה לפי שניות שלמות".
 - **Alternative rejected**: silently picking one rule for both packs.
 - **Impact**: 13-row delta (below). The choice per pack is policy, selectable, never silent.
@@ -96,3 +96,28 @@ Every non-trivial interpretation, with source, alternatives, impact and the test
 - **Impact**: Example 2 error conflicts dropped 78 → 32 (all remaining involve crossing 'b',
   which is genuinely ambiguous). No silent guessing — the convention itself is the rule.
 - **Test**: real-DWG run evidence (EXAMPLE2 artifacts); crossing 'b' remains blocked.
+
+## ED-011 — Boundary-termination candidates (Directive §21A)
+
+- **Decision**: a boundary endpoint lying inside/on the opposing envelope region (veh×veh),
+  or a vehicle boundary that enters a crossing band and terminates before its remaining edges
+  (veh×ped), generates an explicit termination candidate (owning-boundary station exact;
+  opposing stations by exact projection). Origin recorded as `boundary-termination`.
+- **Evidence**: Example 1 E-R→a — manual CD 18.95 ≈ boundary full length 18.93; ΔCD after the
+  rule −0.020 m and IG 6=6 (was engine 5 < manual 6, the last unsafe case).
+- **Tests**: `BoundaryTerminationTests`, `Vehicle_boundary_terminating_inside_crossing_adds_end_candidate`.
+
+## ED-012 — Endpoint stop-line references require explicit confirmation (Directive §14)
+
+- **Decision**: exact intersection → valid; endpoint within 0.5 m → SUGGESTION only, blocking
+  IG-GEO-004 until confirmed in the project sidecar (`confirmedEndpointReferences`).
+- **Evidence**: Example 2 confirmed refs are exactly `E-L.b1`, `S-L.b2` — the two cases the
+  Directive predicted from Gate-P.
+
+## ED-013 — Pedestrian model (Directive §5–§6)
+
+- **Decision**: crossings carry N edges (2/4/6…) and the authoritative project width W from
+  Pedestrian Xing / sidecar; clearing CD = W; averaging of edge lengths is forbidden and
+  absent from the code; disagreeing W rows → PEDESTRIAN_WIDTH_CONFLICT (ERROR).
+- **Evidence**: Example 1 ped-clearing rows now match with ΔCD = 0.000 exactly (previous
+  averaging gave +0.17…+0.29 m); Example 2 crossing c uses 8.30, not ~15.88.

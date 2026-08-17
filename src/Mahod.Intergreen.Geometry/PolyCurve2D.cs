@@ -99,6 +99,60 @@ public sealed class PolyCurve2D
         return dedup;
     }
 
+    /// <summary>
+    /// Nearest on-curve station to an arbitrary point (exact projection per segment).
+    /// Used for boundary-termination candidates (Directive §21A) — never for silently
+    /// extending geometry.
+    /// </summary>
+    public (double Station, double Distance) NearestStation(Point2D p)
+    {
+        var bestStation = 0.0;
+        var bestDist = double.MaxValue;
+        for (var i = 0; i < _segments.Count; i++)
+        {
+            var (local, dist) = NearestOnSegment(_segments[i], p);
+            if (dist < bestDist)
+            {
+                bestDist = dist;
+                bestStation = _cumulative[i] + local;
+            }
+        }
+        return (bestStation, bestDist);
+    }
+
+    private static (double LocalStation, double Distance) NearestOnSegment(ISegment2D seg, Point2D p)
+    {
+        switch (seg)
+        {
+            case LineSegment2D l:
+            {
+                var d = l.B - l.A;
+                var len2 = Vector2D.Dot(d, d);
+                var t = len2 < Tolerances.NumericEpsilon ? 0.0 : Math.Clamp(Vector2D.Dot(p - l.A, d) / len2, 0, 1);
+                var proj = new Point2D(l.A.X + d.X * t, l.A.Y + d.Y * t);
+                return (t * l.Length, proj.DistanceTo(p));
+            }
+            case CircularArcSegment2D a:
+            {
+                var angle = Math.Atan2(p.Y - a.Center.Y, p.X - a.Center.X);
+                var delta = CircularArcSegment2D.NormalizeSigned(angle - a.StartAngleRad);
+                var along = a.SweepRad >= 0
+                    ? CircularArcSegment2D.NormalizePositive(delta)
+                    : CircularArcSegment2D.NormalizePositive(-delta);
+                if (along <= Math.Abs(a.SweepRad))
+                {
+                    var radial = Math.Abs(p.DistanceTo(a.Center) - a.Radius);
+                    return (along * a.Radius, radial);
+                }
+                var dStart = p.DistanceTo(a.Start);
+                var dEnd = p.DistanceTo(a.End);
+                return dStart <= dEnd ? (0.0, dStart) : (a.Length, dEnd);
+            }
+            default:
+                throw new NotSupportedException(seg.GetType().Name);
+        }
+    }
+
     public PolyCurve2D Reversed()
         => new(_segments.AsEnumerable().Reverse().Select(s => s.Reversed()));
 

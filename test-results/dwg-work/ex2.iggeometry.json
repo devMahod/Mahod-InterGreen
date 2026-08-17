@@ -1470,13 +1470,13 @@
       "handle": "5773",
       "entityType": "LWPolyline",
       "layer": "intergreen_W-T",
-      "reason": "polycurve needs at least one segment"
+      "reason": "DEGENERATE_GEOMETRY_EXCLUDED: polycurve needs at least one segment"
     },
     {
-      "handle": "6549",
-      "entityType": "BlockReference(D-GEOM- HAYARKON-11S-EX-MHD)",
+      "handle": "6549/6602",
+      "entityType": "DBText",
       "layer": "intergreen_b",
-      "reason": "nested geometry not extracted in P0 \u2014 report, never silently ignore (Directive \u00A77)"
+      "reason": "UNSUPPORTED_GEOMETRY"
     }
   ]
 }

@@ -15,8 +15,9 @@ Production validation blocks all four; proven by `ProductionValidationRegression
 ## F-002 — Workbook rounding is shorter than §5.7 in 13 of 148 rows
 
 Always in the unsafe (shorter) direction. Full table in ENGINEERING_DECISIONS.md ED-001.
-The workbook itself flags these rows in `Consider for manual rounding?` — deliberate practice,
-but a deviation from the published ceiling rule.
+The historical `<0.1 → round down` rule was a superseded OFFICIAL requirement of its time
+(Directive §30) — these 13 rows are not engineer mistakes. The current 2025 requirement is
+the plain ceiling.
 
 ## F-003 — Duplicate conflict number in Example 2
 

@@ -11,7 +11,22 @@ public sealed record MovementGeometry(
     MovementMode Mode,
     IReadOnlyList<PolyCurve2D> Boundaries,
     IReadOnlyList<PolyCurve2D> LaneCentrelines,
-    PolyCurve2D? StopLine);
+    PolyCurve2D? StopLine)
+{
+    /// <summary>
+    /// Pedestrian crossing width W [m] — the authoritative Legacy project input
+    /// (Pedestrian Xing sheet / project sidecar). NEVER derived from boundary averaging
+    /// (Directive §5–§6). Null for vehicles and for unconfigured crossings.
+    /// </summary>
+    public double? PedestrianWidthMeters { get; init; }
+
+    /// <summary>
+    /// Stop/reference mappings explicitly confirmed by the user (project sidecar, §14):
+    /// curve ids (e.g. "E-L.b1") whose endpoint reference has been confirmed.
+    /// </summary>
+    public IReadOnlySet<string> ConfirmedEndpointReferences { get; init; } =
+        new HashSet<string>();
+}
 
 /// <summary>One candidate conflict point with exact stations from each movement's stop line.</summary>
 public sealed record ConflictPoint(
@@ -19,7 +34,8 @@ public sealed record ConflictPoint(
     double ClearingDistanceMeters,
     double EnteringDistanceMeters,
     string ClearingCurveId,
-    string EnteringCurveId);
+    string EnteringCurveId,
+    string Origin = "boundary-intersection");
 
 public sealed record ConflictPointResult(
     IReadOnlyList<ConflictPoint> Points,
@@ -39,26 +55,48 @@ public interface IConflictPointStrategy
 }
 
 /// <summary>
-/// Legacy Mahod geometry: each movement = 2 envelope boundary polylines; candidate points are
-/// ALL boundary×boundary intersections (never truncated, v3 §15); distances measured from the
-/// geometric stop-line reference station (v3 §14) so polyline direction cannot matter.
+/// Legacy Mahod geometry (hardened per Directive §§3, 5–7, 14, 21A):
+///  - candidate points: ALL boundary×boundary intersections PLUS boundary-termination
+///    candidates (a boundary endpoint lying inside/on the opposing envelope region);
+///  - envelope overlap is proven by exact region evaluation — AABB is only a pre-filter;
+///  - pedestrian crossings carry N edges and an authoritative project width W;
+///  - endpoint stop-line fallbacks require explicit user confirmation (no hidden 0.5 m guess).
 /// </summary>
 public sealed class LegacyEnvelopeConflictStrategy : IConflictPointStrategy
 {
     public const string CodeWrongBoundaryCount = "IG-GEO-001";
     public const string CodeNoStopLine = "IG-GEO-002";
     public const string CodeReferenceUnresolved = "IG-GEO-003";
-    public const string CodeReferenceEndpointFallback = "IG-GEO-004";
+    public const string CodeReferenceEndpointUnconfirmed = "IG-GEO-004";
     public const string CodePossibleUnresolvedConflict = "IG-GEO-005";
+    public const string CodeEnvelopeRegionInvalid = "IG-GEO-006";
+    public const string CodePedestrianWidthMissing = "IG-GEO-007";
+    public const string CodePedestrianEdgeCoverageGap = "IG-GEO-008";
 
-    private readonly double _endpointToleranceMeters;
+    /// <summary>Gap [m] within which a non-intersecting crossing edge is flagged as a coverage gap (§7).</summary>
+    public const double PedestrianCoverageGapMeters = 1.0;
 
-    public LegacyEnvelopeConflictStrategy(double endpointToleranceMeters = 0.5)
-        => _endpointToleranceMeters = endpointToleranceMeters;
+    private readonly double _endpointSuggestionToleranceMeters;
+
+    public LegacyEnvelopeConflictStrategy(double endpointSuggestionToleranceMeters = 0.5)
+        => _endpointSuggestionToleranceMeters = endpointSuggestionToleranceMeters;
 
     public string Id => "legacy-envelope";
 
     public ConflictPointResult FindConflictPoints(MovementGeometry clearing, MovementGeometry entering)
+    {
+        if (clearing.Mode == MovementMode.Pedestrian && entering.Mode == MovementMode.Pedestrian)
+            return new ConflictPointResult(Array.Empty<ConflictPoint>(), Array.Empty<ValidationFinding>());
+
+        if (clearing.Mode == MovementMode.Pedestrian || entering.Mode == MovementMode.Pedestrian)
+            return VehiclePedestrian(clearing, entering);
+
+        return VehicleVehicle(clearing, entering);
+    }
+
+    // ---------------- vehicle × vehicle ----------------
+
+    private ConflictPointResult VehicleVehicle(MovementGeometry clearing, MovementGeometry entering)
     {
         var findings = new List<ValidationFinding>();
 
@@ -67,101 +105,269 @@ public sealed class LegacyEnvelopeConflictStrategy : IConflictPointStrategy
             if (m.Boundaries.Count != 2)
                 findings.Add(new ValidationFinding(CodeWrongBoundaryCount, Severity.Error, m.MovementId,
                     $"Movement '{m.MovementId}' ({role}) has {m.Boundaries.Count} envelope boundaries (expected 2)."));
-            // Pedestrian crossings carry no stop line in the legacy drawing convention:
-            // each side of the crossing acts as the start, and the clearing distance is the
-            // crossing length itself (workbook 'Pedestrian Xing' practice).
-            if (m.StopLine is null && m.Mode != MovementMode.Pedestrian)
+            if (m.StopLine is null)
                 findings.Add(new ValidationFinding(CodeNoStopLine, Severity.Error, m.MovementId,
                     $"Movement '{m.MovementId}' ({role}) has no stop/reference line."));
         }
         if (findings.Any(f => f.Severity == Severity.Error))
             return new ConflictPointResult(Array.Empty<ConflictPoint>(), findings);
 
-        // reference stations per boundary (vehicles only — pedestrians measure by length)
-        var refA = clearing.Mode == MovementMode.Pedestrian ? null : ResolveReferences(clearing, findings);
-        var refB = entering.Mode == MovementMode.Pedestrian ? null : ResolveReferences(entering, findings);
-        if ((clearing.Mode != MovementMode.Pedestrian && refA is null)
-            || (entering.Mode != MovementMode.Pedestrian && refB is null))
+        var refA = ResolveReferences(clearing, findings);
+        var refB = ResolveReferences(entering, findings);
+        if (refA is null || refB is null)
             return new ConflictPointResult(Array.Empty<ConflictPoint>(), findings);
 
-        var pedClearingLength = clearing.Mode == MovementMode.Pedestrian
-            ? Math.Round(clearing.Boundaries.Average(b => b.TotalLength), 6)
-            : 0.0;
-
         var points = new List<ConflictPoint>();
+
+        // 1. all boundary×boundary intersections
         for (var i = 0; i < 2; i++)
+        for (var j = 0; j < 2; j++)
         {
-            for (var j = 0; j < 2; j++)
+            foreach (var hit in clearing.Boundaries[i].IntersectionsWith(entering.Boundaries[j]))
             {
-                var ba = clearing.Boundaries[i];
-                var bb = entering.Boundaries[j];
-                foreach (var hit in ba.IntersectionsWith(bb))
-                {
-                    var cd = clearing.Mode == MovementMode.Pedestrian
-                        ? pedClearingLength                                  // full crossing length
-                        : Math.Abs(hit.StationA - refA![i].Station);
-                    var ed = entering.Mode == MovementMode.Pedestrian
-                        ? 0.0                                                // pedestrian entering = 0 (§5.4)
-                        : Math.Abs(hit.StationB - refB![j].Station);
-                    points.Add(new ConflictPoint(
-                        hit.Point, cd, ed,
-                        $"{clearing.MovementId}.b{i + 1}",
-                        $"{entering.MovementId}.b{j + 1}"));
-                }
+                points.Add(new ConflictPoint(hit.Point,
+                    Math.Abs(hit.StationA - refA[i]),
+                    Math.Abs(hit.StationB - refB[j]),
+                    $"{clearing.MovementId}.b{i + 1}",
+                    $"{entering.MovementId}.b{j + 1}"));
             }
         }
 
-        // numerical dedup across boundary pairs
-        var dedup = new List<ConflictPoint>();
-        foreach (var p in points.OrderBy(p => p.ClearingDistanceMeters))
+        // 2. exact envelope regions (invalid strip → REVIEW, never a guess)
+        var regionA = EnvelopeRegion.Build(clearing.Boundaries[0], clearing.Boundaries[1]);
+        var regionB = EnvelopeRegion.Build(entering.Boundaries[0], entering.Boundaries[1]);
+        foreach (var (r, m) in new[] { (regionA, clearing), (regionB, entering) })
         {
-            if (!dedup.Any(e => e.Location.DistanceTo(p.Location) < Tolerances.PointDeduplication))
-                dedup.Add(p);
+            if (!r.IsValid)
+                findings.Add(new ValidationFinding(CodeEnvelopeRegionInvalid, Severity.ReviewRequired,
+                    m.MovementId, $"{r.InvalidReason} — movement '{m.MovementId}'.",
+                    SourceReference: "Directive §3"));
         }
 
-        if (dedup.Count == 0 && EnvelopesOverlap(clearing, entering))
+        // 3. boundary-termination candidates (Directive §21A): an endpoint of one movement's
+        //    boundary that lies inside/on the opposing envelope is a legitimate Legacy
+        //    conflict-zone extremum that pure intersections miss.
+        if (regionA.IsValid && regionB.IsValid)
+        {
+            AddTerminationCandidates(points, owner: clearing, ownerRefs: refA, other: entering,
+                otherRefs: refB, otherRegion: regionB, ownerIsClearing: true);
+            AddTerminationCandidates(points, owner: entering, ownerRefs: refB, other: clearing,
+                otherRefs: refA, otherRegion: regionA, ownerIsClearing: false);
+        }
+
+        var dedup = Deduplicate(points);
+
+        // 4. exact overlap evaluation — only when nothing was found and AABB pre-filter passes
+        if (dedup.Count == 0 && regionA.IsValid && regionB.IsValid
+            && AabbOverlap(clearing, entering)
+            && EnvelopeRegion.OverlapWithoutCrossing(regionA, regionB, out var evidence))
         {
             findings.Add(new ValidationFinding(CodePossibleUnresolvedConflict, Severity.ReviewRequired,
                 $"{clearing.MovementId} × {entering.MovementId}",
-                "Envelopes overlap but no boundary intersection was found (POSSIBLE_UNRESOLVED_CONFLICT).",
+                $"Envelope regions overlap without any boundary crossing (POSSIBLE_UNRESOLVED_CONFLICT). Evidence: {evidence}.",
                 "A silently missing conflict is worse than a wrong number — review the drawing.",
-                SourceReference: "v3 §15"));
+                SourceReference: "v3 §15; Directive §3"));
         }
 
         return new ConflictPointResult(dedup, findings);
     }
 
-    private ReferenceStation.Result[]? ResolveReferences(MovementGeometry m, List<ValidationFinding> findings)
+    private static void AddTerminationCandidates(List<ConflictPoint> points,
+        MovementGeometry owner, double[] ownerRefs,
+        MovementGeometry other, double[] otherRefs,
+        EnvelopeRegion otherRegion, bool ownerIsClearing)
     {
-        var results = new ReferenceStation.Result[2];
         for (var i = 0; i < 2; i++)
         {
-            var r = ReferenceStation.Resolve(m.Boundaries[i], m.StopLine!, _endpointToleranceMeters);
+            var boundary = owner.Boundaries[i];
+            foreach (var (pt, stationOnOwner, endName) in new[]
+            {
+                (boundary.Start, 0.0, "start"),
+                (boundary.End, boundary.TotalLength, "end"),
+            })
+            {
+                if (!otherRegion.Contains(pt)) continue;
+
+                var ownerStation = Math.Abs(stationOnOwner - ownerRefs[i]);
+                // project onto BOTH opposing boundaries — near and far edges of the conflict
+                // zone are distinct legitimate candidates (David's manual practice).
+                for (var j = 0; j < 2; j++)
+                {
+                    var (projStation, _) = other.Boundaries[j].NearestStation(pt);
+                    var otherStation = Math.Abs(projStation - otherRefs[j]);
+                    points.Add(ownerIsClearing
+                        ? new ConflictPoint(pt, ownerStation, otherStation,
+                            $"{owner.MovementId}.b{i + 1}@{endName}",
+                            $"{other.MovementId}.b{j + 1}~proj",
+                            Origin: "boundary-termination")
+                        : new ConflictPoint(pt, otherStation, ownerStation,
+                            $"{other.MovementId}.b{j + 1}~proj",
+                            $"{owner.MovementId}.b{i + 1}@{endName}",
+                            Origin: "boundary-termination"));
+                }
+            }
+        }
+    }
+
+    // ---------------- vehicle × pedestrian ----------------
+
+    private ConflictPointResult VehiclePedestrian(MovementGeometry clearing, MovementGeometry entering)
+    {
+        var findings = new List<ValidationFinding>();
+        var ped = clearing.Mode == MovementMode.Pedestrian ? clearing : entering;
+        var veh = clearing.Mode == MovementMode.Pedestrian ? entering : clearing;
+        var pedIsClearing = clearing.Mode == MovementMode.Pedestrian;
+
+        if (veh.Boundaries.Count != 2)
+            findings.Add(new ValidationFinding(CodeWrongBoundaryCount, Severity.Error, veh.MovementId,
+                $"Movement '{veh.MovementId}' has {veh.Boundaries.Count} envelope boundaries (expected 2)."));
+        if (veh.StopLine is null)
+            findings.Add(new ValidationFinding(CodeNoStopLine, Severity.Error, veh.MovementId,
+                $"Movement '{veh.MovementId}' has no stop/reference line."));
+        if (ped.Boundaries.Count < 2)
+            findings.Add(new ValidationFinding(CodeWrongBoundaryCount, Severity.Error, ped.MovementId,
+                $"Pedestrian crossing '{ped.MovementId}' has {ped.Boundaries.Count} edges (needs at least 2)."));
+        if (pedIsClearing && ped.PedestrianWidthMeters is null)
+            findings.Add(new ValidationFinding(CodePedestrianWidthMissing, Severity.Error, ped.MovementId,
+                $"Pedestrian crossing '{ped.MovementId}' has no project width W (Pedestrian Xing / sidecar). " +
+                "W is authoritative project data and is never derived from edge-length averaging.",
+                SourceReference: "Directive §5–§6"));
+        if (findings.Any(f => f.Severity == Severity.Error))
+            return new ConflictPointResult(Array.Empty<ConflictPoint>(), findings);
+
+        var vehRefs = ResolveReferences(veh, findings);
+        if (vehRefs is null)
+            return new ConflictPointResult(Array.Empty<ConflictPoint>(), findings);
+
+        var points = new List<ConflictPoint>();
+        for (var i = 0; i < 2; i++)
+        {
+            var boundary = veh.Boundaries[i];
+            var intersectedEdges = 0;
+            var missedEdges = 0;
+            var maxHitStation = double.MinValue;
+            for (var e = 0; e < ped.Boundaries.Count; e++)
+            {
+                var edge = ped.Boundaries[e];
+                var hits = boundary.IntersectionsWith(edge);
+                if (hits.Count > 0) intersectedEdges++; else missedEdges++;
+                foreach (var hit in hits)
+                {
+                    maxHitStation = Math.Max(maxHitStation, hit.StationA);
+                    var vehStation = Math.Abs(hit.StationA - vehRefs[i]);
+                    points.Add(pedIsClearing
+                        ? new ConflictPoint(hit.Point, ped.PedestrianWidthMeters!.Value, vehStation,
+                            $"{ped.MovementId}.e{e + 1}", $"{veh.MovementId}.b{i + 1}")
+                        : new ConflictPoint(hit.Point, vehStation, 0.0,
+                            $"{veh.MovementId}.b{i + 1}", $"{ped.MovementId}.e{e + 1}"));
+                }
+
+                // §7 coverage-gap diagnostic: edge does not reach this boundary but its
+                // endpoint terminates nearby — never silently extended.
+                if (hits.Count == 0)
+                {
+                    foreach (var end in new[] { edge.Start, edge.End })
+                    {
+                        var (_, dist) = boundary.NearestStation(end);
+                        if (dist > Tolerances.OnCurve * 100 && dist <= PedestrianCoverageGapMeters)
+                        {
+                            findings.Add(new ValidationFinding(CodePedestrianEdgeCoverageGap,
+                                Severity.ReviewRequired, $"{ped.MovementId} × {veh.MovementId}",
+                                $"Crossing edge {ped.MovementId}.e{e + 1} ends {dist:F2} m short of boundary " +
+                                $"{veh.MovementId}.b{i + 1} (PEDESTRIAN_EDGE_COVERAGE_GAP). No silent extension is applied.",
+                                RecommendedAction: "Correct the drawing or confirm the intended edge in Project Setup.",
+                                SourceReference: "Directive §7"));
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Directive §21A applied to crossings: a vehicle boundary that enters the crossing
+            // (intersects some edges) but terminates before the remaining edge(s) ends INSIDE
+            // the crossing band. Its drawn end is a legitimate Legacy measurement extremum —
+            // David's manual practice measures to the end of the drawn path
+            // (Example 1, E-R→a: manual CD 18.95 ≈ boundary full length 18.93).
+            if (intersectedEdges > 0 && missedEdges > 0
+                && boundary.TotalLength > maxHitStation + Tolerances.PointDeduplication)
+            {
+                var endStation = Math.Abs(boundary.TotalLength - vehRefs[i]);
+                var endPoint = boundary.PointAtStation(boundary.TotalLength);
+                points.Add(pedIsClearing
+                    ? new ConflictPoint(endPoint, ped.PedestrianWidthMeters!.Value, endStation,
+                        $"{ped.MovementId}.band", $"{veh.MovementId}.b{i + 1}@end",
+                        Origin: "boundary-termination")
+                    : new ConflictPoint(endPoint, endStation, 0.0,
+                        $"{veh.MovementId}.b{i + 1}@end", $"{ped.MovementId}.band",
+                        Origin: "boundary-termination"));
+                findings.Add(new ValidationFinding(CodePedestrianEdgeCoverageGap,
+                    Severity.ReviewRequired, $"{veh.MovementId} × {ped.MovementId}",
+                    $"Vehicle boundary {veh.MovementId}.b{i + 1} terminates inside crossing '{ped.MovementId}' " +
+                    $"(intersects {intersectedEdges} of {intersectedEdges + missedEdges} edges). Its drawn end " +
+                    "was added as a termination candidate; the drawing may be incomplete.",
+                    RecommendedAction: "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+                    SourceReference: "Directive §21A"));
+            }
+        }
+
+        return new ConflictPointResult(Deduplicate(points), findings);
+    }
+
+    // ---------------- shared helpers ----------------
+
+    /// <summary>
+    /// §14 reference policy: exact intersection → valid; explicitly confirmed endpoint →
+    /// valid with provenance; anything else → ERROR (blocked until resolved). The 0.5 m
+    /// endpoint proximity is only a SUGGESTION surfaced in the finding text.
+    /// </summary>
+    private double[]? ResolveReferences(MovementGeometry m, List<ValidationFinding> findings)
+    {
+        var refs = new double[m.Boundaries.Count];
+        for (var i = 0; i < m.Boundaries.Count; i++)
+        {
+            var curveId = $"{m.MovementId}.b{i + 1}";
+            var r = ReferenceStation.Resolve(m.Boundaries[i], m.StopLine!, _endpointSuggestionToleranceMeters);
             if (r is null)
             {
                 findings.Add(new ValidationFinding(CodeReferenceUnresolved, Severity.Error, m.MovementId,
-                    $"Boundary {i + 1} of '{m.MovementId}' cannot be referenced to its stop line " +
-                    "(no intersection and no endpoint within tolerance).",
-                    SourceReference: "v3 §14"));
+                    $"Boundary {curveId} cannot be referenced to its stop line (no intersection, no nearby endpoint).",
+                    SourceReference: "v3 §14; Directive §14"));
                 return null;
             }
-            if (r.Method == ReferenceStation.Method.EndpointFallback)
+            if (r.Method == ReferenceStation.Method.EndpointFallback
+                && !m.ConfirmedEndpointReferences.Contains(curveId))
             {
-                findings.Add(new ValidationFinding(CodeReferenceEndpointFallback, Severity.Warning, m.MovementId,
-                    $"Boundary {i + 1} of '{m.MovementId}' does not intersect its stop line; " +
-                    $"using the endpoint at station {r.Station:F3} (within {_endpointToleranceMeters} m).",
-                    SourceReference: "v3 §14"));
+                findings.Add(new ValidationFinding(CodeReferenceEndpointUnconfirmed, Severity.Error, m.MovementId,
+                    $"Boundary {curveId} does not intersect its stop line. A nearby endpoint exists at station " +
+                    $"{r.Station:F3} (within {_endpointSuggestionToleranceMeters} m) but an endpoint may not become an " +
+                    "engineering reference without explicit confirmation.",
+                    RecommendedAction: "Confirm the endpoint reference in Project Setup (persisted in the sidecar) or fix the drawing.",
+                    SourceReference: "Directive §14"));
+                return null;
             }
-            results[i] = r;
+            refs[i] = r.Station;
         }
-        return results;
+        return refs;
     }
 
-    private static bool EnvelopesOverlap(MovementGeometry a, MovementGeometry b)
+    private static bool AabbOverlap(MovementGeometry a, MovementGeometry b)
     {
         var (aMin, aMax) = BoundingBox(a.Boundaries);
         var (bMin, bMax) = BoundingBox(b.Boundaries);
         return aMin.X <= bMax.X && bMin.X <= aMax.X && aMin.Y <= bMax.Y && bMin.Y <= aMax.Y;
+    }
+
+    private static List<ConflictPoint> Deduplicate(List<ConflictPoint> points)
+    {
+        var result = new List<ConflictPoint>();
+        foreach (var p in points.OrderBy(p => p.ClearingDistanceMeters).ThenBy(p => p.EnteringDistanceMeters))
+        {
+            if (!result.Any(e => e.Location.DistanceTo(p.Location) < Tolerances.PointDeduplication
+                                 && Math.Abs(e.ClearingDistanceMeters - p.ClearingDistanceMeters) < Tolerances.PointDeduplication
+                                 && Math.Abs(e.EnteringDistanceMeters - p.EnteringDistanceMeters) < Tolerances.PointDeduplication))
+                result.Add(p);
+        }
+        return result;
     }
 
     private static (Point2D Min, Point2D Max) BoundingBox(IEnumerable<PolyCurve2D> curves)
@@ -187,7 +393,6 @@ public sealed class LegacyEnvelopeConflictStrategy : IConflictPointStrategy
         yield return s.End;
         if (s is CircularArcSegment2D a)
         {
-            // axis-aligned extremes that fall inside the sweep
             for (var k = 0; k < 4; k++)
             {
                 var angle = k * Math.PI / 2.0;
@@ -228,13 +433,13 @@ public sealed class LaneCentrelineConflictStrategy : IConflictPointStrategy
 
         foreach (var (m, role) in new[] { (clearing, "clearing"), (entering, "entering") })
         {
-            if (m.LaneCentrelines.Count == 0)
+            if (m.Mode != MovementMode.Pedestrian && m.LaneCentrelines.Count == 0)
                 findings.Add(new ValidationFinding(CodeGeometryMissing, Severity.Error, m.MovementId,
                     $"2025_GEOMETRY_MISSING: movement '{m.MovementId}' ({role}) has no registered lane centrelines. " +
                     "The 2025 method requires a travel-path centreline per lane (§5.4); envelope boundaries must not be used.",
                     RecommendedAction: "Register centrelines with IG_REGISTER_CENTERLINES or draw them.",
                     SourceReference: "SR-5.4.2; v3 §16"));
-            if (m.StopLine is null)
+            if (m.Mode != MovementMode.Pedestrian && m.StopLine is null)
                 findings.Add(new ValidationFinding(CodeNoStopLine, Severity.Error, m.MovementId,
                     $"Movement '{m.MovementId}' ({role}) has no stop/reference line."));
         }

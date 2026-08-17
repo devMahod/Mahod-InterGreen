@@ -1,0 +1,10 @@
+{
+ "schemaVersion": "1.0",
+ "unitsConfirmed": "meters",
+ "unitsConfirmedBy": "Arthur — Gate-P operator confirmation, 2026-08-17",
+ "confirmedEndpointReferences": [
+  "E-L.b1",
+  "S-L.b2"
+ ],
+ "notes": "Endpoint stop-line references confirmed from Gate-P evidence per Directive §14. Example 2 is REVISION_MISMATCH for geometry golden purposes (§19)."
+}
