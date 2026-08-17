@@ -1,8 +1,26 @@
 # INTEGRATION_VADIM — Civil 3D / MahodAI host contract
 
-**Rule zero (Directive §2/§48): the deterministic engine is the product. No second Civil
-calculation engine is ever created; MahodAI is an orchestration/explanation layer and never
-computes CD/ED/intergreen values itself.**
+> `CIVIL 3D HOST: NOT IMPLEMENTED IN DAVID PILOT`
+> `SHARED ENGINE/API: READY FOR FUTURE INTEGRATION`
+
+```text
+Civil 3D / MahodAI Host
+        ↓
+Project Assembly / Adapter
+        ↓
+SAME Mahod.Intergreen Core
+        ↓
+Validation / Analysis / Matrix / Excel
+```
+
+**Rule zero: NO SECOND CIVIL CALCULATION ENGINE.** The deterministic engine is the
+product; MahodAI is an orchestration/explanation layer and never computes CD/ED/intergreen
+values itself.
+
+Companion documents: `API_EXAMPLES_VADIM.md` (call snippets),
+`VADIM_IMPLEMENTATION_CHECKLIST_HE.md` (future implementation sequence),
+`CIVIL_INTEGRATION_BOUNDARY.md` (what is shared / host-specific / future / out of scope),
+`RESULT_SCHEMA.md` (the actual result contract).
 
 ## The shared stack (normal .NET 8 assemblies; Core has no AutoCAD dependency)
 
@@ -35,6 +53,29 @@ computes CD/ED/intergreen values itself.**
 
 The engine is pure (no mutable statics). In CAD hosts, extract geometry inside a locked
 transaction, then run the pipeline off-document. Never mutate source entities.
+
+## Host responsibilities checklist (Civil 3D)
+
+- **Geometry extraction**: convert Civil entities (corridor feature lines, polylines,
+  alignments as needed) to `PolyCurve2D` exactly — lines/arcs, no polygonal approximation;
+  keep entity handles for traceability and Show.
+- **2025 lane centrelines**: the Civil host is the natural source of one centreline per
+  lane (alignments/offset targets) — feed them as the 2025 geometry input.
+- **Document locking / transactions**: extract inside a locked read transaction; run the
+  pipeline off-document; never mutate source entities.
+- **UI / main thread**: pipeline calls are pure CPU — keep them off the UI thread; only
+  Show/visualization touches the document again (own transaction).
+- **Sidecar**: reuse `<drawing>.intergreen-project.json` semantics unchanged (units
+  confirmation, modes, endpoint confirmations, widths, classification, overrides).
+- **Units / classification / stop-lines / pedestrian W**: same explicit-or-blocked policy
+  as the AutoCAD host — the engine enforces it; the host only collects confirmations.
+- **Rule-pack selection**: pass the pack directory (`legacy-mahod-v1` / `israel-2025-06`);
+  never hardcode parameters in the host.
+- **Overrides**: only through `ProjectOverrideService` (sidecar-backed, audited,
+  SAFETY_REDUCING_OVERRIDE gate). No host-side value substitution.
+- **Error/review propagation**: surface VALID / WARNING / REVIEW_REQUIRED / ERROR /
+  BLOCKED exactly as returned — never collapse REVIEW/BLOCKED into silence.
+- **Excel export**: through the shared `WorkbookWriter` only.
 
 ## What Vadim must NOT reimplement
 

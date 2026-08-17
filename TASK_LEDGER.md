@@ -59,3 +59,23 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
   source hashes. Suite 210/210. FINAL_PILOT_VERIFICATION_REPORT.md issued.
 - STATUS: READY FOR INDEPENDENT VERIFICATION (never auto-approved; §56 GUI smoke =
   AWAITING_ARTHUR_MANUAL_SMOKE).
+
+## 0.1.1 — documentation/packaging alignment round (LOCKED directive)
+- Scope lock respected: ZERO changes to *.cs / *.csproj / *.sln / rules / tests / DLLs.
+- Locked facts verified against artifacts BEFORE editing (never rubber-stamped):
+  Ex1 all-40 comparison 38 equal / 2 engine-higher (row 82: 4->5 via W-L.b2@end CD 28.52
+  raw 4.14; row 89: 6->7 via a.band ED=0 raw 6.958) / 0 engine-lower; residual criterion
+  (nearest |dCD|>0.05 OR |dED|>0.05; row 82 included via governing candidate) = 12 rows,
+  10 IG-equal; Ex2 matrix artifact = 37 VALID / 7 REVIEW / 0 BLOCKED (my earlier prose
+  said 38/6 — corrected tree-wide).
+- Corrected: RESIDUAL_CLASSIFICATION, FINAL_PILOT_VERIFICATION_REPORT, CAD_SMOKE_TEST
+  (31-step §14 sequence), KNOWN_LIMITATIONS_HE, RESULT_SCHEMA (actual contract),
+  README_INSTALL_HE (packaged 07_AUTOCAD_BUNDLE path + troubleshooting),
+  QUICK_START_DAVID_HE (no-auto-drawing statement), USER_GUIDE_HE (32 topics).
+- New: START_HERE_HE, USER_GUIDE_DAVID_ILLUSTRATED_HE (20 real-screenshot placeholders,
+  none fabricated), SCREENSHOT_CAPTURE_CHECKLIST_HE, ARTHUR_GUI_SMOKE_RECORD_HE,
+  LIN_PREPILOT_CHECKLIST_HE, PILOT_FEEDBACK_HE, DAVID_PILOT_REVIEW_AGENDA_HE,
+  API_EXAMPLES_VADIM, VADIM_IMPLEMENTATION_CHECKLIST_HE, CIVIL_INTEGRATION_BOUNDARY;
+  INTEGRATION_VADIM updated (required diagram + host responsibilities).
+- STATUS: READY FOR ARTHUR GUI SMOKE (never APPROVED FOR DAVID PILOT; screenshots + GUI
+  record = AWAITING_ARTHUR_GUI_SMOKE).

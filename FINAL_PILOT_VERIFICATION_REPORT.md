@@ -21,9 +21,25 @@ IG-GEO-005:                     0        (was 32 AABB false positives)
 VERY_CLOSE <=1cm:               CD 18/40 · ED 18/40   (classification: 7 points fully VERY_CLOSE)
 <=2cm:                          CD 21/40 · ED 20/40
 <=5cm:                          CD 37/40 · ED 30/40   (29 points MATCH/SMALL_DELTA)
->5cm residual:                  11 — each individually classified (RESIDUAL_CLASSIFICATION.md),
-                                all with engine Final IG == manual Final IG
-unresolved unsafe discrepancies: 0
+
+all 40 historical rows (Final IG comparison):
+  engine == manual:             38
+  engine >  manual:             2   (ENGINE_RESULT_HIGHER — conservative/safe direction:
+                                    row 82 W-L→S-T 4→5 via governing termination candidate
+                                    W-L.b2@end CD 28.52, raw 4.14 → 5;
+                                    row 89 a→S-T 6→7 via crossing-a edge candidate a.band,
+                                    ED = 0 at the S-T stop line, raw 6.96 → 7;
+                                    engineering findings for David, not defects)
+  engine <  manual:             0
+
+geometric residual criterion (nearest candidate |ΔCD| > 0.05 m OR |ΔED| > 0.05 m;
+row 82 also meets it via its governing candidate — see RESIDUAL_CLASSIFICATION.md):
+  rows meeting criterion:       12
+  Final IG equal:               10
+  engine-higher:                2   (rows 82, 89)
+  engine-lower:                 0
+
+unresolved unsafe (engine-lower) discrepancies: 0
 matrix VALID:                   24
 matrix REVIEW_REQUIRED:         0
 matrix BLOCKED:                 0
@@ -37,7 +53,9 @@ nested BlockReference:          PASS  (recursively resolved; content = DBText la
 degenerate geometry handling:   PASS  (5773 → DEGENERATE_GEOMETRY_EXCLUDED)
 known validation findings:      PASS  (debris, endpoint-reference confirmations E-L.b1 + S-L.b2
                                 via sidecar, width source, 4 incomplete workbook rows)
-matrix:                         38 VALID / 6 REVIEW_REQUIRED / 0 BLOCKED
+matrix:                         37 VALID / 7 REVIEW_REQUIRED / 0 BLOCKED
+                                (crossing b is NOT generically blocked; the workbook/DWG
+                                revision mismatch remains an explicit limitation)
 
 2025
 official conformance tests:     27 / 27   (נספח 1 תוספת א' categories א–ז, ≥2 examples per case,
@@ -76,13 +94,20 @@ source hashes complete: PASS  (structured SourceDocuments with SHA-256 in both m
 override audit tests:   PASS  (SAFETY_REDUCING_OVERRIDE gate, base value permanent)
 
 FINAL STATUS:
-READY FOR INDEPENDENT VERIFICATION
+READY FOR ARTHUR GUI SMOKE
+
+Package revision: 0.1.1 (documentation/packaging alignment only)
+Engine/plugin binary version: unchanged from 0.1.0
+  (baseline commit 1b099e660e95eef1fc06ab40c160b1d22eefd3e7; independently reviewed:
+  210/210 suite reproduced by Claude Web, engine/artifacts reviewed by GPT)
 
 Blocking issues: NONE
-Open before David (not blocking independent review):
-  1. AWAITING_ARTHUR_MANUAL_SMOKE — the 5-minute GUI procedure in docs/CAD_SMOKE_TEST.md
-  2. OPEN_QUESTIONS.md items for David (OQ-001…OQ-007)
+Human gates remaining (in order — see START_HERE_HE.md):
+  1. AWAITING_ARTHUR_MANUAL_SMOKE — GUI smoke per CAD_SMOKE_TEST.md + real screenshots
+  2. Lin internal pre-pilot (LIN_PREPILOT_CHECKLIST_HE.md)
+  3. David engineering pilot/review (DAVID_PILOT_REVIEW_AGENDA_HE.md; OQ-001…OQ-007)
 ```
 
-Full disclosure of remaining limitations: docs/KNOWN_LIMITATIONS_HE.md (Directive §60).
-This build is NOT labelled production-ready, approved, or ready-for-David (Directive §57).
+Full disclosure of remaining limitations: docs/KNOWN_LIMITATIONS_HE.md.
+This package is NOT labelled production-ready, approved, or APPROVED FOR DAVID PILOT.
+DOCUMENTATION/PACKAGING ALIGNMENT ONLY — ENGINE BINARIES UNCHANGED FROM 0.1.0.
