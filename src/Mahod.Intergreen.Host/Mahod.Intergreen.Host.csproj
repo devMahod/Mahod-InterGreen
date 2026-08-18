@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Host/user-journey support layer (User-Journey Hardening directive).
+       NO Autodesk dependency and NO engineering logic — path/workbook input handling,
+       workflow state gating, transactional sidecar persistence, dialogs abstraction,
+       support logging. Fully unit-testable without AutoCAD. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Mahod.Intergreen.Host</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mahod.Intergreen.Contracts\Mahod.Intergreen.Contracts.csproj" />
+    <ProjectReference Include="..\Mahod.Intergreen.Excel\Mahod.Intergreen.Excel.csproj" />
+  </ItemGroup>
+
+</Project>

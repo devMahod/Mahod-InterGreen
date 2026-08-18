@@ -33,6 +33,7 @@
     <ProjectReference Include="..\Mahod.Intergreen.Geometry\Mahod.Intergreen.Geometry.csproj" />
     <ProjectReference Include="..\Mahod.Intergreen.Rules\Mahod.Intergreen.Rules.csproj" />
     <ProjectReference Include="..\Mahod.Intergreen.Reporting\Mahod.Intergreen.Reporting.csproj" />
+    <ProjectReference Include="..\Mahod.Intergreen.Host\Mahod.Intergreen.Host.csproj" />
     <ProjectReference Include="..\Mahod.Intergreen.Excel\Mahod.Intergreen.Excel.csproj" />
   </ItemGroup>
 

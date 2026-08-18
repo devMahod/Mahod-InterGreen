@@ -8,7 +8,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyName>Mahod_Intergreen_Setup_0.1.0-r2</AssemblyName>
+    <AssemblyName>Mahod_Intergreen_Setup_0.1.0-r3</AssemblyName>
     <Product>Mahod Intergreen</Product>
     <Company>Mahod Engineering</Company>
     <AssemblyTitle>Mahod Intergreen Setup</AssemblyTitle>

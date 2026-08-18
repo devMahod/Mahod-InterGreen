@@ -119,6 +119,15 @@ internal static class Program
         Directory.CreateDirectory(PluginsDir);
         if (Directory.Exists(BundleDir))
         {
+            // Probe EVERY existing file for exclusive access BEFORE deleting anything —
+            // a locked old installation must abort cleanly, never leave a half-removed
+            // bundle (user-journey hardening §14).
+            string? lockedFile = ProbeForLockedFile(BundleDir);
+            if (lockedFile is not null)
+                throw new InvalidOperationException(
+                    "לא ניתן להחליף את ההתקנה הקודמת — קובץ מתוכה נעול על ידי תוכנית אחרת:\n" +
+                    lockedFile + "\n" +
+                    "סגרי את AutoCAD (כולל חלונות שקרסו) ונסי שוב. ההתקנה הקיימת לא נפגעה.");
             progress?.Invoke("מסיר גרסה קודמת של התוסף…");
             DeleteDirectoryWithRetry(BundleDir);
         }
@@ -196,6 +205,21 @@ internal static class Program
         {
             DeleteDirectoryWithRetry(UninstallerDir);
         }
+    }
+
+    private static string? ProbeForLockedFile(string dir)
+    {
+        foreach (string f in Directory.EnumerateFiles(dir, "*", SearchOption.AllDirectories))
+        {
+            try
+            {
+                File.SetAttributes(f, FileAttributes.Normal);
+                using var fs = new FileStream(f, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+            }
+            catch (IOException) { return f; }
+            catch (UnauthorizedAccessException) { return f; }
+        }
+        return null;
     }
 
     private static void DeleteDirectoryWithRetry(string dir)

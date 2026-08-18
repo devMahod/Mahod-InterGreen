@@ -126,3 +126,16 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
   superseded notice; urgent correction email produced (exact directive text).
 - LESSON (added to validation doctrine): file-hash identity of a package is NOT runtime
   closure - always execute the real workload from the exact shipping folder.
+
+## USER-JOURNEY HARDENING r5 (2026-08-18)
+- Lin's real GUI finding (quoted path -> File.Exists) fixed at the root: file-picker
+  Setup, central WorkbookPathResolver, WorkbookAcceptance, transactional SidecarStore
+  (schema v1, corrupt-recovery, atomic), WorkflowStateMachine gating, Hebrew actionable
+  errors, SupportLog + palette export button, ExportPlanner overwrite policy.
+- NEW assembly Mahod.Intergreen.Host (no Autodesk deps) + host tests 56/56; engineering
+  suite still 210/210; Core DLLs byte-identical; host DLL faade08a->56d81966.
+- Mutations 5/5 detected (TESTS_PROVE_FAILURE_DETECTION); closure gate re-proven on the
+  r3 bundle from clean copy AND installed path; installer r3 scenarios 14/14 incl.
+  locked-install clean abort (pre-delete probe).
+- Shipped: installer r3 (1974c879...), LIN r5 (2d42f145...); r2/r4 superseded; artifacts
+  in docs/hardening + master HARDENING_R5; failure record LIN_R4_SETUP_PATH_FAILURE.
