@@ -196,8 +196,18 @@ public class IgWorkflowCommands
 
     private static StackPanel BuildPanel()
     {
-        var root = new StackPanel { Margin = new Thickness(8) };
-        _status = new TextBlock { TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 8) };
+        // Deterministic palette colors: the hosted WPF visual does NOT inherit the
+        // AutoCAD theme dictionary, so a bare TextBlock renders with WPF's default BLACK
+        // foreground on the palette's black background — title/status/rules text were
+        // invisible in the real host. Every text element gets an explicit foreground.
+        var textBrush = System.Windows.Media.Brushes.White;
+        var root = new StackPanel { Margin = new Thickness(8), Background = System.Windows.Media.Brushes.Black };
+        _status = new TextBlock
+        {
+            TextWrapping = TextWrapping.Wrap,
+            Margin = new Thickness(0, 0, 0, 8),
+            Foreground = textBrush,
+        };
         // Official Mahod logo (white variant for the dark palette) — embedded in the
         // plugin assembly, never read from a user folder at runtime. Uniform stretch
         // preserves the aspect ratio; a missing resource silently degrades to text-only.
@@ -218,6 +228,7 @@ public class IgWorkflowCommands
             FontSize = 15,
             HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
             Margin = new Thickness(0, 0, 0, 4),
+            Foreground = textBrush,
         });
         root.Children.Add(new Separator { Margin = new Thickness(0, 0, 0, 8) });
         root.Children.Add(_status);
@@ -270,6 +281,7 @@ public class IgWorkflowCommands
             VerticalAlignment = System.Windows.VerticalAlignment.Center,
             Margin = new Thickness(0, 0, 0, 8),
             Opacity = 0.85,
+            Foreground = textBrush,
         };
         root.Children.Add(_rulesLabel);
 
