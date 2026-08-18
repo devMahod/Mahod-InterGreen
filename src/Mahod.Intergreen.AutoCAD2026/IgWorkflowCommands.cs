@@ -81,16 +81,14 @@ public class IgWorkflowCommands
             var panel = BuildPanel();
             _palette.AddVisual("Pilot", panel);
             _palette.MinimumSize = new System.Drawing.Size(420, 480);
-            SupportLog.Start(
-                typeof(IgWorkflowCommands).Assembly.GetName().Version?.ToString() ?? "?",
-                AcadApp.Version.ToString());
+            SupportLog.Start(HostBuild.ReleaseId, AcadApp.Version.ToString());
             // Host capability record (§10): which Autodesk product/year/runtime we run in.
             string product = "?", acadver = "?";
             try { product = AcadApp.GetSystemVariable("PRODUCT")?.ToString() ?? "?"; } catch { }
             try { acadver = AcadApp.GetSystemVariable("ACADVER")?.ToString() ?? "?"; } catch { }
             SupportLog.Write("HOST_INFO",
                 $"product={product} acadver={acadver} runtime=net{Environment.Version} " +
-                $"hostBuild={HostBuild.Year}");
+                $"hostBuild={HostBuild.Year} release={HostBuild.ReleaseId}");
         }
         _palette.Visible = true;
         TryAdoptExistingProject();
@@ -383,7 +381,7 @@ public class IgWorkflowCommands
         var outDir = Path.GetDirectoryName(db.Filename)!;
         AnalysisWriters.WriteAll(outDir, input.IntersectionName, _lastOutput.Analysis, all,
             Guid.NewGuid().ToString("N"), DateTimeOffset.Now, TimeSpan.Zero,
-            $"Mahod.Intergreen.AutoCAD (host {HostBuild.Year}, net{Environment.Version.Major})");
+            $"Mahod.Intergreen.AutoCAD {HostBuild.ReleaseId} (net{Environment.Version.Major})");
 
         State.OnAnalyzeSucceeded();
         SupportLog.Write("ANALYZE_OK", $"conflicts={_lastOutput.Analysis.Conflicts.Count}");
@@ -467,6 +465,9 @@ public class IgWorkflowCommands
         {
             ["host_product"] = product,
             ["host_year"] = HostBuild.Year,
+            ["release_id"] = HostBuild.ReleaseId,
+            ["release_revision"] = HostBuild.ReleaseRevision,
+            ["git_sha"] = HostBuild.GitSha,
             ["acadver"] = acadver,
             ["runtime"] = Environment.Version.ToString(),
             ["workbook_input"] = res.StringResult,

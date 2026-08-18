@@ -6,7 +6,7 @@ using Microsoft.Win32;
 namespace MahodIntergreenSetup;
 
 /// <summary>
-/// Mahod Intergreen — per-user installer for the validated AutoCAD 2026 plugin bundle.
+/// Mahod Intergreen — per-user installer for the validated multi-host plugin bundle
 /// Packaging layer only: the embedded payload is the byte-identical validated bundle.
 /// Modes: (default) GUI install · /uninstall · /silent (works with both).
 /// Exit codes: 0 OK, 1 failure, 2 cancelled.
@@ -14,7 +14,22 @@ namespace MahodIntergreenSetup;
 internal static class Program
 {
     internal const string ProductName = "Mahod Intergreen";
-    internal const string EngineVersion = "0.1.0";
+
+    // Shipped identity comes from build/MahodRelease.props via assembly metadata —
+    // never hand-typed, so the EXE can never advertise a stale revision or Git SHA
+    // (traceability audit 2026-08-18).
+    private static string Meta(string key)
+        => typeof(Program).Assembly
+               .GetCustomAttributes<System.Reflection.AssemblyMetadataAttribute>()
+               .FirstOrDefault(a => a.Key == key)?.Value ?? "?";
+
+    internal static string EngineVersion { get; } = Meta("MahodEngineVersion");
+    internal static string ReleaseRevision { get; } = Meta("MahodReleaseRevision");
+    internal static string GitSha { get; } = Meta("MahodGitSha");
+    internal static string HostBuilds { get; } = Meta("MahodHostBuilds").Replace(";", " + ");
+    internal static string ProductRevision { get; } = $"{EngineVersion}-{ReleaseRevision}";
+    internal static string ReleaseId { get; } =
+        $"{EngineVersion}-{ReleaseRevision} (hosts {Meta("MahodHostBuilds").Replace(";", "+")}, git {GitSha})";
     internal const string UninstallKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Uninstall\MahodIntergreen";
 
     internal static string PluginsDir => Path.Combine(
@@ -63,7 +78,7 @@ internal static class Program
         if (uninstall)
         {
             var answer = MessageBox.Show(
-                "להסיר את Mahod Intergreen מ-AutoCAD 2026?\n\n" +
+                "להסיר את Mahod Intergreen מ-AutoCAD / Civil 3D?\n\n" +
                 "יוסר רק תוסף Mahod Intergreen. שרטוטים, קובצי פרויקט (sidecar) וקובצי Excel לא יימחקו.",
                 ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                 MessageBoxDefaultButton.Button1, MessageBoxOptions.RtlReading | MessageBoxOptions.RightAlign);
@@ -195,13 +210,14 @@ internal static class Program
         try
         {
             File.WriteAllText(Path.Combine(Path.GetTempPath(), "MahodIntergreenSetup.detect.log"),
-                string.Join(Environment.NewLine, DetectHosts()));
+                ReleaseId + Environment.NewLine + string.Join(Environment.NewLine, DetectHosts()));
         }
         catch { /* diagnostics only */ }
         using (var key = Registry.CurrentUser.CreateSubKey(UninstallKeyPath))
         {
             key.SetValue("DisplayName", ProductName + " (AutoCAD / Civil 3D 2026-2027)");
-            key.SetValue("DisplayVersion", EngineVersion);
+            key.SetValue("DisplayVersion", ProductRevision);
+            key.SetValue("Comments", ReleaseId);
             key.SetValue("Publisher", "Mahod Engineering");
             key.SetValue("InstallLocation", BundleDir);
             key.SetValue("UninstallString", $"\"{UninstallerExe}\" /uninstall");

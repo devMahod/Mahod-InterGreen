@@ -1,5 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\..\build\MahodRelease.props" />
+
   <!-- Host/user-journey support layer (User-Journey Hardening directive).
        NO Autodesk dependency and NO engineering logic — path/workbook input handling,
        workflow state gating, transactional sidecar persistence, dialogs abstraction,

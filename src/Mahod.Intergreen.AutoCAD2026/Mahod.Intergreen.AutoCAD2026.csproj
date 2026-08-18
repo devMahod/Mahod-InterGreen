@@ -1,5 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\..\build\MahodRelease.props" />
+
   <!-- ONE host codebase, version-correct builds (Multi-Host directive §4/§5):
          dotnet build -p:AutoCADVersion=2026  -> net8.0-windows  + Autodesk 2026 refs
          dotnet build -p:AutoCADVersion=2027  -> net10.0-windows + Autodesk 2027 refs
@@ -22,6 +24,14 @@
     <BaseOutputPath>bin\host$(AutoCADVersion)\</BaseOutputPath>
     <BaseIntermediateOutputPath>obj\host$(AutoCADVersion)\</BaseIntermediateOutputPath>
     <DefaultItemExcludes>$(DefaultItemExcludes);bin/**;obj/**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyMetadata Include="MahodHostBuild" Value="$(AutoCADVersion)" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <InformationalVersion>$(InformationalVersion), host build $(AutoCADVersion)</InformationalVersion>
   </PropertyGroup>
 
   <ItemGroup>

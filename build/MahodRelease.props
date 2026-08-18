@@ -1,0 +1,37 @@
+<Project>
+  <!-- SINGLE SOURCE OF TRUTH for shipped release identity (traceability audit 2026-08-18).
+       Imported ONLY by the installer + the two host projects. The six validated
+       engineering assemblies deliberately do NOT import this file: their bytes stay
+       byte-identical to the approved 0.1.0 engine.
+
+       The Git SHA is supplied at build time:
+           dotnet build ... -p:MahodGitSha=$(git rev-parse HEAD)
+       so a candidate can never carry a stale or guessed revision. A build without it is
+       stamped UNSTAMPED-DEV and must never be shipped. -->
+  <PropertyGroup>
+    <MahodEngineVersion>0.1.0</MahodEngineVersion>
+    <MahodReleaseRevision>r6</MahodReleaseRevision>
+    <MahodReleaseRevisionNumber>6</MahodReleaseRevisionNumber>
+    <MahodGitSha Condition="'$(MahodGitSha)' == ''">UNSTAMPED-DEV</MahodGitSha>
+    <MahodGitShaShort>$(MahodGitSha.Substring(0,7))</MahodGitShaShort>
+
+    <Product>Mahod Intergreen</Product>
+    <Company>Mahod Engineering Ltd.</Company>
+    <Copyright>© Mahod Engineering Ltd.</Copyright>
+
+    <!-- AssemblyVersion stays fixed on purpose: binding identity must not move between
+         distribution revisions. FileVersion carries the revision; the full truth lives in
+         InformationalVersion (= Windows PE "Product version"). -->
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Version>$(MahodEngineVersion)</Version>
+    <FileVersion>$(MahodEngineVersion).$(MahodReleaseRevisionNumber)</FileVersion>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <InformationalVersion>$(MahodEngineVersion)-$(MahodReleaseRevision) (engine $(MahodEngineVersion), git $(MahodGitSha))</InformationalVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyMetadata Include="MahodEngineVersion" Value="$(MahodEngineVersion)" />
+    <AssemblyMetadata Include="MahodReleaseRevision" Value="$(MahodReleaseRevision)" />
+    <AssemblyMetadata Include="MahodGitSha" Value="$(MahodGitSha)" />
+  </ItemGroup>
+</Project>

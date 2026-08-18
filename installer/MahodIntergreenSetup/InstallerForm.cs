@@ -34,7 +34,9 @@ internal sealed class InstallerForm : Form
         _title.SetBounds(20, 24, 520, 44);
         _title.TextAlign = ContentAlignment.MiddleRight;
 
-        _subtitle.Text = "חישוב זמנים בין-ירוקים · מהוד הנדסה · גרסת מנוע " + Program.EngineVersion;
+        _subtitle.Text = "חישוב זמנים בין-ירוקים · מהוד הנדסה · גרסה " + Program.ProductRevision +
+                         "  ·  מנוע " + Program.EngineVersion + "  ·  build " +
+                         (Program.GitSha.Length >= 7 ? Program.GitSha[..7] : Program.GitSha);
         _subtitle.Font = new Font("Segoe UI", 10.5f);
         _subtitle.ForeColor = Color.FromArgb(90, 90, 90);
         _subtitle.SetBounds(20, 70, 520, 26);
@@ -95,10 +97,12 @@ internal sealed class InstallerForm : Form
             _body.Text =
                 "ההתקנה הושלמה בהצלחה!\n\n" +
                 "השלבים הבאים:\n" +
-                "1. פתחו את AutoCAD 2026 (אם היה פתוח — סגרו ופתחו מחדש).\n" +
+                "1. פתחו את AutoCAD או Civil 3D ‏(2026 / 2027) — אם היו פתוחים, סגרו ופתחו מחדש.\n" +
                 "2. פתחו את שרטוט הבין-ירוקים.\n" +
                 "3. בשורת הפקודה הקלידו: INTERGREEN\n\n" +
-                "להסרה: הגדרות Windows ← אפליקציות ← Mahod Intergreen.";
+                "להסרה: הגדרות Windows ← אפליקציות ← Mahod Intergreen.\n\n" +
+                "גרסה מותקנת: " + Program.ProductRevision + " (build " +
+                (Program.GitSha.Length >= 7 ? Program.GitSha[..7] : Program.GitSha) + ")";
             _detect.Text = "✓ Mahod Intergreen מותקן.";
             _detect.ForeColor = Color.FromArgb(0, 130, 60);
             _status.Text = "";
