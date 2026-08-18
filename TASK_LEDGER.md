@@ -180,3 +180,25 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
 - QUARANTINED: Lin r5 pkg, installers r3+r4, ARTHUR_CIVIL2027 r4, Vadim r4. NEW: installer
   r5 (78d5c92f...), ARTHUR_FULL_RELEASE_GATE_0.1.0-r5.zip + Cowork runbook, master r3.
   Cowork = primary release gate; Lin gets r6 only after it passes.
+
+## r6 — release traceability + dual Setup input (2026-08-18, one pass)
+- Arthur's independent audit of r5: shipped EXE PE ProductVersion still said
+  'installer r2' + previous commit SHA (published before the metadata edit landed).
+  Root fix: build/MahodRelease.props = single source of release identity; Git SHA
+  supplied at build time (-p:MahodGitSha); SDK auto-append disabled; imported ONLY by
+  installer + 2 host projects so the six engineering DLLs keep approved bytes.
+  All surfaces re-audited: FileVersion 0.1.0.6, ProductVersion 0.1.0-r6 (git 41b9fd0...),
+  host DLLs, wizard UI, uninstall DisplayVersion+Comments, PackageContents 0.1.0.6,
+  support log HOST_INFO, run manifests, smoke JSON, distribution manifest.
+- Lin's UX request (same pass): manual full-path entry ALONGSIDE Browse. New Host-layer
+  SetupService is now THE pipeline for both (Validate -> Commit); palette gained a
+  secondary 'או הדבק/הקלד נתיב מלא' WPF prompt; zero duplicated path/workbook logic;
+  command-line-only Setup NOT restored.
+- Tests: 210/210 engineering, 65/65 host (+9 manual-entry incl. Lin quoted case entered
+  manually, spaces/Hebrew/UNC/mapped/folder/unsupported/cleared, previous-valid-setup
+  preservation, and Browse==Manual parity on path/hash/template/model/state/sidecar).
+- Real Autodesk (2026 + 2027 consoles): IG_SMOKE_SETUP_ACCEPT PASS for BOTH input
+  methods with parity all-true; runtime closure both years PASS; cross-target parity
+  byte-identical; installer lifecycle 5/5 (machine left on r6).
+- Candidate: installer r6 7514b83e..., gate r6 c0003fc7..., master r4 8305d555...
+  r5/r4/r3 artifacts superseded. STOPPED for Arthur's independent audit before Cowork.
