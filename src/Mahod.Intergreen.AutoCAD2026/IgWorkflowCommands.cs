@@ -41,6 +41,7 @@ public class IgWorkflowCommands
     /// <summary>Test seam (§18): production uses the WPF dialogs below.</summary>
     internal static IWorkbookPicker Picker = new WpfWorkbookPicker();
     internal static IMessageService Messages = new WpfMessageService();
+    internal static IWorkbookPathPrompt PathPrompt = new WpfPathPrompt();
 
     private sealed class WpfWorkbookPicker : IWorkbookPicker
     {
@@ -55,6 +56,44 @@ public class IgWorkflowCommands
             if (initialDirectory is not null && Directory.Exists(initialDirectory))
                 dlg.InitialDirectory = initialDirectory;
             return dlg.ShowDialog() == true ? dlg.FileName : null;
+        }
+    }
+
+    /// <summary>Manual full-path entry (r6). Optional, secondary to Browse; the text it
+    /// returns goes straight into the same SetupService pipeline.</summary>
+    private sealed class WpfPathPrompt : IWorkbookPathPrompt
+    {
+        public string? PromptForPath(string? initialValue)
+        {
+            var win = new System.Windows.Window
+            {
+                Title = "הדבק/הקלד נתיב מלא לקובץ ה-Excel",
+                Width = 640, Height = 190, FlowDirection = System.Windows.FlowDirection.RightToLeft,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                ResizeMode = ResizeMode.NoResize,
+            };
+            var root = new StackPanel { Margin = new Thickness(14) };
+            root.Children.Add(new TextBlock
+            {
+                Text = "אפשר להדביק נתיב שהועתק עם \"Copy as path\" (כולל מרכאות) — הן יוסרו אוטומטית.",
+                TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 8),
+            });
+            var box = new TextBox
+            {
+                Text = initialValue ?? "", FlowDirection = System.Windows.FlowDirection.LeftToRight,
+                Padding = new Thickness(4), FontFamily = new System.Windows.Media.FontFamily("Consolas"),
+            };
+            root.Children.Add(box);
+            var row = new WrapPanel { Margin = new Thickness(0, 12, 0, 0) };
+            var ok = new Button { Content = "אישור", Width = 90, Margin = new Thickness(0, 0, 8, 0), IsDefault = true };
+            var cancel = new Button { Content = "ביטול", Width = 90, IsCancel = true };
+            row.Children.Add(ok); row.Children.Add(cancel);
+            root.Children.Add(row);
+            win.Content = root;
+            string? result = null;
+            ok.Click += (_, _) => { result = box.Text; win.DialogResult = true; };
+            box.Focus(); box.SelectAll();
+            return win.ShowDialog() == true ? result : null;
         }
     }
 
@@ -115,7 +154,8 @@ public class IgWorkflowCommands
             b.Click += (_, _) => Guard(gate, onClick);
             buttons.Children.Add(b);
         }
-        Add("1. Setup", WorkflowAction.Setup, Setup);
+        Add("1. Setup — בחר קובץ Excel…", WorkflowAction.Setup, () => SetupCore(SetupInputMethod.Browse));
+        Add("או הדבק/הקלד נתיב מלא", WorkflowAction.Setup, () => SetupCore(SetupInputMethod.ManualPath));
         Add("2. Validate", WorkflowAction.Validate, () => RunPipeline(analyzeOnly: false));
         Add("3. Analyze", WorkflowAction.Analyze, () => RunPipeline(analyzeOnly: true));
         Add("4. Show in drawing", WorkflowAction.Show, ShowSelected);
@@ -219,51 +259,64 @@ public class IgWorkflowCommands
         catch (System.Exception ex) { SupportLog.Error("ADOPT_FAILED", ex); }
     }
 
-    // ---- 1. Setup: file picker + transactional commit (hardening §2/§3/§6/§7) ----
-    private static void Setup()
+    // ---- 1. Setup: Browse (default) OR manual full path — ONE pipeline (r6) ----
+    // Both entry points differ only in how the RAW string is obtained. From the moment it
+    // exists it goes through SetupService (resolver -> acceptance -> reader -> validated
+    // transactional commit). No duplicated path/workbook logic exists anywhere.
+    private static void SetupCore(SetupInputMethod method)
     {
         var doc = AcadApp.DocumentManager.MdiActiveDocument
             ?? throw new UserFacingException("אין שרטוט פתוח.\nפתחי את שרטוט הבין-ירוקים ואז נסי שוב.", "no active document");
         var ed = doc.Editor;
         var db = doc.Database;
         var scPath = SidecarPath(db);
+        string drawingDir = Path.GetDirectoryName(db.Filename)!;
 
         var loaded = SidecarStore.Load(scPath);
         if (loaded.Status == SidecarLoadStatus.Recovered)
             SetStatus(loaded.UserMessageHe);
-        var sidecar = loaded.Data;
 
-        // initial folder: last valid workbook folder → drawing folder → Documents
-        string? initial = null;
-        var prev = SidecarStore.ResolveWorkbook(sidecar, Path.GetDirectoryName(db.Filename)!);
-        if (prev.Status == WorkbookRefStatus.Ok)
-            initial = Path.GetDirectoryName(prev.Path);
-        initial ??= Path.GetDirectoryName(db.Filename);
-        if (initial is null || !Directory.Exists(initial))
-            initial = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        // starting point: last valid workbook, else drawing folder, else Documents
+        var prev = SidecarStore.ResolveWorkbook(loaded.Data, drawingDir);
+        string? prevPath = prev.Status == WorkbookRefStatus.Ok ? prev.Path : null;
+        string? initialDir = prevPath is not null ? Path.GetDirectoryName(prevPath) : null;
+        initialDir ??= drawingDir;
+        if (!Directory.Exists(initialDir))
+            initialDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-        SupportLog.Write("SETUP_PICKER_OPEN", initial ?? "");
-        string? picked = Picker.PickWorkbook(initial);
-        if (picked is null)
+        string? raw;
+        if (method == SetupInputMethod.Browse)
         {
-            SupportLog.Write("SETUP_CANCELLED", "");
-            SetStatus("הבחירה בוטלה — ההגדרות הקודמות של הפרויקט לא השתנו.");
-            return; // transactional: nothing was written
+            SupportLog.Write("SETUP_PICKER_OPEN", initialDir);
+            raw = Picker.PickWorkbook(initialDir);
+        }
+        else
+        {
+            SupportLog.Write("SETUP_MANUAL_PROMPT", prevPath ?? initialDir);
+            raw = PathPrompt.PromptForPath(prevPath);
         }
 
-        var accept = WorkbookAcceptance.Validate(picked);
+        if (raw is null || string.IsNullOrWhiteSpace(raw))
+        {
+            SupportLog.Write("SETUP_CANCELLED", method.ToString());
+            SetStatus("הבחירה בוטלה — ההגדרות הקודמות של הפרויקט לא השתנו.");
+            return; // transactional: nothing written
+        }
+
+        var accept = SetupService.Validate(raw);
         if (!accept.IsOk)
         {
-            SupportLog.Write("SETUP_WORKBOOK_REJECTED", accept.Detail);
+            SupportLog.Write($"SETUP_WORKBOOK_REJECTED[{method}]", accept.Detail);
             Messages.Error(accept.UserMessageHe);
-            SetStatus("קובץ ה-Excel לא התקבל — ההגדרות הקודמות לא השתנו. אפשר לנסות Setup שוב.");
-            return; // transactional: previous valid configuration intact
+            SetStatus("קובץ ה-Excel לא התקבל — ההגדרות הקודמות לא השתנו. אפשר לנסות שוב.");
+            return; // previous valid configuration intact
         }
 
-        // units confirmation (Directive §13) — only when the drawing cannot say
+        // units confirmation (Directive §13) — host-specific, still before any commit
+        var extras = new Dictionary<string, string>();
         var (unitsName, toMeters) = GeometryExtraction.Units(db);
         if (toMeters is null &&
-            !(sidecar.TryGetValue("unitsConfirmed", out var uc) && uc.ValueKind == JsonValueKind.String
+            !(loaded.Data.TryGetValue("unitsConfirmed", out var uc) && uc.ValueKind == JsonValueKind.String
               && string.Equals(uc.GetString(), "meters", StringComparison.OrdinalIgnoreCase)))
         {
             var keep = ed.GetKeywords(
@@ -273,18 +326,20 @@ public class IgWorkflowCommands
                     "ההגדרה לא הושלמה: יש לאשר שהשרטוט במטרים (הניתוח נשאר חסום עד האישור).\n" +
                     "ההגדרות הקודמות לא השתנו.",
                     "units not confirmed");
-            SidecarStore.Set(sidecar, "unitsConfirmed", "meters");
-            SidecarStore.Set(sidecar, "unitsConfirmedBy", Environment.UserName + " via INTERGREEN Setup");
+            extras["unitsConfirmed"] = "meters";
+            extras["unitsConfirmedBy"] = Environment.UserName + " via INTERGREEN Setup";
         }
 
-        // validation passed — COMMIT (atomic) as the last step
-        SidecarStore.Set(sidecar, "workbook", accept.NormalizedPath!);
-        SidecarStore.Commit(scPath, sidecar);
+        var commit = SetupService.Commit(accept, scPath, drawingDir, extras);
+        if (!commit.Committed)
+            throw new UserFacingException(commit.UserMessageHe,
+                $"commit reload={commit.ReloadStatus} ref={commit.ReloadRef}");
+
         _workbookPath = accept.NormalizedPath;
         _lastModel = accept.Model;
         _lastOutput = null;
         State.OnSetupCommitted();
-        SupportLog.Write("SETUP_COMMITTED", accept.NormalizedPath!);
+        SupportLog.Write($"SETUP_COMMITTED[{method}]", accept.NormalizedPath!);
         SetStatus($"Setup נשמר ({Path.GetFileName(accept.NormalizedPath)}) → עכשיו Validate.");
     }
 
@@ -474,31 +529,48 @@ public class IgWorkflowCommands
         };
         try
         {
-            var p = WorkbookPathResolver.Resolve(res.StringResult);
-            payload["path_resolution"] = p.Status.ToString();
-            var accept = WorkbookAcceptance.Validate(res.StringResult);   // PRODUCTION service
-            payload["acceptance_status"] = accept.Status.ToString();
-            payload["acceptance_detail"] = accept.IsOk ? "ok" : accept.Detail;
-            if (accept.IsOk)
+            // r6: prove BOTH production input methods inside the real Autodesk process.
+            // Browse = the clean absolute path a file picker returns.
+            // Manual = the same file pasted Windows-"Copy as path" style (quoted + padded).
+            string browseRaw = res.StringResult;
+            string manualRaw = "  \"" + res.StringResult.Trim().Trim('"') + "\"  ";
+            string dir = Path.GetDirectoryName(doc.Database.Filename)!;
+
+            var browse = SetupService.Validate(browseRaw);
+            var manual = SetupService.Validate(manualRaw);
+            payload["path_resolution"] = WorkbookPathResolver.Resolve(browseRaw).Status.ToString();
+            payload["acceptance_status"] = browse.Status.ToString();
+            payload["acceptance_status_manual"] = manual.Status.ToString();
+            payload["acceptance_detail"] = browse.IsOk ? "ok" : browse.Detail;
+
+            if (browse.IsOk && manual.IsOk)
             {
-                payload["template_variant"] = accept.Model!.Variant.ToString();
+                payload["template_variant"] = browse.Model!.Variant.ToString();
                 payload["model_counts"] = new Dictionary<string, int>
                 {
-                    ["signalGroups"] = accept.Model.SignalGroups.Count,
-                    ["pedestrianWidths"] = accept.Model.PedestrianWidths.Count,
-                    ["movementParameters"] = accept.Model.MovementParameters.Count,
+                    ["signalGroups"] = browse.Model.SignalGroups.Count,
+                    ["pedestrianWidths"] = browse.Model.PedestrianWidths.Count,
+                    ["movementParameters"] = browse.Model.MovementParameters.Count,
                 };
-                // sidecar transactional commit to a TEST location + reload (production store)
-                string scTest = Path.Combine(Path.GetDirectoryName(doc.Database.Filename)!,
-                    "smoke-setup-accept.intergreen-project.json");
-                var data = SidecarStore.Load(scTest).Data;
-                SidecarStore.Set(data, "workbook", accept.NormalizedPath!);
-                SidecarStore.Commit(scTest, data);
-                var reload = SidecarStore.Load(scTest);
-                var wbRef = SidecarStore.ResolveWorkbook(reload.Data,
-                    Path.GetDirectoryName(doc.Database.Filename)!);
-                payload["sidecar_commit"] = reload.Status.ToString();
-                payload["sidecar_reload"] = wbRef.Status.ToString();
+                string scB = Path.Combine(dir, "smoke-browse.intergreen-project.json");
+                string scM = Path.Combine(dir, "smoke-manual.intergreen-project.json");
+                var cB = SetupService.Commit(browse, scB, dir);
+                var cM = SetupService.Commit(manual, scM, dir);
+                payload["sidecar_commit"] = cB.ReloadStatus.ToString();
+                payload["sidecar_reload"] = cB.ReloadRef.ToString();
+                payload["sidecar_commit_manual"] = cM.ReloadStatus.ToString();
+                payload["sidecar_reload_manual"] = cM.ReloadRef.ToString();
+                payload["input_method_parity"] = new Dictionary<string, object?>
+                {
+                    ["normalized_path_equal"] = browse.NormalizedPath == manual.NormalizedPath,
+                    ["template_equal"] = browse.Model.Variant == manual.Model!.Variant,
+                    ["model_counts_equal"] =
+                        browse.Model.SignalGroups.Count == manual.Model.SignalGroups.Count &&
+                        browse.Model.PedestrianWidths.Count == manual.Model.PedestrianWidths.Count &&
+                        browse.Model.MovementParameters.Count == manual.Model.MovementParameters.Count,
+                    ["sidecar_identical"] = File.ReadAllText(scB) == File.ReadAllText(scM),
+                    ["setup_state_equal"] = cB.Committed == cM.Committed,
+                };
             }
         }
         catch (System.Exception ex)

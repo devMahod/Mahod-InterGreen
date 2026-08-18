@@ -45,10 +45,14 @@ for year, acad in HOSTS:
     detail = "no output"
     if out.exists():
         d = json.load(open(out, encoding="utf-8"))
-        ok = d.get("acceptance_status") == "Ok" and d.get("sidecar_commit") == "Ok" \
-             and d.get("sidecar_reload") == "Ok"
-        detail = f"variant={d.get('template_variant')} counts={d.get('model_counts')}" if ok \
-                 else (d.get("acceptance_detail") or d.get("exception_full_detail") or "")[:400]
+        parity = d.get("input_method_parity") or {}
+        ok = (d.get("acceptance_status") == "Ok" and d.get("acceptance_status_manual") == "Ok"
+              and d.get("sidecar_commit") == "Ok" and d.get("sidecar_reload") == "Ok"
+              and d.get("sidecar_commit_manual") == "Ok" and d.get("sidecar_reload_manual") == "Ok"
+              and bool(parity) and all(parity.values()))
+        detail = (f"browse+manual OK | parity {parity} | variant={d.get('template_variant')} "
+                  f"| counts={d.get('model_counts')}"
+                  if ok else (d.get("acceptance_detail") or d.get("exception_full_detail") or "")[:400])
     print(f"RealHost_SetupAccept_OriginalExample1 [{year}]:", "PASS" if ok else "FAIL", "|", detail)
     ok_all &= ok
     shutil.rmtree(tb.parent)
