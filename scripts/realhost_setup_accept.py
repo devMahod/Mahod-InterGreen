@@ -46,13 +46,26 @@ for year, acad in HOSTS:
     if out.exists():
         d = json.load(open(out, encoding="utf-8"))
         parity = d.get("input_method_parity") or {}
+        an = d.get("analyze") or {}
+        # r7 golden gate: the FULL production Analyze must run inside the real host
+        # (rules resolved from the installed bundle, not from the Autodesk CWD) and
+        # reproduce the validated Example-1 numbers exactly.
+        analyze_ok = (an.get("movements") == 11 and an.get("crossings") == 4
+                      and an.get("conflicts") == 50 and an.get("matrix_valid") == 24
+                      and an.get("matrix_review") == 0 and an.get("matrix_blocked") == 0
+                      and an.get("wl_st_final_ig") == 5
+                      and "rules" not in (an.get("process_cwd") or "").lower())
         ok = (d.get("acceptance_status") == "Ok" and d.get("acceptance_status_manual") == "Ok"
               and d.get("sidecar_commit") == "Ok" and d.get("sidecar_reload") == "Ok"
               and d.get("sidecar_commit_manual") == "Ok" and d.get("sidecar_reload_manual") == "Ok"
-              and bool(parity) and all(parity.values()))
+              and bool(parity) and all(parity.values()) and analyze_ok)
         detail = (f"browse+manual OK | parity {parity} | variant={d.get('template_variant')} "
-                  f"| counts={d.get('model_counts')}"
-                  if ok else (d.get("acceptance_detail") or d.get("exception_full_detail") or "")[:400])
+                  f"| counts={d.get('model_counts')} | ANALYZE cwd={an.get('process_cwd')} "
+                  f"mov={an.get('movements')}/{an.get('crossings')} conf={an.get('conflicts')} "
+                  f"matrix={an.get('matrix_valid')}/{an.get('matrix_review')}/{an.get('matrix_blocked')} "
+                  f"WL-ST={an.get('wl_st_final_ig')}"
+                  if ok else (json.dumps(an) + " | " +
+                              (d.get("acceptance_detail") or d.get("exception_full_detail") or ""))[:600])
     print(f"RealHost_SetupAccept_OriginalExample1 [{year}]:", "PASS" if ok else "FAIL", "|", detail)
     ok_all &= ok
     shutil.rmtree(tb.parent)
