@@ -177,18 +177,20 @@ public class IgWorkflowCommands
             _palette.AddVisual("Pilot", panel);
             _palette.MinimumSize = new System.Drawing.Size(420, 480);
             SupportLog.Start(HostBuild.ReleaseId, AcadApp.Version.ToString());
-            // Host capability record (§10): which Autodesk product/year/runtime we run in.
-            string product = "?", acadver = "?";
-            try { product = AcadApp.GetSystemVariable("PRODUCT")?.ToString() ?? "?"; } catch { }
+            // Host capability record (§10): which Autodesk product/year/runtime we run
+            // in. PRODUCT reports "AutoCAD" even inside Civil 3D, so the REAL product is
+            // resolved from the loaded AECC modules (r9, HostProductIdentity).
+            string acadver = "?";
             try { acadver = AcadApp.GetSystemVariable("ACADVER")?.ToString() ?? "?"; } catch { }
             SupportLog.Write("HOST_INFO",
-                $"product={product} acadver={acadver} runtime=net{Environment.Version} " +
+                $"product={DetectHostProduct()} acadver={acadver} runtime=net{Environment.Version} " +
                 $"hostBuild={HostBuild.Year} release={HostBuild.ReleaseId}");
+            // r9: bind the palette to the active drawing — on a document switch the
+            // previous drawing's results must never look current.
+            AcadApp.DocumentManager.DocumentActivated += (_, _) => Guard(null, OnDocumentActivated);
         }
         _palette.Visible = true;
-        TryAdoptExistingProject();
-        RefreshRulesLabel();
-        UpdateButtonStates();
+        BindToActiveDrawing();
         SetStatus("Setup → Validate → Analyze → Review → Export Excel.");
     }
 
@@ -204,50 +206,72 @@ public class IgWorkflowCommands
             root.Children.Add(new System.Windows.Controls.Image
             {
                 Source = logo,
-                Height = 30,
+                Height = 34,
                 Stretch = System.Windows.Media.Stretch.Uniform,
-                HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
-                Margin = new Thickness(0, 0, 0, 6),
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+                Margin = new Thickness(0, 10, 0, 10),
             });
         root.Children.Add(new TextBlock
         {
             Text = "MAHOD INTERGREEN — Pilot",
             FontWeight = FontWeights.Bold,
             FontSize = 15,
-            Margin = new Thickness(0, 0, 0, 6),
+            HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+            Margin = new Thickness(0, 0, 0, 4),
         });
+        root.Children.Add(new Separator { Margin = new Thickness(0, 0, 0, 8) });
         root.Children.Add(_status);
 
-        var buttons = new WrapPanel();
-        void Add(string label, WorkflowAction? gate, Action onClick)
+        // r9 layout polish: uniform button metrics, clear hierarchy — the numbered main
+        // workflow first, support actions in a separated secondary row. Compact on purpose.
+        var buttons = new WrapPanel { Margin = new Thickness(0, 2, 0, 0) };
+        var support = new WrapPanel { Margin = new Thickness(0, 2, 0, 0) };
+        Button Make(string label, WorkflowAction? gate, Action onClick, bool primary)
         {
-            var b = new Button { Content = label, Margin = new Thickness(0, 0, 6, 6), Padding = new Thickness(10, 4, 10, 4) };
+            var b = new Button
+            {
+                Content = label,
+                Height = primary ? 30 : 26,
+                MinWidth = primary ? 108 : 96,
+                Margin = new Thickness(0, 0, 8, 8),
+                Padding = new Thickness(10, 0, 10, 0),
+                VerticalContentAlignment = System.Windows.VerticalAlignment.Center,
+            };
+            if (primary) b.FontWeight = FontWeights.SemiBold;
             b.Click += (_, _) => Guard(gate, onClick);
-            // r8: stage-gated actions are visually disabled until the state machine
-            // allows them (Guard stays as the safety net for every path).
+            // stage-gated actions are visually disabled until the state machine allows
+            // them (Guard stays as the safety net for every path).
             if (gate is WorkflowAction ga && ga is not WorkflowAction.Setup and not WorkflowAction.ClearQa)
                 _actionButtons[ga] = b;
-            buttons.Children.Add(b);
+            return b;
         }
+        void Add(string label, WorkflowAction? gate, Action onClick)
+            => buttons.Children.Add(Make(label, gate, onClick, primary: true));
+        void AddSupport(string label, WorkflowAction? gate, Action onClick)
+            => support.Children.Add(Make(label, gate, onClick, primary: false));
         Add("1. Setup — בחר קובץ Excel…", WorkflowAction.Setup, () => SetupCore(SetupInputMethod.Browse));
-        Add("או הדבק/הקלד נתיב מלא", WorkflowAction.Setup, () => SetupCore(SetupInputMethod.ManualPath));
         Add("2. Validate", WorkflowAction.Validate, () => RunPipeline(analyzeOnly: false));
         Add("3. Analyze", WorkflowAction.Analyze, () => RunPipeline(analyzeOnly: true));
         Add("4. Show in drawing", WorkflowAction.Show, ShowSelected);
         Add("5. Export Excel", WorkflowAction.Export, ExportExcel);
-        Add("Clear QA", WorkflowAction.ClearQa, ClearQa);
-        Add("Export Support Log", null, ExportSupportLog);
         root.Children.Add(buttons);
+        root.Children.Add(new Separator { Margin = new Thickness(0, 0, 0, 8) });
 
-        // r8: active guideline (rule-pack) version — visible, and changeable only as a
+        AddSupport("או הדבק/הקלד נתיב מלא", WorkflowAction.Setup, () => SetupCore(SetupInputMethod.ManualPath));
+        AddSupport("בחירת חוקים…", null, ChooseRulePack);
+        AddSupport("Clear QA", WorkflowAction.ClearQa, ClearQa);
+        AddSupport("Export Support Log", null, ExportSupportLog);
+        root.Children.Add(support);
+
+        // active guideline (rule-pack) version — always visible; changeable only as a
         // deliberate engineer action (versioned-guidelines requirement).
-        var rulesRow = new WrapPanel { Margin = new Thickness(0, 0, 0, 6) };
-        var rulesBtn = new Button { Content = "בחירת חוקים…", Padding = new Thickness(8, 2, 8, 2), Margin = new Thickness(0, 0, 8, 0) };
-        rulesBtn.Click += (_, _) => Guard(null, ChooseRulePack);
-        _rulesLabel = new TextBlock { VerticalAlignment = System.Windows.VerticalAlignment.Center };
-        rulesRow.Children.Add(rulesBtn);
-        rulesRow.Children.Add(_rulesLabel);
-        root.Children.Add(rulesRow);
+        _rulesLabel = new TextBlock
+        {
+            VerticalAlignment = System.Windows.VerticalAlignment.Center,
+            Margin = new Thickness(0, 0, 0, 8),
+            Opacity = 0.85,
+        };
+        root.Children.Add(_rulesLabel);
 
         _list = new ListView { Height = 330 };
         var gv = new GridView();
@@ -349,6 +373,54 @@ public class IgWorkflowCommands
 
     private static string SidecarPath(Database db)
         => Path.ChangeExtension(db.Filename, null) + ".intergreen-project.json";
+
+    private static string? _boundDrawingPath;
+
+    /// <summary>Real host product (r9): PRODUCT says "AutoCAD" even inside Civil 3D, so
+    /// the loaded AECC managed modules are the deciding evidence (HostProductIdentity).</summary>
+    private static string DetectHostProduct()
+    {
+        string reported = "AutoCAD";
+        try { reported = AcadApp.GetSystemVariable("PRODUCT")?.ToString() ?? "AutoCAD"; } catch { }
+        return HostProductIdentity.Detect(
+            AppDomain.CurrentDomain.GetAssemblies().Select(a => a.GetName().Name), reported);
+    }
+
+    /// <summary>r9: the palette state belongs to ONE drawing. When the active document
+    /// differs from the bound one, displayed results are cleared, the workflow state
+    /// machine resets, and the new drawing's saved project (sidecar) is adopted — stale
+    /// results from another drawing must never look current or be acted on.</summary>
+    private static void BindToActiveDrawing()
+    {
+        var doc = AcadApp.DocumentManager.MdiActiveDocument;
+        string? active = doc?.Database?.Filename;
+        if (!DrawingBinding.RequiresReset(_boundDrawingPath, active))
+            return;
+        _boundDrawingPath = active;
+        _lastOutput = null;
+        _lastModel = null;
+        _workbookPath = null;
+        try { ClearTransients(); } catch { /* old document's view may be gone */ }
+        State.OnProjectInvalidated();
+        Populate(new List<ConflictRow>());
+        if (doc is not null)
+            TryAdoptExistingProject();
+        RefreshRulesLabel();
+        UpdateButtonStates();
+    }
+
+    private static void OnDocumentActivated()
+    {
+        var doc = AcadApp.DocumentManager.MdiActiveDocument;
+        string? active = doc?.Database?.Filename;
+        if (!DrawingBinding.RequiresReset(_boundDrawingPath, active))
+            return;
+        BindToActiveDrawing();
+        SetStatus("עברת לשרטוט אחר — התוצאות הקודמות נוקו. " +
+                  (State.ProjectConfigured
+                      ? "הפרויקט השמור של השרטוט נטען; הריצי Validate/Analyze."
+                      : "הריצי Setup לשרטוט הזה."));
+    }
 
     /// <summary>On palette open: adopt a valid saved project so Validate works directly.</summary>
     private static void TryAdoptExistingProject()
@@ -459,6 +531,7 @@ public class IgWorkflowCommands
         _workbookPath = accept.NormalizedPath;
         _lastModel = accept.Model;
         _lastOutput = null;
+        _boundDrawingPath = db.Filename;
         State.OnSetupCommitted();
         RefreshRulesLabel();
         SupportLog.Write($"SETUP_COMMITTED[{method}]", accept.NormalizedPath!);
@@ -758,12 +831,11 @@ public class IgWorkflowCommands
         if (res.Status != PromptStatus.OK) return;
         string outPath = Path.Combine(Path.GetDirectoryName(doc.Database.Filename)!, "ig_setup_accept.json");
 
-        string product = "?", acadver = "?";
-        try { product = AcadApp.GetSystemVariable("PRODUCT")?.ToString() ?? "?"; } catch { }
+        string acadver = "?";
         try { acadver = AcadApp.GetSystemVariable("ACADVER")?.ToString() ?? "?"; } catch { }
         var payload = new Dictionary<string, object?>
         {
-            ["host_product"] = product,
+            ["host_product"] = DetectHostProduct(),
             ["host_year"] = HostBuild.Year,
             ["release_id"] = HostBuild.ReleaseId,
             ["release_revision"] = HostBuild.ReleaseRevision,
