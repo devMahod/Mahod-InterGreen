@@ -26,3 +26,9 @@ public interface IWorkbookPathPrompt
     /// <returns>raw text as typed/pasted by the engineer, or null when cancelled/cleared.</returns>
     string? PromptForPath(string? initialValue);
 }
+
+/// <summary>Rule-pack chooser dialog (r8). Returns the chosen pack id, or null on cancel.</summary>
+public interface IRulePackChooser
+{
+    string? Choose(IReadOnlyList<InstalledRulePack> installed, string activePackId);
+}

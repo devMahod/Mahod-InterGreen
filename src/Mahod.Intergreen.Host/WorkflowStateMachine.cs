@@ -46,6 +46,16 @@ public sealed class WorkflowStateMachine
     }
 
     public void OnProjectLoadedFromSidecar() => ProjectConfigured = true;
+
+    /// <summary>A deliberate rule-pack change: the project stays configured, but every
+    /// previously shown result was computed under other rules — never present it as
+    /// current (r8).</summary>
+    public void OnRulesChanged()
+    {
+        Validated = false;
+        Analyzed = false;
+        HasSelection = false;
+    }
     public void OnValidateSucceeded() => Validated = true;
     public void OnAnalyzeSucceeded() { Validated = true; Analyzed = true; }
     public void OnPipelineFailed() { /* keep prior flags: results already shown remain valid */ }

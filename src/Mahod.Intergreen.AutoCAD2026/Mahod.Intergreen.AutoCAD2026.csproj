@@ -66,4 +66,9 @@
            Text="Autodesk $(AutoCADVersion) managed references not found at $(AutoCadDir)" />
   </Target>
 
+  <ItemGroup>
+    <!-- Official Mahod logo (white variant) — shipped inside the assembly so the palette
+         never depends on any user folder at runtime. -->
+    <EmbeddedResource Include="Resources\MahodLogoWhite.png" />
+  </ItemGroup>
 </Project>

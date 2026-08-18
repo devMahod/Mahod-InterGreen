@@ -42,6 +42,13 @@ public class IgWorkflowCommands
     internal static IWorkbookPicker Picker = new WpfWorkbookPicker();
     internal static IMessageService Messages = new WpfMessageService();
     internal static IWorkbookPathPrompt PathPrompt = new WpfPathPrompt();
+    internal static IRulePackChooser RulePackChooser = new WpfRulePackChooser();
+
+    private static readonly Dictionary<WorkflowAction, Button> _actionButtons = new();
+    private static TextBlock? _rulesLabel;
+
+    private static string PluginDir
+        => Path.GetDirectoryName(typeof(IgWorkflowCommands).Assembly.Location)!;
 
     private sealed class WpfWorkbookPicker : IWorkbookPicker
     {
@@ -110,6 +117,55 @@ public class IgWorkflowCommands
             MessageBoxResult.Cancel, MessageBoxOptions.RtlReading) == MessageBoxResult.OK;
     }
 
+    /// <summary>Rule-pack chooser (r8): plain list of the packs installed in the bundle;
+    /// selection returns the pack id, cancel returns null. No engineering logic.</summary>
+    private sealed class WpfRulePackChooser : IRulePackChooser
+    {
+        public string? Choose(IReadOnlyList<InstalledRulePack> installed, string activePackId)
+        {
+            var win = new System.Windows.Window
+            {
+                Title = "בחירת גרסת חוקים (הנחיות) לפרויקט",
+                Width = 560, Height = 260, FlowDirection = System.Windows.FlowDirection.RightToLeft,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                ResizeMode = ResizeMode.NoResize,
+            };
+            var root = new StackPanel { Margin = new Thickness(14) };
+            root.Children.Add(new TextBlock
+            {
+                Text = "גרסת החוקים נשמרת בפרויקט הנוכחי בלבד. פרויקטים קיימים לעולם לא עוברים גרסה אוטומטית.",
+                TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 8),
+            });
+            var list = new ListBox { Height = 110 };
+            foreach (var pack in installed)
+            {
+                var item = new ListBoxItem
+                {
+                    Content = $"{pack.DisplayName} — {pack.Id} v{pack.Version}" +
+                              (string.Equals(pack.Id, activePackId, StringComparison.OrdinalIgnoreCase) ? "  (פעיל)" : ""),
+                    Tag = pack.Id,
+                };
+                list.Items.Add(item);
+                if (string.Equals(pack.Id, activePackId, StringComparison.OrdinalIgnoreCase))
+                    list.SelectedItem = item;
+            }
+            root.Children.Add(list);
+            var row = new WrapPanel { Margin = new Thickness(0, 12, 0, 0) };
+            var ok = new Button { Content = "אישור", Width = 90, Margin = new Thickness(0, 0, 8, 0), IsDefault = true };
+            var cancel = new Button { Content = "ביטול", Width = 90, IsCancel = true };
+            row.Children.Add(ok); row.Children.Add(cancel);
+            root.Children.Add(row);
+            win.Content = root;
+            string? result = null;
+            ok.Click += (_, _) =>
+            {
+                result = (list.SelectedItem as ListBoxItem)?.Tag as string;
+                win.DialogResult = result is not null;
+            };
+            return win.ShowDialog() == true ? result : null;
+        }
+    }
+
     [CommandMethod("INTERGREEN", CommandFlags.Modal)]
     public void Intergreen()
     {
@@ -131,6 +187,8 @@ public class IgWorkflowCommands
         }
         _palette.Visible = true;
         TryAdoptExistingProject();
+        RefreshRulesLabel();
+        UpdateButtonStates();
         SetStatus("Setup → Validate → Analyze → Review → Export Excel.");
     }
 
@@ -138,6 +196,19 @@ public class IgWorkflowCommands
     {
         var root = new StackPanel { Margin = new Thickness(8) };
         _status = new TextBlock { TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 8) };
+        // Official Mahod logo (white variant for the dark palette) — embedded in the
+        // plugin assembly, never read from a user folder at runtime. Uniform stretch
+        // preserves the aspect ratio; a missing resource silently degrades to text-only.
+        var logo = TryLoadLogo();
+        if (logo is not null)
+            root.Children.Add(new System.Windows.Controls.Image
+            {
+                Source = logo,
+                Height = 30,
+                Stretch = System.Windows.Media.Stretch.Uniform,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
+                Margin = new Thickness(0, 0, 0, 6),
+            });
         root.Children.Add(new TextBlock
         {
             Text = "MAHOD INTERGREEN — Pilot",
@@ -152,6 +223,10 @@ public class IgWorkflowCommands
         {
             var b = new Button { Content = label, Margin = new Thickness(0, 0, 6, 6), Padding = new Thickness(10, 4, 10, 4) };
             b.Click += (_, _) => Guard(gate, onClick);
+            // r8: stage-gated actions are visually disabled until the state machine
+            // allows them (Guard stays as the safety net for every path).
+            if (gate is WorkflowAction ga && ga is not WorkflowAction.Setup and not WorkflowAction.ClearQa)
+                _actionButtons[ga] = b;
             buttons.Children.Add(b);
         }
         Add("1. Setup — בחר קובץ Excel…", WorkflowAction.Setup, () => SetupCore(SetupInputMethod.Browse));
@@ -160,9 +235,19 @@ public class IgWorkflowCommands
         Add("3. Analyze", WorkflowAction.Analyze, () => RunPipeline(analyzeOnly: true));
         Add("4. Show in drawing", WorkflowAction.Show, ShowSelected);
         Add("5. Export Excel", WorkflowAction.Export, ExportExcel);
-        Add("Clear QA", WorkflowAction.ClearQa, ClearTransients);
+        Add("Clear QA", WorkflowAction.ClearQa, ClearQa);
         Add("Export Support Log", null, ExportSupportLog);
         root.Children.Add(buttons);
+
+        // r8: active guideline (rule-pack) version — visible, and changeable only as a
+        // deliberate engineer action (versioned-guidelines requirement).
+        var rulesRow = new WrapPanel { Margin = new Thickness(0, 0, 0, 6) };
+        var rulesBtn = new Button { Content = "בחירת חוקים…", Padding = new Thickness(8, 2, 8, 2), Margin = new Thickness(0, 0, 8, 0) };
+        rulesBtn.Click += (_, _) => Guard(null, ChooseRulePack);
+        _rulesLabel = new TextBlock { VerticalAlignment = System.Windows.VerticalAlignment.Center };
+        rulesRow.Children.Add(rulesBtn);
+        rulesRow.Children.Add(_rulesLabel);
+        root.Children.Add(rulesRow);
 
         _list = new ListView { Height = 330 };
         var gv = new GridView();
@@ -175,9 +260,41 @@ public class IgWorkflowCommands
         Col("ED", "Ed", 55);
         Col("IG", "Ig", 40);
         _list.View = gv;
-        _list.SelectionChanged += (_, _) => State.HasSelection = _list.SelectedItem is not null;
+        _list.SelectionChanged += (_, _) =>
+        {
+            State.HasSelection = _list.SelectedItem is not null;
+            UpdateButtonStates();
+        };
         root.Children.Add(_list);
+        UpdateButtonStates();
         return root;
+    }
+
+    private static void UpdateButtonStates()
+    {
+        foreach (var kv in _actionButtons)
+            kv.Value.IsEnabled = State.Gate(kv.Key) is null;
+    }
+
+    private static System.Windows.Media.Imaging.BitmapImage? TryLoadLogo()
+    {
+        try
+        {
+            var asm = typeof(IgWorkflowCommands).Assembly;
+            var name = asm.GetManifestResourceNames()
+                .FirstOrDefault(n => n.EndsWith("MahodLogoWhite.png", StringComparison.OrdinalIgnoreCase));
+            if (name is null) return null;
+            using var stream = asm.GetManifestResourceStream(name);
+            if (stream is null) return null;
+            var bi = new System.Windows.Media.Imaging.BitmapImage();
+            bi.BeginInit();
+            bi.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
+            bi.StreamSource = stream;
+            bi.EndInit();
+            bi.Freeze();
+            return bi;
+        }
+        catch { return null; }
     }
 
     /// <summary>Workflow gate + safety net: gate message instead of crash for out-of-order
@@ -205,6 +322,10 @@ public class IgWorkflowCommands
             SetStatus("אירעה שגיאה לא צפויה. הפרטים הטכניים נשמרו בלוג — " +
                       "לחצי Export Support Log ושלחי את הקובץ לארתור.\n" +
                       $"({ex.GetType().Name})");
+        }
+        finally
+        {
+            UpdateButtonStates();
         }
     }
 
@@ -339,6 +460,7 @@ public class IgWorkflowCommands
         _lastModel = accept.Model;
         _lastOutput = null;
         State.OnSetupCommitted();
+        RefreshRulesLabel();
         SupportLog.Write($"SETUP_COMMITTED[{method}]", accept.NormalizedPath!);
         SetStatus($"Setup נשמר ({Path.GetFileName(accept.NormalizedPath)}) → עכשיו Validate.");
     }
@@ -427,8 +549,17 @@ public class IgWorkflowCommands
         // r7: rules ship inside the bundle next to THIS assembly. RulesRoot() walks up
         // from AppContext.BaseDirectory, which inside Autodesk is the Autodesk install
         // dir — the exact Civil 3D 2027 Analyze failure. Anchor explicitly instead.
-        string pluginDir = Path.GetDirectoryName(typeof(IgWorkflowCommands).Assembly.Location)!;
-        var pack = RulePackLoader.Load(Path.Combine(RuntimeRoots.RulesRoot(pluginDir), "legacy-mahod-v1"));
+        // r8: WHICH pack is project state (sidecar); absent = validated legacy default,
+        // never a silent migration. A stored-but-uninstalled pack fails closed in Hebrew.
+        string packId = RulePackSelection.ProjectPackId(SidecarStore.Load(scPath).Data);
+        string packDir = Path.Combine(RuntimeRoots.RulesRoot(PluginDir), packId);
+        if (!File.Exists(Path.Combine(packDir, "manifest.json")))
+            throw new UserFacingException(
+                $"גרסת החוקים שנשמרה בפרויקט ('{packId}') אינה מותקנת.\n" +
+                "בחרי גרסת חוקים מותקנת (כפתור \"בחירת חוקים…\") או הריצי את המתקין מחדש.",
+                $"rule pack '{packId}' not installed");
+        var pack = RulePackLoader.Load(packDir);
+        SupportLog.Write("RULEPACK", $"{pack.Manifest.Id} {pack.Manifest.Version} sha256 {pack.ContentSha256}");
         var input = new PipelineInput(
             Path.GetFileNameWithoutExtension(db.Filename), Path.GetFileName(db.Filename),
             // r7: the active DWG is held locked by Autodesk — hash it with full share
@@ -445,7 +576,12 @@ public class IgWorkflowCommands
             $"Mahod.Intergreen.AutoCAD {HostBuild.ReleaseId} (net{Environment.Version.Major})");
 
         State.OnAnalyzeSucceeded();
-        SupportLog.Write("ANALYZE_OK", $"conflicts={_lastOutput.Analysis.Conflicts.Count}");
+        SupportLog.Write("ANALYZE_OK",
+            $"conflicts={_lastOutput.Analysis.Conflicts.Count} " +
+            $"matrixValid={_lastOutput.Analysis.Matrix.Count(m => m.Status == "VALID")} " +
+            $"matrixReview={_lastOutput.Analysis.Matrix.Count(m => m.Status.StartsWith("REVIEW"))} " +
+            $"matrixBlocked={_lastOutput.Analysis.Matrix.Count(m => m.Status == "BLOCKED")} " +
+            $"pack={pack.Manifest.Id}@{pack.Manifest.Version}");
         Populate(_lastOutput.Analysis.Conflicts.Select(c => new ConflictRow(
             c.Id, c.Status, c.Points.Count.ToString(),
             c.Points.Count > 0 ? c.Points.Max(p => p.Cd).ToString("F2") : "",
@@ -480,29 +616,132 @@ public class IgWorkflowCommands
                 $"conflict {row.Id}: no points");
 
         ClearTransients();
-        var tm = TransientManager.CurrentTransientManager;
-        foreach (var p in conflict.Points)
-        {
-            var isGoverning = conflict.DefiningPointId == p.Id;
-            var circle = new Circle(new Autodesk.AutoCAD.Geometry.Point3d(p.X, p.Y, 0), Autodesk.AutoCAD.Geometry.Vector3d.ZAxis,
-                isGoverning ? 1.2 : 0.6)
-            { ColorIndex = isGoverning ? 1 : 2 };
-            _transients.Add(circle);
-            tm.AddTransient(circle, TransientDrawingMode.DirectShortTerm, 128, new Autodesk.AutoCAD.Geometry.IntegerCollection());
-        }
-
         var xs = conflict.Points.Select(p => p.X).ToList();
         var ys = conflict.Points.Select(p => p.Y).ToList();
-        var margin = 15.0;
-        doc.Editor.Command("_.ZOOM", "_W",
-            new Autodesk.AutoCAD.Geometry.Point3d(xs.Min() - margin, ys.Min() - margin, 0),
-            new Autodesk.AutoCAD.Geometry.Point3d(xs.Max() + margin, ys.Max() + margin, 0));
+        const double margin = 15.0;
+
+        // r8 FIX (Arthur's GUI: "Exception: eInvalidInput"): Editor.Command cannot run
+        // from a modeless palette click — it requires command context. Set the view
+        // directly under a document lock instead; the transient QA markers are drawn the
+        // same non-destructive way (never database entities, never saved).
+        using (doc.LockDocument())
+        {
+            var tm = TransientManager.CurrentTransientManager;
+            foreach (var p in conflict.Points)
+            {
+                var isGoverning = conflict.DefiningPointId == p.Id;
+                var circle = new Circle(new Autodesk.AutoCAD.Geometry.Point3d(p.X, p.Y, 0), Autodesk.AutoCAD.Geometry.Vector3d.ZAxis,
+                    isGoverning ? 1.2 : 0.6)
+                { ColorIndex = isGoverning ? 1 : 2 };
+                _transients.Add(circle);
+                tm.AddTransient(circle, TransientDrawingMode.DirectShortTerm, 128, new Autodesk.AutoCAD.Geometry.IntegerCollection());
+            }
+
+            using var view = doc.Editor.GetCurrentView();
+            double w = Math.Max(xs.Max() - xs.Min(), 1.0) + 2 * margin;
+            double h = Math.Max(ys.Max() - ys.Min(), 1.0) + 2 * margin;
+            double aspect = view.Height > 1e-9 ? view.Width / view.Height : 1.0;
+            if (aspect > 1e-9)
+            {
+                if (w / h > aspect) h = w / aspect;
+                else w = h * aspect;
+            }
+            view.CenterPoint = new Autodesk.AutoCAD.Geometry.Point2d(
+                (xs.Min() + xs.Max()) / 2.0, (ys.Min() + ys.Max()) / 2.0);
+            view.Width = w;
+            view.Height = h;
+            doc.Editor.SetCurrentView(view);
+        }
+        doc.Editor.UpdateScreen();
+        SupportLog.Write("SHOW_OK",
+            $"{conflict.Id} points={conflict.Points.Count} governing={conflict.DefiningPointId ?? "-"} finalIg={conflict.FinalIg?.ToString() ?? "-"}");
         SetStatus($"{conflict.Id}: {conflict.Points.Count} candidate points highlighted " +
                   $"(red = governing {conflict.DefiningPointId}); Final IG = {conflict.FinalIg?.ToString() ?? "—"}.");
     }
 
     [CommandMethod("IG_CLEAR_QA", CommandFlags.Modal)]
-    public void ClearQa() => ClearTransients();
+    public void ClearQaCommand() => ClearQa();
+
+    /// <summary>Removes ONLY the tool-owned transient QA markers. They are never database
+    /// entities, so user geometry cannot be touched by design.</summary>
+    private static void ClearQa()
+    {
+        int n = _transients.Count;
+        ClearTransients();
+        AcadApp.DocumentManager.MdiActiveDocument?.Editor.UpdateScreen();
+        SupportLog.Write("CLEAR_QA", $"removed={n}");
+        SetStatus(n == 0
+            ? "אין סימוני QA להסרה."
+            : "סימוני ה-QA הזמניים הוסרו. גאומטריית השרטוט עצמה לא השתנתה.");
+    }
+
+    private static void RefreshRulesLabel()
+    {
+        if (_rulesLabel is null) return;
+        try
+        {
+            var doc = AcadApp.DocumentManager.MdiActiveDocument;
+            string packId = RulePackSelection.DefaultPackId;
+            if (doc is not null)
+                packId = RulePackSelection.ProjectPackId(SidecarStore.Load(SidecarPath(doc.Database)).Data);
+            var installed = RulePackSelection.ListInstalled(RuntimeRoots.RulesRoot(PluginDir));
+            var active = installed.FirstOrDefault(x => string.Equals(x.Id, packId, StringComparison.OrdinalIgnoreCase));
+            _rulesLabel.Text = active is null
+                ? $"חוקים: {packId} — לא מותקן!"
+                : $"חוקים: {active.Id} v{active.Version}";
+        }
+        catch { _rulesLabel.Text = "חוקים: —"; }
+    }
+
+    /// <summary>Deliberate rule-pack change (r8): list installed → engineer picks →
+    /// explicit Hebrew warning → transactional sidecar persist → prior results
+    /// invalidated. Absent selection keeps the legacy default forever.</summary>
+    private static void ChooseRulePack()
+    {
+        var doc = AcadApp.DocumentManager.MdiActiveDocument
+            ?? throw new UserFacingException("אין שרטוט פתוח.\nפתחי את שרטוט הפרויקט ואז נסי שוב.", "no active document");
+        var installed = RulePackSelection.ListInstalled(RuntimeRoots.RulesRoot(PluginDir));
+        if (installed.Count == 0)
+            throw new UserFacingException("לא נמצאו חבילות חוקים מותקנות.\nהריצי את המתקין של Mahod Intergreen מחדש.",
+                "no rule packs installed");
+
+        string scPath = SidecarPath(doc.Database);
+        var loaded = SidecarStore.Load(scPath);
+        string current = RulePackSelection.ProjectPackId(loaded.Data);
+
+        string? chosen = RulePackChooser.Choose(installed, current);
+        if (chosen is null || !RulePackSelection.ChangeRequiresWarning(current, chosen))
+        {
+            SetStatus($"גרסת החוקים לא שונתה ({current}).");
+            return;
+        }
+        if (!State.ProjectConfigured)
+            throw new UserFacingException(
+                "בחירת חוקים נשמרת בפרויקט של השרטוט.\nהריצי קודם Setup (בחירת קובץ Excel) ואז בחרי גרסת חוקים.",
+                "rules change before setup");
+
+        var target = installed.First(x => string.Equals(x.Id, chosen, StringComparison.OrdinalIgnoreCase));
+        if (!Messages.Confirm(
+                "החלפת גרסת חוקים לפרויקט הנוכחי:\n" +
+                $"מ: {current}\n" +
+                $"אל: {target.Id} v{target.Version} — {target.DisplayName}\n\n" +
+                "תוצאות ניתוח קודמות יוסרו מהתצוגה ויש להריץ Analyze מחדש.\n" +
+                "פרויקטים אחרים אינם מושפעים. להמשיך?"))
+        {
+            SetStatus("החלפת גרסת החוקים בוטלה.");
+            return;
+        }
+
+        RulePackSelection.ApplySelection(loaded.Data, target.Id,
+            Environment.UserName + " via INTERGREEN rules chooser");
+        SidecarStore.Commit(scPath, loaded.Data);
+        State.OnRulesChanged();
+        _lastOutput = null;
+        Populate(new List<ConflictRow>());
+        SupportLog.Write("RULEPACK_SELECTED", $"{target.Id} v{target.Version} (was {current}) sidecar={scPath}");
+        RefreshRulesLabel();
+        SetStatus($"גרסת החוקים הוחלפה ל-{target.Id} v{target.Version}. הריצי Analyze מחדש.");
+    }
 
     /// <summary>
     /// Failure-closure §7: deterministic Setup-acceptance smoke INSIDE the real Autodesk
@@ -600,19 +839,26 @@ public class IgWorkflowCommands
                 _lastModel = browse.Model;
                 RunPipeline(analyzeOnly: false);
                 RunPipeline(analyzeOnly: true);
-                var an = _lastOutput!.Analysis;
-                var wlst = an.Conflicts.FirstOrDefault(c => c.Clearing == "W-L" && c.Entering == "S-T");
-                payload["analyze"] = new Dictionary<string, object?>
+                payload["analyze"] = AnalyzePayload();
+
+                // r8: production Export Excel path (planner + writer — the same calls the
+                // palette button makes), plus proof the SOURCE workbook is untouched.
+                string sourceShaBefore = RuntimeRoots.Sha256OfOpenFile(_workbookPath!);
+                var plan = ExportPlanner.Plan(_workbookPath!, dir);
+                string exportPath = plan.Status switch
                 {
-                    ["process_cwd"] = Environment.CurrentDirectory,
-                    ["base_directory"] = AppContext.BaseDirectory,
-                    ["movements"] = an.Movements.Count,
-                    ["crossings"] = an.Movements.Count(m => m.Mode.Contains("edestrian")),
-                    ["conflicts"] = an.Conflicts.Count,
-                    ["matrix_valid"] = an.Matrix.Count(m => m.Status == "VALID"),
-                    ["matrix_review"] = an.Matrix.Count(m => m.Status.StartsWith("REVIEW")),
-                    ["matrix_blocked"] = an.Matrix.Count(m => m.Status == "BLOCKED"),
-                    ["wl_st_final_ig"] = wlst?.FinalIg,
+                    ExportPlanStatus.Ok => plan.DestinationPath!,
+                    ExportPlanStatus.NeedsConfirmOverwrite => plan.UniqueAlternativePath!,
+                    _ => throw new InvalidOperationException($"export plan {plan.Status}: {plan.UserMessageHe}"),
+                };
+                var export = WorkbookWriter.Export(_workbookPath!, exportPath, _lastOutput!.Analysis, _lastModel!);
+                payload["export"] = new Dictionary<string, object?>
+                {
+                    ["path"] = exportPath,
+                    ["rows"] = export.RowsPopulated,
+                    ["structural_issues"] = export.StructuralIssues.Count,
+                    ["source_sha_before"] = sourceShaBefore,
+                    ["source_sha_after"] = RuntimeRoots.Sha256OfOpenFile(_workbookPath!),
                 };
             }
         }
@@ -625,6 +871,68 @@ public class IgWorkflowCommands
         File.WriteAllText(outPath, JsonSerializer.Serialize(payload,
             new JsonSerializerOptions { WriteIndented = true }));
         ed.WriteMessage($"\nIG_SMOKE_SETUP_ACCEPT → {outPath}");
+    }
+
+    private static Dictionary<string, object?> AnalyzePayload()
+    {
+        var an = _lastOutput!.Analysis;
+        var wlst = an.Conflicts.FirstOrDefault(c => c.Clearing == "W-L" && c.Entering == "S-T");
+        return new Dictionary<string, object?>
+        {
+            ["process_cwd"] = Environment.CurrentDirectory,
+            ["base_directory"] = AppContext.BaseDirectory,
+            ["movements"] = an.Movements.Count,
+            ["crossings"] = an.Movements.Count(m => m.Mode.Contains("edestrian")),
+            ["conflicts"] = an.Conflicts.Count,
+            ["matrix_valid"] = an.Matrix.Count(m => m.Status == "VALID"),
+            ["matrix_review"] = an.Matrix.Count(m => m.Status.StartsWith("REVIEW")),
+            ["matrix_blocked"] = an.Matrix.Count(m => m.Status == "BLOCKED"),
+            ["wl_st_final_ig"] = wlst?.FinalIg,
+            ["rule_pack"] = $"{_lastOutput.Analysis.RulePack.Id} {_lastOutput.Analysis.RulePack.Version} {_lastOutput.Analysis.RulePack.ContentSha256}",
+        };
+    }
+
+    /// <summary>
+    /// r8 persistence gate: a FRESH Autodesk process adopting the previously committed
+    /// sidecar (exactly what INTERGREEN does on palette open after close/reopen) must
+    /// reproduce the identical production analysis WITHOUT any new Setup.
+    /// </summary>
+    [CommandMethod("IG_SMOKE_ADOPT_ANALYZE", CommandFlags.Modal)]
+    public void SmokeAdoptAnalyze()
+    {
+        var doc = AcadApp.DocumentManager.MdiActiveDocument;
+        var ed = doc!.Editor;
+        string dir = Path.GetDirectoryName(doc.Database.Filename)!;
+        string outPath = Path.Combine(dir, "ig_adopt_analyze.json");
+        var payload = new Dictionary<string, object?>
+        {
+            ["host_year"] = HostBuild.Year,
+            ["release_id"] = HostBuild.ReleaseId,
+        };
+        try
+        {
+            var sc = SidecarStore.Load(SidecarPath(doc.Database));
+            payload["sidecar_status"] = sc.Status.ToString();
+            var wb = SidecarStore.ResolveWorkbook(sc.Data, dir);
+            payload["workbook_ref"] = wb.Status.ToString();
+            if (wb.Status != WorkbookRefStatus.Ok)
+                throw new InvalidOperationException($"adopt failed: sidecar={sc.Status} workbook={wb.Status}");
+            _workbookPath = wb.Path;
+            _lastModel = null;
+            _lastOutput = null;
+            State.OnProjectLoadedFromSidecar();
+            payload["rule_pack_id"] = RulePackSelection.ProjectPackId(sc.Data);
+            RunPipeline(analyzeOnly: false);
+            RunPipeline(analyzeOnly: true);
+            payload["analyze"] = AnalyzePayload();
+        }
+        catch (System.Exception ex)
+        {
+            payload["exception_full_detail"] = ExceptionDetail.Full(ex);
+        }
+        File.WriteAllText(outPath, JsonSerializer.Serialize(payload,
+            new JsonSerializerOptions { WriteIndented = true }));
+        ed.WriteMessage($"\nIG_SMOKE_ADOPT_ANALYZE → {outPath}");
     }
 
     private static void ClearTransients()
