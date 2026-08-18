@@ -94,7 +94,8 @@ public class IgCommands
             Directory.CreateDirectory(env);
             return env;
         }
-        return Path.GetDirectoryName(db.Filename) ?? Environment.CurrentDirectory;
+        // r7: never fall back to the process CurrentDirectory (it belongs to Autodesk)
+        return Path.GetDirectoryName(db.Filename) ?? Mahod.Intergreen.Host.RuntimeRoots.FallbackOutputDir();
     }
 
     private static void Log(Editor ed, string msg) => ed.WriteMessage("\n" + msg);

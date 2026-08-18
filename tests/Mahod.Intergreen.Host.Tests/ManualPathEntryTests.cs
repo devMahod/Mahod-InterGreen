@@ -142,3 +142,54 @@ public class ManualPathEntryTests : IDisposable
         Assert.Equal(Path.GetFullPath(good), still.Path);
     }
 }
+
+/// <summary>r7 regression: rule/resource resolution must be CWD-independent.</summary>
+public class RuntimeRootsTests : IDisposable
+{
+    private readonly string _dir = TestPaths.NewTempDir("roots");
+    private readonly string _savedCwd = Directory.GetCurrentDirectory();
+    public void Dispose()
+    {
+        Directory.SetCurrentDirectory(_savedCwd);
+        try { Directory.Delete(_dir, true); } catch { }
+    }
+
+    [Fact]
+    public void Rules_resolve_from_anchor_even_when_cwd_has_no_rules_anywhere()
+    {
+        // simulate the Autodesk GUI: CWD is a foreign directory tree with NO rules/
+        string autodeskLike = Path.Combine(_dir, "Program Files", "Autodesk", "AutoCAD 2027");
+        Directory.CreateDirectory(autodeskLike);
+        Directory.SetCurrentDirectory(autodeskLike);
+
+        // installed bundle layout: <plugin>\rules\legacy-mahod-v1\manifest.json
+        string plugin = Path.Combine(_dir, "bundle", "Contents", "2027");
+        Directory.CreateDirectory(Path.Combine(plugin, "rules", "legacy-mahod-v1"));
+        File.Copy(Path.Combine(TestPaths.RulesLegacy, "manifest.json"),
+                  Path.Combine(plugin, "rules", "legacy-mahod-v1", "manifest.json"));
+
+        string root = RuntimeRoots.RulesRoot(plugin);
+        Assert.Equal(Path.Combine(plugin, "rules"), root);
+    }
+
+    [Fact]
+    public void Missing_rules_fail_with_exact_installed_path_not_cwd_walk()
+    {
+        Directory.SetCurrentDirectory(_dir); // rules-less CWD
+        string plugin = Path.Combine(_dir, "empty-bundle");
+        Directory.CreateDirectory(plugin);
+        var ex = Assert.Throws<DirectoryNotFoundException>(() => RuntimeRoots.RulesRoot(plugin));
+        Assert.Contains(Path.Combine(plugin, "rules"), ex.Message); // names the exact path
+        Assert.Contains("המתקין", ex.Message);                       // actionable guidance
+    }
+
+    [Fact]
+    public void Fallback_output_dir_is_fixed_per_user_location_not_cwd()
+    {
+        Directory.SetCurrentDirectory(_dir);
+        string p = RuntimeRoots.FallbackOutputDir();
+        Assert.True(Directory.Exists(p));
+        Assert.DoesNotContain(_dir, p);
+        Assert.Contains(Path.Combine("Mahod", "MahodIntergreen"), p);
+    }
+}

@@ -10,8 +10,8 @@
        stamped UNSTAMPED-DEV and must never be shipped. -->
   <PropertyGroup>
     <MahodEngineVersion>0.1.0</MahodEngineVersion>
-    <MahodReleaseRevision>r6</MahodReleaseRevision>
-    <MahodReleaseRevisionNumber>6</MahodReleaseRevisionNumber>
+    <MahodReleaseRevision>r7</MahodReleaseRevision>
+    <MahodReleaseRevisionNumber>7</MahodReleaseRevisionNumber>
     <MahodGitSha Condition="'$(MahodGitSha)' == ''">UNSTAMPED-DEV</MahodGitSha>
     <MahodGitShaShort>$(MahodGitSha.Substring(0,7))</MahodGitShaShort>
 

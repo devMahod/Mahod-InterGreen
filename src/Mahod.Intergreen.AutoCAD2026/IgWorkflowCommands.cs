@@ -424,7 +424,11 @@ public class IgWorkflowCommands
             return;
         }
 
-        var pack = RulePackLoader.Load(Path.Combine(RulePackLoader.RulesRoot(), "legacy-mahod-v1"));
+        // r7: rules ship inside the bundle next to THIS assembly. RulesRoot() walks up
+        // from AppContext.BaseDirectory, which inside Autodesk is the Autodesk install
+        // dir — the exact Civil 3D 2027 Analyze failure. Anchor explicitly instead.
+        string pluginDir = Path.GetDirectoryName(typeof(IgWorkflowCommands).Assembly.Location)!;
+        var pack = RulePackLoader.Load(Path.Combine(RuntimeRoots.RulesRoot(pluginDir), "legacy-mahod-v1"));
         var input = new PipelineInput(
             Path.GetFileNameWithoutExtension(db.Filename), Path.GetFileName(db.Filename),
             AnalysisWriters.Sha256OfFile(db.Filename), pack,
@@ -570,6 +574,35 @@ public class IgWorkflowCommands
                         browse.Model.MovementParameters.Count == manual.Model.MovementParameters.Count,
                     ["sidecar_identical"] = File.ReadAllText(scB) == File.ReadAllText(scM),
                     ["setup_state_equal"] = cB.Committed == cM.Committed,
+                };
+
+                // r7 REGRESSION (Arthur's confirmed GUI blocker): run the FULL production
+                // Validate + Analyze — the exact palette code path, including rule-pack
+                // resolution — inside the real Autodesk process. The process CWD and
+                // AppContext.BaseDirectory here belong to Autodesk and contain no rules/
+                // anywhere above them; r6 failed exactly at this point with
+                // DirectoryNotFoundException. The payload records the ambient dirs as
+                // evidence the run reproduced the hostile environment.
+                var cD = SetupService.Commit(browse, SidecarPath(doc.Database),
+                    Path.GetDirectoryName(doc.Database.Filename)!);
+                payload["sidecar_commit_drawing"] = cD.ReloadStatus.ToString();
+                _workbookPath = browse.NormalizedPath;
+                _lastModel = browse.Model;
+                RunPipeline(analyzeOnly: false);
+                RunPipeline(analyzeOnly: true);
+                var an = _lastOutput!.Analysis;
+                var wlst = an.Conflicts.FirstOrDefault(c => c.Clearing == "W-L" && c.Entering == "S-T");
+                payload["analyze"] = new Dictionary<string, object?>
+                {
+                    ["process_cwd"] = Environment.CurrentDirectory,
+                    ["base_directory"] = AppContext.BaseDirectory,
+                    ["movements"] = an.Movements.Count,
+                    ["crossings"] = an.Movements.Count(m => m.Mode.Contains("edestrian")),
+                    ["conflicts"] = an.Conflicts.Count,
+                    ["matrix_valid"] = an.Matrix.Count(m => m.Status == "VALID"),
+                    ["matrix_review"] = an.Matrix.Count(m => m.Status.StartsWith("REVIEW")),
+                    ["matrix_blocked"] = an.Matrix.Count(m => m.Status == "BLOCKED"),
+                    ["wl_st_final_ig"] = wlst?.FinalIg,
                 };
             }
         }
