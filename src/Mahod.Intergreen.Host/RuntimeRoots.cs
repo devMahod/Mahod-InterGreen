@@ -24,6 +24,17 @@ public static class RuntimeRoots
             "נראה שההתקנה פגומה — הריצו את המתקין של Mahod Intergreen מחדש.");
     }
 
+    /// <summary>SHA-256 of a file that may be OPEN AND LOCKED by the host application
+    /// (the active DWG inside AutoCAD/Civil denies default sharing). Opens with full
+    /// share flags so hashing never depends on how the host holds its own file.</summary>
+    public static string Sha256OfOpenFile(string path)
+    {
+        using var fs = new FileStream(path, FileMode.Open, FileAccess.Read,
+            FileShare.ReadWrite | FileShare.Delete);
+        using var sha = System.Security.Cryptography.SHA256.Create();
+        return Convert.ToHexString(sha.ComputeHash(fs));
+    }
+
     /// <summary>Fallback output directory for an unsaved/unnamed drawing — a fixed
     /// per-user location, never the process CurrentDirectory.</summary>
     public static string FallbackOutputDir()

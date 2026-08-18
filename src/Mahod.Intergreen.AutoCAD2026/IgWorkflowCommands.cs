@@ -431,7 +431,9 @@ public class IgWorkflowCommands
         var pack = RulePackLoader.Load(Path.Combine(RuntimeRoots.RulesRoot(pluginDir), "legacy-mahod-v1"));
         var input = new PipelineInput(
             Path.GetFileNameWithoutExtension(db.Filename), Path.GetFileName(db.Filename),
-            AnalysisWriters.Sha256OfFile(db.Filename), pack,
+            // r7: the active DWG is held locked by Autodesk — hash it with full share
+            // flags (second ambient-assumption GUI blocker caught by the real-host gate).
+            RuntimeRoots.Sha256OfOpenFile(db.Filename), pack,
             new ProjectClassification { RoadType = sidecar.RoadType, PostedSpeedKph = sidecar.PostedSpeedKph },
             _lastModel.Constants, _lastModel.Variant, _lastModel.MovementParameters, movements);
         _lastOutput = AnalysisPipeline.Run(input);

@@ -193,3 +193,21 @@ public class RuntimeRootsTests : IDisposable
         Assert.Contains(Path.Combine("Mahod", "MahodIntergreen"), p);
     }
 }
+
+/// <summary>r7 regression: hashing must work on a file the host holds locked
+/// (AutoCAD denies default sharing on the active DWG).</summary>
+public class OpenFileHashTests
+{
+    [Fact]
+    public void Hashes_file_opened_by_another_handle_with_no_read_share()
+    {
+        string p = Path.Combine(TestPaths.NewTempDir("lockhash"), "held.dwg");
+        File.WriteAllBytes(p, new byte[] { 1, 2, 3, 4, 5 });
+        // hold the file the hostile way: writable handle, allow ReadWrite share only
+        // (File.OpenRead's default FileShare.Read is refused against this handle)
+        using var hold = new FileStream(p, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
+        Assert.Throws<IOException>(() => File.OpenRead(p).Dispose());
+        string h = RuntimeRoots.Sha256OfOpenFile(p);
+        Assert.Equal("74F81FE167D99B4CB41D6D0CCDA82278CAEE9F3E2F25D5E5A3936FF3DCEC60D0", h);
+    }
+}
