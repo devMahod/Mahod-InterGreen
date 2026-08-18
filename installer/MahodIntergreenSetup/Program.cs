@@ -89,18 +89,48 @@ internal static class Program
         return InstallerForm.ExitCode;
     }
 
-    internal static bool AutoCad2026Detected()
+    /// <summary>Detect supported installed Autodesk hosts (Multi-Host §8): per year
+    /// (2026 = series R25.1, 2027 = R26.0) and per flavor (AutoCAD / Civil 3D), using
+    /// registry product names with a filesystem fallback (root acad.exe + C3D flavor dir).</summary>
+    internal static List<string> DetectHosts()
     {
-        try
+        var found = new List<string>();
+        foreach (var (series, year) in new[] { ("R25.1", "2026"), ("R26.0", "2027") })
         {
-            using var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Autodesk\AutoCAD\R25.1");
-            if (key is not null && key.GetSubKeyNames().Length > 0) return true;
+            bool anySeries = false, civil = false, plainAcad = false;
+            try
+            {
+                using var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Autodesk\AutoCAD\" + series);
+                foreach (var sub in key?.GetSubKeyNames() ?? Array.Empty<string>())
+                {
+                    if (!sub.StartsWith("ACAD-", StringComparison.OrdinalIgnoreCase)) continue;
+                    anySeries = true;
+                    try
+                    {
+                        using var k2 = key!.OpenSubKey(sub);
+                        string pn = k2?.GetValue("ProductName")?.ToString() ?? "";
+                        if (pn.Contains("Civil", StringComparison.OrdinalIgnoreCase)) civil = true;
+                        else if (pn.Contains("AutoCAD", StringComparison.OrdinalIgnoreCase)) plainAcad = true;
+                    }
+                    catch { /* per-flavor best effort */ }
+                }
+            }
+            catch { /* registry best effort */ }
+            string root = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+                "Autodesk", "AutoCAD " + year);
+            bool rootExists = File.Exists(Path.Combine(root, "acad.exe"));
+            anySeries |= rootExists;
+            plainAcad |= rootExists;
+            civil |= File.Exists(Path.Combine(root, "C3D", "AeccDbMgd.dll"));
+            if (!anySeries) continue;
+            if (plainAcad) found.Add($"AutoCAD {year}");
+            if (civil) found.Add($"Civil 3D {year}");
         }
-        catch { /* registry read best-effort */ }
-        return File.Exists(Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
-            "Autodesk", "AutoCAD 2026", "acad.exe"));
+        return found;
     }
+
+    internal static bool AnySupportedHostDetected() => DetectHosts().Count > 0;
 
     internal static bool SkipAutoCadCheck;
 
@@ -162,9 +192,15 @@ internal static class Program
         {
             File.Copy(self, UninstallerExe, overwrite: true);
         }
+        try
+        {
+            File.WriteAllText(Path.Combine(Path.GetTempPath(), "MahodIntergreenSetup.detect.log"),
+                string.Join(Environment.NewLine, DetectHosts()));
+        }
+        catch { /* diagnostics only */ }
         using (var key = Registry.CurrentUser.CreateSubKey(UninstallKeyPath))
         {
-            key.SetValue("DisplayName", ProductName + " (AutoCAD 2026)");
+            key.SetValue("DisplayName", ProductName + " (AutoCAD / Civil 3D 2026-2027)");
             key.SetValue("DisplayVersion", EngineVersion);
             key.SetValue("Publisher", "Mahod Engineering");
             key.SetValue("InstallLocation", BundleDir);

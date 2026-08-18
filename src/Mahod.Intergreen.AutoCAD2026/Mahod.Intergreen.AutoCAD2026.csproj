@@ -1,15 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <!-- ONE host codebase, version-correct builds (Multi-Host directive §4/§5):
+         dotnet build -p:AutoCADVersion=2026  -> net8.0-windows  + Autodesk 2026 refs
+         dotnet build -p:AutoCADVersion=2027  -> net10.0-windows + Autodesk 2027 refs
+       The same year build serves AutoCAD and Civil 3D of that year (§6).
+       Autodesk assemblies are referenced from the local installation and are NEVER
+       copied or shipped. Output assembly is host-neutral: Mahod.Intergreen.AutoCAD. -->
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <AutoCADVersion Condition="'$(AutoCADVersion)' == ''">2026</AutoCADVersion>
+    <TargetFramework Condition="'$(AutoCADVersion)' == '2026'">net8.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(AutoCADVersion)' == '2027'">net10.0-windows</TargetFramework>
+    <AssemblyName>Mahod.Intergreen.AutoCAD</AssemblyName>
+    <RootNamespace>Mahod.Intergreen.AutoCAD2026</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <UseWPF>true</UseWPF>
-    <!-- Autodesk assemblies are referenced from the local installation and are NEVER
-         copied or shipped (execution prompt §13 / Directive §7). -->
-    <AutoCadDir>C:\Program Files\Autodesk\AutoCAD 2026</AutoCadDir>
+    <AutoCadDir>C:\Program Files\Autodesk\AutoCAD $(AutoCADVersion)</AutoCadDir>
+    <DefineConstants>$(DefineConstants);ACADHOST$(AutoCADVersion)</DefineConstants>
+    <BaseOutputPath>bin\host$(AutoCADVersion)\</BaseOutputPath>
+    <BaseIntermediateOutputPath>obj\host$(AutoCADVersion)\</BaseIntermediateOutputPath>
+    <DefaultItemExcludes>$(DefaultItemExcludes);bin/**;obj/**</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,5 +48,12 @@
     <ProjectReference Include="..\Mahod.Intergreen.Host\Mahod.Intergreen.Host.csproj" />
     <ProjectReference Include="..\Mahod.Intergreen.Excel\Mahod.Intergreen.Excel.csproj" />
   </ItemGroup>
+
+  <!-- Guard against wrong-year Autodesk resolution: fail the build if the pinned
+       reference directory does not match the requested AutoCADVersion. -->
+  <Target Name="VerifyAutodeskYear" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(AutoCadDir)\acdbmgd.dll')"
+           Text="Autodesk $(AutoCADVersion) managed references not found at $(AutoCadDir)" />
+  </Target>
 
 </Project>

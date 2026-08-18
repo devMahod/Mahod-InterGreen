@@ -84,6 +84,13 @@ public class IgWorkflowCommands
             SupportLog.Start(
                 typeof(IgWorkflowCommands).Assembly.GetName().Version?.ToString() ?? "?",
                 AcadApp.Version.ToString());
+            // Host capability record (§10): which Autodesk product/year/runtime we run in.
+            string product = "?", acadver = "?";
+            try { product = AcadApp.GetSystemVariable("PRODUCT")?.ToString() ?? "?"; } catch { }
+            try { acadver = AcadApp.GetSystemVariable("ACADVER")?.ToString() ?? "?"; } catch { }
+            SupportLog.Write("HOST_INFO",
+                $"product={product} acadver={acadver} runtime=net{Environment.Version} " +
+                $"hostBuild={HostBuild.Year}");
         }
         _palette.Visible = true;
         TryAdoptExistingProject();
@@ -375,7 +382,8 @@ public class IgWorkflowCommands
 
         var outDir = Path.GetDirectoryName(db.Filename)!;
         AnalysisWriters.WriteAll(outDir, input.IntersectionName, _lastOutput.Analysis, all,
-            Guid.NewGuid().ToString("N"), DateTimeOffset.Now, TimeSpan.Zero, "Mahod.Intergreen.AutoCAD2026");
+            Guid.NewGuid().ToString("N"), DateTimeOffset.Now, TimeSpan.Zero,
+            $"Mahod.Intergreen.AutoCAD (host {HostBuild.Year}, net{Environment.Version.Major})");
 
         State.OnAnalyzeSucceeded();
         SupportLog.Write("ANALYZE_OK", $"conflicts={_lastOutput.Analysis.Conflicts.Count}");

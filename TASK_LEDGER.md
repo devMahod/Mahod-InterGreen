@@ -139,3 +139,25 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
   locked-install clean abort (pre-delete probe).
 - Shipped: installer r3 (1974c879...), LIN r5 (2d42f145...); r2/r4 superseded; artifacts
   in docs/hardening + master HARDENING_R5; failure record LIN_R4_SETUP_PATH_FAILURE.
+
+## MULTI-HOST 0.1.0-r4 (2026-08-18, authorized to proceed parallel to Lin r5 smoke)
+- ONE codebase -> two host builds via -p:AutoCADVersion: 2026 net8 (56d... family) and
+  2027 net10; output renamed host-neutral Mahod.Intergreen.AutoCAD.dll; HostBuild.Year +
+  HOST_INFO diagnostics. .NET 10 SDK 10.0.400 installed (authorized, official winget).
+- Civil 3D 2027 verified PRESENT (flavor inside AutoCAD 2027 dir: C3D\AeccDbMgd.dll,
+  registry ACAD-A102, uninstall entry) - Arthur was right, folder-name check was wrong.
+- Bundle: per-year Contents/2026+2027, engineering DLLs byte-identical in both,
+  PackageContents Platform="AutoCAD*" (old exact "AutoCAD" would exclude Civil!) with
+  series pinning R25.1/R26.0.
+- Cross-target parity: analysis.json BYTE-IDENTICAL between net8 and net10 runners from
+  clean shipping payloads; golden numbers both; closures 2026+2027 PASS (clean+installed).
+- Real-runtime headless: NETLOAD+IG_SCAN+IG_EXPORT_GEOMETRY PASS in 2026 console AND in
+  the actual Civil-flavored 2027 console (trusted ApplicationPlugins path; 2027 SECURELOAD
+  blocks untrusted paths - product unaffected).
+- Universal installer r4 (34e206c8...): host detection (AutoCAD2026+AutoCAD2027+Civil2027,
+  correctly no Civil2026), 15/15 scenarios incl. real upgrade from r3.
+- EXTERNAL EVENT: Downloads distribution artifacts were removed between sessions
+  (assumed archived by Arthur); staging rebuilt deterministically from repo/materials;
+  historical sealed hashes remain recorded here. Cowork evidence intact on Desktop.
+- Shipped: ARTHUR_CIVIL2027_SMOKE r4 (0977ce7c...), VADIM r4 (4a01575e..., supersedes r3),
+  MASTER r2 (259eb9b0...). Suite 266/266 under SDK10. Lin r5 remains in-flight baseline.

@@ -1,0 +1,41 @@
+{
+  "id": "legacy-mahod-v1",
+  "version": "1.0.0",
+  "displayName": "Legacy Mahod workbook method",
+  "status": "VALIDATED",
+  "effectiveDate": null,
+  "sourceDocuments": [
+    {
+      "id": "example1-workbook.xlsx",
+      "filename": "05_PINES-HABAL- SHEM-TOM_IG_matrix_2026-07-28-maya.xlsx",
+      "officialUrl": "Mahod project evidence",
+      "publicationDate": "2026-07-28",
+      "sha256": "29428df77484cafe86492b595acc453d7db30f9ddfd246285c5dbde67b342db9",
+      "relevantSections": "golden 40 rows"
+    },
+    {
+      "id": "example2-workbook.xlsx",
+      "filename": "Abarbanel-HaMaccabim_IG_matrix_2026-07-05.xlsx",
+      "officialUrl": "Mahod project evidence",
+      "publicationDate": "2026-07-05",
+      "sha256": "44969dbc9eee603583102706145be376adc3a25268d169c4dc376f75b43ab6ee",
+      "relevantSections": "golden 108 rows (REVISION_MISMATCH vs DWG)"
+    },
+    {
+      "id": "inbar-manual-v15.pdf",
+      "filename": "InbarManual_Ver15.pdf",
+      "officialUrl": "supplied by David Suchinsky",
+      "publicationDate": "15.11.13 (Nov 2013)",
+      "sha256": "3908b0adbcfe544624d08d2af15e4e28dfb0469f8188992564fcb2dc80e1a9c5",
+      "relevantSections": "pp.67-82 §12.3"
+    }
+  ],
+  "geometryStrategyId": "legacy-envelope",
+  "calculationStrategyId": "legacy-mahod-v1",
+  "roundingStrategyId": "mahod-legacy-0.1",
+  "minimumIntergreenSec": null,
+  "createdAt": "2026-08-17",
+  "approvedAt": null,
+  "approvedBy": null,
+  "notes": "Minimum-3s question for Legacy is OPEN (OPEN_QUESTIONS.md OQ-001). Blank-as-zero is compatibility behaviour only and is NOT part of this pack's production semantics. STATUS: VALIDATED (software/conformance) — human engineering approval pending David pilot sign-off (Directive §32)."
+}

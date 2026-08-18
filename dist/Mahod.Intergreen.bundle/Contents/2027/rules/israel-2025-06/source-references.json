@@ -1,0 +1,25 @@
+{
+  "document": "הנחיות לתכנון רמזורים - יוני 2025",
+  "chapter": 5,
+  "references": {
+    "SR-5.1": { "section": "5.3.1 טבלה 5.1", "printedPage": "5-4", "pdfPage": 151, "covers": "motor-vehicle clearing/entering speeds, urban/interurban × through/turn" },
+    "SR-5.2": { "section": "5.3.2 טבלה 5.2", "printedPage": "5-4", "pdfPage": 151, "covers": "pedestrian clearing speed Sp by crossing type: 1.2 standard/coordinated-lane, 1.0 high-demand / LRT-crossing / near institutions" },
+    "SR-5.3": { "section": "5.3.3 טבלה 5.3", "printedPage": "5-5", "pdfPage": 152, "covers": "bicycle speeds SX=25, SY=15, SZ=25 kph" },
+    "SR-5.4": { "section": "5.3.4 טבלה 5.4", "printedPage": "5-5", "pdfPage": 152, "covers": "LRT speeds: SX/SZ = max permitted section speed; SY = min(max(posted/2, 25), operational profile rounded up to 5)" },
+    "SR-5.5": { "section": "5.3.5 טבלה 5.5", "printedPage": "5-6", "pdfPage": 153, "covers": "clearing vehicle length: standard(+bus+truck)=12, articulated/coordinated/heavy-industry=19, bicycle=2, LRT=15" },
+    "SR-5.3.6": { "section": "5.3.6", "printedPage": "5-6", "pdfPage": 153, "covers": "vehicle braking deceleration a=3.5 m/s²; slow-clearing acceleration a1 per §5.5" },
+    "SR-5.3.7": { "section": "5.3.7", "printedPage": "5-6", "pdfPage": 153, "covers": "bicycles: constant speed, no acceleration; a=3.5 m/s²" },
+    "SR-5.3.8": { "section": "5.3.8", "printedPage": "5-6", "pdfPage": 153, "covers": "LRT: a=1.2 m/s² max decel, a1=1.2 m/s² start acceleration" },
+    "SR-5.3.9": { "section": "5.3.9", "printedPage": "5-6", "pdfPage": 153, "covers": "driver reaction time t=1.0 s for every vehicle type" },
+    "SR-5.4.2": { "section": "5.4.2", "printedPage": "5-7..5-9", "pdfPage": 154, "covers": "L2/L3 measured from stop line to conflict point along travel-path centreline; multiple lanes → multiple candidate points; compute all when in doubt" },
+    "SR-5.4.3": { "section": "5.4.3", "printedPage": "5-10", "pdfPage": 157, "covers": "vehicle clears vs ped/bike enters: T3=0; L2 to far edge of crossing (farther of ped/bike crossings)" },
+    "SR-5.4.4": { "section": "5.4.4", "printedPage": "5-10..5-11", "pdfPage": 157, "covers": "ped clears vs vehicle enters: L3 to near side of crossing, <1.5m → 0; W at crossing centre incl. ped-bike gap, take longer" },
+    "SR-5.5.1": { "section": "5.5.1", "printedPage": "5-14..5-17", "pdfPage": 161, "covers": "vehicle clearing: T2X=t+LX/Sx; a1Y=1.5-1.5*SY/50; T2Y quadratic; T2=max(T2X,T2Y); LX=L1X+L2+l, L1X=Sx²/2a" },
+    "SR-5.5.2": { "section": "5.5.2", "printedPage": "5-17..5-18", "pdfPage": 164, "covers": "entering: T3=L3/Sz, Sz=SZ/3.6" },
+    "SR-5.5.3": { "section": "5.5.3-5.5.4", "printedPage": "5-18", "pdfPage": 165, "covers": "pedestrian: Tw=W/Sp; pedestrian entering time always 0" },
+    "SR-5.5.5": { "section": "5.5.5-5.5.6", "printedPage": "5-18..5-21", "pdfPage": 165, "covers": "bicycle: T2X=t+LX/Sx, T2Y=t+LY/Sy constant speed; T3=L3/Sz; l=2" },
+    "SR-5.5.7": { "section": "5.5.7-5.5.8", "printedPage": "5-22..5-26", "pdfPage": 169, "covers": "LRT: case I moving (T2X=(L1X+L2+I)/Sx+t etc.), case II from stop (sqrt(2(L2+l)/a1) within accel range, else Sx/a1+(L2+l-Sx²/2a1)/Sx); T2=max(T2I,T2II); T3=L3/Sz" },
+    "SR-5.6": { "section": "5.6.1-5.6.3", "printedPage": "5-26..5-27", "pdfPage": 173, "covers": "final: veh→veh/bike/LRT T=max(3,T2-T3); veh→ped T=max(3,T2); ped→veh T=max(3,Tw-T3)" },
+    "SR-5.7": { "section": "5.7", "printedPage": "5-27", "pdfPage": 174, "covers": "matrix; values rounded UP to whole seconds" }
+  }
+}

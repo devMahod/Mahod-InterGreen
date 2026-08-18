@@ -1,0 +1,33 @@
+{
+  "id": "israel-2025-06",
+  "version": "1.0.0",
+  "displayName": "הנחיות לתכנון רמזורים - יוני 2025 (פרק 5)",
+  "status": "VALIDATED",
+  "effectiveDate": "2025-06-01",
+  "sourceDocuments": [
+    {
+      "id": "guidelines-2025-06.pdf",
+      "filename": "הנחיות לתכנון רמזורים - יוני 2025.pdf",
+      "officialUrl": "https://www.gov.il/BlobFolder/guide/planning_traffic_lights/he/",
+      "publicationDate": "יוני 2025",
+      "sha256": "dd3062c8a2f01a0b279ec7367bb9180a34037c1a01d01a3771ba3ed21da4ad76",
+      "relevantSections": "ch.5 pp.5-1..5-27 (PDF 148-174)"
+    },
+    {
+      "id": "nispach1-ed4-jan2026.pdf",
+      "filename": "נוהל אישור תוכנות לתכנון רמזורים - נספח 1 - מהדורה רביעית - ינואר 2026.pdf",
+      "officialUrl": "https://www.gov.il/BlobFolder/policy/guidelines_using_software_plan_traffic_lights/he/",
+      "publicationDate": "ינואר 2026",
+      "sha256": "7d8a4ffc5fbda5ff779f4be15597cd1c2bb78608faa33e5b173d5ba2d81a8b7a",
+      "relevantSections": "תוספת א (conformance cases), תוספת ד (unified format), תוספת ה"
+    }
+  ],
+  "geometryStrategyId": "lane-centreline",
+  "calculationStrategyId": "israel-2025-06",
+  "roundingStrategyId": "guidelines-ceil",
+  "minimumIntergreenSec": 3,
+  "createdAt": "2026-08-17",
+  "approvedAt": null,
+  "approvedBy": null,
+  "notes": "APPROVED requires human engineering sign-off (David). Lane-centreline geometry input is required; envelope geometry must never produce a 2025 result (v3 §16). Tables transcribed first-hand from §5.3 rendered pages."
+}

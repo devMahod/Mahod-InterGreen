@@ -1,0 +1,11 @@
+{
+  "note": "The Legacy pack's authoritative tests are the 148 golden rows (Mahod.Intergreen.Regression.Tests) plus the rounding/boundary unit tests in Mahod.Intergreen.Core.Tests. This file adds the speed-resolution cases mirroring the workbook Parameters-sheet formulas.",
+  "speedResolution": [
+    { "id": "L-urb-thr-fast", "road": "urban", "maneuver": "through", "which": "fast", "postedKph": 70, "expectKph": 50 },
+    { "id": "L-urb-turn-fast", "road": "urban", "maneuver": "turn", "which": "fast", "postedKph": 70, "expectKph": 50 },
+    { "id": "L-urb-slow", "road": "urban", "maneuver": "through", "which": "slow", "postedKph": 70, "expectKph": 25 },
+    { "id": "L-int-turn-fast-90", "road": "interurban", "maneuver": "turn", "which": "fast", "postedKph": 90, "expectKph": 70 },
+    { "id": "L-int-turn-fast-60", "road": "interurban", "maneuver": "turn", "which": "fast", "postedKph": 60, "expectKph": 50 },
+    { "id": "L-int-thr-slow-60", "road": "interurban", "maneuver": "through", "which": "slow", "postedKph": 60, "expectKph": 30 }
+  ]
+}

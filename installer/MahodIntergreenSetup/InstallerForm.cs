@@ -41,20 +41,23 @@ internal sealed class InstallerForm : Form
         _subtitle.TextAlign = ContentAlignment.MiddleRight;
 
         _body.Text =
-            "האשף יתקין את תוסף Mahod Intergreen עבור AutoCAD 2026.\n\n" +
+            "האשף יתקין את Mahod Intergreen עבור AutoCAD ו-Civil 3D ‏(2026 ו-2027).\n\n" +
+            "• חבילה אחת — כל מוצר נתמך טוען אוטומטית את הרכיב הנכון לגרסה שלו.\n" +
             "• התקנה ברמת המשתמש בלבד — ללא הרשאות מנהל.\n" +
             "• מותקן לתיקיית התוספים הרשמית של Autodesk ‏(ApplicationPlugins).\n" +
             "• לא נוגע בשרטוטים, בפרויקטים או בתוספים אחרים.\n" +
-            "• הסרה: הגדרות Windows ← אפליקציות ← Mahod Intergreen ← הסרה.\n\n" +
-            "לאחר ההתקנה: פתחו את AutoCAD 2026 והקלידו INTERGREEN.";
+            "• הסרה: הגדרות Windows, אפליקציות, Mahod Intergreen.\n\n" +
+            "לאחר ההתקנה: פתחו את המוצר והקלידו INTERGREEN.";
         _body.SetBounds(20, 108, 520, 170);
         _body.TextAlign = ContentAlignment.TopRight;
 
-        bool acad = Program.AutoCad2026Detected();
-        _detect.Text = acad
-            ? "✓ AutoCAD 2026 זוהה במחשב זה."
-            : "‼ AutoCAD 2026 לא זוהה במחשב זה. אפשר להתקין בכל זאת — התוסף ייטען כשיותקן AutoCAD 2026.";
-        _detect.ForeColor = acad ? Color.FromArgb(0, 130, 60) : Color.FromArgb(190, 120, 0);
+        var hosts = Program.DetectHosts();
+        _detect.Text = hosts.Count > 0
+            ? "זוהו במחשב זה:  " + string.Join("  ·  ", hosts) +
+              "\n‏Intergreen יהיה זמין בכל המוצרים האלה (פקודת INTERGREEN)."
+            : "‼ לא זוהה AutoCAD/Civil 3D ‏2026 או 2027 במחשב זה.\n" +
+              "אפשר להתקין בכל זאת — התוסף ייטען אוטומטית כשיותקן מוצר נתמך.";
+        _detect.ForeColor = hosts.Count > 0 ? Color.FromArgb(0, 130, 60) : Color.FromArgb(190, 120, 0);
         _detect.Font = new Font("Segoe UI Semibold", 10f);
         _detect.SetBounds(20, 282, 520, 40);
         _detect.TextAlign = ContentAlignment.TopRight;
