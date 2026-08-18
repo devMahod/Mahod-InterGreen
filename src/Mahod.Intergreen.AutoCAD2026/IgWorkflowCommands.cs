@@ -583,8 +583,16 @@ public class IgWorkflowCommands
                 // anywhere above them; r6 failed exactly at this point with
                 // DirectoryNotFoundException. The payload records the ambient dirs as
                 // evidence the run reproduced the hostile environment.
+                // The palette Setup asks the user to confirm meters when INSUNITS is
+                // Unitless (ex1.dwg is); the smoke supplies that confirmation
+                // deterministically — same extras, same pipeline.
+                var smokeExtras = new Dictionary<string, string>
+                {
+                    ["unitsConfirmed"] = "meters",
+                    ["unitsConfirmedBy"] = "IG_SMOKE_SETUP_ACCEPT deterministic confirmation",
+                };
                 var cD = SetupService.Commit(browse, SidecarPath(doc.Database),
-                    Path.GetDirectoryName(doc.Database.Filename)!);
+                    Path.GetDirectoryName(doc.Database.Filename)!, smokeExtras);
                 payload["sidecar_commit_drawing"] = cD.ReloadStatus.ToString();
                 _workbookPath = browse.NormalizedPath;
                 _lastModel = browse.Model;
