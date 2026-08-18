@@ -12,18 +12,67 @@ using Mahod.Intergreen.AutoCAD2026;
 
 namespace Mahod.Intergreen.AutoCAD2026;
 
-/// <summary>Resolves this plugin's own dependency DLLs from its directory under NETLOAD.</summary>
+/// <summary>
+/// Deterministic dependency binding for the plugin (real-runtime failure closure, 2026-08-18).
+///
+/// ROOT-CAUSE NOTE: the previous implementation used AppDomain.AssemblyResolve +
+/// Assembly.LoadFrom. That runs LAST in the .NET resolution pipeline and loads into the
+/// LoadFrom context — inside a real Autodesk process (other plugins, Autodesk's own
+/// LoadFrom fallback) this made workbook-stack binding non-deterministic: Lin's r5 GUI
+/// surfaced it as NotImplementedException from a wrong binding; the in-process smoke
+/// reproduced it as FileLoadException on ClosedXML 0.105.1.0.
+///
+/// Fix: (1) EAGERLY claim our exact shipped dependency closure into the default ALC via
+/// LoadFromAssemblyPath before anything else can bind those simple names; (2) register
+/// AssemblyLoadContext.Default.Resolving (which precedes AppDomain fallbacks) to resolve
+/// from our folder; (3) if a DIFFERENT copy of one of our dependencies is already loaded
+/// by another plugin, record a precise conflict diagnostic instead of failing later with
+/// an opaque exception.
+/// </summary>
 public class IgApp : IExtensionApplication
 {
-    public void Initialize()
-        => AppDomain.CurrentDomain.AssemblyResolve += (_, args) =>
+    /// <summary>
+    /// Dedicated load context: EVERY Mahod assembly and third-party dependency shipped in
+    /// the bundle folder loads HERE, so bindings like ClosedXML → DocumentFormat.OpenXml
+    /// always resolve to OUR exact shipped files — regardless of which versions Autodesk
+    /// or other plugins have already loaded into the default context (Civil/AutoCAD 2027
+    /// preload their own OpenXml.Framework 3.1.1, which poisoned ClosedXML with
+    /// NotImplementedException in Lin's run). Framework assemblies fall through to the
+    /// default context (return null) so the runtime is shared normally.
+    /// </summary>
+    private sealed class MahodLoadContext : System.Runtime.Loader.AssemblyLoadContext
+    {
+        private readonly string _dir;
+        public MahodLoadContext(string dir) : base("MahodIntergreen", isCollectible: false)
+            => _dir = dir;
+        protected override System.Reflection.Assembly? Load(System.Reflection.AssemblyName name)
         {
-            var name = new System.Reflection.AssemblyName(args.Name).Name;
-            var dir = Path.GetDirectoryName(typeof(IgApp).Assembly.Location);
-            if (name is null || dir is null) return null;
-            var path = Path.Combine(dir, name + ".dll");
-            return File.Exists(path) ? System.Reflection.Assembly.LoadFrom(path) : null;
+            string p = Path.Combine(_dir, name.Name + ".dll");
+            return File.Exists(p) ? LoadFromAssemblyPath(p) : null;
+        }
+    }
+
+    private static MahodLoadContext? _alc;
+
+    // Initialize references ONLY BCL/self types: JIT of this method happens before the
+    // resolver is registered, so a Mahod.* reference here would bind the fragile way.
+    public void Initialize()
+    {
+        string dir = Path.GetDirectoryName(typeof(IgApp).Assembly.Location)!;
+        _alc = new MahodLoadContext(dir);
+        // The NETLOADed host itself lives in the default context; serve its Mahod/vendor
+        // dependency binds FROM the isolated context (one type identity everywhere).
+        System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += (_, name) =>
+        {
+            string p = Path.Combine(dir, name.Name + ".dll");
+            return File.Exists(p) ? _alc!.LoadFromAssemblyPath(p) : null;
         };
+        LogInit(dir);
+    }
+
+    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+    private static void LogInit(string dir)
+        => Mahod.Intergreen.Host.SupportLog.Write("ISOLATED_ALC_READY", dir);
 
     public void Terminate() { }
 }

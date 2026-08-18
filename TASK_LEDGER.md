@@ -161,3 +161,22 @@ Legend: NOT STARTED / ACTIVE / PASS / FAIL / BLOCKED / NOT RUN
   historical sealed hashes remain recorded here. Cowork evidence intact on Desktop.
 - Shipped: ARTHUR_CIVIL2027_SMOKE r4 (0977ce7c...), VADIM r4 (4a01575e..., supersedes r3),
   MASTER r2 (259eb9b0...). Suite 266/266 under SDK10. Lin r5 remains in-flight baseline.
+
+## REAL-RUNTIME FAILURE CLOSURE (2026-08-18 evening) — Lin r5 defect fixed at root
+- Lin real GUI: Setup rejected the Golden workbook with NotImplementedException.
+  REPRODUCED with full stacks via new in-process IG_SMOKE_SETUP_ACCEPT command:
+  2027 Civil console = Lin exact NIE at XLWorkbook.LoadSpreadsheetDocument (ClosedXML
+  bound to Autodesk-preloaded DocumentFormat.OpenXml.Framework 3.1.1, empty-Location);
+  2026 console = FileLoadException on ClosedXML identity. Root defect: IgApp used
+  AppDomain.AssemblyResolve + Assembly.LoadFrom (last-chance, non-deterministic).
+- FIX: dedicated isolated AssemblyLoadContext (MahodIntergreen) — all Mahod/vendor DLLs
+  bind ONLY from the bundle folder; framework falls through. Diagnostics upgraded:
+  full exception chains + loaded-assembly report (old one-line log was useless).
+- PROOF: broken build FAILED the smoke in both real consoles; fixed build PASSED in both
+  (V1 variant, 8/4/12 model counts, sidecar Ok/Ok), also from the INSTALLED r5 bundle;
+  headless geometry both years PASS; suite 266/266. Permanent gate:
+  scripts/realhost_setup_accept.py + rule: no headless/proxy result substitutes for
+  in-Autodesk acceptance + full real GUI.
+- QUARANTINED: Lin r5 pkg, installers r3+r4, ARTHUR_CIVIL2027 r4, Vadim r4. NEW: installer
+  r5 (78d5c92f...), ARTHUR_FULL_RELEASE_GATE_0.1.0-r5.zip + Cowork runbook, master r3.
+  Cowork = primary release gate; Lin gets r6 only after it passes.

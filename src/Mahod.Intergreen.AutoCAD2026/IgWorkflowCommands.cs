@@ -445,6 +445,72 @@ public class IgWorkflowCommands
     [CommandMethod("IG_CLEAR_QA", CommandFlags.Modal)]
     public void ClearQa() => ClearTransients();
 
+    /// <summary>
+    /// Failure-closure §7: deterministic Setup-acceptance smoke INSIDE the real Autodesk
+    /// process, calling the SAME production services used after File Picker selection:
+    /// resolver → acceptance → sidecar transactional commit (to a test copy) → reload.
+    /// Emits machine-readable JSON next to the drawing. Never mutates the workbook.
+    /// </summary>
+    [CommandMethod("IG_SMOKE_SETUP_ACCEPT", CommandFlags.Modal)]
+    public void SmokeSetupAccept()
+    {
+        var doc = AcadApp.DocumentManager.MdiActiveDocument;
+        var ed = doc!.Editor;
+        var res = ed.GetString(new PromptStringOptions("\nWorkbook path") { AllowSpaces = true });
+        if (res.Status != PromptStatus.OK) return;
+        string outPath = Path.Combine(Path.GetDirectoryName(doc.Database.Filename)!, "ig_setup_accept.json");
+
+        string product = "?", acadver = "?";
+        try { product = AcadApp.GetSystemVariable("PRODUCT")?.ToString() ?? "?"; } catch { }
+        try { acadver = AcadApp.GetSystemVariable("ACADVER")?.ToString() ?? "?"; } catch { }
+        var payload = new Dictionary<string, object?>
+        {
+            ["host_product"] = product,
+            ["host_year"] = HostBuild.Year,
+            ["acadver"] = acadver,
+            ["runtime"] = Environment.Version.ToString(),
+            ["workbook_input"] = res.StringResult,
+        };
+        try
+        {
+            var p = WorkbookPathResolver.Resolve(res.StringResult);
+            payload["path_resolution"] = p.Status.ToString();
+            var accept = WorkbookAcceptance.Validate(res.StringResult);   // PRODUCTION service
+            payload["acceptance_status"] = accept.Status.ToString();
+            payload["acceptance_detail"] = accept.IsOk ? "ok" : accept.Detail;
+            if (accept.IsOk)
+            {
+                payload["template_variant"] = accept.Model!.Variant.ToString();
+                payload["model_counts"] = new Dictionary<string, int>
+                {
+                    ["signalGroups"] = accept.Model.SignalGroups.Count,
+                    ["pedestrianWidths"] = accept.Model.PedestrianWidths.Count,
+                    ["movementParameters"] = accept.Model.MovementParameters.Count,
+                };
+                // sidecar transactional commit to a TEST location + reload (production store)
+                string scTest = Path.Combine(Path.GetDirectoryName(doc.Database.Filename)!,
+                    "smoke-setup-accept.intergreen-project.json");
+                var data = SidecarStore.Load(scTest).Data;
+                SidecarStore.Set(data, "workbook", accept.NormalizedPath!);
+                SidecarStore.Commit(scTest, data);
+                var reload = SidecarStore.Load(scTest);
+                var wbRef = SidecarStore.ResolveWorkbook(reload.Data,
+                    Path.GetDirectoryName(doc.Database.Filename)!);
+                payload["sidecar_commit"] = reload.Status.ToString();
+                payload["sidecar_reload"] = wbRef.Status.ToString();
+            }
+        }
+        catch (System.Exception ex)
+        {
+            payload["exception_full_detail"] = ExceptionDetail.Full(ex);
+        }
+        payload["loaded_assemblies"] = ExceptionDetail.LoadedAssemblyReport()
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        File.WriteAllText(outPath, JsonSerializer.Serialize(payload,
+            new JsonSerializerOptions { WriteIndented = true }));
+        ed.WriteMessage($"\nIG_SMOKE_SETUP_ACCEPT → {outPath}");
+    }
+
     private static void ClearTransients()
     {
         var tm = TransientManager.CurrentTransientManager;

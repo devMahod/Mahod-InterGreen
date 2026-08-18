@@ -8,13 +8,13 @@
     <UseWindowsForms>true</UseWindowsForms>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyName>Mahod_Intergreen_Setup_0.1.0-r4</AssemblyName>
+    <AssemblyName>Mahod_Intergreen_Setup_0.1.0-r5</AssemblyName>
     <Product>Mahod Intergreen</Product>
     <Company>Mahod Engineering</Company>
     <AssemblyTitle>Mahod Intergreen Setup</AssemblyTitle>
     <Version>0.1.0</Version>
     <FileVersion>0.1.0.0</FileVersion>
-    <InformationalVersion>0.1.0 installer r2 (runtime-closure fix: +SixLabors.Fonts, +RBush; engine binaries unchanged)</InformationalVersion>
+    <InformationalVersion>0.1.0 installer r5 (isolated-ALC dependency binding; engine binaries unchanged)</InformationalVersion>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     <SelfContained>true</SelfContained>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>

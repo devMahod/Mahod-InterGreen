@@ -1,6 +1,45 @@
+using System.Text;
 using Mahod.Intergreen.Excel;
 
 namespace Mahod.Intergreen.Host;
+
+/// <summary>Full technical exception detail for the support log (failure-closure §5):
+/// complete ToString (all inner levels + stack), TargetSite, Source, HResult.</summary>
+public static class ExceptionDetail
+{
+    public static string Full(Exception ex)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine(ex.ToString()); // includes message, inner chain, stack traces
+        int level = 0;
+        for (Exception? e = ex; e is not null; e = e.InnerException, level++)
+        {
+            sb.AppendLine($"[L{level}] {e.GetType().FullName} | Source={e.Source} " +
+                          $"| HResult=0x{e.HResult:X8} | TargetSite={e.TargetSite?.DeclaringType?.FullName}.{e.TargetSite?.Name}");
+        }
+        return sb.ToString();
+    }
+
+    /// <summary>name/version/location of the workbook-path runtime assemblies (§5 list).</summary>
+    public static string LoadedAssemblyReport()
+    {
+        string[] interesting = { "Mahod.Intergreen.Host", "Mahod.Intergreen.Excel", "ClosedXML",
+            "ClosedXML.Parser", "DocumentFormat.OpenXml", "DocumentFormat.OpenXml.Framework",
+            "System.IO.Packaging", "WindowsBase", "SixLabors.Fonts", "RBush" };
+        var sb = new StringBuilder();
+        foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            var n = asm.GetName();
+            if (interesting.Contains(n.Name, StringComparer.OrdinalIgnoreCase))
+            {
+                string loc;
+                try { loc = asm.Location; } catch { loc = "(dynamic)"; }
+                sb.AppendLine($"{n.Name} | {n.Version} | {loc}");
+            }
+        }
+        return sb.ToString();
+    }
+}
 
 public enum WorkbookAcceptStatus
 {
@@ -56,7 +95,7 @@ public static class WorkbookAcceptance
                     : "לא ניתן לקרוא את חוברת ה-Excel שנבחרה (ייתכן שהיא פגומה).\n" +
                       "נסי לפתוח אותה ב-Excel; אם היא נפתחת שם — שלחי לארתור את קובץ הלוג (Export Support Log).\n" +
                       "פרט טכני: " + ex.GetType().Name,
-                ex.GetType().Name + ": " + ex.Message);
+                ExceptionDetail.Full(ex) + "\n-- loaded assemblies --\n" + ExceptionDetail.LoadedAssemblyReport());
         }
     }
 }
