@@ -39,7 +39,9 @@ for year, acad in HOSTS:
         encoding="utf-8")
     subprocess.run([acad + r"\accoreconsole.exe", "/i", str(W / "ex1.dwg"),
                     "/s", str(W / "run.scr"), "/l", "en-US"],
-                   capture_output=True, timeout=300)
+                   # r7: CWD = the Autodesk install dir, exactly like the real GUI —
+                   # no rules/ exists there or above it (the environment that broke r6).
+                   capture_output=True, timeout=300, cwd=acad)
     out = W / "ig_setup_accept.json"
     ok = False
     detail = "no output"
