@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Release-stamped: 0.1.0-r11, git df96c3645037a454e23a21f1f5164f8bb721007e (regenerate via scripts/release_build.py) -->
+<!-- Release-stamped: 0.1.0-r11, git 32434c5fe5f9071b051debb52ae5ae9770a53f09 (regenerate via scripts/release_build.py) -->
 <ApplicationPackage SchemaVersion="1.0" AutodeskProduct="AutoCAD"
     Name="Mahod Intergreen" AppVersion="0.1.0.11"
     Description="Mahod Engineering - intergreen calculation for signalized intersections (AutoCAD/Civil 3D 2026-2027), release 0.1.0-r11"
@@ -10,12 +10,12 @@
     <RuntimeRequirements OS="Win64" Platform="AutoCAD*" SeriesMin="R25.1" SeriesMax="R25.1" />
     <ComponentEntry AppName="MahodIntergreen2026" Version="0.1.0.11"
         ModuleName="./Contents/2026/Mahod.Intergreen.AutoCAD.dll"
-        AppDescription="INTERGREEN pilot workflow" LoadOnAutoCADStartup="True" />
+        AppDescription="Intergreen workflow" LoadOnAutoCADStartup="True" />
   </Components>
   <Components Description="Intergreen host 2027 (AutoCAD 2027 / Civil 3D 2027, .NET 10) - release 0.1.0-r11">
     <RuntimeRequirements OS="Win64" Platform="AutoCAD*" SeriesMin="R26.0" SeriesMax="R26.0" />
     <ComponentEntry AppName="MahodIntergreen2027" Version="0.1.0.11"
         ModuleName="./Contents/2027/Mahod.Intergreen.AutoCAD.dll"
-        AppDescription="INTERGREEN pilot workflow" LoadOnAutoCADStartup="True" />
+        AppDescription="Intergreen workflow" LoadOnAutoCADStartup="True" />
   </Components>
 </ApplicationPackage>
