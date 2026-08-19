@@ -21,7 +21,7 @@ using Mahod.Intergreen.Rules;
 namespace Mahod.Intergreen.AutoCAD2026;
 
 /// <summary>
-/// The Pilot workflow: one professional entry point — INTERGREEN — backed by a WPF
+/// The Intergreen workflow: one professional entry point — INTERGREEN — backed by a WPF
 /// palette: Setup → Validate → Analyze → Review → Export Excel. This host contains NO
 /// engineering formulas; every number comes from the shared deterministic pipeline.
 /// User-journey behavior (path handling, workflow gating, sidecar transactionality,
@@ -221,7 +221,7 @@ public class IgWorkflowCommands
             _palette = new PaletteSet("MAHOD INTERGREEN",
                 new Guid("7A1C4E2B-9D3F-4B4E-A2F3-6C1D2E3F4A5B"));
             var panel = BuildPanel();
-            _palette.AddVisual("Pilot", panel);
+            _palette.AddVisual("Intergreen", panel);
             _palette.MinimumSize = new System.Drawing.Size(420, 480);
             SupportLog.Start(HostBuild.ReleaseId, AcadApp.Version.ToString());
             // Host capability record (§10): which Autodesk product/year/runtime we run
@@ -270,7 +270,7 @@ public class IgWorkflowCommands
             });
         root.Children.Add(new TextBlock
         {
-            Text = "MAHOD INTERGREEN — Pilot",
+            Text = "Mahod Intergreen",
             FontWeight = FontWeights.Bold,
             FontSize = 15,
             HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
