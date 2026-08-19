@@ -36,12 +36,34 @@ candidate points at zero cost. This is the core value of the tool.
 Both workbooks compute with urban 50/25 despite the demo intersection (Route 70) being
 interurban. See OQ-005 — raised as a question, not silently "fixed".
 
-## F-006 — Example 1 AutoAdjusted (INBAR) sheet is entirely #REF!
+## F-006 — Example 1 AutoAdjusted (INBAR) sheet is largely #REF! (68 of 109 rows)
 
 Pre-existing source-workbook error (`SOURCE_WORKBOOK_EXISTING_ERROR`, v3 §33). See OQ-007.
+r11 correction: not "entirely" — 68 of the 109 AutoAdjusted rows reference deleted Input rows
+(`='Input Distances'!#REF!`); the remaining 41 rows (25–32, 46–60, 64, 75–78, 82–87, 91–102, 112)
+map the 40 real conflicts correctly, which is why the legacy `Matrix` pivot still shows 22 cells.
+The exporter reports this as a legacy-pivot note (`ExportResult.LegacyPivotNotes`).
 
 ## F-007 — Sub-1-second results silently vanish from the workbook matrix
 
 The AK rounding rule is undefined below 1 s (MOD by zero → blank). No golden row hits this,
 but the failure mode is silent omission of a conflict pair. Production emits a value + finding
 (`IG-VAL-003`, ED-004).
+
+## F-008 — V2 template: AutoAdjusted slots 2–4 add the SLOW-SPEED column instead of the Inbar addition
+
+In the Example 2 (V2) template, `AutoAdjusted Distances!F/H/J` (points 2–4) read
+`=IF('Input Distances'!F3>0, MAX(4, CEILING('Input Distances'!F3,0.5) + IFERROR(VLOOKUP($B4,
+Parameters!$A:$E, 4, FALSE), 0)), 0)` — column index **4** hard-coded (= "Clearing Speed - Slow
+[kph]" = 25) where slot 1 uses `Parameters!$E$1` (= "Additional vehicle length" = 0). Any second
+point therefore gets +25 m of clearing distance (≈ +2 s). The manual one-point practice never
+triggers it; the r10 export (up to 4 points per row) did, inflating the legacy Matrix by +2 s
+in 27 of 44 cells after Refresh. The current V1 template is correct (`Parameters!$F$1`). r11
+writes the governing point only (ED-014). → reported as OQ-008.
+
+## F-009 — The exported Matrix PivotTable showed the source's stale cache until Refresh (r10)
+
+The byte-copied `xl/pivotCache/pivotCacheRecordsN.xml` + rendered pivot cells display the
+MANUAL matrix; Refresh rebuilds from the engine-populated sheets (Lin, r10). Real-Excel repro on
+Example 2: 32 of 44 cells changed on Refresh. Fixed in r11 (ED-014: refreshOnLoad + purged
+records + cleared cells; Example 1/2/template/fixture: 0 cells change on Refresh).

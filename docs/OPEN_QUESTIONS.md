@@ -40,7 +40,20 @@ The written spec/flow diagram says the command should offer 8 approaches; the wo
 supports 4 (12 movements). Internal model uses A01…Ann and is not limited; confirm the
 required user-facing set. → **David**
 
-## OQ-007 — Example 1 AutoAdjusted sheet is entirely #REF!
+## OQ-007 — Example 1 AutoAdjusted sheet is largely #REF!
 
-Is the AutoAdjusted (INBAR) sheet still in use? It is broken in the Example 1 workbook
-(`SOURCE_WORKBOOK_EXISTING_ERROR`; v3 §33). Affects the INBAR export path only. → **David**
+Is the AutoAdjusted (INBAR) sheet still in use? 68 of its 109 rows are broken in the Example 1
+workbook (`SOURCE_WORKBOOK_EXISTING_ERROR`; v3 §33; F-006). Affects the INBAR export path /
+legacy Matrix only — `MAHOD Matrix Status` is authoritative. → **David**
+
+## OQ-008 — V2 template AutoAdjusted slots 2–4 formula (F-008)
+
+`AutoAdjusted Distances!F/H/J` in the Abarbanel (V2) workbook add the slow-speed column (25)
+instead of the Inbar addition. Should the template be corrected (as the current V1 template
+already is)? The engine export no longer depends on it (governing point only, ED-014). → **David**
+
+## OQ-009 — Legacy `Matrix` is the Inbar-rounded view, `MAHOD Matrix Status` the exact result
+
+The legacy pivot is built on `AutoAdjusted Distances` (CD ceiling 0.5 m, ED floor 0.5 m) and can
+read +1 s above the engine's exact value in a few cells (ED-014). Which value is typed into Inbar
+— the adjusted distances (as today) or the exact MAHOD times? → **David**

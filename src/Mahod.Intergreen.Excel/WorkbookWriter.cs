@@ -10,20 +10,45 @@ using Mahod.Intergreen.Reporting;
 namespace Mahod.Intergreen.Excel;
 
 /// <summary>Result of an export, with the structural verification evidence (Directive §23/§55).</summary>
+/// <param name="RowsPopulated">Input Distances rows that received the engine's governing point.</param>
+/// <param name="MultiPointRows">Populated rows whose conflict has more than one candidate point
+/// (all candidates live in 'MAHOD Engine Results'; the compatibility view shows the governing one).</param>
+/// <param name="RowsClearedNoEngineResult">Input Distances rows whose movement pair has no engine
+/// conflict/points: their manual CD/ED were cleared (never mixed with engine values) and flagged
+/// in the QA column. The source workbook is untouched.</param>
+/// <param name="PivotCachesReset">Legacy PivotTable caches marked refreshOnLoad + purged (r11).</param>
+/// <param name="LegacyPivotNotes">Human-readable notes about the legacy pivot source health.</param>
 public sealed record ExportResult(
     string OutputPath,
     IReadOnlyList<string> PreservedSheets,
     IReadOnlyList<string> AddedSheets,
     IReadOnlyList<string> StructuralIssues,
     int RowsPopulated,
-    int MoreThanFourPointRows);
+    int MultiPointRows,
+    int RowsClearedNoEngineResult,
+    int PivotCachesReset,
+    IReadOnlyList<string> LegacyPivotNotes);
 
 /// <summary>
 /// Production Excel exporter (Directive §22–§29), implemented with SURGICAL OpenXML edits:
 /// the output is a byte-copy of David's workbook in which only the explicitly targeted
 /// parts change (Input Distances CD/ED cells, a MAHOD QA column, two appended sheets,
-/// fullCalcOnLoad, and the obsolete xl/calcChain.xml dropped). Every other part — formulas, styles, images, pivot caches, print
-/// settings, names — remains untouched at package level, so nothing can be silently lost.
+/// fullCalcOnLoad, the obsolete xl/calcChain.xml dropped, and — r11 — the legacy
+/// PivotTable caches reset so Excel rebuilds them from the engine-populated workbook on
+/// open). Every other part — formulas, styles, images, print settings, names — remains
+/// untouched at package level, so nothing can be silently lost.
+///
+/// Export contract (re-confirmed r11, Lin's refresh finding): the familiar legacy sheets ARE
+/// fed by the engine (compatibility view), but the whole legacy chain must then be internally
+/// consistent — one source of truth, no manual/engine mix, no stale cached result:
+///   • Input Distances row = the engine's GOVERNING point only (slot 1), exactly as the manual
+///     workflow fills one point; every candidate point lives in 'MAHOD Engine Results'.
+///     (Writing 4 slots exposed a latent defect in the V2 template's AutoAdjusted sheet —
+///     slots 2–4 add the slow-speed column instead of the Inbar addition — which the manual
+///     one-point practice never hit; the governing point alone yields the identical FINAL IG.)
+///   • rows whose movement pair has no engine conflict/points are CLEARED and flagged, never
+///     left with manual numbers underneath engine numbers.
+///   • the Matrix PivotTable cache is never shipped stale (refreshOnLoad + purged + cleared).
 ///
 /// (A full-package rewriter such as ClosedXML re-serializes every part; on these real
 /// workbooks it corrupts the Matrix pivot cache that already contains historical #REF!
@@ -48,8 +73,11 @@ public static class WorkbookWriter
 
         var preserved = new List<string>();
         var rowsPopulated = 0;
-        var moreThanFour = 0;
+        var multiPoint = 0;
+        var rowsCleared = 0;
         var replacedFormulaCells = new List<string>();
+        var pivotNotes = new List<string>();
+        var pivotCachesReset = 0;
 
         using (var doc = SpreadsheetDocument.Open(outputPath, true))
         {
@@ -86,40 +114,47 @@ public static class WorkbookWriter
                 var clearing = CellText(GetCell(row, 2));
                 var entering = CellText(GetCell(row, 3));
                 if (string.IsNullOrWhiteSpace(clearing)) continue;
-                if (!conflictsById.TryGetValue($"{clearing}→{entering}", out var conflict)
-                    || conflict.Points.Count == 0)
-                    continue;
+                var hasConflict = conflictsById.TryGetValue($"{clearing}→{entering}", out var conflict);
 
-                var ordered = conflict.Points
-                    .OrderByDescending(p => p.RawIg ?? double.MinValue)
-                    .ThenBy(p => p.Cd).ThenBy(p => p.Ed).ThenBy(p => p.Id, StringComparer.Ordinal)
-                    .ToList();
-                var selected = ordered.Take(4).ToList();
-                if (conflict.DefiningPointId is string gov && selected.All(p => p.Id != gov))
-                    selected[^1] = conflict.Points.First(p => p.Id == gov);
-
-                for (var p = 0; p < 4; p++)
+                if (!hasConflict || conflict!.Points.Count == 0)
                 {
-                    if (p < selected.Count)
-                    {
-                        SetCell(sheetData, r, 4 + p * 2, Math.Round(selected[p].Cd, 3), false, replacedFormulaCells);
-                        SetCell(sheetData, r, 5 + p * 2, Math.Round(selected[p].Ed, 3), false, replacedFormulaCells);
-                    }
-                    else
-                    {
-                        ClearCell(row, 4 + p * 2);
-                        ClearCell(row, 5 + p * 2);
-                    }
-                }
-                rowsPopulated++;
-
-                if (conflict.Points.Count > 4)
-                {
-                    moreThanFour++;
+                    // r11: no engine result for this pair → the legacy row must not keep manual
+                    // numbers next to engine numbers. Clear all four slots, say why in the QA
+                    // column (the SOURCE workbook still holds the manual values, untouched).
+                    var hadValue = false;
+                    for (var col = 4; col <= 11; col++)
+                        hadValue |= ClearCell(row, col, replacedFormulaCells);
                     SetCell(sheetData, r, qaCol,
-                        $"MORE_THAN_4_CANDIDATE_POINTS ({conflict.Points.Count}) — REVIEW_REQUIRED, see '{EngineResultsSheet}'",
+                        (hasConflict
+                            ? $"NO_ENGINE_POINTS — engine found no candidate point for {clearing}→{entering}; "
+                            : $"NOT_IN_ENGINE_RESULTS — {clearing}→{entering} is not an engine conflict; ") +
+                        (hadValue ? "manual CD/ED removed from this copy (source workbook unchanged). " : "") +
+                        $"See '{EngineResultsSheet}'.",
                         isText: true);
+                    if (hadValue) rowsCleared++;
+                    continue;
                 }
+
+                // governing point = the engine's defining point (max raw IG); fall back to the
+                // raw-IG ordering only if the engine did not name one.
+                var governing = conflict.Points.FirstOrDefault(p => p.Id == conflict.DefiningPointId)
+                    ?? conflict.Points
+                        .OrderByDescending(p => p.RawIg ?? double.MinValue)
+                        .ThenBy(p => p.Cd).ThenBy(p => p.Ed).ThenBy(p => p.Id, StringComparer.Ordinal)
+                        .First();
+
+                SetCell(sheetData, r, 4, Math.Round(governing.Cd, 3), false, replacedFormulaCells);
+                SetCell(sheetData, r, 5, Math.Round(governing.Ed, 3), false, replacedFormulaCells);
+                for (var col = 6; col <= 11; col++)
+                    ClearCell(row, col, replacedFormulaCells);
+                rowsPopulated++;
+                if (conflict.Points.Count > 1) multiPoint++;
+
+                SetCell(sheetData, r, qaCol,
+                    $"ENGINE governing point {governing.Id}" +
+                    (conflict.Points.Count > 1 ? $" of {conflict.Points.Count} candidates" : "") +
+                    $" — all candidates in '{EngineResultsSheet}'",
+                    isText: true);
             }
             inputPart.Worksheet.Save();
 
@@ -187,6 +222,18 @@ public static class WorkbookWriter
             }
             AppendSheet(wbPart, MatrixStatusSheet, matrixRows);
 
+            // ---- legacy PivotTables (r11, Lin's refresh finding) ----
+            // The Matrix sheet's PivotTable caches the legacy results as of the source's LAST
+            // MANUAL refresh. A byte-copied cache therefore displays the manual matrix until
+            // the user presses Refresh, while the engine-populated sheets underneath already
+            // say otherwise ("without Refresh everything matches; after Refresh numbers
+            // change"). An export must never ship a stale pivot: every worksheet-sourced cache
+            // is marked refreshOnLoad, its cached records are purged and the pivot's rendered
+            // cells are cleared, so Excel rebuilds the PivotTable from the engine-populated
+            // workbook on open (after fullCalcOnLoad). Refresh stays fully functional and no
+            // formula is touched. Proven in real Excel: open == Refresh == Refresh All == reopen.
+            pivotCachesReset = ResetLegacyPivots(wbPart, pivotNotes);
+
             // ---- authoritative-engine discipline (§27): Excel recalculates on open ----
             var calcProps = wbPart.Workbook.GetFirstChild<CalculationProperties>();
             if (calcProps is null)
@@ -216,7 +263,113 @@ public static class WorkbookWriter
 
         var issues = VerifyStructure(sourceWorkbookPath, outputPath, replacedFormulaCells.Count);
         return new ExportResult(outputPath, preserved,
-            new[] { EngineResultsSheet, MatrixStatusSheet }, issues, rowsPopulated, moreThanFour);
+            new[] { EngineResultsSheet, MatrixStatusSheet }, issues, rowsPopulated, multiPoint,
+            rowsCleared, pivotCachesReset, pivotNotes);
+    }
+
+    // ---------------- legacy PivotTables (r11) ----------------
+
+    /// <summary>
+    /// Marks every worksheet-sourced pivot cache refreshOnLoad, purges its cached records and
+    /// clears the rendered cells of each PivotTable that uses it. Returns the number of caches
+    /// reset. Notes describe pre-existing source-range errors (e.g. #REF! rows) that make part
+    /// of the legacy Matrix uncomputable in the SOURCE workbook.
+    /// </summary>
+    private static int ResetLegacyPivots(WorkbookPart wbPart, List<string> notes)
+    {
+        var reset = 0;
+        var sheets = wbPart.Workbook.Sheets!.Elements<Sheet>().ToList();
+        foreach (var cachePart in wbPart.PivotTableCacheDefinitionParts.ToList())
+        {
+            var def = cachePart.PivotCacheDefinition;
+            if (def is null) continue;
+            var ws = def.CacheSource?.WorksheetSource;
+            if (def.CacheSource?.Type?.Value != SourceValues.Worksheet || ws is null)
+                continue; // external/consolidation sources: not ours to refresh
+
+            def.RefreshOnLoad = true;
+            def.RecordCount = 0U;
+            var recPart = cachePart.PivotTableCacheRecordsPart;
+            if (recPart is not null)
+            {
+                recPart.PivotCacheRecords = new PivotCacheRecords { Count = 0U };
+                recPart.PivotCacheRecords.Save();
+            }
+            def.Save();
+            reset++;
+
+            // source-range health (pre-existing errors in the SOURCE workbook)
+            if (ws.Sheet?.Value is string srcSheetName && ws.Reference?.Value is string srcRef)
+            {
+                var srcSheet = sheets.FirstOrDefault(x => x.Name == srcSheetName);
+                if (srcSheet is not null && TryParseRange(srcRef, out var r1, out var c1, out var r2, out var c2))
+                {
+                    var srcPart = (WorksheetPart)wbPart.GetPartById(srcSheet.Id!);
+                    int dataRows = 0, errorRows = 0;
+                    foreach (var row in srcPart.Worksheet.GetFirstChild<SheetData>()!.Elements<Row>())
+                    {
+                        var ri = (int)(row.RowIndex?.Value ?? 0);
+                        if (ri <= r1 || ri > r2) continue; // r1 = header row
+                        var first = GetCell(row, c1);
+                        if (first is null || (first.CellValue is null && first.InlineString is null)) continue;
+                        dataRows++;
+                        if (first.DataType?.Value == CellValues.Error) errorRows++;
+                    }
+                    if (errorRows > 0)
+                        notes.Add($"legacy pivot source '{srcSheetName}'!{srcRef}: {errorRows} of {dataRows} source rows " +
+                                  "are #REF!/error cells in the SOURCE workbook (pre-existing) — those rows cannot feed the legacy Matrix; " +
+                                  $"'{MatrixStatusSheet}' is authoritative");
+                }
+            }
+        }
+
+        // clear the rendered cells of every PivotTable (Excel re-renders on the on-load refresh)
+        foreach (var sheet in sheets)
+        {
+            var part = (WorksheetPart)wbPart.GetPartById(sheet.Id!);
+            foreach (var pt in part.PivotTableParts)
+            {
+                var loc = pt.PivotTableDefinition?.Location?.Reference?.Value;
+                if (loc is null || !TryParseRange(loc, out var r1, out var c1, out var r2, out var c2)) continue;
+                var sheetData = part.Worksheet.GetFirstChild<SheetData>();
+                if (sheetData is null) continue;
+                foreach (var row in sheetData.Elements<Row>())
+                {
+                    var ri = (int)(row.RowIndex?.Value ?? 0);
+                    if (ri < r1 || ri > r2) continue;
+                    foreach (var cell in row.Elements<Cell>())
+                    {
+                        var ci = ColumnIndexOf(cell.CellReference?.Value);
+                        if (ci < c1 || ci > c2) continue;
+                        cell.CellFormula = null;
+                        cell.CellValue = null;
+                        cell.InlineString = null;
+                        cell.DataType = null; // style kept; value gone
+                    }
+                }
+                part.Worksheet.Save();
+            }
+        }
+        return reset;
+    }
+
+    /// <summary>"C3:K12" → 1-based rows/cols; "C3" → single cell.</summary>
+    public static bool TryParseRange(string reference, out int r1, out int c1, out int r2, out int c2)
+    {
+        r1 = c1 = r2 = c2 = 0;
+        var parts = reference.Replace("$", "").Split(':');
+        if (parts.Length is < 1 or > 2) return false;
+        if (!TryParseCell(parts[0], out r1, out c1)) return false;
+        if (parts.Length == 1) { r2 = r1; c2 = c1; return true; }
+        return TryParseCell(parts[1], out r2, out c2);
+
+        static bool TryParseCell(string cell, out int row, out int col)
+        {
+            row = col = 0;
+            var i = 0;
+            while (i < cell.Length && char.IsLetter(cell[i])) { col = col * 26 + (char.ToUpperInvariant(cell[i]) - 'A' + 1); i++; }
+            return col > 0 && int.TryParse(cell[i..], out row) && row > 0;
+        }
     }
 
     // ---------------- structural before/after verification (§23) ----------------
@@ -234,6 +387,21 @@ public static class WorkbookWriter
         var dstCalcPr = dst.WorkbookPart.Workbook.GetFirstChild<CalculationProperties>();
         if (dstCalcPr?.FullCalculationOnLoad?.Value != true)
             issues.Add("output calcPr lacks fullCalcOnLoad=1 (Excel would not rebuild the calculation chain / recalc on open)");
+
+        // r11 post-conditions: no legacy pivot may ship stale — every worksheet-sourced cache is
+        // refreshOnLoad with zero cached records, and no PivotTable was lost.
+        foreach (var audit in PivotCacheAudit.Inspect(dst))
+        {
+            if (!audit.WorksheetSourced) continue;
+            if (!audit.RefreshOnLoad)
+                issues.Add($"legacy pivot cache ({audit.Source}) is not refreshOnLoad — Excel would display the stale manual matrix until Refresh");
+            if (audit.CachedRecords > 0)
+                issues.Add($"legacy pivot cache ({audit.Source}) still carries {audit.CachedRecords} cached records from the source's last manual refresh");
+        }
+        var srcPivots = src.WorkbookPart!.WorksheetParts.Sum(w => w.PivotTableParts.Count());
+        var dstPivots = dst.WorkbookPart.WorksheetParts.Sum(w => w.PivotTableParts.Count());
+        if (dstPivots != srcPivots)
+            issues.Add($"PivotTable count changed {srcPivots} → {dstPivots}");
 
         var srcSheets = src.WorkbookPart!.Workbook.Sheets!.Elements<Sheet>().Select(s => s.Name!.Value!).ToList();
         var dstSheets = dst.WorkbookPart!.Workbook.Sheets!.Elements<Sheet>().Select(s => s.Name!.Value!).ToList();
@@ -300,13 +468,21 @@ public static class WorkbookWriter
         return row.Elements<Cell>().FirstOrDefault(c => c.CellReference == reference);
     }
 
-    private static void ClearCell(Row row, int col)
+    /// <returns>true when the cell had a value or formula (i.e. something was actually removed).</returns>
+    private static bool ClearCell(Row row, int col, List<string>? replacedFormulas = null)
     {
         var cell = GetCell(row, col);
-        if (cell is null) return;
+        if (cell is null) return false;
+        var had = cell.CellValue is not null || cell.InlineString is not null || cell.CellFormula is not null;
+        if (cell.CellFormula is not null)
+        {
+            replacedFormulas?.Add(cell.CellReference?.Value ?? "");
+            cell.CellFormula = null;
+        }
         cell.CellValue = null;
+        cell.InlineString = null;
         cell.DataType = null;
-        // raw-input cells carry no formulas; leave style in place
+        return had; // style left in place
     }
 
     private static void SetCell(SheetData sheetData, int rowIndex, int col, object value, bool isText = false)

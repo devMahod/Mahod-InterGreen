@@ -271,8 +271,11 @@ if (Array.IndexOf(args_, "--export-excel") >= 0)
         Path.GetFileNameWithoutExtension(workbookPath) + "_MAHOD_INTERGREEN.xlsx");
     var export = WorkbookWriter.Export(workbookPath, excelOut, output.Analysis, model);
     Console.WriteLine($"  excel export: {export.OutputPath}");
-    Console.WriteLine($"    rows populated={export.RowsPopulated} >4-point rows={export.MoreThanFourPointRows} " +
+    Console.WriteLine($"    rows populated={export.RowsPopulated} multi-point rows={export.MultiPointRows} " +
+                      $"rows cleared (no engine result)={export.RowsClearedNoEngineResult} pivot caches reset={export.PivotCachesReset} " +
                       $"structural issues={export.StructuralIssues.Count}");
+    foreach (var note in export.LegacyPivotNotes)
+        Console.WriteLine($"    LEGACY PIVOT: {note}");
     foreach (var issue in export.StructuralIssues.Take(10))
         Console.WriteLine($"    STRUCTURAL: {issue}");
     if (export.StructuralIssues.Count > 0)

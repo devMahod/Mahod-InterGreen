@@ -131,8 +131,11 @@ public class WorkbookWriterTests
     }
 
     [Fact]
-    public void More_than_four_points_never_silently_truncated()
+    public void Multi_point_conflicts_keep_every_candidate_in_engine_sheet_and_only_the_governing_point_in_the_legacy_row()
     {
+        // r11 contract: the compatibility view holds exactly ONE point — the engine's governing
+        // point — like the manual workflow; every candidate lives in 'MAHOD Engine Results'.
+        // (Writing 4 slots fed the V2 template's defective AutoAdjusted slot-2..4 formulas.)
         var src = Example1Path();
         var outPath = Path.Combine(Path.GetTempPath(), $"wbtest_{Guid.NewGuid():N}.xlsx");
         try
@@ -143,20 +146,77 @@ public class WorkbookWriterTests
                 points, "P6", 4.8, 5, "trace", Array.Empty<string>());
             var result = WorkbookWriter.Export(src, outPath, Doc(conflict), WorkbookReader.Read(src));
 
-            Assert.Equal(1, result.MoreThanFourPointRows);
+            Assert.Equal(1, result.RowsPopulated);
+            Assert.Equal(1, result.MultiPointRows);
+            Assert.Empty(result.StructuralIssues);
             using var wb = new XLWorkbook(outPath);
             // the complete point set lives in the engine sheet — all 6 rows
             var engine = wb.Worksheet(WorkbookWriter.EngineResultsSheet);
             var engineRows = engine.RangeUsed()!.Rows().Count() - 1;
             Assert.Equal(6, engineRows);
-            // the compatibility view holds 4 slots with the governing point included
+            // the compatibility view: slot 1 = governing point P6 (CD 16, ED 8); slots 2–4 empty
             var input = wb.Worksheet("Input Distances");
             var row = input.RangeUsed()!.Rows()
                 .First(r => r.Cell(2).GetString() == "S-T" &&
                             (r.Cell(3).HasFormula ? r.Cell(3).CachedValue.ToString() : r.Cell(3).GetString()) == "W-L")
                 .RowNumber();
-            var cds = Enumerable.Range(0, 4).Select(p => input.Cell(row, 4 + p * 2).GetDouble()).ToList();
-            Assert.Contains(16.0, cds); // P6 (governing, highest raw IG) present
+            Assert.Equal(16.0, input.Cell(row, 4).GetDouble());
+            Assert.Equal(8.0, input.Cell(row, 5).GetDouble());
+            for (var col = 6; col <= 11; col++)
+                Assert.True(input.Cell(row, col).IsEmpty(), $"slot column {col} must be empty");
+            Assert.Contains("P6", input.Cell(row, 40).GetString());
+            Assert.Contains("6 candidates", input.Cell(row, 40).GetString());
+        }
+        finally
+        {
+            File.Delete(outPath);
+        }
+    }
+
+    [Fact]
+    public void Rows_without_engine_result_are_cleared_and_flagged_never_left_with_manual_numbers()
+    {
+        // r11 contract: the legacy sheets are ONE source of truth. A row whose movement pair
+        // has no engine conflict/points must not keep manual CD/ED next to engine numbers —
+        // it is cleared and the QA column says why (the SOURCE workbook keeps the manual values).
+        var src = Example1Path();
+        var outPath = Path.Combine(Path.GetTempPath(), $"wbtest_{Guid.NewGuid():N}.xlsx");
+        try
+        {
+            // one populated conflict (S-T→W-L), one engine conflict with zero points (S-T→W-T),
+            // everything else absent from the engine results
+            var populated = new ConflictRecord("S-T→W-L", "S-T", "W-L", "VALID",
+                new[] { Pt("P1", 24.35, 5.02, 5.27) }, "P1", 5.27, 6, "trace", Array.Empty<string>());
+            var noPoints = new ConflictRecord("S-T→W-T", "S-T", "W-T", "BLOCKED",
+                Array.Empty<ConflictPointRecord>(), null, null, null, "trace", new[] { "IG-GEO-001" });
+            var result = WorkbookWriter.Export(src, outPath, Doc(populated, noPoints), WorkbookReader.Read(src));
+
+            Assert.Empty(result.StructuralIssues);
+            Assert.Equal(1, result.RowsPopulated);
+            Assert.Equal(39, result.RowsClearedNoEngineResult); // Example 1 has 40 conflict rows
+
+            using var wb = new XLWorkbook(outPath);
+            var input = wb.Worksheet("Input Distances");
+            int RowOf(string clearing, string entering) => input.RangeUsed()!.Rows()
+                .First(r => (r.Cell(2).HasFormula ? r.Cell(2).CachedValue.ToString() : r.Cell(2).GetString()) == clearing &&
+                            (r.Cell(3).HasFormula ? r.Cell(3).CachedValue.ToString() : r.Cell(3).GetString()) == entering)
+                .RowNumber();
+
+            var rPop = RowOf("S-T", "W-L");
+            Assert.Equal(24.35, input.Cell(rPop, 4).GetDouble(), 3);
+            Assert.StartsWith("ENGINE governing point P1", input.Cell(rPop, 40).GetString());
+
+            var rNoPts = RowOf("S-T", "W-T");
+            for (var col = 4; col <= 11; col++) Assert.True(input.Cell(rNoPts, col).IsEmpty());
+            Assert.StartsWith("NO_ENGINE_POINTS", input.Cell(rNoPts, 40).GetString());
+            Assert.Contains("manual CD/ED removed", input.Cell(rNoPts, 40).GetString());
+
+            var rAbsent = RowOf("W-L", "S-T");
+            for (var col = 4; col <= 11; col++) Assert.True(input.Cell(rAbsent, col).IsEmpty());
+            Assert.StartsWith("NOT_IN_ENGINE_RESULTS", input.Cell(rAbsent, 40).GetString());
+
+            // the legacy formula chain still computes for the populated row and nothing else was touched
+            Assert.True(input.Cell(rPop, 12).HasFormula);
         }
         finally
         {
@@ -233,7 +293,7 @@ public class WorkbookWriterTests
             using (var zip = ZipFile.OpenRead(src))
             using (var sr = new StreamReader(zip.GetEntry("xl/calcChain.xml")!.Open()))
                 Assert.Contains("r=\"D3\"", sr.ReadToEnd());
-            Assert.Equal(2, FormulaCount(src, "Input Distances")); // D3 (replaced) + F3 (kept)
+            Assert.Equal(2, FormulaCount(src, "Input Distances")); // D3 (replaced) + M3 (kept)
             Assert.Equal(1, FormulaCount(src, "Other"));           // A1 (kept)
 
             // X→Y is the fixture's only conflict row; its D3 is a formula cell → replaced by the engine value
@@ -254,7 +314,7 @@ public class WorkbookWriterTests
             Assert.Contains("forceFullCalc=\"1\"", after.CalcPr);
 
             // only the intentionally replaced formula is gone; every other formula survives
-            Assert.Equal(1, FormulaCount(outPath, "Input Distances")); // F3 kept, D3 now a value
+            Assert.Equal(1, FormulaCount(outPath, "Input Distances")); // M3 kept, D3 now a value
             Assert.Equal(1, FormulaCount(outPath, "Other"));
             using (var wb = new XLWorkbook(outPath))
             {
@@ -262,8 +322,10 @@ public class WorkbookWriterTests
                 Assert.False(input.Cell("D3").HasFormula);
                 Assert.Equal(24.35, input.Cell("D3").GetDouble(), 3);
                 Assert.Equal(5.02, input.Cell("E3").GetDouble(), 3);
-                Assert.True(input.Cell("F3").HasFormula);
-                Assert.Equal("D3*2", input.Cell("F3").FormulaA1);
+                Assert.True(input.Cell("F3").IsEmpty()); // slot 2 cleared (governing point only, r11)
+                Assert.True(input.Cell("G3").IsEmpty());
+                Assert.True(input.Cell("M3").HasFormula);
+                Assert.Equal("D3*2", input.Cell("M3").FormulaA1);
                 Assert.True(wb.Worksheet("Other").Cell("A1").HasFormula);
                 // sheet order preserved, MAHOD sheets appended after the originals
                 Assert.Equal(new[] { "Input Distances", "Other", WorkbookWriter.EngineResultsSheet, WorkbookWriter.MatrixStatusSheet },
@@ -305,14 +367,181 @@ public class WorkbookWriterTests
             Assert.False(after.ContentTypePresent);
             Assert.Contains("fullCalcOnLoad=\"1\"", after.CalcPr);
 
-            // exactly one formula (D34) was replaced; everything else survives
-            Assert.Equal(srcFormulas - 1, FormulaCount(outPath, "Input Distances"));
+            // the 10 pedestrian CD formula cells D33–D42 are the only formulas touched: D34 is
+            // replaced by the engine value, the other nine belong to rows WITHOUT an engine
+            // result and are cleared (r11 contract); every other formula survives — in
+            // particular the clearing-name formulas in column B and the whole calc chain L..AL.
+            Assert.Equal(srcFormulas - 10, FormulaCount(outPath, "Input Distances"));
             using var wb = new XLWorkbook(outPath);
             var input = wb.Worksheet("Input Distances");
             Assert.False(input.Cell("D34").HasFormula);
             Assert.Equal(8.35, input.Cell("D34").GetDouble(), 3);
-            Assert.True(input.Cell("D33").HasFormula); // neighbouring pedestrian row untouched
+            Assert.True(input.Cell("D33").IsEmpty());   // row without engine result: cleared + flagged
+            Assert.StartsWith("NOT_IN_ENGINE_RESULTS", input.Cell("AN33").GetString());
             Assert.True(input.Cell("B34").HasFormula); // the clearing-name formula itself is untouched
+            Assert.True(input.Cell("L34").HasFormula); // the legacy calculation chain is untouched
+            Assert.True(input.Cell("AK34").HasFormula);
+        }
+        finally
+        {
+            File.Delete(outPath);
+        }
+    }
+
+    // ------------------------------------------------------------------------------------
+    // r11 — Lin's refresh finding: the export displayed the source's cached (manual) Matrix
+    // PivotTable until the user pressed Refresh; after Refresh the pivot rebuilt from the
+    // engine-populated sheets and the numbers changed. The fixture is a REAL-Excel workbook
+    // (tests/fixtures/pivot/pivot-regression.xlsx): formulas feeding a pivot source, an
+    // existing pivot cache with the ORIGINAL values, and one underlying value changed by the
+    // export. These tests pin the r11 policy: no stale pivot ever ships (refreshOnLoad +
+    // purged records + cleared rendered cells), calc flags set, no calcChain, formulas kept.
+    // ------------------------------------------------------------------------------------
+
+    private static string PivotFixturePath()
+    {
+        var dir = AppContext.BaseDirectory;
+        while (dir is not null)
+        {
+            var candidate = Path.Combine(dir, "tests", "fixtures", "pivot", "pivot-regression.xlsx");
+            if (File.Exists(candidate)) return candidate;
+            dir = Path.GetDirectoryName(dir);
+        }
+        throw new DirectoryNotFoundException("pivot-regression.xlsx fixture not found");
+    }
+
+    [Fact]
+    public void Pivot_fixture_as_shipped_by_r10_is_detected_as_a_stale_cache_risk()
+    {
+        // The r10 writer copied the pivot parts untouched, so the fixture's pivot state IS the
+        // r10 output state: cached records present, no refresh on open → stale display risk.
+        var audit = PivotCacheAudit.Inspect(PivotFixturePath());
+        var cache = Assert.Single(audit);
+        Assert.True(cache.WorksheetSourced);
+        Assert.Equal("'Calc'!A1:C4", cache.Source);
+        Assert.Equal(3, cache.CachedRecords);
+        Assert.False(cache.RefreshOnLoad);
+        Assert.True(cache.IsStaleRisk);
+        Assert.Contains("Matrix!", cache.PivotTables.Single());
+    }
+
+    [Fact]
+    public void Export_never_ships_a_stale_pivot_refreshOnLoad_purged_records_cleared_cells()
+    {
+        var src = PivotFixturePath();
+        var srcBytes = File.ReadAllBytes(src);
+        var outPath = Path.Combine(Path.GetTempPath(), $"wbtest_{Guid.NewGuid():N}.xlsx");
+        try
+        {
+            // fixture cache holds FINAL IG 4 for X→Y (CD 10, ED 2); the engine says CD 30 → the
+            // legacy formula would now give ROUNDUP((30-2)/2)=14 — the cached 4 is stale
+            var conflict = new ConflictRecord("X→Y", "X", "Y", "VALID",
+                new[] { Pt("P1", 30, 2, 13.5) }, "P1", 13.5, 14, "trace", Array.Empty<string>());
+            var result = WorkbookWriter.Export(src, outPath, Doc(conflict), EmptyModel());
+
+            Assert.Empty(result.StructuralIssues);
+            Assert.Equal(1, result.RowsPopulated);
+            Assert.Equal(1, result.PivotCachesReset);
+
+            // cache policy
+            var cache = Assert.Single(PivotCacheAudit.Inspect(outPath));
+            Assert.True(cache.RefreshOnLoad, "Excel must rebuild the pivot on open");
+            Assert.Equal(0, cache.CachedRecords);
+            Assert.False(cache.IsStaleRisk);
+            Assert.Single(cache.PivotTables); // the PivotTable itself survives
+
+            using (var d = SpreadsheetDocument.Open(outPath, false))
+            {
+                var wbPart = d.WorkbookPart!;
+                // recalculation flags + no calcChain (the fixture HAD one)
+                var calcPr = wbPart.Workbook.GetFirstChild<CalculationProperties>()!;
+                Assert.True(calcPr.FullCalculationOnLoad!.Value);
+                Assert.True(calcPr.ForceFullCalculation!.Value);
+                Assert.Null(wbPart.CalculationChainPart);
+                // the rendered pivot cells are cleared: nothing stale can be displayed before the refresh
+                var matrix = wbPart.Workbook.Sheets!.Elements<Sheet>().First(s => s.Name == "Matrix");
+                var mpart = (WorksheetPart)wbPart.GetPartById(matrix.Id!);
+                var loc = mpart.PivotTableParts.Single().PivotTableDefinition!.Location!.Reference!.Value!;
+                Assert.True(WorkbookWriter.TryParseRange(loc, out var r1, out var c1, out var r2, out var c2));
+                var stale = mpart.Worksheet.Descendants<Cell>().Where(c =>
+                {
+                    Assert.True(WorkbookWriter.TryParseRange(c.CellReference!.Value!, out var rr, out var cc, out _, out _));
+                    return rr >= r1 && rr <= r2 && cc >= c1 && cc <= c2 && (c.CellValue is not null || c.InlineString is not null);
+                }).ToList();
+                Assert.Empty(stale);
+                // the pivot cache definition still points at the same worksheet source
+                var def = wbPart.PivotTableCacheDefinitionParts.Single().PivotCacheDefinition!;
+                Assert.Equal("Calc", def.CacheSource!.WorksheetSource!.Sheet!.Value);
+                Assert.Equal("A1:C4", def.CacheSource!.WorksheetSource!.Reference!.Value);
+            }
+
+            // formulas feeding the pivot source are untouched; only the targeted cell changed
+            Assert.Equal(FormulaCount(src, "Calc"), FormulaCount(outPath, "Calc"));
+            using (var wb = new XLWorkbook(outPath))
+            {
+                var input = wb.Worksheet("Input Distances");
+                Assert.Equal(30.0, input.Cell("D3").GetDouble());
+                Assert.Equal(2.0, input.Cell("E3").GetDouble());
+                Assert.True(input.Cell("M3").HasFormula);           // non-slot formula kept
+            }
+            Assert.Equal(srcBytes, File.ReadAllBytes(src));
+        }
+        finally
+        {
+            File.Delete(outPath);
+        }
+    }
+
+    [Fact]
+    public void Pivot_fixture_rows_without_engine_result_are_cleared_and_sheet_order_preserved()
+    {
+        var src = PivotFixturePath();
+        var outPath = Path.Combine(Path.GetTempPath(), $"wbtest_{Guid.NewGuid():N}.xlsx");
+        try
+        {
+            var conflict = new ConflictRecord("X→Y", "X", "Y", "VALID",
+                new[] { Pt("P1", 30, 2, 13.5) }, "P1", 13.5, 14, "trace", Array.Empty<string>());
+            var result = WorkbookWriter.Export(src, outPath, Doc(conflict), EmptyModel());
+            Assert.Equal(2, result.RowsClearedNoEngineResult); // X→Z and W→Y had manual numbers
+            using var wb = new XLWorkbook(outPath);
+            var input = wb.Worksheet("Input Distances");
+            Assert.True(input.Cell("D4").IsEmpty());
+            Assert.True(input.Cell("D5").IsEmpty());
+            Assert.StartsWith("NOT_IN_ENGINE_RESULTS", input.Cell("AN4").GetString());
+            Assert.Equal(new[] { "Input Distances", "Calc", "Matrix", WorkbookWriter.EngineResultsSheet, WorkbookWriter.MatrixStatusSheet },
+                wb.Worksheets.Select(w => w.Name).ToArray());
+        }
+        finally
+        {
+            File.Delete(outPath);
+        }
+    }
+
+    [Fact]
+    public void Real_example_exports_reset_their_legacy_matrix_pivot_and_report_source_health()
+    {
+        // Example 1's legacy pivot source ('AutoAdjusted Distances'!AG3:AK1000) has 68 #REF! rows
+        // in the SOURCE workbook (pre-existing, F-006): the export must say so, and still ship the
+        // pivot reset (refreshOnLoad + purged), never a stale manual matrix.
+        var src = Example1Path();
+        var outPath = Path.Combine(Path.GetTempPath(), $"wbtest_{Guid.NewGuid():N}.xlsx");
+        try
+        {
+            var conflict = new ConflictRecord("S-T→W-L", "S-T", "W-L", "VALID",
+                new[] { Pt("P1", 24.35, 5.02, 5.27) }, "P1", 5.27, 6, "trace", Array.Empty<string>());
+            var result = WorkbookWriter.Export(src, outPath, Doc(conflict), WorkbookReader.Read(src));
+            Assert.Empty(result.StructuralIssues);
+            Assert.Equal(1, result.PivotCachesReset);
+            var note = Assert.Single(result.LegacyPivotNotes);
+            Assert.Contains("'AutoAdjusted Distances'!AG3:AK1000", note);
+            Assert.Contains("68 of 109", note);
+            var cache = Assert.Single(PivotCacheAudit.Inspect(outPath));
+            Assert.True(cache.RefreshOnLoad);
+            Assert.Equal(0, cache.CachedRecords);
+            // and the source still has its stale (manual) cache — untouched
+            var srcCache = Assert.Single(PivotCacheAudit.Inspect(src));
+            Assert.Equal(110, srcCache.CachedRecords);
+            Assert.True(srcCache.IsStaleRisk);
         }
         finally
         {

@@ -124,3 +124,40 @@ Every non-trivial interpretation, with source, alternatives, impact and the test
   absent from the code; disagreeing W rows → PEDESTRIAN_WIDTH_CONFLICT (ERROR).
 - **Evidence**: Example 1 ped-clearing rows now match with ΔCD = 0.000 exactly (previous
   averaging gave +0.17…+0.29 m); Example 2 crossing c uses 8.30, not ~15.88.
+
+## ED-014 — Excel export contract re-confirmed: engine-fed legacy chain, one source of truth (r11)
+
+- **Trigger**: Lin's refresh finding — the r10 export displayed the source's cached (manual)
+  `Matrix` PivotTable until Refresh; after Refresh the pivot rebuilt from the engine-populated
+  sheets and numbers changed ("legacy visual result from old cache + engine values underneath").
+- **Decision (contract)**: the familiar legacy sheets ARE fed by the engine (compatibility
+  view, v3 §25) and the whole legacy chain must then be internally consistent:
+  1. `Input Distances` receives the engine's **governing point only** (slot 1), exactly like the
+     manual one-point practice; every candidate point lives in `MAHOD Engine Results`. Writing
+     four slots fed the V2 template's defective AutoAdjusted slot-2..4 formulas (F-008) and is
+     not needed — the governing point alone yields the identical FINAL IG.
+  2. Rows whose movement pair has **no engine conflict/points are cleared** (all four slots) and
+     flagged in the `MAHOD QA` column (`NOT_IN_ENGINE_RESULTS` / `NO_ENGINE_POINTS`); the source
+     workbook keeps the manual values untouched. A row without an engine result therefore looks
+     exactly like an unmeasured row of the manual template (the legacy pivot renders such pairs
+     as 0 — a template artefact of MAX over the text result `""`). Rationale: the export is the
+     engine's workbook; manual numbers must never sit next to engine numbers unflagged.
+  3. Every worksheet-sourced pivot cache ships `refreshOnLoad=1`, with its cached records purged
+     and the pivot's rendered cells cleared — Excel rebuilds the PivotTable from the engine-
+     populated workbook on open (after `fullCalcOnLoad`). Refresh stays functional; no formula is
+     touched. Proven in real Excel: Matrix after open == after Refresh == after Refresh All ==
+     after close/reopen (0 changed cells; Example 1, Example 2, the V1 template, the fixture).
+- **Engine authority**: `MAHOD Matrix Status` (exact engine result) is authoritative. The legacy
+  `Matrix` pivots the `AutoAdjusted Distances` sheet = the Inbar-entry view (CD rounded UP to
+  0.5 m, ED DOWN to 0.5 m, + "Addition to Inbar distances"); it can therefore be +1 s above the
+  engine in a few cells (Example 1: b→1, c→2, d→2 from pedestrian CD 7.25→7.5 / ED 0.7→0.5).
+  That is the legacy template's own Inbar adaptation, identical to the manual workflow, not an
+  engineering delta — every such cell is listed in the r11 matrix delta reports.
+- **Alternative rejected**: keeping manual numbers in rows the engine could not compute (r10
+  behaviour) — mixes two sources inside one pivot and can make a legacy cell outvote the engine.
+- **Tests**: `Multi_point_conflicts_keep_every_candidate_in_engine_sheet_and_only_the_governing_point_in_the_legacy_row`,
+  `Rows_without_engine_result_are_cleared_and_flagged_never_left_with_manual_numbers`,
+  `Export_never_ships_a_stale_pivot_refreshOnLoad_purged_records_cleared_cells`,
+  `Pivot_fixture_as_shipped_by_r10_is_detected_as_a_stale_cache_risk`,
+  `Real_example_exports_reset_their_legacy_matrix_pivot_and_report_source_health`
+  (fixture: `tests/fixtures/pivot/pivot-regression.xlsx`, built with real Excel).

@@ -1155,9 +1155,13 @@ public class IgWorkflowCommands
 
         SupportLog.Write("EXPORT_START", outPath);
         var export = WorkbookWriter.Export(_workbookPath, outPath, _lastOutput.Analysis, _lastModel);
-        SupportLog.Write("EXPORT_DONE", $"{outPath} rows={export.RowsPopulated} issues={export.StructuralIssues.Count}");
+        SupportLog.Write("EXPORT_DONE", $"{outPath} rows={export.RowsPopulated} multiPoint={export.MultiPointRows} cleared={export.RowsClearedNoEngineResult} pivotReset={export.PivotCachesReset} issues={export.StructuralIssues.Count}");
+        foreach (var note in export.LegacyPivotNotes) SupportLog.Write("EXPORT_LEGACY_PIVOT_NOTE", note);
         SetStatus(export.StructuralIssues.Count == 0
-            ? $"Excel exported → {Path.GetFileName(outPath)} ({export.RowsPopulated} rows, {export.MoreThanFourPointRows} rows with >4 points)."
+            ? $"Excel exported → {Path.GetFileName(outPath)} ({export.RowsPopulated} rows from the engine" +
+              (export.RowsClearedNoEngineResult > 0 ? $", {export.RowsClearedNoEngineResult} rows cleared — no engine result, see QA column" : "") +
+              (export.LegacyPivotNotes.Count > 0 ? "; legacy Matrix source has pre-existing #REF! rows — 'MAHOD Matrix Status' is authoritative" : "") +
+              "). הקובץ נפתח ב-Excel כשהמטריצה מתרעננת אוטומטית."
             : $"EXPORT VERIFICATION FAILED: {export.StructuralIssues.First()}");
     }
 
