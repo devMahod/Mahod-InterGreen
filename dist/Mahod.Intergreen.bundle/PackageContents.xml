@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Release-stamped: 0.1.0-r9, git 4bc1d3a0d02dd8a6dd7ab6fb0b80f244a04d14bb (regenerate via scripts/release_build.py) -->
+<!-- Release-stamped: 0.1.0-r10, git c403af9c8b0ce61e0c66dfc981ffb96784390ff4 (regenerate via scripts/release_build.py) -->
 <ApplicationPackage SchemaVersion="1.0" AutodeskProduct="AutoCAD"
-    Name="Mahod Intergreen" AppVersion="0.1.0.9"
-    Description="Mahod Engineering - intergreen calculation for signalized intersections (AutoCAD/Civil 3D 2026-2027), release 0.1.0-r9"
+    Name="Mahod Intergreen" AppVersion="0.1.0.10"
+    Description="Mahod Engineering - intergreen calculation for signalized intersections (AutoCAD/Civil 3D 2026-2027), release 0.1.0-r10"
     Author="Mahod Engineering Ltd."
     ProductCode="{7A1C4E2B-9D3F-4B4E-A2F3-6C1D2E3F4A5C}">
   <CompanyDetails Name="Mahod Engineering Ltd." Url="https://mahodeng.co.il" />
-  <Components Description="Intergreen host 2026 (AutoCAD 2026 / Civil 3D 2026, .NET 8) - release 0.1.0-r9">
+  <Components Description="Intergreen host 2026 (AutoCAD 2026 / Civil 3D 2026, .NET 8) - release 0.1.0-r10">
     <RuntimeRequirements OS="Win64" Platform="AutoCAD*" SeriesMin="R25.1" SeriesMax="R25.1" />
-    <ComponentEntry AppName="MahodIntergreen2026" Version="0.1.0.9"
+    <ComponentEntry AppName="MahodIntergreen2026" Version="0.1.0.10"
         ModuleName="./Contents/2026/Mahod.Intergreen.AutoCAD.dll"
         AppDescription="INTERGREEN pilot workflow" LoadOnAutoCADStartup="True" />
   </Components>
-  <Components Description="Intergreen host 2027 (AutoCAD 2027 / Civil 3D 2027, .NET 10) - release 0.1.0-r9">
+  <Components Description="Intergreen host 2027 (AutoCAD 2027 / Civil 3D 2027, .NET 10) - release 0.1.0-r10">
     <RuntimeRequirements OS="Win64" Platform="AutoCAD*" SeriesMin="R26.0" SeriesMax="R26.0" />
-    <ComponentEntry AppName="MahodIntergreen2027" Version="0.1.0.9"
+    <ComponentEntry AppName="MahodIntergreen2027" Version="0.1.0.10"
         ModuleName="./Contents/2027/Mahod.Intergreen.AutoCAD.dll"
         AppDescription="INTERGREEN pilot workflow" LoadOnAutoCADStartup="True" />
   </Components>
