@@ -43,9 +43,12 @@ public class IgWorkflowCommands
     internal static IMessageService Messages = new WpfMessageService();
     internal static IWorkbookPathPrompt PathPrompt = new WpfPathPrompt();
     internal static IRulePackChooser RulePackChooser = new WpfRulePackChooser();
+    /// <summary>r10 (Lin): the project DWG is chosen through a normal file picker.</summary>
+    internal static IDrawingPicker DrawingPicker = new WpfDrawingPicker();
 
     private static readonly Dictionary<WorkflowAction, Button> _actionButtons = new();
     private static TextBlock? _rulesLabel;
+    private static TextBlock? _drawingLabel;
 
     private static string PluginDir
         => Path.GetDirectoryName(typeof(IgWorkflowCommands).Assembly.Location)!;
@@ -64,6 +67,50 @@ public class IgWorkflowCommands
                 dlg.InitialDirectory = initialDirectory;
             return dlg.ShowDialog() == true ? dlg.FileName : null;
         }
+    }
+
+    /// <summary>r10: normal Windows file picker for the project drawing (*.dwg only).</summary>
+    private sealed class WpfDrawingPicker : IDrawingPicker
+    {
+        public string? PickDrawing(string? initialDirectory)
+        {
+            var dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                Title = "בחרי את שרטוט ה-DWG של הפרויקט",
+                Filter = "AutoCAD drawing (*.dwg)|*.dwg",
+                DefaultExt = ".dwg",
+                CheckFileExists = true,
+                Multiselect = false,
+            };
+            if (initialDirectory is not null && Directory.Exists(initialDirectory))
+                dlg.InitialDirectory = initialDirectory;
+            return dlg.ShowDialog() == true ? dlg.FileName : null;
+        }
+    }
+
+    /// <summary>r10: the AutoCAD document collection behind the testable DrawingChooser.</summary>
+    private sealed class AcadDrawingHost : IDrawingHost
+    {
+        public string? ActiveDrawingPath => AcadApp.DocumentManager.MdiActiveDocument?.Database?.Filename;
+
+        public IReadOnlyList<string> OpenDrawingPaths
+            => AcadApp.DocumentManager.Cast<Autodesk.AutoCAD.ApplicationServices.Document>()
+                .Select(d => d.Database?.Filename)
+                .Where(f => !string.IsNullOrEmpty(f))
+                .Select(f => f!)
+                .ToList();
+
+        public void Activate(string normalizedPath)
+        {
+            var target = AcadApp.DocumentManager.Cast<Autodesk.AutoCAD.ApplicationServices.Document>()
+                .First(d => DrawingSelection.SamePath(d.Database?.Filename, normalizedPath));
+            AcadApp.DocumentManager.MdiActiveDocument = target;
+        }
+
+        // Palette clicks run in the application context, where opening a document is allowed.
+        public void Open(string normalizedPath)
+            => Autodesk.AutoCAD.ApplicationServices.DocumentCollectionExtension.Open(
+                AcadApp.DocumentManager, normalizedPath, false);
     }
 
     /// <summary>Manual full-path entry (r6). Optional, secondary to Browse; the text it
@@ -232,6 +279,16 @@ public class IgWorkflowCommands
         });
         root.Children.Add(new Separator { Margin = new Thickness(0, 0, 0, 8) });
         root.Children.Add(_status);
+        // r10: which drawing the displayed state belongs to — always visible, full path on hover.
+        _drawingLabel = new TextBlock
+        {
+            TextWrapping = TextWrapping.Wrap,
+            Margin = new Thickness(0, 0, 0, 8),
+            FontWeight = FontWeights.SemiBold,
+            Foreground = textBrush,
+        };
+        root.Children.Add(_drawingLabel);
+        RefreshDrawingLabel();
 
         // r9 layout polish: uniform button metrics, clear hierarchy — the numbered main
         // workflow first, support actions in a separated secondary row. Compact on purpose.
@@ -260,6 +317,7 @@ public class IgWorkflowCommands
             => buttons.Children.Add(Make(label, gate, onClick, primary: true));
         void AddSupport(string label, WorkflowAction? gate, Action onClick)
             => support.Children.Add(Make(label, gate, onClick, primary: false));
+        Add("שרטוט DWG…", null, ChooseDrawing);
         Add("1. Setup — בחר קובץ Excel…", WorkflowAction.Setup, () => SetupCore(SetupInputMethod.Browse));
         Add("2. Validate", WorkflowAction.Validate, () => RunPipeline(analyzeOnly: false));
         Add("3. Analyze", WorkflowAction.Analyze, () => RunPipeline(analyzeOnly: true));
@@ -268,10 +326,12 @@ public class IgWorkflowCommands
         root.Children.Add(buttons);
         root.Children.Add(new Separator { Margin = new Thickness(0, 0, 0, 8) });
 
-        AddSupport("או הדבק/הקלד נתיב מלא", WorkflowAction.Setup, () => SetupCore(SetupInputMethod.ManualPath));
         AddSupport("בחירת חוקים…", null, ChooseRulePack);
         AddSupport("Clear QA", WorkflowAction.ClearQa, ClearQa);
         AddSupport("Export Support Log", null, ExportSupportLog);
+        // r10: typing/pasting the workbook path is an ADVANCED/diagnostic fallback only —
+        // the normal way is the file picker (Lin's feedback). Same SetupService pipeline.
+        AddSupport("מתקדם: נתיב Excel ידני…", WorkflowAction.Setup, () => SetupCore(SetupInputMethod.ManualPath));
         root.Children.Add(support);
 
         // active guideline (rule-pack) version — always visible; changeable only as a
@@ -398,6 +458,41 @@ public class IgWorkflowCommands
             AppDomain.CurrentDomain.GetAssemblies().Select(a => a.GetName().Name), reported);
     }
 
+    private static void RefreshDrawingLabel()
+    {
+        if (_drawingLabel is null) return;
+        _drawingLabel.Text = DrawingSelection.BoundDrawingLabelHe(_boundDrawingPath);
+        _drawingLabel.ToolTip = string.IsNullOrWhiteSpace(_boundDrawingPath) ? null : _boundDrawingPath;
+    }
+
+    // ---- 0. Choose the project drawing through a normal file picker (r10, Lin) ----
+    // Decision logic (cancel / invalid / already open / open) is DrawingChooser in the Host
+    // layer and unit-tested there; this method only wires the dialog, the AutoCAD document
+    // collection, the support log and the palette status. Cancel/rejection change nothing.
+    private static void ChooseDrawing()
+    {
+        var chooser = new DrawingChooser(DrawingPicker, new AcadDrawingHost(), new RecentDrawingFolderStore());
+        SupportLog.Write("DWG_PICKER_OPEN", chooser.InitialDirectory());
+        var r = chooser.Choose();
+        SupportLog.Write($"DWG_PICK_{r.Status}", r.LogDetail);
+
+        if (r.IsError)
+        {
+            Messages.Error(r.UserMessageHe);
+            SetStatus(r.UserMessageHe.Replace('\n', ' ') + "\nההגדרות הקודמות לא השתנו.");
+            return;
+        }
+        if (r.ChangedActiveDrawing)
+        {
+            // DocumentActivated normally re-binds already; calling again is idempotent.
+            BindToActiveDrawing();
+            SetStatus(r.UserMessageHe +
+                      (State.ProjectConfigured ? "\nהפרויקט השמור של השרטוט נטען — אפשר ישר Validate." : ""));
+            return;
+        }
+        SetStatus(r.UserMessageHe);
+    }
+
     /// <summary>r9: the palette state belongs to ONE drawing. When the active document
     /// differs from the bound one, displayed results are cleared, the workflow state
     /// machine resets, and the new drawing's saved project (sidecar) is adopted — stale
@@ -409,6 +504,7 @@ public class IgWorkflowCommands
         if (!DrawingBinding.RequiresReset(_boundDrawingPath, active))
             return;
         _boundDrawingPath = active;
+        RefreshDrawingLabel();
         _lastOutput = null;
         _lastModel = null;
         _workbookPath = null;
@@ -544,6 +640,7 @@ public class IgWorkflowCommands
         _lastModel = accept.Model;
         _lastOutput = null;
         _boundDrawingPath = db.Filename;
+        RefreshDrawingLabel();
         State.OnSetupCommitted();
         RefreshRulesLabel();
         SupportLog.Write($"SETUP_COMMITTED[{method}]", accept.NormalizedPath!);

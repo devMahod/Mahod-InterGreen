@@ -22,7 +22,7 @@ public sealed record ExportResult(
 /// Production Excel exporter (Directive §22–§29), implemented with SURGICAL OpenXML edits:
 /// the output is a byte-copy of David's workbook in which only the explicitly targeted
 /// parts change (Input Distances CD/ED cells, a MAHOD QA column, two appended sheets,
-/// fullCalcOnLoad). Every other part — formulas, styles, images, pivot caches, print
+/// fullCalcOnLoad, and the obsolete xl/calcChain.xml dropped). Every other part — formulas, styles, images, pivot caches, print
 /// settings, names — remains untouched at package level, so nothing can be silently lost.
 ///
 /// (A full-package rewriter such as ClosedXML re-serializes every part; on these real
@@ -196,6 +196,21 @@ public static class WorkbookWriter
             }
             calcProps.FullCalculationOnLoad = true;
             calcProps.ForceFullCalculation = true;
+
+            // ---- calculation chain (r10, Lin finding) ----
+            // xl/calcChain.xml is Excel's cached list of formula cells (derived metadata,
+            // not content). The export intentionally replaces explicit CD/ED formula cells
+            // with engine values, so a byte-copied chain still references cells that no
+            // longer hold a formula; Excel then reports "We found a problem with some
+            // content… Removed Records: Formula from /xl/calcChain.xml part" and opens the
+            // export as [Repaired]. The standards-safe fix is to drop the obsolete chain —
+            // DeletePart removes the part, its workbook relationship and its
+            // [Content_Types].xml override — and let Excel rebuild it on open, which
+            // fullCalcOnLoad/forceFullCalc already require. Worksheet formulas are untouched.
+            var calcChain = wbPart.CalculationChainPart;
+            if (calcChain is not null)
+                wbPart.DeletePart(calcChain);
+
             wbPart.Workbook.Save();
         }
 
@@ -211,6 +226,14 @@ public static class WorkbookWriter
         var issues = new List<string>();
         using var src = SpreadsheetDocument.Open(srcPath, false);
         using var dst = SpreadsheetDocument.Open(dstPath, false);
+
+        // r10 post-condition: an export must never carry a calculation chain — after CD/ED
+        // formula replacement any copied chain is stale and triggers Excel's repair prompt.
+        if (dst.WorkbookPart!.CalculationChainPart is not null)
+            issues.Add("output still carries xl/calcChain.xml (stale calculation chain → Excel repair prompt)");
+        var dstCalcPr = dst.WorkbookPart.Workbook.GetFirstChild<CalculationProperties>();
+        if (dstCalcPr?.FullCalculationOnLoad?.Value != true)
+            issues.Add("output calcPr lacks fullCalcOnLoad=1 (Excel would not rebuild the calculation chain / recalc on open)");
 
         var srcSheets = src.WorkbookPart!.Workbook.Sheets!.Elements<Sheet>().Select(s => s.Name!.Value!).ToList();
         var dstSheets = dst.WorkbookPart!.Workbook.Sheets!.Elements<Sheet>().Select(s => s.Name!.Value!).ToList();
