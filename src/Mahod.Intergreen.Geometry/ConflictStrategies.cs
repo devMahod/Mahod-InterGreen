@@ -240,6 +240,10 @@ public sealed class LegacyEnvelopeConflictStrategy : IConflictPointStrategy
             return new ConflictPointResult(Array.Empty<ConflictPoint>(), findings);
 
         var points = new List<ConflictPoint>();
+        // The strip the pedestrians actually walk in: of the crossing's N drawn edges, the two that
+        // are furthest apart are its outer sides. Crossings are regularly drawn in more than two
+        // pieces (Lin's crossing b has three), so picking edges 1 and 2 would describe a sliver.
+        var crossingStrips = CrossingStrips(ped.Boundaries);
         for (var i = 0; i < 2; i++)
         {
             var boundary = veh.Boundaries[i];
@@ -288,29 +292,68 @@ public sealed class LegacyEnvelopeConflictStrategy : IConflictPointStrategy
             // the crossing band. Its drawn end is a legitimate Legacy measurement extremum —
             // David's manual practice measures to the end of the drawn path
             // (Example 1, E-R→a: manual CD 18.95 ≈ boundary full length 18.93).
-            if (intersectedEdges > 0 && missedEdges > 0
-                && boundary.TotalLength > maxHitStation + Tolerances.PointDeduplication)
+            // The drawn far end is the end the vehicle travels TOWARDS — the one further from its
+            // reference station. It is at TotalLength only when the polyline was drawn from the
+            // stop line outwards, which is the documented convention but not something every
+            // drawing honours: a reversed polyline carries its stop line at TotalLength, and
+            // taking that as the "termination" put a candidate on the stop line at distance zero,
+            // which maximises the intergreen and therefore always governed (Lin, 05293 b→S-L).
+            // Either drawn end may be the one that stops inside the crossing — which one it is
+            // depends on the direction the polyline happens to be drawn in, and that convention is
+            // not honoured by every drawing. What decides it is whether the end actually lies in
+            // the crossing: a stop line that sits inside the crossing legitimately gives distance 0
+            // (Example 2, b→S-R, the engineer's own 14), while an end tens of metres away is not a
+            // termination in the crossing at all (Lin 05293, b→S-L, where it wrongly governed).
+            if (intersectedEdges > 0 && missedEdges > 0 && crossingStrips.Count > 0)
             {
-                var endStation = Math.Abs(boundary.TotalLength - vehRefs[i]);
-                var endPoint = boundary.PointAtStation(boundary.TotalLength);
-                points.Add(pedIsClearing
-                    ? new ConflictPoint(endPoint, ped.PedestrianWidthMeters!.Value, endStation,
-                        $"{ped.MovementId}.band", $"{veh.MovementId}.b{i + 1}@end",
-                        Origin: "boundary-termination")
-                    : new ConflictPoint(endPoint, endStation, 0.0,
-                        $"{veh.MovementId}.b{i + 1}@end", $"{ped.MovementId}.band",
-                        Origin: "boundary-termination"));
-                findings.Add(new ValidationFinding(CodePedestrianEdgeCoverageGap,
-                    Severity.ReviewRequired, $"{veh.MovementId} × {ped.MovementId}",
-                    $"Vehicle boundary {veh.MovementId}.b{i + 1} terminates inside crossing '{ped.MovementId}' " +
-                    $"(intersects {intersectedEdges} of {intersectedEdges + missedEdges} edges). Its drawn end " +
-                    "was added as a termination candidate; the drawing may be incomplete.",
-                    RecommendedAction: "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
-                    SourceReference: "Directive §21A"));
+                foreach (var (station, endName) in new[] { (0.0, "start"), (boundary.TotalLength, "end") })
+                {
+                    var endPoint = boundary.PointAtStation(station);
+                    // Inside a strip, or sitting exactly on a drawn edge — a boundary that stops on
+                    // the crossing line has stopped in the crossing (Example 2, W-R: 0.000 m).
+                    var onCrossing = crossingStrips.Any(strip => strip.Contains(endPoint))
+                        || ped.Boundaries.Any(e => e.NearestStation(endPoint).Distance <= Tolerances.PointDeduplication);
+                    if (!onCrossing) continue;
+                    var endStation = Math.Abs(station - vehRefs[i]);
+                    points.Add(pedIsClearing
+                        ? new ConflictPoint(endPoint, ped.PedestrianWidthMeters!.Value, endStation,
+                            $"{ped.MovementId}.band", $"{veh.MovementId}.b{i + 1}@{endName}",
+                            Origin: "boundary-termination")
+                        : new ConflictPoint(endPoint, endStation, 0.0,
+                            $"{veh.MovementId}.b{i + 1}@{endName}", $"{ped.MovementId}.band",
+                            Origin: "boundary-termination"));
+                    findings.Add(new ValidationFinding(CodePedestrianEdgeCoverageGap,
+                        Severity.ReviewRequired, $"{veh.MovementId} × {ped.MovementId}",
+                        $"Vehicle boundary {veh.MovementId}.b{i + 1} terminates inside crossing '{ped.MovementId}' " +
+                        $"(intersects {intersectedEdges} of {intersectedEdges + missedEdges} edges). Its drawn " +
+                        $"{endName} was added as a termination candidate; the drawing may be incomplete.",
+                        RecommendedAction: "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+                        SourceReference: "Directive §21A"));
+                }
             }
         }
 
         return new ConflictPointResult(Deduplicate(points), findings);
+    }
+
+    /// <summary>
+    /// The ground a crossing actually covers, as every strip spanned by a pair of its drawn edges.
+    /// Crossings are regularly drawn in more than two pieces — Example 2's crossing b has five, and
+    /// Lin's crossing b three — so no single pair describes the crossing, and the pair whose
+    /// midpoints lie furthest apart can be two segments of the SAME side. Used only to test whether
+    /// a vehicle boundary terminates inside the crossing (§21A); never a source of measurement,
+    /// where W remains the authoritative project width (§5–§6).
+    /// </summary>
+    private static IReadOnlyList<EnvelopeRegion> CrossingStrips(IReadOnlyList<PolyCurve2D> edges)
+    {
+        var strips = new List<EnvelopeRegion>();
+        for (var a = 0; a < edges.Count; a++)
+        for (var b = a + 1; b < edges.Count; b++)
+        {
+            var region = EnvelopeRegion.Build(edges[a], edges[b]);
+            if (region.IsValid) strips.Add(region);
+        }
+        return strips;
     }
 
     // ---------------- shared helpers ----------------
