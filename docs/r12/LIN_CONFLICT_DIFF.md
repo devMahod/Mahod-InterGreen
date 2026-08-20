@@ -156,3 +156,44 @@ Lin did not hit an unknown defect — she hit the case we had already solved for
    that the engine already implements**, and detect the condition early (at Validate, not deep in Analyze).
 3. Golden hygiene: Example 2's baseline should carry its sidecar explicitly as part of the fixture,
    so it is never mistaken for a drawing that passes unaided.
+
+---
+
+# r12 — the fix, and how it was verified without a Civil 3D session
+
+Source commit `7cd934d` · installer `Mahod_Intergreen_Setup_r12.exe`
+sha256 `548d55d5148a3098ada352fb6930f8290e56a4334262037d2f0cbc44118edf04`.
+
+## What changed
+
+Only `Mahod.Intergreen.Host` and `Mahod.Intergreen.AutoCAD` — the six engineering assemblies and the
+rule packs are byte-identical to the accepted r11 (identity gate PASS, `RELEASE_BUILD_r12.txt`).
+
+- `ReferenceReview` (Host): ordering (widest gap first), the Hebrew wording, the sidecar key.
+- `SidecarStore.SetStrings` / `GetStrings`: canonical, de-duplicated string arrays.
+- Palette: **Validate** now names the affected movements and the gap in centimetres instead of
+  reporting a bare error count, and a new **"נקודות ייחוס…"** button lists every unconfirmed
+  boundary with its DWG handle and gap, writes the ones the engineer ticks to the sidecar, and
+  re-runs. Nothing is ticked by default and nothing is confirmed implicitly.
+- `IG_SMOKE_REFERENCE_REVIEW`: the whole feature minus the WPF dialog, drivable headlessly.
+
+## Verification (Civil 3D was in use by another project throughout; it was never touched)
+
+Automated suite: **331/331** (was 319; 12 new Host tests).
+
+Headless end-to-end through `accoreconsole`, running the **shipping dist bytes**:
+
+| Run | host | result |
+|---|---|---|
+| Lin 05293_B | 2026 (net8) | finds `N-R.b2`/4F27 6.25 cm + `E-T.b1`/4EBA 4.74 cm → confirm → matrix 30→**52 VALID**, 44→**2 BLOCKED**, pending 0 |
+| Lin 05293_B | 2027 (net10) | identical to the 2026 run, field for field |
+| Golden ex1 | 2026 | 0 pending; 11 movements, 50 conflicts, matrix **24 VALID**, W-L→S-T **5** — accepted golden, unchanged |
+| Golden ex2 | 2026 | finds `E-L.b1` 16.45 cm + `S-L.b2` 4.37 cm — **the same two boundaries the gate had hand-confirmed** — → confirm → 168 conflicts, matrix **37 VALID / 7 REVIEW / 0 BLOCKED**, W-L→S-T **5** — accepted golden, unchanged |
+
+The Example 2 run is the strongest evidence available: the feature independently rediscovered the two
+confirmations that previously existed only as hand-edited JSON in a gate folder, and reproduced the
+accepted baseline from them.
+
+**Not verified:** the WPF dialog's own rendering (layout, RTL, checkbox behaviour). It cannot be shown
+in `accoreconsole`, and every other part of the path it drives is proven above. It needs about two
+minutes in a real Civil 3D session before the package is sent.
