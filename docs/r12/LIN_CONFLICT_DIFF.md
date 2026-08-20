@@ -197,3 +197,32 @@ accepted baseline from them.
 **Not verified:** the WPF dialog's own rendering (layout, RTL, checkbox behaviour). It cannot be shown
 in `accoreconsole`, and every other part of the path it drives is proven above. It needs about two
 minutes in a real Civil 3D session before the package is sent.
+
+## The dialog itself — now verified, still without a Civil 3D session
+
+The one gap left open above is closed. A throwaway WPF harness (`scratchpad/dlgcheck`) loads the
+**shipping** `Contents/2026/Mahod.Intergreen.AutoCAD.dll`, instantiates the private nested
+`WpfReferenceConfirmer` by reflection and calls the same `Choose()` the palette button calls, then
+renders the live window to PNG. Autodesk assemblies are never touched, because the dialog code does
+not reference any.
+
+Result (`evidence/01_…png`, `02_…png`):
+
+- assembly reports `0.1.0-r12 … git 7cd934d`, window `640x420`, `FlowDirection=RightToLeft`;
+- three rows render with Hebrew, movement, curve id, DWG handle and gap; buttons read
+  "אישור המסומנים" / "ביטול";
+- **all boxes start unticked** — nothing is pre-confirmed;
+- ticking rows 1 and 3 and pressing confirm returns exactly `N-R.b2, E-L.b1` — the selected ids and
+  nothing else; closing without confirming returns null.
+
+Two cosmetic notes, neither worth a rebuild on its own:
+
+1. `ReferenceReview.Line` formats with `F1`, which is banker's rounding: a 6.25 cm gap prints as
+   **6.2** cm. Lin's covering note and the r12 PDF say 6.3 cm for the same boundary. Harmless, but
+   round half-up here if this file is touched again.
+2. The list box is a fixed 190 px, so with two or three rows most of it is empty space, and the
+   window keeps ~95 px of unused height below the buttons. Sizing to content would look better.
+
+The dialog does not sort its own input — it renders the order it is given, and `ScanReferences`
+sorts before calling it. That is correct today; sorting defensively inside `Choose` would make it
+robust to a future caller.
