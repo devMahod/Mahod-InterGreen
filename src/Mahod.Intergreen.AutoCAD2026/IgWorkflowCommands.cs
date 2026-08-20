@@ -35,6 +35,18 @@ public class IgWorkflowCommands
     private static PipelineOutput? _lastOutput;
     private static WorkbookModel? _lastModel;
     private static string? _workbookPath;
+
+    /// <summary>
+    /// Boundaries whose measurement origin fell back to a drawn endpoint at the last Validate/Analyze.
+    /// Refreshed on every pipeline run; drives the reference-confirmation dialog.
+    /// </summary>
+    private static IReadOnlyList<ReferenceIssue> _referenceIssues = Array.Empty<ReferenceIssue>();
+
+    /// <summary>
+    /// Mirrors LegacyEnvelopeConflictStrategy's endpoint-suggestion tolerance, so the pre-check
+    /// surfaces exactly the boundaries the engine will later reject.
+    /// </summary>
+    private const double ReferenceToleranceMeters = 0.5;
     private static readonly List<Drawable> _transients = new();
     private static readonly WorkflowStateMachine State = new();
 
@@ -162,6 +174,55 @@ public class IgWorkflowCommands
         public bool Confirm(string m) => MessageBox.Show(m, "Mahod Intergreen",
             MessageBoxButton.OKCancel, MessageBoxImage.Question,
             MessageBoxResult.Cancel, MessageBoxOptions.RtlReading) == MessageBoxResult.OK;
+    }
+
+    /// <summary>
+    /// Endpoint-reference confirmation (Directive §14). One checkbox per boundary that stops short
+    /// of its stop line, showing the gap in centimetres and the DWG handle — at drawing scale these
+    /// gaps are invisible, so the numbers are the only way to find the line. Nothing is pre-ticked:
+    /// each confirmation is a deliberate engineering statement. Returns the confirmed curve ids,
+    /// or null on cancel.
+    /// </summary>
+    private sealed class WpfReferenceConfirmer
+    {
+        public IReadOnlyList<string>? Choose(IReadOnlyList<ReferenceIssue> issues)
+        {
+            var win = new System.Windows.Window
+            {
+                Title = "נקודות ייחוס לקו העצירה",
+                Width = 640, Height = 420, FlowDirection = System.Windows.FlowDirection.RightToLeft,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                ResizeMode = ResizeMode.NoResize,
+            };
+            var root = new StackPanel { Margin = new Thickness(14) };
+            root.Children.Add(new TextBlock
+            {
+                Text = ReferenceReview.DialogExplanation(issues),
+                TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 10),
+            });
+            var list = new ListBox { Height = 190 };
+            var boxes = new List<CheckBox>();
+            foreach (var issue in issues)
+            {
+                var box = new CheckBox { Content = ReferenceReview.Line(issue), Tag = issue.CurveId };
+                boxes.Add(box);
+                list.Items.Add(new ListBoxItem { Content = box });
+            }
+            root.Children.Add(list);
+            var row = new WrapPanel { Margin = new Thickness(0, 12, 0, 0) };
+            var ok = new Button { Content = "אישור המסומנים", Width = 130, Margin = new Thickness(0, 0, 8, 0), IsDefault = true };
+            var cancel = new Button { Content = "ביטול", Width = 90, IsCancel = true };
+            row.Children.Add(ok); row.Children.Add(cancel);
+            root.Children.Add(row);
+            win.Content = root;
+            List<string>? result = null;
+            ok.Click += (_, _) =>
+            {
+                result = boxes.Where(b => b.IsChecked == true).Select(b => (string)b.Tag).ToList();
+                win.DialogResult = true;
+            };
+            return win.ShowDialog() == true ? result : null;
+        }
     }
 
     /// <summary>Rule-pack chooser (r8): plain list of the packs installed in the bundle;
@@ -326,6 +387,7 @@ public class IgWorkflowCommands
         root.Children.Add(buttons);
         root.Children.Add(new Separator { Margin = new Thickness(0, 0, 0, 8) });
 
+        AddSupport("נקודות ייחוס…", null, ConfirmReferences);
         AddSupport("בחירת חוקים…", null, ChooseRulePack);
         AddSupport("Clear QA", WorkflowAction.ClearQa, ClearQa);
         AddSupport("Export Support Log", null, ExportSupportLog);
@@ -445,6 +507,90 @@ public class IgWorkflowCommands
 
     private static string SidecarPath(Database db)
         => Path.ChangeExtension(db.Filename, null) + ".intergreen-project.json";
+
+    /// <summary>
+    /// Which boundaries can only be referenced to their stop line through a drawn endpoint
+    /// (Directive §14). Runs at Validate, before any conflict is computed, so the engineer learns
+    /// about it from a Hebrew sentence naming the movements instead of from empty rows later.
+    /// Already-confirmed boundaries are omitted — they are no longer a question.
+    /// </summary>
+    private static IReadOnlyList<ReferenceIssue> ScanReferences(
+        IReadOnlyList<PipelineMovement> movements, ProjectSidecar sidecar)
+    {
+        var issues = new List<ReferenceIssue>();
+        foreach (var mv in movements)
+        {
+            var geom = mv.Geometry;
+            if (geom.Mode == MovementMode.Pedestrian || geom.StopLine is null) continue;
+            for (var i = 0; i < geom.Boundaries.Count; i++)
+            {
+                var curveId = $"{mv.Id}.b{i + 1}";
+                if (sidecar.ConfirmedEndpointReferences.Contains(curveId)) continue;
+                var r = ReferenceStation.Resolve(geom.Boundaries[i], geom.StopLine, ReferenceToleranceMeters);
+                if (r is null || r.Method != ReferenceStation.Method.EndpointFallback) continue;
+                issues.Add(new ReferenceIssue(mv.Id, curveId,
+                    i < mv.SourceHandles.Count ? mv.SourceHandles[i] : "-",
+                    MeasureGap(geom.Boundaries[i], geom.StopLine)));
+            }
+        }
+        return ReferenceReview.Sorted(issues);
+    }
+
+    /// <summary>
+    /// Distance from the boundary's nearest endpoint to its stop line. PolyCurve2D exposes no
+    /// point-to-curve distance, and reimplementing it here would let the number the engineer sees
+    /// drift away from the engine's own decision. So we narrow the very same Resolve() call: the
+    /// smallest tolerance that still yields an endpoint fallback is the gap.
+    /// </summary>
+    private static double MeasureGap(PolyCurve2D boundary, PolyCurve2D stopLine)
+    {
+        double lo = 0.0, hi = ReferenceToleranceMeters;
+        for (var i = 0; i < 24; i++)
+        {
+            var mid = (lo + hi) / 2;
+            if (ReferenceStation.Resolve(boundary, stopLine, mid)?.Method == ReferenceStation.Method.EndpointFallback)
+                hi = mid;
+            else
+                lo = mid;
+        }
+        return hi;
+    }
+
+    /// <summary>
+    /// Confirm endpoint references (Directive §14). Shows every unconfirmed boundary with its gap
+    /// and DWG handle; confirming writes the curve ids to the project sidecar, which is the only
+    /// thing the engine reads. Nothing is confirmed implicitly and nothing is confirmed for other
+    /// projects. Cancel leaves the drawing and the sidecar untouched.
+    /// </summary>
+    private static void ConfirmReferences()
+    {
+        var doc = AcadApp.DocumentManager.MdiActiveDocument
+            ?? throw new UserFacingException("אין שרטוט פתוח.", "no active document");
+        if (_referenceIssues.Count == 0)
+            throw new UserFacingException(
+                "אין נקודות ייחוס הממתינות לאישור.\nהריצי Validate כדי לבדוק את השרטוט הנוכחי.",
+                "no pending reference issues");
+
+        var chosen = new WpfReferenceConfirmer().Choose(_referenceIssues);
+        if (chosen is null || chosen.Count == 0)
+        {
+            SetStatus("אישור נקודות הייחוס בוטל — לא נשמר שינוי.");
+            return;
+        }
+
+        var scPath = SidecarPath(doc.Database);
+        var store = SidecarStore.Load(scPath);
+        var merged = SidecarStore.GetStrings(store.Data, ReferenceReview.SidecarKey).Concat(chosen);
+        SidecarStore.SetStrings(store.Data, ReferenceReview.SidecarKey, merged);
+        SidecarStore.Commit(scPath, store.Data);
+        SupportLog.Write("REFERENCES_CONFIRMED", string.Join(";", chosen));
+
+        // The confirmations only take effect through a fresh pipeline run; re-run both stages so
+        // the palette never shows results computed under the previous set.
+        _lastOutput = null;
+        RunPipeline(analyzeOnly: false);
+        RunPipeline(analyzeOnly: true);
+    }
 
     private static string? _boundDrawingPath;
 
@@ -714,16 +860,23 @@ public class IgWorkflowCommands
         var movements = ProjectAssembly.BuildMovements(curvesByLayer,
             _lastModel!.SignalGroups, _lastModel.PedestrianWidths, sidecar, findings);
 
+        _referenceIssues = ScanReferences(movements, sidecar);
+
         if (!analyzeOnly)
         {
             var errors = findings.Count(x => x.Severity == Severity.Error);
             var warns = findings.Count(x => x.Severity == Severity.Warning);
             State.OnValidateSucceeded();
-            SupportLog.Write("VALIDATE_OK", $"movements={movements.Count} errors={errors} warnings={warns}");
+            SupportLog.Write("VALIDATE_OK", $"movements={movements.Count} errors={errors} warnings={warns} " +
+                                            $"endpointRefs={_referenceIssues.Count}");
+            foreach (var issue in _referenceIssues)
+                SupportLog.Write("REFERENCE_ENDPOINT", ReferenceReview.Line(issue));
             SetStatus($"VALIDATE: {movements.Count} movements " +
                       $"({movements.Count(m => m.Mode == MovementMode.Pedestrian)} crossings), " +
                       $"units={unitsName}, errors={errors}, warnings={warns}. " +
-                      (errors > 0 ? "Resolve errors via Setup/drawing before Analyze." : "Ready to Analyze."));
+                      (_referenceIssues.Count > 0
+                          ? ReferenceReview.HebrewSummary(_referenceIssues) + " לחצי \"נקודות ייחוס…\"."
+                          : errors > 0 ? "Resolve errors via Setup/drawing before Analyze." : "Ready to Analyze."));
             Populate(findings.Select(x => new ConflictRow(x.ConflictRef ?? "-", x.Severity.ToString(), "", "", "", x.Code)).ToList());
             return;
         }
@@ -1052,6 +1205,79 @@ public class IgWorkflowCommands
         File.WriteAllText(outPath, JsonSerializer.Serialize(payload,
             new JsonSerializerOptions { WriteIndented = true }));
         ed.WriteMessage($"\nIG_SMOKE_SETUP_ACCEPT → {outPath}");
+    }
+
+    /// <summary>
+    /// Headless proof of the reference-confirmation feature (r12): Setup → Validate → report the
+    /// boundaries that fell back to a drawn endpoint → confirm them all through the same
+    /// SidecarStore calls the dialog uses → Validate + Analyze again. Exercises every part of the
+    /// feature except the WPF dialog itself, so it can be verified in accoreconsole without a
+    /// Civil 3D session. Writes ig_reference_review.json next to the drawing.
+    /// </summary>
+    [CommandMethod("IG_SMOKE_REFERENCE_REVIEW", CommandFlags.Modal)]
+    public void SmokeReferenceReview()
+    {
+        var doc = AcadApp.DocumentManager.MdiActiveDocument;
+        var ed = doc!.Editor;
+        var res = ed.GetString(new PromptStringOptions("\nWorkbook path") { AllowSpaces = true });
+        if (res.Status != PromptStatus.OK) return;
+        var dir = Path.GetDirectoryName(doc.Database.Filename)!;
+        var outPath = Path.Combine(dir, "ig_reference_review.json");
+        var payload = new Dictionary<string, object?> { ["release_id"] = HostBuild.ReleaseId };
+        try
+        {
+            var wb = SetupService.Validate(res.StringResult);
+            payload["acceptance_status"] = wb.Status.ToString();
+            if (wb.IsOk)
+            {
+                SetupService.Commit(wb, SidecarPath(doc.Database), dir, new Dictionary<string, string>
+                {
+                    ["unitsConfirmed"] = "meters",
+                    ["unitsConfirmedBy"] = "IG_SMOKE_REFERENCE_REVIEW deterministic confirmation",
+                });
+                _workbookPath = wb.NormalizedPath;
+                _lastModel = wb.Model;
+
+                RunPipeline(analyzeOnly: false);
+                var pending = _referenceIssues;
+                payload["pending"] = pending.Select(i => new Dictionary<string, object?>
+                {
+                    ["movement"] = i.MovementId,
+                    ["curveId"] = i.CurveId,
+                    ["handle"] = i.Handle,
+                    ["gap_cm"] = Math.Round(i.GapCentimetres, 2),
+                }).ToList();
+                payload["summary_he"] = ReferenceReview.HebrewSummary(pending);
+
+                RunPipeline(analyzeOnly: true);
+                payload["analyze_before"] = AnalyzePayload();
+
+                if (pending.Count > 0)
+                {
+                    var scPath = SidecarPath(doc.Database);
+                    var store = SidecarStore.Load(scPath);
+                    SidecarStore.SetStrings(store.Data, ReferenceReview.SidecarKey,
+                        SidecarStore.GetStrings(store.Data, ReferenceReview.SidecarKey)
+                            .Concat(pending.Select(i => i.CurveId)));
+                    SidecarStore.Commit(scPath, store.Data);
+                    payload["confirmed"] = pending.Select(i => i.CurveId).ToList();
+
+                    _lastOutput = null;
+                    RunPipeline(analyzeOnly: false);
+                    payload["pending_after"] = _referenceIssues.Count;
+                    RunPipeline(analyzeOnly: true);
+                    payload["analyze_after"] = AnalyzePayload();
+                }
+            }
+        }
+        catch (System.Exception ex)
+        {
+            payload["error"] = ex.Message;
+        }
+        File.WriteAllText(outPath,
+            JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true }),
+            new System.Text.UTF8Encoding(false));
+        ed.WriteMessage($"\nIG_SMOKE_REFERENCE_REVIEW OK → {outPath}");
     }
 
     private static Dictionary<string, object?> AnalyzePayload()

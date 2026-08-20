@@ -76,6 +76,28 @@ public static class SidecarStore
     }
 
     /// <summary>
+    /// Store a string array (confirmed endpoint references). Values are de-duplicated and ordered
+    /// so a re-confirmation never rewrites the file with the same set in a different order.
+    /// </summary>
+    public static void SetStrings(Dictionary<string, JsonElement> data, string key, IEnumerable<string> values)
+    {
+        var ordered = values.Distinct(StringComparer.Ordinal).OrderBy(v => v, StringComparer.Ordinal).ToArray();
+        using var d = JsonDocument.Parse(JsonSerializer.Serialize(ordered));
+        data[key] = d.RootElement.Clone();
+    }
+
+    /// <summary>Read back a string array; missing or malformed values yield an empty set.</summary>
+    public static IReadOnlyList<string> GetStrings(Dictionary<string, JsonElement> data, string key)
+    {
+        if (!data.TryGetValue(key, out var el) || el.ValueKind != JsonValueKind.Array)
+            return Array.Empty<string>();
+        return el.EnumerateArray()
+            .Where(e => e.ValueKind == JsonValueKind.String)
+            .Select(e => e.GetString()!)
+            .ToList();
+    }
+
+    /// <summary>
     /// Resolve the stored workbook reference. Legacy/bad-build values (quoted, relative)
     /// are normalized through the central resolver. If the stored file is gone but a file
     /// with the SAME name sits next to the drawing, it is offered as a CANDIDATE — never
