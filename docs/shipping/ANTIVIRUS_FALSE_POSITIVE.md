@@ -74,3 +74,40 @@ We do not ask a client to disable Defender, restore a file from quarantine, add 
 click "Run anyway". It teaches them to wave away security warnings, it does not survive the next
 Windows update, and it makes our tool the prime suspect the next time anything on that machine
 misbehaves. We ship something that does not trip the alarm instead.
+
+---
+
+# The delivered package (2026-08-26)
+
+Built to the same shape as `Mahod_Culvert_1.0.1.zip`, which already ships in this format.
+No DLL was rebuilt and no code was changed — this is a packaging change only.
+
+| file | sha256 |
+|---|---|
+| **`Mahod_Intergreen_0.1.0-r13.zip`** — send this | `83e584342e923be00f0f9c9eb69bf2ab17c97a601366ca160cf7c58ee4d9cfc7` |
+| `Mahod_Intergreen_0.1.0-r13_INSTALLER_VARIANT.zip` — kept aside, do not send | `7b11f1b9d4e4107eb781c8a563c4afdda0d19a24210d495435dc06d6cd07238d` |
+
+5.85 MB against the installer's 73 MB — the installer carries the .NET runtime, the package carries
+only the product. Contents: the Hebrew guide, `התקנה - קרא אותי.txt`, and the 47-file bundle folder.
+The guide's Installation section was rewritten from "run the Setup exe" to the folder copy, with
+`Always Load` on first open and "uninstall = delete the folder".
+
+## Gates, all fail-closed
+
+1. **No executable content** — the build refuses to write the ZIP if any entry ends in `.exe`,
+   `.msi`, `.bat`, `.cmd`, `.ps1`, `.scr`, `.com`, `.vbs`, `.js`, `.lnk`, `.jse`, `.wsf`, `.hta`,
+   `.reg`. PASS, 49 entries.
+2. **Byte identity, twice over** — every shipped file is hash-checked against the dist that passed
+   acceptance *and* against the payload embedded in `Mahod_Intergreen_Setup_r13.exe`, the installer
+   Lin validated on her own project. So what ships is the build she signed off, not a fresh compile.
+   PASS, 47 files against both.
+3. **Defender** — `MpCmdRun -Scan -ScanType 3` on the ZIP: "found no threats", and the file is still
+   on disk afterwards. PASS.
+
+Build script: `scratchpad/build_release_r13.py`. Delivery email: `Downloads/EMAIL_DRAFT_Intergreen_r13.md`.
+
+## Still open
+
+The installer variant stays unsent until Mahod holds a code-signing certificate, and the Parking
+detection should be reported to Microsoft as a false positive — both are Arthur's calls, unchanged
+from the section above.
