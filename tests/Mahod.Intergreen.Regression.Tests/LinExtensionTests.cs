@@ -62,6 +62,15 @@ public class LinExtensionTests
         Assert.Equal("E-T", byHandle["4EBA"].MovementId);
         Assert.Equal(4.7, byHandle["4EBA"].GapCentimetres, 0.15);
         Assert.Equal("4F27", issues[0].Handle);                                  // widest first
+
+        // the short end is known, so the palette can show the spot instead of quoting a handle
+        var movements = LinMovements();
+        foreach (var issue in issues)
+        {
+            Assert.NotNull(issue.NearEnd);
+            var stop = movements.Single(m => m.Id == issue.MovementId).StopLine!;
+            Assert.Equal(issue.GapMeters, stop.NearestStation(issue.NearEnd!.Value).Distance, 3);
+        }
     }
 
     [Fact]

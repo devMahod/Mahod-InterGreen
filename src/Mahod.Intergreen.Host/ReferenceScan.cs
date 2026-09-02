@@ -44,9 +44,11 @@ public static class ReferenceScan
                 if (confirmed.Contains(curveId)) continue;
                 var r = ReferenceStation.Resolve(mv.Boundaries[i], mv.StopLine, ReferenceToleranceMeters);
                 if (r is null || r.Method != ReferenceStation.Method.EndpointFallback) continue;
+                var b = mv.Boundaries[i];
+                var nearEnd = mv.StopLine.NearestStation(b.Start).Distance <= mv.StopLine.NearestStation(b.End).Distance ? b.Start : b.End;
                 issues.Add(new ReferenceIssue(mv.Id, curveId,
                     i < mv.Handles.Count ? mv.Handles[i] : "-",
-                    MeasureGap(mv.Boundaries[i], mv.StopLine)));
+                    MeasureGap(b, mv.StopLine)) { NearEnd = nearEnd });
             }
         }
         return ReferenceReview.Sorted(issues);

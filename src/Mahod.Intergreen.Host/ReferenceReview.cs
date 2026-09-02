@@ -13,6 +13,9 @@ namespace Mahod.Intergreen.Host;
 public sealed record ReferenceIssue(string MovementId, string CurveId, string Handle, double GapMeters)
 {
     public double GapCentimetres => GapMeters * 100.0;
+
+    /// <summary>The boundary end that is short of the stop line, in the engine's metres — so the palette can show the spot instead of a handle.</summary>
+    public Mahod.Intergreen.Geometry.Point2D? NearEnd { get; init; }
 }
 
 /// <summary>

@@ -476,7 +476,9 @@ public partial class IgWorkflowCommands
         root.Children.Add(new Separator { Margin = new Thickness(0, 0, 0, 8) });
 
         AddSupport("נקודות ייחוס…", null, ConfirmReferences);
-        AddSupport("סף אישור אוטומטי…", null, SetAutoConfirmTolerance);
+        AddSupport("סף הארכה אוטומטית…", null, SetAutoConfirmTolerance);
+        AddSupport("הארך בשרטוט…", null, ExtendInDrawing);                  // ED-016: write the virtual extensions, one Undo
+        AddSupport("הצג קו קצר…", null, ShowShortBoundary);                 // a pending reference, shown instead of a handle
         AddSupport("בחירת חוקים…", null, ChooseRulePack);
         AddSupport("Clear QA", WorkflowAction.ClearQa, ClearQa);
         AddSupport("Export Support Log", null, ExportSupportLog);
@@ -887,6 +889,7 @@ public partial class IgWorkflowCommands
             $"יחידות השרטוט ('{unitsName}') לא אושרו.\nהריצי Setup ואשרי שהשרטוט במטרים.",
             "units unresolved");
 
+        _lastScale = scale;
         ExtractionResult extraction;
         using (var tr = db.TransactionManager.StartTransaction())
         {
