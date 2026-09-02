@@ -36,10 +36,12 @@ invariant (`Every_termination_candidate_lies_on_the_crossing_it_claims_to_stop_i
 - Default **OFF**; 10 cm is the dialog's suggestion (`SuggestedAutoConfirmToleranceMeters`) — done.
 - Clamp the sidecar value on read — done (`ReferenceReview.Clamp`).
 - "10 cm cannot change an intergreen" withdrawn in ED-016 — done.
-- Confirming an endpoint is not extending a line — **accepted**: WP2 is being reworked as a virtual
-  extension along the end tangent to the assigned stop line (length along the tangent, unique
-  intersection, ambiguous → engineer), applied before the engine so no confirmation is needed; plus an
-  explicit palette action that writes the extension into the DWG with Undo. In progress.
+- Confirming an endpoint is not extending a line — **accepted and done** (commit 9fd00ac): the pass now
+  extends along the end tangent to the stop line (length along the tangent, unique intersection); a
+  boundary that runs past the stop line's end vertex — Lin's E-T, 4.7 cm beside it — cannot be extended
+  and is confirmed the way she did by hand, recorded as automatic; ambiguous or wider gaps go to the
+  engineer. Proven on Lin's geometry and in accoreconsole 2026/2027 on Example 2 (S-L.b2 +4.37 cm;
+  E-L.b1 at 16.45 cm rightly left pending). The explicit "extend in the DWG" action is still to come.
 
 ## 4. WP3 colours — *accepted in part*
 

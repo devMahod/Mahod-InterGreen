@@ -284,3 +284,27 @@ Locked by `Regression.Tests/GeneratedWorkbookTests`, `Host.Tests/TemplateWorkboo
   measured along the tangent, not the perpendicular gap), applied before the engine runs so the
   intersection is exact and no sidecar confirmation is needed; lowering the tolerance drops earlier
   automatic entries; an explicit palette action writes the same extension into the DWG with Undo.
+
+### ED-016 — the rework is in (2026-09-02, commit 9fd00ac)
+
+What the tolerance pass does now (`Host/ReferenceScan.Resolve`, applied by the palette at Validate):
+
+| case | action | provenance |
+|---|---|---|
+| gap ≤ tolerance and the end tangent meets the stop line | **Extended** — a virtual segment along the end tangent to the intersection; the engine sees an exact intersection; the DWG is untouched | finding `IG-GEO-013`, log `BOUNDARY_EXTENDED` with the length along the tangent |
+| gap ≤ tolerance but the boundary runs past the stop line's end vertex (nothing to extend to) | **Confirmed** — the drawn end is the origin, as the engineer does by hand (r12) | sidecar `autoConfirmedEndpointReferences`, finding `IG-GEO-014`, log `REFERENCE_AUTO_CONFIRMED` |
+| gap > tolerance, both ends short, tolerance 0 | **Pending** — the engineer, in "נקודות ייחוס…" | log `REFERENCE_PENDING` with the reason |
+
+Evidence, real geometry:
+
+- Lin 05293 (`tests/fixtures/geometry/lin05293.iggeometry.json`, `LinExtensionTests`): N-R 4F27 misses by
+  6.3 cm along its own line → extended +6.25 cm, exact intersection afterwards; E-T 4EBA lies 4.7 cm
+  beside the stop line's end vertex → confirmed (no ray from its end can reach the line — the stop line
+  is the short one). A 5 cm tolerance takes only the 4.7 cm case; 0 takes nothing.
+- Example 2 in accoreconsole 2026 and 2027 (`scripts/realhost_tolerance_pass.py`), tolerance pre-set to
+  10 cm and no hand confirmations: S-L.b2 extended +4.37 cm; E-L.b1 is **16.45 cm** short — wider than
+  the tolerance, so it stays with the engineer, and once confirmed the golden holds (168 / 37-7-0).
+  Example 1 has no near-miss and is untouched (50 / 24-0-0 / W-L→S-T 5).
+
+Still open in WP2: an explicit palette action that writes the same extension into the DWG (with Undo), and
+a "show in drawing" for a pending reference so the engineer never needs the handle.
