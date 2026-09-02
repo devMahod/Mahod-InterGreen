@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Mahod Intergreen — מדריך מהיר</title>
+<style>
+  @page { size: A4; margin: 13mm 16mm 12mm 16mm; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Arial, "Noto Sans Hebrew", sans-serif; color: #111; font-size: 11pt; line-height: 1.42; direction: rtl; }
+  h1 { font-size: 24pt; margin: 0; color: #0b3d2e; letter-spacing: 0.2px; }
+  .sub { font-size: 13.5pt; color: #2f4f45; margin: 1mm 0 5mm 0; }
+  h2 { font-size: 14pt; margin: 5mm 0 2mm 0; color: #0b3d2e; border-bottom: 1.5px solid #0b3d2e; padding-bottom: 1mm; }
+  ol, ul { margin: 0; padding-right: 7mm; }
+  li { margin-bottom: 1.6mm; }
+  .btn { display: inline-block; border: 1px solid #777; border-radius: 4px; padding: 0 2mm; background: #f2f2f2; font-size: 10.8pt; unicode-bidi: isolate; white-space: nowrap; }
+  .ltr { direction: ltr; unicode-bidi: embed; font-family: Consolas, "Courier New", monospace; font-size: 10.8pt; }
+  .note { border-right: 4px solid #0b3d2e; background: #f3f8f5; padding: 2.5mm 4mm; margin: 2mm 0 4mm 0; }
+  .warn { border-right: 4px solid #b3541e; background: #fdf4ee; padding: 2.5mm 4mm; margin: 3mm 0; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0; }
+  td, th { border: 1px solid #bbb; padding: 1.6mm 3mm; text-align: right; vertical-align: top; font-size: 10.4pt; }
+  th { background: #eef3f0; }
+  .pb { page-break-before: always; }
+  .foot { margin-top: 6mm; font-size: 10pt; color: #555; border-top: 1px solid #ccc; padding-top: 2mm; }
+</style>
+</head>
+<body>
+  <h1>Mahod Intergreen</h1>
+  <div class="sub">כלי לחישוב ובקרת זמני בין־ירוק</div>
+
+  <div class="note">
+    הכלי מחשב את זמני הבין־ירוק ישירות מהשרטוט ומקובץ ה־Excel של הפרויקט, בתוך Civil 3D / AutoCAD.
+    הוא <b>לא משנה</b> את השרטוט ו<b>לא</b> את קובץ ה־Excel המקורי אלא אם ביקשתם זאת במפורש (ראו "הארך בשרטוט") — כל תוצר נכתב כקובץ חדש ליד הקיימים.
+  </div>
+
+  <h2>התקנה</h2>
+  <ol>
+    <li>לסגור את כל חלונות AutoCAD / Civil 3D.</li>
+    <li>לחיצה כפולה על <span class="ltr">Mahod_Intergreen_Setup_0.1.0-r14.exe</span>.
+        אם מותקנת גרסה קודמת — היא מוחלפת אוטומטית.</li>
+    <li>לפתוח את Civil 3D (או AutoCAD). בפתיחה הראשונה תופיע שאלת אבטחה על טעינת התוסף —
+        לבחור <span class="ltr">Always Load</span>.</li>
+  </ol>
+
+  <h2>הפעלה</h2>
+  <p>בשורת הפקודה מקלידים <span class="ltr">INTERGREEN</span> ולוחצים Enter — נפתחת פלטת <b>Mahod Intergreen</b> עם שורת סטטוס בעברית, כפתורי העבודה ורשימת התוצאות.</p>
+
+  <h2>מה חדש בגרסה r14</h2>
+  <ul>
+    <li><b>בניית תנועות מקווי המתכנן</b> — <span class="btn">בניית תנועות…</span>: מצביעים על קווי השפה/הסימון של מתכנן התנועה, והכלי מעתיק אותם לשכבות <span class="ltr">intergreen_*</span> בצבעי הגישות של המחלקה. קווי המקור לא נערכים.</li>
+    <li><b>קובץ Excel חדש מהשרטוט</b> — <span class="btn">Excel חדש מהשרטוט…</span>: הכלי יוצר את קובץ IG_matrix מתבנית המחלקה, ממלא מה שהשרטוט יודע (תנועות, מעברי חצייה ומיקומם בתבנית) ומבקש בטופס קצר רק את מה שהשרטוט לא יודע (מהירויות, מספרי קבוצות אות).</li>
+    <li><b>קו גבול קצר</b> — במקום handle: <span class="btn">הצג קו קצר…</span> מתקרב לקצה בשרטוט; <span class="btn">סף הארכה אוטומטית…</span> (כבוי כברירת מחדל; דייויד הציע 10 ס"מ) מאריך אוטומטית לחישוב; <span class="btn">הארך בשרטוט…</span> כותב את ההארכה גם לשרטוט — רק בלחיצה, עם Undo.</li>
+    <li>מרחק הפינוי של רכב מול מעבר חצייה נמדד עד <b>הקצה הרחוק</b> של המעבר (הנחיות יוני 2025 עמ' 157).</li>
+  </ul>
+
+  <h2>תהליך העבודה</h2>
+  <table>
+    <tr><th style="width:7%">#</th><th style="width:31%">פעולה</th><th>מה עושים / מה רואים</th></tr>
+    <tr><td>1</td><td><b>שרטוט DWG</b><br><span class="btn">שרטוט DWG…</span></td>
+        <td>לבחור את קובץ השרטוט של הצומת. השרטוט נפתח ושמו מופיע בשורה <b>"שרטוט: …"</b>.</td></tr>
+    <tr><td>1א</td><td><b>בניית תנועות</b> (אם השכבות עוד לא קיימות)<br><span class="btn">בניית תנועות…</span></td>
+        <td>בשורת הפקודה: גישה (N/E/S/W) ← סוג (R/T/L, או P למעבר חצייה ואות) ← מצביעים על שני קווי הגבול ועל קו העצירה, ולכל קו על הקצה שעל קו העצירה. הקווים <b>מועתקים</b> לשכבת התנועה בצבע הגישה; Undo מבטל תנועה. Enter לסיום.</td></tr>
+    <tr><td>2</td><td><b>Setup</b><br><span class="btn">1. Setup — בחר קובץ Excel…</span><br>או<br><span class="btn">Excel חדש מהשרטוט…</span></td>
+        <td>יש Excel של הפרויקט? בוחרים אותו ומאשרים יחידות (<span class="ltr">Meters</span>). אין? "Excel חדש מהשרטוט" מציג טופס אחד: מהירויות לפי גישה, מספר קבוצת אות לתנועה, אורך ומיקום (c1..c12) לכל מעבר חצייה — מה שהשרטוט יודע כבר ממולא, לאישור. הקובץ נוצר ליד השרטוט ונרשם כ־Excel של הפרויקט.</td></tr>
+    <tr><td>3</td><td><b>Validate</b><br><span class="btn">2. Validate</span></td>
+        <td>בדיקה שאין שגיאות חוסמות: כמה תנועות וחציות זוהו. אם קו גבול אינו מגיע עד קו העצירה — ההודעה אומרת איזו תנועה וכמה ס"מ.</td></tr>
+    <tr><td>3א</td><td><b>קו גבול קצר</b><br><span class="btn">הצג קו קצר…</span> <span class="btn">נקודות ייחוס…</span><br><span class="btn">סף הארכה אוטומטית…</span> <span class="btn">הארך בשרטוט…</span></td>
+        <td>"הצג קו קצר" מתקרב לקצה ומסמן אותו באדום. אפשר לתקן את השרטוט, לאשר את הקצה ב"נקודות ייחוס", או להגדיר סף (למשל 10 ס"מ): פערים מתחת לסף מוארכים אוטומטית <b>לחישוב בלבד</b> ומופיעים בשורת הסטטוס וביומן. "הארך בשרטוט" כותב את אותן הארכות גם לשרטוט — פעולה אחת, Undo מבטל.</td></tr>
+    <tr><td>4</td><td><b>Analyze</b><br><span class="btn">3. Analyze</span></td>
+        <td>חישוב הקונפליקטים והמטריצה. לכל זוג תנועות (מפנה ← נכנסת): CD, ED, זמן הבין־ירוק והסטטוס.</td></tr>
+    <tr><td>5</td><td><b>Show in drawing</b><br><span class="btn">4. Show in drawing</span></td>
+        <td>בוחרים שורה ברשימה; התצוגה מתקרבת, נקודות החישוב מסומנות והנקודה הקובעת מודגשת באדום.</td></tr>
+    <tr><td>6</td><td><b>Export Excel</b><br><span class="btn">5. Export Excel</span></td>
+        <td>נוצר קובץ תוצאות <b>חדש</b> (<span class="ltr">*_MAHOD_INTERGREEN.xlsx</span>) ליד המקור: כל הגיליונות המקוריים + שני גיליונות תוצאה של מהוד בסוף.</td></tr>
+  </table>
+
+  <h2>חשוב לדעת</h2>
+  <ul>
+    <li><b>קובץ המקור לא נדרס.</b> ה־Excel והשרטוט המקוריים נשארים כפי שהם; "Excel חדש מהשרטוט" לעולם לא מחליף קובץ קיים.</li>
+    <li><b>השרטוט משתנה רק בלחיצה מפורשת</b> ("בניית תנועות" מעתיקה קווים לשכבות חדשות; "הארך בשרטוט" מאריכה קווים שבחרתם) — ותמיד עם Undo.</li>
+    <li><b>אפשר לבצע Refresh באקסל</b> — התוצאה נשארת עקבית. המטריצה מתרעננת בפתיחה; אם Excel שואל בסגירה אם לשמור, שתי התשובות תקינות.</li>
+    <li><b>סימוני QA בשרטוט זמניים.</b> <span class="btn">Clear QA</span> מנקה אותם; הם אינם נשמרים.</li>
+    <li><b>Rule Pack פעיל מוצג בפלטה</b>; שינוי דרך <span class="btn">בחירת חוקים…</span> הוא פעולה יזומה לפרויקט, לא שינוי שקט.</li>
+    <li>מעבר לשרטוט אחר מנקה את התצוגה וטוען את הפרויקט השמור של השרטוט החדש. התוצאות שייכות תמיד לשרטוט שבשורה "שרטוט: …".</li>
+  </ul>
+
+  <h2>אם משהו משתבש</h2>
+  <div class="warn">
+    <ol>
+      <li>ללחוץ בפלטה על <span class="btn">Export Support Log</span> — נוצר קובץ לוג על שולחן העבודה (רצף הפעולות וזהות הגרסה, ללא מידע אישי).</li>
+      <li>לשלוח את הלוג לארתור / לצוות הטכנולוגיה של מהוד, עם תיאור קצר (ואם יש — צילום מסך של ההודעה).</li>
+      <li>לא לשמור על גבי קובץ ה־Excel המקורי או השרטוט המקורי.</li>
+    </ol>
+  </div>
+
+  <p style="margin-top:5mm">בהצלחה!<br><b>צוות מהוד הנדסה</b></p>
+
+  <div class="foot">מהוד הנדסה בע"מ · <span dir="ltr" style="unicode-bidi:isolate">Mahod Intergreen · Version 0.1.0-r14</span></div>
+</body>
+</html>

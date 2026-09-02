@@ -314,3 +314,27 @@ so nobody needs a handle. Real hosts (`scripts/realhost_extend_in_dwg.py`, accor
 Example 2 copy): S-L.b2 +4.37 cm written, re-validated with nothing virtual left, QSAVE, reopened in a
 fresh process with the tolerance OFF — the boundary meets its stop line for real; E-L.b1 (16.45 cm) stays
 with the engineer throughout, and the golden holds once she confirms it. PASS ×2.
+
+## ED-018 — The movement builder copies the planner's lines; it never edits them (David Suchinsky, 2026-08-27, items 3 and 5)
+
+**Source.** David approved the drawing methodology of `הגדרת פעולה.docx` Appendix A (item 3) and asked that
+the engineer pick the relevant curb / lane-marking lines once at the start of a project, because the
+traffic planners' layers are inconsistent (item 5). Codex review 2026-09-02: never edit the source or
+an xref; entity-level picks; explicit direction; Undo; offer a saved profile but never apply it silently.
+
+**Rule.** "בניית תנועות…" walks Appendix A at the command line — approach, turn (or crossing letter),
+two boundary lines, stop line, and for each boundary the end that lies on the stop line. Each picked
+Line / Arc / LWPolyline is **copied** onto `intergreen_<approach>-<turn>` (or `intergreen_<letter>`),
+the layer in the Appendix B colour (`ColourModel.LayerAci`), the copy turned to start at the stop-line
+end (David's convention; the engine no longer depends on it); the stop line is copied onto
+`intergreen_stopline`. Entities inside blocks or xrefs are refused. One document lock, one transaction,
+one Undo per movement. Source handles and source layers are written to the project sidecar
+(`builtMovements`, `baseLayers`); a later project is told which layers were used last time, and picks
+again. The tool never decides which planner line is a boundary.
+
+**Evidence.** `scripts/realhost_build.py`, accoreconsole 2026 and 2027, Example 1 copy: N-T built from
+the S-T boundaries and the S stop line — three copies, layer colour ACI 52 (north straight), source
+layer counts unchanged, the engine sees N-T with two boundaries and a stop line. PASS ×2.
+
+**Assemblies changed.** `Mahod.Intergreen.AutoCAD` only (`MovementBuilderCommands.cs`); the colour
+model is Host (WP3, `ColourModel`), now wired to layer creation.
