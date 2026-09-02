@@ -1,0 +1,16 @@
+0.1.0-r14 packaging — 2026-09-02 11:09
+  installer  Mahod_Intergreen_Setup_0.1.0-r14.exe  78655771 B  sha256 00c4f0a59de97240df482ab69fda4b70c173b4cddfd02bc71566821fc5100f01
+  guide      guide_staff_r14.pdf  102579 B  sha256 b3c54dba58ea5832fb2e33e2ec4a6ef03099da1e53f5c18085a9b8180cb452af
+[PASS] staff ZIP C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14.zip  73215106 B  sha256 494db5f2077b445fd2a7efbbeaa3cb835f6b226253f2753bf249c2486f5ffbf9  files=['Mahod_Intergreen_Setup_0.1.0-r14.exe', 'Mahod_Intergreen_מדריך_מהיר.pdf']
+[PASS] no-installer ZIP C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14_ללא_מתקין.zip  7137321 B  sha256 5a2d8d85b7dfa030b089b128d1003929984ad65aaba56e02db77977bbb154814
+  Defender Mahod_Intergreen_0.1.0-r14.zip: CLEAN (exit 0): Scan starting... Scan finished. Scanning C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14.zip found no threats.
+  Defender Mahod_Intergreen_0.1.0-r14_ללא_מתקין.zip: CLEAN (exit 0): Scan starting... Scan finished. Scanning C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14_???_?????.zip found no threats.
+[PASS] Defender custom scan clean on both ZIPs
+
+SUMMARY
+  staff ZIP        C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14.zip
+  staff sha256     494db5f2077b445fd2a7efbbeaa3cb835f6b226253f2753bf249c2486f5ffbf9
+  no-installer ZIP C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14_ללא_מתקין.zip
+  no-inst sha256   5a2d8d85b7dfa030b089b128d1003929984ad65aaba56e02db77977bbb154814
+  installer sha256 00c4f0a59de97240df482ab69fda4b70c173b4cddfd02bc71566821fc5100f01
+  RESULT           PASS

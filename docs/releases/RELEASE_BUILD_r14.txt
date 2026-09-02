@@ -1,0 +1,35 @@
+r14 release build — 2026-09-02 11:05
+[PASS] MahodRelease.props = 0.1.0-r14
+[PASS] source commit cbd8f94678bb35b5bdcf7d64f97ae695d1f70935
+[PASS] Contracts/Core/Reporting/Rules/Excel + rules/ SOURCE unchanged since accepted r11 (02c7a47)
+      Geometry source delta since r11 (re-shipped by decision, r13 §21A + r14 ED-015):
+ .../ConflictStrategies.cs                          | 187 +++++++++++++++++++--
+ 1 file changed, 170 insertions(+), 17 deletions(-)
+[PASS] host 2026 build (git-stamped)
+[PASS] host 2027 build (git-stamped)
+      copied Mahod.Intergreen.AutoCAD.dll -> Contents/2026  0e133a0656719e9e
+      copied Mahod.Intergreen.Host.dll -> Contents/2026  c89056de90d4ba6b
+      copied Mahod.Intergreen.Geometry.dll -> Contents/2026  c69bb1d780e6fb77
+      copied Mahod.Intergreen.AutoCAD.dll -> Contents/2027  ea4e406a967b29b8
+      copied Mahod.Intergreen.Host.dll -> Contents/2027  c89056de90d4ba6b
+      copied Mahod.Intergreen.Geometry.dll -> Contents/2027  c69bb1d780e6fb77
+[PASS] identity gate: 42 locked files in dist byte-identical; changed only ['Contents/2026/Mahod.Intergreen.AutoCAD.dll', 'Contents/2026/Mahod.Intergreen.Geometry.dll', 'Contents/2026/Mahod.Intergreen.Host.dll', 'Contents/2027/Mahod.Intergreen.AutoCAD.dll', 'Contents/2027/Mahod.Intergreen.Geometry.dll', 'Contents/2027/Mahod.Intergreen.Host.dll']
+[PASS] PackageContents.xml stamped 0.1.0-r14, git cbd8f94
+[PASS] 2026 AutoCAD.dll 0.1.0.14|0.1.0-r14 (engine 0.1.0, git cbd8f94678bb35b5bdcf7d64f97ae695d1f70935), host build 2026
+[PASS] 2027 AutoCAD.dll 0.1.0.14|0.1.0-r14 (engine 0.1.0, git cbd8f94678bb35b5bdcf7d64f97ae695d1f70935), host build 2027
+[PASS] payload bundle.zip == dist (49 entries) sha256 7cf9d8c070fe702106803da6324bd8e869713a022af0e7a7832214ebe6e96550
+[PASS] installer Mahod_Intergreen_Setup_0.1.0-r14.exe  78655771 bytes  sha256 00c4f0a59de97240df482ab69fda4b70c173b4cddfd02bc71566821fc5100f01  version 0.1.0.14|0.1.0-r14 (engine 0.1.0, git cbd8f94678bb35b5bdcf7d64f97ae695d1f70935)
+
+SUMMARY
+  source commit      cbd8f94678bb35b5bdcf7d64f97ae695d1f70935
+  release            0.1.0-r14
+  installer          C:\Users\arthurf\Downloads\InterGreens\Mahod.Intergreen\installer\out\Mahod_Intergreen_Setup_0.1.0-r14.exe
+  installer sha256   00c4f0a59de97240df482ab69fda4b70c173b4cddfd02bc71566821fc5100f01
+  payload sha256     7cf9d8c070fe702106803da6324bd8e869713a022af0e7a7832214ebe6e96550 (49 entries)
+  2026 Mahod.Intergreen.AutoCAD.dll     0e133a0656719e9e0650c25886d66359343196585669fb8c335b10a6804b3997
+  2026 Mahod.Intergreen.Host.dll        c89056de90d4ba6b97053cda82710de942e681a1a0ff6794f7fa8eb9f3d200f6
+  2026 Mahod.Intergreen.Geometry.dll    c69bb1d780e6fb7781c77b6ffe92281efb297c6f1769d6300ae71931c343e590
+  2027 Mahod.Intergreen.AutoCAD.dll     ea4e406a967b29b811651280abd11de7cf4e1361f6dc9429b4a5a7a4589d6b04
+  2027 Mahod.Intergreen.Host.dll        c89056de90d4ba6b97053cda82710de942e681a1a0ff6794f7fa8eb9f3d200f6
+  2027 Mahod.Intergreen.Geometry.dll    c69bb1d780e6fb7781c77b6ffe92281efb297c6f1769d6300ae71931c343e590
+  RESULT             PASS
