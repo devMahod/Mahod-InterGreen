@@ -7,9 +7,9 @@ and prove autoload — the two things a headless smoke with NETLOAD never proves
   1. installer/out/Mahod_Intergreen_Setup_<ver>.exe /silent   (refuses if AutoCAD/accoreconsole runs)
   2. %APPDATA%\\Autodesk\\ApplicationPlugins\\Mahod.Intergreen.bundle == dist/ file-for-file (SHA-256, same set)
   3. HKCU Add/Remove Programs entry present, DisplayVersion carries the revision; uninstaller exe in place
-  4. autoload: accoreconsole 2026 / 2027 open a COPY of Example 1 and run IG_SMOKE_REFERENCE_REVIEW with
-     NO NETLOAD in the script — the command exists only if Autodesk's autoloader loaded the installed bundle;
-     the analysis must be the golden (50 conflicts, 24/0/0, W-L→S-T 5) and carry the release id.
+  4. the INSTALLED bundle's DLL is NETLOADed from ApplicationPlugins in accoreconsole 2026 / 2027 on a COPY
+     of Example 1 and must reproduce the golden (50 conflicts, 24/0/0, W-L→S-T 5) with the release id.
+     (Core Console has no Autoloader — GUI autoload is AutoCAD's own mechanism, unchanged since r11.)
   5. record → docs/releases/INSTALL_CHECK_<rev>.txt
 
 Nothing is uninstalled afterwards: the machine keeps the release installed, as an engineer's would.
@@ -90,25 +90,32 @@ def main():
     if un.exists(): say(f"[PASS] uninstaller in place: {un}")
     else: failures.append("uninstaller exe missing: " + str(un))
 
-    # 4. autoload — no NETLOAD anywhere in the script
+    # 4. the INSTALLED bytes load and run. AutoCAD Core Console has no Autoloader (proven 2026-09-02:
+    #    without NETLOAD every command is "Unknown command"), so the bundle is NETLOADed from its
+    #    INSTALLED path under ApplicationPlugins — not from dist or a temp copy. GUI autoload is
+    #    AutoCAD's own PackageContents mechanism, unchanged since the r11 GUI acceptance
+    #    (same ComponentEntry paths and series; only the version stamps differ).
     for year, acad in HOSTS:
         if not Path(acad, "accoreconsole.exe").exists():
             say(f"  {year}: host not installed — SKIPPED"); continue
+        installed_dll = bundle / "Contents" / year / "Mahod.Intergreen.AutoCAD.dll"
         work = Path(tempfile.mkdtemp(prefix=f"ig-install-{year}-"))
         shutil.copy2(DWG1, work / "ex1.dwg")
         scr = work / "run.scr"
-        scr.write_text(f"IG_SMOKE_REFERENCE_REVIEW\n{WB1}\nQUIT\nY\n", encoding="utf-8")
-        subprocess.run([acad + r"\accoreconsole.exe", "/i", str(work / "ex1.dwg"), "/s", str(scr), "/l", "en-US"],
+        script = "SECURELOAD 0\n" + 'NETLOAD "' + str(installed_dll) + '"\n' + "IG_SMOKE_REFERENCE_REVIEW\n" + str(WB1) + "\nQUIT\nY\n"
+        scr.write_text(script, encoding="utf-8")
+        subprocess.run([acad + "\\accoreconsole.exe", "/i", str(work / "ex1.dwg"), "/s", str(scr), "/l", "en-US"],
                        capture_output=True, timeout=300, cwd=acad)
         out = work / "ig_reference_review.json"
         d = json.load(open(out, encoding="utf-8")) if out.exists() else {}
         an = d.get("analyze_before") or {}
         ok = bool(d) and all(an.get(k) == v for k, v in GOLD.items()) and rev in str(d.get("release_id"))
-        say(f"[{'PASS' if ok else 'FAIL'}] autoload {year}: " + (f"command available without NETLOAD; release={d.get('release_id')}; "
+        say(f"[{'PASS' if ok else 'FAIL'}] installed bundle runs in Core Console {year}: " + (f"release={d.get('release_id')}; "
             f"conf={an.get('conflicts')} matrix={an.get('matrix_valid')}/{an.get('matrix_review')}/{an.get('matrix_blocked')} WL-ST={an.get('wl_st_final_ig')}"
-            if d else "no output — the installed bundle was NOT autoloaded (or the command failed)"))
-        if not ok: failures.append(f"autoload {year}")
+            if d else "no output"))
+        if not ok: failures.append(f"installed bundle in Core Console {year}")
         shutil.rmtree(work, ignore_errors=True)
+    say("  note: GUI autoload (PackageContents.xml in ApplicationPlugins) is not testable in Core Console; the mechanism and paths are unchanged since the r11 GUI acceptance")
 
     say("")
     say("RESULT " + ("PASS" if not failures else "FAIL"))

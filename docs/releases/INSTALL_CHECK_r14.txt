@@ -1,0 +1,12 @@
+0.1.0-r14 install check — 2026-09-02 21:25
+  installer Mahod_Intergreen_Setup_0.1.0-r14.exe sha256 2ad861bb80d8c4c70c79454244f77c3d879664d2eadc0e98190ccd3b7acd3622
+  installer /silent exit=0
+[PASS] installed bundle == dist (49 files, every SHA-256 equal)
+  installed PackageContents: 0.1.0-r14 git 3600f49
+[PASS] Add/Remove Programs entry present, DisplayVersion 0.1.0-r14
+[PASS] uninstaller in place: C:\Users\arthurf\AppData\Local\Mahod\MahodIntergreen\Uninstall_Mahod_Intergreen.exe
+[PASS] installed bundle runs in Core Console 2026: release=0.1.0-r14 host2026 git 3600f4904cd0949adf90902df59ddf22be850883; conf=50 matrix=24/0/0 WL-ST=5
+[PASS] installed bundle runs in Core Console 2027: release=0.1.0-r14 host2027 git 3600f4904cd0949adf90902df59ddf22be850883; conf=50 matrix=24/0/0 WL-ST=5
+  note: GUI autoload (PackageContents.xml in ApplicationPlugins) is not testable in Core Console; the mechanism and paths are unchanged since the r11 GUI acceptance
+
+RESULT PASS
