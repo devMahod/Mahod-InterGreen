@@ -208,11 +208,12 @@ public class PedestrianModelTests
     }
 
     [Fact]
-    public void Vehicle_boundary_terminating_inside_crossing_adds_end_candidate()
+    public void Vehicle_boundary_terminating_inside_crossing_is_measured_to_the_crossing_exit()
     {
-        // Directive §21A / Example-1 E-R→a: the vehicle boundary crosses the near edge (y=10)
-        // but ends at y=12 — before the far edge (y=13.5). Its drawn end must become a
-        // termination candidate so the far-side clearing distance is not silently lost.
+        // Directive §21A + ED-015 (David, 2026-08-27): the vehicle boundary crosses the near edge
+        // (y=10) but ends at y=12 — before the far edge (y=13.5). The conflict with a crossing ends
+        // only after the crossing, so the CLEARING vehicle is measured to where its boundary would
+        // leave the crossing: the far edge at 13.5, not the drawn end at 12.
         var veh = new MovementGeometry("E-R", MovementMode.Vehicle,
             new[] { Line(0, -20, 0, 12), Line(3.5, -20, 3.5, 12) },
             Array.Empty<PolyCurve2D>(), Line(-2, 0, 6, 0));
@@ -222,15 +223,39 @@ public class PedestrianModelTests
 
         var result = new LegacyEnvelopeConflictStrategy().FindConflictPoints(veh, ped);
         Assert.False(result.HasBlockingError);
-        // near-edge intersections at station 10 + termination candidates at station 12 (boundary end)
+        // near-edge intersections at station 10 + exit candidates at station 13.5 (far edge)
         Assert.Contains(result.Points, p => p.Origin == "boundary-termination"
+            && p.ClearingCurveId.EndsWith("+exit", StringComparison.Ordinal)
+            && Math.Abs(p.ClearingDistanceMeters - 13.5) < 1e-9);
+        // the drawn end itself is no longer offered as the measurement point
+        Assert.DoesNotContain(result.Points, p => p.Origin == "boundary-termination"
             && Math.Abs(p.ClearingDistanceMeters - 12.0) < 1e-9);
         Assert.Contains(result.Findings, f =>
             f.Code == LegacyEnvelopeConflictStrategy.CodePedestrianEdgeCoverageGap
-            && f.Message.Contains("terminates inside crossing"));
-        // the termination candidate governs veh→ped (max CD, ED=0)
+            && f.Message.Contains("Measured to the crossing exit"));
+        // the exit candidate governs veh→ped (max CD, ED=0)
         var maxCd = result.Points.Max(p => p.ClearingDistanceMeters);
-        Assert.Equal(12.0, maxCd, 9);
+        Assert.Equal(13.5, maxCd, 9);
+    }
+
+    [Fact]
+    public void Entering_vehicle_is_still_measured_to_where_it_first_meets_the_crossing()
+    {
+        // ED-015 is per role: for the ENTERING vehicle the conflict begins at first contact with the
+        // crossing, so its smallest ED (the near edge at 10) must remain and govern; a longer ED
+        // would shorten the intergreen, the unsafe direction.
+        var veh = new MovementGeometry("E-R", MovementMode.Vehicle,
+            new[] { Line(0, -20, 0, 12), Line(3.5, -20, 3.5, 12) },
+            Array.Empty<PolyCurve2D>(), Line(-2, 0, 6, 0));
+        var ped = new MovementGeometry("a", MovementMode.Pedestrian,
+            new[] { Line(-10, 10, 20, 10), Line(-10, 13.5, 20, 13.5) },
+            Array.Empty<PolyCurve2D>(), null)
+        { PedestrianWidthMeters = 8.0 };
+
+        var result = new LegacyEnvelopeConflictStrategy().FindConflictPoints(ped, veh);
+        Assert.False(result.HasBlockingError);
+        Assert.Equal(10.0, result.Points.Min(p => p.EnteringDistanceMeters), 9);
+        Assert.DoesNotContain(result.Points, p => p.EnteringCurveId.EndsWith("+exit", StringComparison.Ordinal));
     }
 
     [Fact]

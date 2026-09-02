@@ -129,6 +129,39 @@ public class TerminationCandidateTests
         Assert.True(offenders.Count == 0, string.Join("; ", offenders));
     }
 
+    /// <summary>
+    /// ED-015 (David, 2026-08-27): a clearing vehicle whose boundary stops inside a crossing is
+    /// measured to where the boundary leaves the crossing. Example 2 W-R→b: both boundaries stop at
+    /// the near edge of crossing b; carried on, b1 leaves 2.14 m further and governs.
+    /// </summary>
+    [Fact]
+    public void Example2_W_R_to_b_is_measured_to_the_crossing_exit()
+    {
+        var (output, _) = Run("example2", "E-L.b1", "S-L.b2");
+        var conflict = output.Analysis.Conflicts.Single(c => c.Id == "W-R→b");
+        var governing = conflict.Points.Single(p => p.Id == conflict.DefiningPointId);
+        Assert.EndsWith("+exit", governing.ClearingCurveId);
+        Assert.Equal(15.63, governing.Cd, 2);
+        Assert.Contains(conflict.Points, p => Math.Abs(p.Cd - 13.488) < 0.01);   // the drawn end is still traceable
+    }
+
+    /// <summary>
+    /// A boundary that already ends on the far edge has nothing to extend to: the drawn end is the
+    /// exit and the engineer's own measurement (Example 1 E-R→a, manual 18.95) must be reproduced,
+    /// not lengthened.
+    /// </summary>
+    [Fact]
+    public void Example1_E_R_to_a_ends_at_the_crossing_edge_and_keeps_the_engineers_distance()
+    {
+        var (output, _) = Run("example1");
+        var conflict = output.Analysis.Conflicts.Single(c => c.Id == "E-R→a");
+        var governing = conflict.Points.Single(p => p.Id == conflict.DefiningPointId);
+        Assert.Equal(18.93, governing.Cd, 2);
+        Assert.Equal(6, conflict.FinalIg);
+        Assert.Contains(output.Findings, f => f.Code == "IG-GEO-008"
+            && f.Message.Contains("E-R.b2 ends at an edge of crossing 'a'"));
+    }
+
     [Fact]
     public void Example1_a_to_S_T_agrees_with_the_engineer()
     {

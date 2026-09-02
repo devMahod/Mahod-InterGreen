@@ -304,9 +304,16 @@ public sealed class LegacyEnvelopeConflictStrategy : IConflictPointStrategy
             // the crossing: a stop line that sits inside the crossing legitimately gives distance 0
             // (Example 2, b→S-R, the engineer's own 14), while an end tens of metres away is not a
             // termination in the crossing at all (Lin 05293, b→S-L, where it wrongly governed).
+            //
+            // ED-015 (David, 2026-08-27): the conflict with a crossing ends only after the crossing.
+            // So for the CLEARING vehicle the drawn end is not the measurement point — the boundary
+            // is carried straight on and measured to where it leaves the crossing (a longer CD, the
+            // conservative direction). For the ENTERING vehicle the conflict begins where the boundary
+            // first meets the crossing, which the intersection candidates already hold; its drawn end
+            // stays as a traceable candidate but can never govern.
             if (intersectedEdges > 0 && missedEdges > 0 && crossingStrips.Count > 0)
             {
-                foreach (var (station, endName) in new[] { (0.0, "start"), (boundary.TotalLength, "end") })
+                foreach (var (station, endName, atStart) in new[] { (0.0, "start", true), (boundary.TotalLength, "end", false) })
                 {
                     var endPoint = boundary.PointAtStation(station);
                     // Inside a strip, or sitting exactly on a drawn edge — a boundary that stops on
@@ -315,20 +322,60 @@ public sealed class LegacyEnvelopeConflictStrategy : IConflictPointStrategy
                         || ped.Boundaries.Any(e => e.NearestStation(endPoint).Distance <= Tolerances.PointDeduplication);
                     if (!onCrossing) continue;
                     var endStation = Math.Abs(station - vehRefs[i]);
-                    points.Add(pedIsClearing
-                        ? new ConflictPoint(endPoint, ped.PedestrianWidthMeters!.Value, endStation,
+
+                    if (pedIsClearing)
+                    {
+                        points.Add(new ConflictPoint(endPoint, ped.PedestrianWidthMeters!.Value, endStation,
                             $"{ped.MovementId}.band", $"{veh.MovementId}.b{i + 1}@{endName}",
-                            Origin: "boundary-termination")
-                        : new ConflictPoint(endPoint, endStation, 0.0,
+                            Origin: "boundary-termination"));
+                        findings.Add(new ValidationFinding(CodePedestrianEdgeCoverageGap,
+                            Severity.ReviewRequired, $"{veh.MovementId} × {ped.MovementId}",
+                            $"Vehicle boundary {veh.MovementId}.b{i + 1} terminates inside crossing '{ped.MovementId}' " +
+                            $"(intersects {intersectedEdges} of {intersectedEdges + missedEdges} edges). Its drawn " +
+                            $"{endName} was added as a termination candidate; the drawing may be incomplete.",
+                            RecommendedAction: "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
+                            SourceReference: "Directive §21A"));
+                        continue;
+                    }
+
+                    // clearing vehicle: carry the boundary straight on and find where it leaves the crossing
+                    var exit = CrossingExit(boundary, atStart, endPoint, ped.Boundaries);
+                    if (exit is null)
+                    {
+                        points.Add(new ConflictPoint(endPoint, endStation, 0.0,
                             $"{veh.MovementId}.b{i + 1}@{endName}", $"{ped.MovementId}.band",
                             Origin: "boundary-termination"));
+                        // Two different situations look the same to the extension: the end already
+                        // sits on the far edge (Example 1, E-R→a: 0.30 m — nothing to extend to, the
+                        // drawn end IS the exit, and the engineer measured exactly that), or the far
+                        // edge genuinely is not where the boundary is heading. Tell them apart.
+                        var toNearestEdge = ped.Boundaries.Min(e => e.NearestStation(endPoint).Distance);
+                        if (toNearestEdge <= EndsAtCrossingEdgeMeters)
+                            findings.Add(new ValidationFinding(CodePedestrianEdgeCoverageGap,
+                                Severity.Warning, $"{veh.MovementId} × {ped.MovementId}",
+                                $"Vehicle boundary {veh.MovementId}.b{i + 1} ends at an edge of crossing '{ped.MovementId}' " +
+                                $"({toNearestEdge * 100:F0} cm from it); its drawn {endName} is the crossing exit (ED-015).",
+                                SourceReference: "Directive §21A; ED-015"));
+                        else
+                            findings.Add(new ValidationFinding(CodePedestrianEdgeCoverageGap,
+                                Severity.ReviewRequired, $"{veh.MovementId} × {ped.MovementId}",
+                                $"Vehicle boundary {veh.MovementId}.b{i + 1} terminates inside crossing '{ped.MovementId}' " +
+                                $"and no far crossing edge lies on its continuation; its drawn {endName} was used (ED-015 fallback).",
+                                RecommendedAction: "Check the crossing's far edge is drawn where the movement leaves it; the clearing distance may be short.",
+                                SourceReference: "Directive §21A; ED-015"));
+                        continue;
+                    }
+                    var (exitPoint, beyondEnd) = exit.Value;
+                    points.Add(new ConflictPoint(exitPoint, endStation + beyondEnd, 0.0,
+                        $"{veh.MovementId}.b{i + 1}@{endName}+exit", $"{ped.MovementId}.band",
+                        Origin: "boundary-termination"));
                     findings.Add(new ValidationFinding(CodePedestrianEdgeCoverageGap,
                         Severity.ReviewRequired, $"{veh.MovementId} × {ped.MovementId}",
                         $"Vehicle boundary {veh.MovementId}.b{i + 1} terminates inside crossing '{ped.MovementId}' " +
-                        $"(intersects {intersectedEdges} of {intersectedEdges + missedEdges} edges). Its drawn " +
-                        $"{endName} was added as a termination candidate; the drawing may be incomplete.",
-                        RecommendedAction: "Verify the boundary reaches the far crossing edge, or confirm the drawn extent.",
-                        SourceReference: "Directive §21A"));
+                        $"(intersects {intersectedEdges} of {intersectedEdges + missedEdges} edges). Measured to the " +
+                        $"crossing exit, {beyondEnd:F2} m beyond its drawn {endName} (ED-015).",
+                        RecommendedAction: "Confirm the drawn boundary should reach the far crossing edge.",
+                        SourceReference: "Directive §21A; ED-015"));
                 }
             }
         }
@@ -354,6 +401,69 @@ public sealed class LegacyEnvelopeConflictStrategy : IConflictPointStrategy
             if (region.IsValid) strips.Add(region);
         }
         return strips;
+    }
+
+    /// <summary>A drawn end this close to a crossing edge already sits on the exit; there is nothing to extend to.</summary>
+    private const double EndsAtCrossingEdgeMeters = 0.5;
+
+    /// <summary>How far to carry a boundary past its drawn end when looking for the crossing's far edge.</summary>
+    private const double CrossingExitSearchMeters = 60.0;
+
+    /// <summary>
+    /// ED-015: where a boundary that stops inside a crossing would leave it if drawn on. The boundary
+    /// is continued along the geometry of its last segment — a straight segment goes straight on, an
+    /// arc keeps its centre, radius and sense of rotation (turns are drawn as fillets, Appendix A, so
+    /// a straight tangent would miss the far edge: Example 1, E-R→a). The farthest crossing edge the
+    /// continuation meets is the exit. Returns the exit point and the distance beyond the drawn end,
+    /// or null when no crossing edge lies ahead (the caller then keeps the drawn end and says so).
+    /// </summary>
+    private static (Point2D Point, double BeyondEnd)? CrossingExit(
+        PolyCurve2D boundary, bool atStart, Point2D endPoint, IReadOnlyList<PolyCurve2D> crossingEdges)
+    {
+        var continuation = Continuation(boundary, atStart, endPoint);
+        if (continuation is null) return null;
+        CurveIntersection? farthest = null;
+        foreach (var edge in crossingEdges)
+        foreach (var hit in continuation.IntersectionsWith(edge))
+        {
+            if (hit.StationA <= Tolerances.PointDeduplication) continue;     // the drawn end itself
+            if (farthest is null || hit.StationA > farthest.Value.StationA) farthest = hit;
+        }
+        return farthest is null ? null : (farthest.Value.Point, farthest.Value.StationA);
+    }
+
+    /// <summary>The boundary carried on past its drawn end, along the last segment's own geometry.</summary>
+    private static PolyCurve2D? Continuation(PolyCurve2D curve, bool atStart, Point2D endPoint)
+    {
+        var seg = atStart ? curve.Segments[0] : curve.Segments[^1];
+        switch (seg)
+        {
+            case LineSegment2D l:
+            {
+                var t = atStart ? l.A - l.B : l.B - l.A;                 // direction of leaving the curve
+                if (t.Length < Tolerances.NumericEpsilon) return null;
+                var dir = t.Scaled(1.0 / t.Length);
+                return new PolyCurve2D(new ISegment2D[]
+                {
+                    new LineSegment2D(endPoint, endPoint + dir.Scaled(CrossingExitSearchMeters)),
+                });
+            }
+            case CircularArcSegment2D a:
+            {
+                // keep turning the same way: leaving through the end continues the sweep's sign,
+                // leaving through the start runs the sweep backwards
+                var sweepSign = atStart ? -Math.Sign(a.SweepRad) : Math.Sign(a.SweepRad);
+                if (sweepSign == 0) return null;
+                var startAngle = atStart ? a.StartAngleRad : a.StartAngleRad + a.SweepRad;
+                var sweep = sweepSign * Math.Min(Math.PI, CrossingExitSearchMeters / Math.Max(a.Radius, Tolerances.NumericEpsilon));
+                return new PolyCurve2D(new ISegment2D[]
+                {
+                    new CircularArcSegment2D(a.Center, a.Radius, startAngle, sweep),
+                });
+            }
+            default:
+                return null;
+        }
     }
 
     // ---------------- shared helpers ----------------

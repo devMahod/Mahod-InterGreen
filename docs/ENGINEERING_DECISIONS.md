@@ -161,3 +161,35 @@ Every non-trivial interpretation, with source, alternatives, impact and the test
   `Pivot_fixture_as_shipped_by_r10_is_detected_as_a_stale_cache_risk`,
   `Real_example_exports_reset_their_legacy_matrix_pivot_and_report_source_health`
   (fixture: `tests/fixtures/pivot/pivot-regression.xlsx`, built with real Excel).
+
+## ED-015 — A conflict with a pedestrian crossing ends after the crossing (David Suchinsky, 2026-08-27)
+
+**Source.** David's e-mail of 2026-08-27, item 1: "we prefer the conflict to end after the crossing;
+measure to the point where the boundary line exits the crossing area."
+
+**Rule, stated per role** (the safety direction differs between the two, and the e-mail did not
+distinguish them — this is our reading, shown to David on his own numbers in the r14 delivery):
+
+- **Clearing vehicle.** When a boundary stops inside a crossing (Directive §21A case), the
+  measurement point is not the drawn end but where the boundary would leave the crossing. The
+  boundary is carried on along its own last segment — a straight segment continues straight, an arc
+  keeps its centre, radius and sense (turns are fillets, Appendix A) — and the farthest crossing edge
+  it meets is the exit. CD grows; the intergreen grows; conservative.
+- **Entering vehicle.** The conflict begins at first contact with the crossing. The intersection
+  candidates already hold that point and, being the smallest ED, it governs. Unchanged.
+- **Fallbacks, never silent.** If the drawn end already sits on a crossing edge (≤ 0.5 m) there is
+  nothing to extend to: the drawn end is the exit (Warning, "ends at an edge of crossing"). If no
+  crossing edge lies on the continuation at all, the drawn end is kept and flagged for review ("the
+  clearing distance may be short").
+
+**Evidence.** Example 1: all 10 clearing-vehicle × crossing rows already equalled the engineer's CD;
+`E-R→a` ends 3 cm from the far edge of crossing `a` and stays at the engineer's 18.93/18.95 — the
+rule reproduces, not lengthens, the human measurement there. Example 2: `W-R→b` 13.49 → 15.63
+(exit 2.14 m beyond the drawn start), `W-R.b2` +5.00 m, `E-L.b1` +1.76 m; no FINAL IG changed on
+either example (39/40 and 60/78 agreement with the workbooks, identical to r13). Locked by
+`Regression.Tests/TerminationCandidateTests` (`Example2_W_R_to_b_is_measured_to_the_crossing_exit`,
+`Example1_E_R_to_a_ends_at_the_crossing_edge_and_keeps_the_engineers_distance`) and
+`Geometry.Tests/HardeningTests` (synthetic: 12.0 → 13.5; entering role unchanged).
+
+**Supersedes** the §21A "drawn end" reading for the clearing role (r13). Engineering assembly changed:
+`Mahod.Intergreen.Geometry` (`ConflictStrategies.cs`: `CrossingExit`, `Continuation`).
