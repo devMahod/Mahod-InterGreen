@@ -53,7 +53,7 @@ def run_engine(tag, geometry, workbook, confirmed):
               open(os.path.join(work, "g.intergreen-project.json"), "w", encoding="utf-8"))
     r = subprocess.run([CLI, "ig-analyze", "--geometry", geo, "--workbook", workbook, "--name", tag,
                         "--out", os.path.join(work, "out"), "--units", "meters"],
-                       capture_output=True, text=True, timeout=600)
+                       capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=600)
     path = os.path.join(work, "out", tag + ".analysis.json")
     if not os.path.exists(path):
         sys.exit(f"{tag}: engine run failed\n{r.stdout[-1500:]}\n{r.stderr[-1500:]}")
