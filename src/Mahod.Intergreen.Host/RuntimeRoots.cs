@@ -24,6 +24,20 @@ public static class RuntimeRoots
             "נראה שההתקנה פגומה — הריצו את המתקין של Mahod Intergreen מחדש.");
     }
 
+    /// <summary>The blank IG_matrix template shipped in the bundle (templates/ next to the anchor).
+    /// r14 "new project": the workbook is created from the client's own template, never invented.</summary>
+    public const string BlankTemplateFileName = "IG_matrix_template.xlsx";
+
+    public static string BlankTemplatePath(string anchorDirectory)
+    {
+        string candidate = Path.Combine(anchorDirectory, "templates", BlankTemplateFileName);
+        if (File.Exists(candidate))
+            return candidate;
+        throw new FileNotFoundException(
+            "תבנית ה-Excel (templates) לא נמצאה בהתקנה: " + candidate + Environment.NewLine +
+            "נראה שההתקנה פגומה — הריצו את המתקין של Mahod Intergreen מחדש.", candidate);
+    }
+
     /// <summary>SHA-256 of a file that may be OPEN AND LOCKED by the host application
     /// (the active DWG inside AutoCAD/Civil denies default sharing). Opens with full
     /// share flags so hashing never depends on how the host holds its own file.</summary>
