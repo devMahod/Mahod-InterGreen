@@ -51,9 +51,11 @@ open questions for David, listed in the report.
 
 ## 5. WP4/WP5 — *accepted in part; several items were already fixed between Codex's snapshot and now*
 
-- Half-length role heuristic flips on reversed polylines — **fixed before the review landed**: roles
-  are anchored at the stop line's station (`CrossingSlots.RolesFromGeometry`), proven on Example 1's
-  reversed S-T boundary and on Example 2's reversed W-R.
+- Half-length role heuristic flips on reversed polylines — **accepted and replaced twice**: first by
+  stop-line anchoring (still wrong for Example 2's short right turns E-R × a, W-R × c), then by the
+  junction's topology (`CrossingSlots.RolesFromGeometry`: ≥2 movements of one approach meeting a
+  crossing ⇒ its approach crossing; a lone one with siblings ⇒ exit arm). Proven on both real drawings,
+  including the reversed boundaries (Example 1 S-T, Example 2 W-R).
 - Automatic c9..c12 inference — **removed**; the arm slot is proposed and the channelised alternative
   is named for the engineer.
 - Slot collision must stop, not warn — **accepted**: the form refuses to close on a crossing without a

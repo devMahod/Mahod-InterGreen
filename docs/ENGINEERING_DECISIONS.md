@@ -243,9 +243,11 @@ and the r14 directive: deliver the tool, not a questionnaire. The format IS the 
   (north arm, exit side), c3/c4 east, c5/c6 south, c7/c8 west, and c9..c12 with a separate crossing on
   a channelised right turn (E-R, S-R, W-R, N-R) that replaces that turn's arm crossings. The letter an
   engineer gives a crossing is arbitrary; its slot is where it is. The slot is derived from the drawing
-  (`Host/CrossingSlots`): which movements meet the crossing and whether within the half of the boundary
-  nearer the stop line (approach arm) or beyond (exit arm) — anchored at the stop line's station, not
-  the first vertex, because boundaries are not reliably drawn stop-line-first. A full-width crossing
+  (`Host/CrossingSlots`) from the junction's topology, not from a distance along a polyline: two
+  movements of one approach meeting a crossing make it that approach's own crossing (they never exit into
+  the same arm); one movement meeting it while its siblings do not puts it on that movement's exit arm; a
+  lone movement falls back to stop-line setback (5 m) and station (8 m). Half-length and setback
+  heuristics were both tried and both failed on Example 2's short right turns. A full-width crossing
   occupies both halves of its arm with the same letter. One letter per slot; a second claimant is
   reported for the engineer, never guessed.
 - Cached values of the template's derived formulas (turn speeds, slow speeds, `$I$7` Inbar addition,
