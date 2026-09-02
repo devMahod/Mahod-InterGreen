@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Release-stamped: 0.1.0-r14, git cbd8f94678bb35b5bdcf7d64f97ae695d1f70935 (regenerate via scripts/release_build.py) -->
+<!-- Release-stamped: 0.1.0-r14, git 3600f4904cd0949adf90902df59ddf22be850883 (regenerate via scripts/release_build.py) -->
 <ApplicationPackage SchemaVersion="0.1.0.14" AutodeskProduct="AutoCAD"
     Name="Mahod Intergreen" AppVersion="0.1.0.14"
     Description="Mahod Engineering - intergreen calculation for signalized intersections (AutoCAD/Civil 3D 2026-2027), release 0.1.0-r14"

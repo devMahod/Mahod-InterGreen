@@ -1,16 +1,16 @@
-0.1.0-r14 packaging — 2026-09-02 11:09
-  installer  Mahod_Intergreen_Setup_0.1.0-r14.exe  78655771 B  sha256 00c4f0a59de97240df482ab69fda4b70c173b4cddfd02bc71566821fc5100f01
-  guide      guide_staff_r14.pdf  102579 B  sha256 b3c54dba58ea5832fb2e33e2ec4a6ef03099da1e53f5c18085a9b8180cb452af
-[PASS] staff ZIP C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14.zip  73215106 B  sha256 494db5f2077b445fd2a7efbbeaa3cb835f6b226253f2753bf249c2486f5ffbf9  files=['Mahod_Intergreen_Setup_0.1.0-r14.exe', 'Mahod_Intergreen_מדריך_מהיר.pdf']
-[PASS] no-installer ZIP C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14_ללא_מתקין.zip  7137321 B  sha256 5a2d8d85b7dfa030b089b128d1003929984ad65aaba56e02db77977bbb154814
+0.1.0-r14 packaging — 2026-09-02 20:01
+  installer  Mahod_Intergreen_Setup_0.1.0-r14.exe  78656283 B  sha256 2ad861bb80d8c4c70c79454244f77c3d879664d2eadc0e98190ccd3b7acd3622
+  guide      guide_staff_r14.pdf  535974 B  sha256 220d32ceae6e9ac48ce79639c34e978b3264b098862f3bcb31b260c4bd3f06a9
+[PASS] staff ZIP C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14.zip  73580687 B  sha256 11c587b90b3667ed047578cc95f31cfd8a171bd5ed7648d3432e4df910fbe54c  files=['Mahod_Intergreen_Setup_0.1.0-r14.exe', 'Mahod_Intergreen_מדריך_מהיר.pdf']
+[PASS] no-installer ZIP C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14_ללא_מתקין.zip  7502940 B  sha256 d0e04e127da8e2ab501c18b0b5df53e54ae5aadea47712a977579418b7e2f815
   Defender Mahod_Intergreen_0.1.0-r14.zip: CLEAN (exit 0): Scan starting... Scan finished. Scanning C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14.zip found no threats.
   Defender Mahod_Intergreen_0.1.0-r14_ללא_מתקין.zip: CLEAN (exit 0): Scan starting... Scan finished. Scanning C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14_???_?????.zip found no threats.
 [PASS] Defender custom scan clean on both ZIPs
 
 SUMMARY
   staff ZIP        C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14.zip
-  staff sha256     494db5f2077b445fd2a7efbbeaa3cb835f6b226253f2753bf249c2486f5ffbf9
+  staff sha256     11c587b90b3667ed047578cc95f31cfd8a171bd5ed7648d3432e4df910fbe54c
   no-installer ZIP C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14_ללא_מתקין.zip
-  no-inst sha256   5a2d8d85b7dfa030b089b128d1003929984ad65aaba56e02db77977bbb154814
-  installer sha256 00c4f0a59de97240df482ab69fda4b70c173b4cddfd02bc71566821fc5100f01
+  no-inst sha256   d0e04e127da8e2ab501c18b0b5df53e54ae5aadea47712a977579418b7e2f815
+  installer sha256 2ad861bb80d8c4c70c79454244f77c3d879664d2eadc0e98190ccd3b7acd3622
   RESULT           PASS
