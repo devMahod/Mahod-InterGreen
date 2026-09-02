@@ -6,3 +6,6 @@ TestResults/
 *.nupkg
 packages/
 _scratch/
+
+# rendered guide output (PDF + page rasters) — build artifact, the HTML/img sources are tracked
+docs/guides/out/
