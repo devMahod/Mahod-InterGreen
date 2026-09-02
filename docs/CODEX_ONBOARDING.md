@@ -165,11 +165,14 @@ machine and confirm the file survived.
 ## 8. What is open
 
 **Engineering questions for the client (David Suchinsky, traffic signals dept):**
-- Example 2 `b→W-R`: his engineer wrote 14, r13 computes 13. The r13 rule measures to where the
-  boundary enters the crossing; 14 corresponds to measuring to the movement's stop line. Which is
-  his method? This decides whether the r13 rule stands as is.
-- Appendix B of `הגדרת פעולה.docx` (the layer colour model) never reached us.
-- Which layers in the base/xref drawings (`TR-GM-*` etc.) carry curb lines and lane edges.
+- Example 2 `b→W-R`: his engineer wrote 14, r13 computes 13. David answered on 2026-08-27:
+  measure to where the boundary **exits** the crossing — a third reading that matches neither today's
+  rule nor his engineer's 14, and his own Example 1 team measured `E-R→a` to the drawn end. Analysis
+  and the question to send back: `docs/r14/DAVID_FEEDBACK_2026-08-27.md`. **Not implemented.**
+- ~~Appendix B (the layer colour model)~~ — **recovered 2026-08-27** from his own drawings and template: `docs/COLOUR_MODEL.md`. Only diagonal approaches remain unspecified.
+- Which layers in the base/xref drawings carry curb lines and lane edges — David (2026-08-27): they
+  are drawn by the traffic planner and are **not consistent across projects**; he proposes the user
+  selects them once per project. Design accordingly (persist in the project sidecar).
 - The 2025 guideline method (conflict points on lane **centrelines**, not envelopes) is stubbed as
   a second strategy and has no validated example.
 
