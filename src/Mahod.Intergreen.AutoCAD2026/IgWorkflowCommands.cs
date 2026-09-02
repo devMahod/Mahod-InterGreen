@@ -466,6 +466,7 @@ public partial class IgWorkflowCommands
         void AddSupport(string label, WorkflowAction? gate, Action onClick)
             => support.Children.Add(Make(label, gate, onClick, primary: false));
         Add("שרטוט DWG…", null, ChooseDrawing);
+        Add("בניית תנועות…", null, BuildMovements);                 // r14 WP6: Appendix A builder — copies, never edits, the planner lines
         Add("1. Setup — בחר קובץ Excel…", WorkflowAction.Setup, () => SetupCore(SetupInputMethod.Browse));
         Add("Excel חדש מהשרטוט…", WorkflowAction.Setup, NewProjectFromDrawing);          // r14: David item 4
         Add("2. Validate", WorkflowAction.Validate, () => RunPipeline(analyzeOnly: false));
