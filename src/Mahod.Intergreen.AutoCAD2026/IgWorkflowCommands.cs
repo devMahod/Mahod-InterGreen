@@ -47,6 +47,34 @@ public class IgWorkflowCommands
     /// surfaces exactly the boundaries the engine will later reject.
     /// </summary>
     private const double ReferenceToleranceMeters = 0.5;
+
+    /// <summary>What the project tolerance confirmed on the last run — shown in the status line.</summary>
+    private static IReadOnlyList<ReferenceIssue> _lastAutoConfirmed = Array.Empty<ReferenceIssue>();
+
+    /// <summary>The project's auto-confirm tolerance, or David's 10 cm default when none is set.</summary>
+    private static double AutoConfirmTolerance(string sidecarPath)
+        => SidecarStore.GetDouble(SidecarStore.Load(sidecarPath).Data, ReferenceReview.ToleranceSidecarKey)
+           ?? ReferenceReview.DefaultAutoConfirmToleranceMeters;
+
+    /// <summary>
+    /// Project setting for ED-016: the gap in centimetres under which a near-miss reference is confirmed
+    /// automatically. Per project, persisted in the sidecar, capped at 50 cm. Setting it to 0 turns the
+    /// automation off and returns every near-miss to the engineer.
+    /// </summary>
+    private static void SetAutoConfirmTolerance()
+    {
+        var doc = AcadApp.DocumentManager.MdiActiveDocument
+            ?? throw new UserFacingException("אין שרטוט פתוח.", "no active document");
+        var scPath = SidecarPath(doc.Database);
+        var current = AutoConfirmTolerance(scPath);
+        var chosen = new WpfToleranceEditor().Choose(current);
+        if (chosen is null) { SetStatus("סף האישור האוטומטי לא שונה."); return; }
+        var store = SidecarStore.Load(scPath);
+        SidecarStore.SetDouble(store.Data, ReferenceReview.ToleranceSidecarKey, chosen.Value);
+        SidecarStore.Commit(scPath, store.Data);
+        SupportLog.Write("AUTO_CONFIRM_TOLERANCE", $"{chosen.Value * 100:F0} cm (was {current * 100:F0} cm)");
+        SetStatus($"סף האישור האוטומטי לפרויקט: {chosen.Value * 100:F0} ס\"מ. הריצי Validate מחדש.");
+    }
     private static readonly List<Drawable> _transients = new();
     private static readonly WorkflowStateMachine State = new();
 
@@ -225,6 +253,57 @@ public class IgWorkflowCommands
         }
     }
 
+    /// <summary>
+    /// ED-016 tolerance editor: one number, in centimetres, with the engineering meaning spelled out.
+    /// Returns metres, or null on cancel. Values above the ceiling are refused, not clamped silently.
+    /// </summary>
+    private sealed class WpfToleranceEditor
+    {
+        public double? Choose(double currentMeters)
+        {
+            var win = new System.Windows.Window
+            {
+                Title = "סף אישור אוטומטי לנקודות ייחוס",
+                Width = 560, Height = 300, FlowDirection = System.Windows.FlowDirection.RightToLeft,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                ResizeMode = ResizeMode.NoResize,
+            };
+            var root = new StackPanel { Margin = new Thickness(14) };
+            root.Children.Add(new TextBlock
+            {
+                Text = "קו גבול שנעצר לפני קו העצירה בפער קטן מהסף הזה יאושר אוטומטית כנקודת ייחוס, " +
+                       "יירשם ביומן, והחישוב ימשיך. פער גדול יותר ימתין לאישורך ב\"נקודות ייחוס…\".\n" +
+                       $"ההגדרה נשמרת לפרויקט הזה בלבד. 0 = ללא אישור אוטומטי. מקסימום {ReferenceReview.MaxAutoConfirmToleranceMeters * 100:F0} ס\"מ.",
+                TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 10),
+            });
+            var row = new WrapPanel();
+            row.Children.Add(new TextBlock { Text = "סף (ס\"מ):", Margin = new Thickness(0, 4, 8, 0) });
+            var box = new TextBox { Width = 80, Text = Math.Round(currentMeters * 100).ToString(System.Globalization.CultureInfo.InvariantCulture) };
+            row.Children.Add(box);
+            root.Children.Add(row);
+            var error = new TextBlock { Foreground = System.Windows.Media.Brushes.DarkRed, Margin = new Thickness(0, 6, 0, 0) };
+            root.Children.Add(error);
+            var buttons = new WrapPanel { Margin = new Thickness(0, 12, 0, 0) };
+            var ok = new Button { Content = "אישור", Width = 90, Margin = new Thickness(0, 0, 8, 0), IsDefault = true };
+            var cancel = new Button { Content = "ביטול", Width = 90, IsCancel = true };
+            buttons.Children.Add(ok); buttons.Children.Add(cancel);
+            root.Children.Add(buttons);
+            win.Content = root;
+            double? result = null;
+            ok.Click += (_, _) =>
+            {
+                if (!double.TryParse(box.Text.Trim(), System.Globalization.NumberStyles.Float,
+                        System.Globalization.CultureInfo.InvariantCulture, out var cm) || cm < 0)
+                { error.Text = "יש להזין מספר סנטימטרים, 0 או יותר."; return; }
+                if (cm > ReferenceReview.MaxAutoConfirmToleranceMeters * 100)
+                { error.Text = $"הסף המרבי הוא {ReferenceReview.MaxAutoConfirmToleranceMeters * 100:F0} ס\"מ."; return; }
+                result = cm / 100.0;
+                win.DialogResult = true;
+            };
+            return win.ShowDialog() == true ? result : null;
+        }
+    }
+
     /// <summary>Rule-pack chooser (r8): plain list of the packs installed in the bundle;
     /// selection returns the pack id, cancel returns null. No engineering logic.</summary>
     private sealed class WpfRulePackChooser : IRulePackChooser
@@ -388,6 +467,7 @@ public class IgWorkflowCommands
         root.Children.Add(new Separator { Margin = new Thickness(0, 0, 0, 8) });
 
         AddSupport("נקודות ייחוס…", null, ConfirmReferences);
+        AddSupport("סף אישור אוטומטי…", null, SetAutoConfirmTolerance);
         AddSupport("בחירת חוקים…", null, ChooseRulePack);
         AddSupport("Clear QA", WorkflowAction.ClearQa, ClearQa);
         AddSupport("Export Support Log", null, ExportSupportLog);
@@ -860,7 +940,31 @@ public class IgWorkflowCommands
         var movements = ProjectAssembly.BuildMovements(curvesByLayer,
             _lastModel!.SignalGroups, _lastModel.PedestrianWidths, sidecar, findings);
 
-        _referenceIssues = ScanReferences(movements, sidecar);
+        // ED-016: a reference that misses its stop line by less than the project tolerance is a
+        // drafting rounding, not an engineering question. Confirm it here, write it to the sidecar
+        // under its own provenance key, log it, and rebuild the movements so THIS run already
+        // measures from it. Anything wider still waits for the engineer in "נקודות ייחוס…".
+        var scanned = ScanReferences(movements, sidecar);
+        var tolerance = AutoConfirmTolerance(scPath);
+        var (autoConfirmed, stillPending) = ReferenceReview.Partition(scanned, tolerance);
+        _lastAutoConfirmed = autoConfirmed;
+        if (autoConfirmed.Count > 0)
+        {
+            var store = SidecarStore.Load(scPath);
+            SidecarStore.SetStrings(store.Data, ReferenceReview.SidecarKey,
+                SidecarStore.GetStrings(store.Data, ReferenceReview.SidecarKey).Concat(autoConfirmed.Select(i => i.CurveId)));
+            SidecarStore.SetStrings(store.Data, ReferenceReview.AutoConfirmedSidecarKey,
+                SidecarStore.GetStrings(store.Data, ReferenceReview.AutoConfirmedSidecarKey).Concat(autoConfirmed.Select(i => i.CurveId)));
+            SidecarStore.Commit(scPath, store.Data);
+            foreach (var issue in autoConfirmed)
+                SupportLog.Write("REFERENCE_AUTO_CONFIRMED",
+                    $"{issue.CurveId} handle {issue.Handle} gap {issue.GapCentimetres:F1} cm <= tolerance {tolerance * 100:F0} cm");
+            sidecar = ProjectSidecar.Load(scPath);
+            findings.RemoveAll(f => f.Code == "IG-GEO-012");   // BuildMovements re-emits its own findings
+            movements = ProjectAssembly.BuildMovements(curvesByLayer,
+                _lastModel!.SignalGroups, _lastModel.PedestrianWidths, sidecar, findings);
+        }
+        _referenceIssues = stillPending;
 
         if (!analyzeOnly)
         {
@@ -871,9 +975,12 @@ public class IgWorkflowCommands
                                             $"endpointRefs={_referenceIssues.Count}");
             foreach (var issue in _referenceIssues)
                 SupportLog.Write("REFERENCE_ENDPOINT", ReferenceReview.Line(issue));
+            var autoNote = _lastAutoConfirmed.Count > 0
+                ? " " + ReferenceReview.AutoConfirmedSummary(_lastAutoConfirmed, tolerance)
+                : "";
             SetStatus($"VALIDATE: {movements.Count} movements " +
                       $"({movements.Count(m => m.Mode == MovementMode.Pedestrian)} crossings), " +
-                      $"units={unitsName}, errors={errors}, warnings={warns}. " +
+                      $"units={unitsName}, errors={errors}, warnings={warns}." + autoNote + " " +
                       (_referenceIssues.Count > 0
                           ? ReferenceReview.HebrewSummary(_referenceIssues) + " לחצי \"נקודות ייחוס…\"."
                           : errors > 0 ? "Resolve errors via Setup/drawing before Analyze." : "Ready to Analyze."));
@@ -1248,6 +1355,12 @@ public class IgWorkflowCommands
                     ["gap_cm"] = Math.Round(i.GapCentimetres, 2),
                 }).ToList();
                 payload["summary_he"] = ReferenceReview.HebrewSummary(pending);
+                payload["auto_confirm_tolerance_m"] = AutoConfirmTolerance(SidecarPath(doc.Database));
+                payload["auto_confirmed"] = _lastAutoConfirmed.Select(i => new Dictionary<string, object?>
+                {
+                    ["movement"] = i.MovementId, ["curveId"] = i.CurveId, ["handle"] = i.Handle,
+                    ["gap_cm"] = Math.Round(i.GapCentimetres, 2),
+                }).ToList();
 
                 RunPipeline(analyzeOnly: true);
                 payload["analyze_before"] = AnalyzePayload();

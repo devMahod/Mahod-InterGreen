@@ -86,6 +86,24 @@ public static class SidecarStore
         data[key] = d.RootElement.Clone();
     }
 
+    /// <summary>Store a numeric project setting (e.g. a tolerance in metres).</summary>
+    public static void SetDouble(Dictionary<string, JsonElement> data, string key, double value)
+    {
+        using var d = JsonDocument.Parse(JsonSerializer.Serialize(value));
+        data[key] = d.RootElement.Clone();
+    }
+
+    /// <summary>Read a numeric project setting; missing or malformed values yield null, never a guess.</summary>
+    public static double? GetDouble(Dictionary<string, JsonElement> data, string key)
+    {
+        if (!data.TryGetValue(key, out var el)) return null;
+        if (el.ValueKind == JsonValueKind.Number && el.TryGetDouble(out var v)) return v;
+        if (el.ValueKind == JsonValueKind.String &&
+            double.TryParse(el.GetString(), System.Globalization.NumberStyles.Float,
+                System.Globalization.CultureInfo.InvariantCulture, out var s)) return s;
+        return null;
+    }
+
     /// <summary>Read back a string array; missing or malformed values yield an empty set.</summary>
     public static IReadOnlyList<string> GetStrings(Dictionary<string, JsonElement> data, string key)
     {

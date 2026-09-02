@@ -193,3 +193,34 @@ either example (39/40 and 60/78 agreement with the workbooks, identical to r13).
 
 **Supersedes** the §21A "drawn end" reading for the clearing role (r13). Engineering assembly changed:
 `Mahod.Intergreen.Geometry` (`ConflictStrategies.cs`: `CrossingExit`, `Continuation`).
+
+## ED-016 — Near-miss stop-line references under a project tolerance are confirmed automatically (David Suchinsky, 2026-08-27)
+
+**Source.** David's e-mail of 2026-08-27, item 6b: consider an automatic mechanism that extends
+movement lines to the stop line when the gap is below a user-defined threshold, e.g. 10 cm.
+
+**What changes relative to ED-012.** ED-012 forbade a *hidden* 0.5 m guess. This is not hidden: the
+threshold is a **project setting** the engineer sees and can change (palette button
+"סף אישור אוטומטי…", stored as `autoConfirmEndpointToleranceMeters` in the project sidecar), the
+default is David's own 10 cm, the ceiling is 50 cm (larger values are refused, not clamped), and 0
+turns the automation off. Nothing is extended in the drawing; the boundary's drawn endpoint is
+confirmed as its reference station exactly as an engineer would in "נקודות ייחוס…".
+
+**Provenance.** Automatic confirmations are written to `confirmedEndpointReferences` (what the engine
+reads) **and** to `autoConfirmedEndpointReferences`, so a reviewer can always separate a tolerance
+decision from an engineer's. Each one is logged (`REFERENCE_AUTO_CONFIRMED`, with handle, gap and
+threshold) and named in the Validate status line. Gaps above the threshold remain pending exactly as
+in r12.
+
+**Why 10 cm is safe.** At 50 km/h, 10 cm is 0.007 s — below any rounding of an intergreen. Lin's two
+real cases were 4.7 cm and 6.3 cm on 40–60 m boundaries, invisible at drawing scale.
+
+**Evidence.** Example 2 run as a customer would (no sidecar): `S-L.b2` (4.37 cm) auto-confirmed,
+`E-L.b1` (16.45 cm) left pending; after the engineer confirms that one the accepted golden
+168 / 157 / 11 and 37 / 7 / 0 is reproduced. Host tests: partition rule, ceiling clamp, tolerance 0,
+sidecar round-trip, provenance kept apart. Dialog rendered and driven headlessly (refuses 75 cm with
+a visible error, accepts 15 cm → 0.150 m).
+
+**Assemblies changed.** `Mahod.Intergreen.Host` (SidecarStore numeric setting, ReferenceReview
+partition/summary), `Mahod.Intergreen.AutoCAD` (pipeline hook, dialog, smoke payload). No
+engineering assembly touched.
