@@ -42,14 +42,10 @@ public partial class IgWorkflowCommands
     /// </summary>
     private static IReadOnlyList<ReferenceIssue> _referenceIssues = Array.Empty<ReferenceIssue>();
 
-    /// <summary>
-    /// Mirrors LegacyEnvelopeConflictStrategy's endpoint-suggestion tolerance, so the pre-check
-    /// surfaces exactly the boundaries the engine will later reject.
-    /// </summary>
-    private const double ReferenceToleranceMeters = 0.5;
 
-    /// <summary>What the project tolerance confirmed on the last run — shown in the status line.</summary>
-    private static IReadOnlyList<ReferenceIssue> _lastAutoConfirmed = Array.Empty<ReferenceIssue>();
+    /// <summary>What the project tolerance did on the last run (extended / confirmed / pending) — shown in the status line.</summary>
+    private static IReadOnlyList<ReferenceResolution> _lastResolved = Array.Empty<ReferenceResolution>();
+    private static double _lastExtensionTolerance;
 
     /// <summary>The project's auto-confirm tolerance (0 = off, the default), clamped exactly as the engine applies it.</summary>
     private static double AutoConfirmTolerance(string sidecarPath)
@@ -72,9 +68,19 @@ public partial class IgWorkflowCommands
         if (chosen is null) { SetStatus("סף האישור האוטומטי לא שונה."); return; }
         var store = SidecarStore.Load(scPath);
         SidecarStore.SetDouble(store.Data, ReferenceReview.ToleranceSidecarKey, chosen.Value);
+        // Anything an earlier tolerance confirmed automatically (the pre-2026-09-02 mechanism) is no longer
+        // a decision anyone took under the new value: drop it, so the next Validate re-evaluates everything.
+        var autoIds = SidecarStore.GetStrings(store.Data, ReferenceReview.AutoConfirmedSidecarKey).ToHashSet(StringComparer.Ordinal);
+        if (autoIds.Count > 0)
+        {
+            SidecarStore.SetStrings(store.Data, ReferenceReview.SidecarKey,
+                SidecarStore.GetStrings(store.Data, ReferenceReview.SidecarKey).Where(id => !autoIds.Contains(id)));
+            SidecarStore.SetStrings(store.Data, ReferenceReview.AutoConfirmedSidecarKey, Array.Empty<string>());
+            SupportLog.Write("AUTO_CONFIRMATIONS_DROPPED", string.Join(";", autoIds));
+        }
         SidecarStore.Commit(scPath, store.Data);
-        SupportLog.Write("AUTO_CONFIRM_TOLERANCE", $"{chosen.Value * 100:F0} cm (was {current * 100:F0} cm)");
-        SetStatus($"סף האישור האוטומטי לפרויקט: {chosen.Value * 100:F0} ס\"מ. הריצי Validate מחדש.");
+        SupportLog.Write("AUTO_EXTEND_TOLERANCE", $"{chosen.Value * 100:F0} cm (was {current * 100:F0} cm)");
+        SetStatus($"סף ההארכה האוטומטית לפרויקט: {chosen.Value * 100:F0} ס\"מ. הריצי Validate מחדש.");
     }
     private static readonly List<Drawable> _transients = new();
     private static readonly WorkflowStateMachine State = new();
@@ -592,58 +598,23 @@ public partial class IgWorkflowCommands
         => Path.ChangeExtension(db.Filename, null) + ".intergreen-project.json";
 
     /// <summary>
-    /// Which boundaries can only be referenced to their stop line through a drawn endpoint
-    /// (Directive §14). Runs at Validate, before any conflict is computed, so the engineer learns
-    /// about it from a Hebrew sentence naming the movements instead of from empty rows later.
-    /// Already-confirmed boundaries are omitted — they are no longer a question.
+    /// Which boundaries can only be referenced to their stop line through a drawn endpoint (Directive §14).
+    /// Runs at Validate, before any conflict is computed; the logic is Host's <see cref="ReferenceScan"/>,
+    /// unit-tested on the real geometry fixtures.
     /// </summary>
     private static IReadOnlyList<ReferenceIssue> ScanReferences(
         IReadOnlyList<PipelineMovement> movements, ProjectSidecar sidecar)
-    {
-        var issues = new List<ReferenceIssue>();
-        foreach (var mv in movements)
-        {
-            var geom = mv.Geometry;
-            if (geom.Mode == MovementMode.Pedestrian || geom.StopLine is null) continue;
-            for (var i = 0; i < geom.Boundaries.Count; i++)
-            {
-                var curveId = $"{mv.Id}.b{i + 1}";
-                if (sidecar.ConfirmedEndpointReferences.Contains(curveId)) continue;
-                var r = ReferenceStation.Resolve(geom.Boundaries[i], geom.StopLine, ReferenceToleranceMeters);
-                if (r is null || r.Method != ReferenceStation.Method.EndpointFallback) continue;
-                issues.Add(new ReferenceIssue(mv.Id, curveId,
-                    i < mv.SourceHandles.Count ? mv.SourceHandles[i] : "-",
-                    MeasureGap(geom.Boundaries[i], geom.StopLine)));
-            }
-        }
-        return ReferenceReview.Sorted(issues);
-    }
+        => ReferenceScan.Scan(ScanMovements(movements), sidecar.ConfirmedEndpointReferences);
+
+    private static List<ReferenceScan.Movement> ScanMovements(IReadOnlyList<PipelineMovement> movements)
+        => movements.Where(m => m.Geometry.Mode != MovementMode.Pedestrian)
+                    .Select(m => new ReferenceScan.Movement(m.Id, m.Geometry.Boundaries, m.Geometry.StopLine, m.SourceHandles))
+                    .ToList();
 
     /// <summary>
-    /// Distance from the boundary's nearest endpoint to its stop line. PolyCurve2D exposes no
-    /// point-to-curve distance, and reimplementing it here would let the number the engineer sees
-    /// drift away from the engine's own decision. So we narrow the very same Resolve() call: the
-    /// smallest tolerance that still yields an endpoint fallback is the gap.
-    /// </summary>
-    private static double MeasureGap(PolyCurve2D boundary, PolyCurve2D stopLine)
-    {
-        double lo = 0.0, hi = ReferenceToleranceMeters;
-        for (var i = 0; i < 24; i++)
-        {
-            var mid = (lo + hi) / 2;
-            if (ReferenceStation.Resolve(boundary, stopLine, mid)?.Method == ReferenceStation.Method.EndpointFallback)
-                hi = mid;
-            else
-                lo = mid;
-        }
-        return hi;
-    }
-
-    /// <summary>
-    /// Confirm endpoint references (Directive §14). Shows every unconfirmed boundary with its gap
-    /// and DWG handle; confirming writes the curve ids to the project sidecar, which is the only
-    /// thing the engine reads. Nothing is confirmed implicitly and nothing is confirmed for other
-    /// projects. Cancel leaves the drawing and the sidecar untouched.
+    /// "נקודות ייחוס…": the engineer confirms, per boundary, that the drawn endpoint is the measurement
+    /// origin (Directive §14). The confirmations live in the project sidecar and take effect through a
+    /// fresh pipeline run.
     /// </summary>
     private static void ConfirmReferences()
     {
@@ -943,30 +914,76 @@ public partial class IgWorkflowCommands
         var movements = ProjectAssembly.BuildMovements(curvesByLayer,
             _lastModel!.SignalGroups, _lastModel.PedestrianWidths, sidecar, findings);
 
-        // ED-016: a reference that misses its stop line by less than the project tolerance is a
-        // drafting rounding, not an engineering question. Confirm it here, write it to the sidecar
-        // under its own provenance key, log it, and rebuild the movements so THIS run already
-        // measures from it. Anything wider still waits for the engineer in "נקודות ייחוס…".
+        // ED-016 (amended 2026-09-02): a boundary that misses its stop line by less than the project
+        // tolerance is EXTENDED to it — along its own end tangent, virtually, in the geometry handed to
+        // the engine — so the engine finds an exact intersection. A boundary that runs past the stop
+        // line's end (nothing to extend to) has its drawn end confirmed as the origin, as the engineer did
+        // by hand in r12; that confirmation is written under the automatic provenance key. Nothing is
+        // written to the DWG. Every case is logged, reported as a finding and named in the status line;
+        // whatever the pass refuses stays a pending reference for the engineer.
         var scanned = ScanReferences(movements, sidecar);
         var tolerance = AutoConfirmTolerance(scPath);
-        var (autoConfirmed, stillPending) = ReferenceReview.Partition(scanned, tolerance);
-        _lastAutoConfirmed = autoConfirmed;
-        if (autoConfirmed.Count > 0)
+        var resolved = ReferenceScan.Resolve(scanned, ScanMovements(movements), tolerance);
+        var stillPending = new List<ReferenceIssue>();
+        var extendedIds = new List<string>();
+        var confirmedIds = new List<string>();
+        foreach (var r in resolved)
+        {
+            switch (r.Kind)
+            {
+                case ReferenceResolutionKind.Extended:
+                {
+                    var layerCurves = curvesByLayer[ProjectAssembly.LayerPrefix + r.Issue.MovementId];
+                    var k = layerCurves.FindIndex(c => c.Item1 == r.Issue.Handle);
+                    if (k < 0) { stillPending.Add(r.Issue); break; }
+                    layerCurves[k] = (r.Issue.Handle, r.Extension!.Extended!);
+                    extendedIds.Add(r.Issue.CurveId);
+                    SupportLog.Write("BOUNDARY_EXTENDED",
+                        $"{r.Issue.CurveId} handle {r.Issue.Handle} +{r.Extension.LengthMeters * 100:F1} cm along its tangent to the stop line (tolerance {tolerance * 100:F0} cm)");
+                    findings.Add(new ValidationFinding("IG-GEO-013", Severity.Warning, r.Issue.MovementId,
+                        $"BOUNDARY_EXTENDED: {r.Issue.CurveId} (handle {r.Issue.Handle}) carried {r.Extension.LengthMeters * 100:F1} cm along its end tangent " +
+                        $"to the stop line; project tolerance {tolerance * 100:F0} cm. The drawing was not changed.",
+                        RecommendedAction: "Set the tolerance to 0 to review such boundaries by hand.",
+                        SourceReference: "ED-016 (amended 2026-09-02)"));
+                    break;
+                }
+                case ReferenceResolutionKind.Confirmed:
+                    confirmedIds.Add(r.Issue.CurveId);
+                    SupportLog.Write("REFERENCE_AUTO_CONFIRMED",
+                        $"{r.Issue.CurveId} handle {r.Issue.Handle} gap {r.Issue.GapCentimetres:F1} cm <= tolerance {tolerance * 100:F0} cm: {r.Reason}");
+                    findings.Add(new ValidationFinding("IG-GEO-014", Severity.Warning, r.Issue.MovementId,
+                        $"REFERENCE_AUTO_CONFIRMED: {r.Issue.CurveId} (handle {r.Issue.Handle}) runs {r.Issue.GapCentimetres:F1} cm beside the stop line's end; " +
+                        $"the drawn end is the measurement origin (project tolerance {tolerance * 100:F0} cm).",
+                        RecommendedAction: "Lengthen the stop line in the drawing to make the intersection exact.",
+                        SourceReference: "ED-016 (amended 2026-09-02)"));
+                    break;
+                default:
+                    stillPending.Add(r.Issue);
+                    if (tolerance > 0)
+                        SupportLog.Write("REFERENCE_PENDING", $"{r.Issue.CurveId} handle {r.Issue.Handle} gap {r.Issue.GapCentimetres:F1} cm: {r.Reason}");
+                    break;
+            }
+        }
+        if (confirmedIds.Count > 0)
         {
             var store = SidecarStore.Load(scPath);
             SidecarStore.SetStrings(store.Data, ReferenceReview.SidecarKey,
-                SidecarStore.GetStrings(store.Data, ReferenceReview.SidecarKey).Concat(autoConfirmed.Select(i => i.CurveId)));
+                SidecarStore.GetStrings(store.Data, ReferenceReview.SidecarKey).Concat(confirmedIds));
             SidecarStore.SetStrings(store.Data, ReferenceReview.AutoConfirmedSidecarKey,
-                SidecarStore.GetStrings(store.Data, ReferenceReview.AutoConfirmedSidecarKey).Concat(autoConfirmed.Select(i => i.CurveId)));
+                SidecarStore.GetStrings(store.Data, ReferenceReview.AutoConfirmedSidecarKey).Concat(confirmedIds));
             SidecarStore.Commit(scPath, store.Data);
-            foreach (var issue in autoConfirmed)
-                SupportLog.Write("REFERENCE_AUTO_CONFIRMED",
-                    $"{issue.CurveId} handle {issue.Handle} gap {issue.GapCentimetres:F1} cm <= tolerance {tolerance * 100:F0} cm");
             sidecar = ProjectSidecar.Load(scPath);
-            findings.RemoveAll(f => f.Code == "IG-GEO-012");   // BuildMovements re-emits its own findings
+        }
+        if (extendedIds.Count > 0 || confirmedIds.Count > 0)
+        {
+            var kept = findings.Where(f => f.Code is "IG-GEO-013" or "IG-GEO-014").ToList();
+            findings.RemoveAll(f => f.Code is "IG-GEO-012" or "IG-GEO-013" or "IG-GEO-014");   // BuildMovements re-emits its own findings
             movements = ProjectAssembly.BuildMovements(curvesByLayer,
                 _lastModel!.SignalGroups, _lastModel.PedestrianWidths, sidecar, findings);
+            findings.AddRange(kept);
         }
+        _lastResolved = resolved;
+        _lastExtensionTolerance = tolerance;
         _referenceIssues = stillPending;
 
         if (!analyzeOnly)
@@ -978,9 +995,8 @@ public partial class IgWorkflowCommands
                                             $"endpointRefs={_referenceIssues.Count}");
             foreach (var issue in _referenceIssues)
                 SupportLog.Write("REFERENCE_ENDPOINT", ReferenceReview.Line(issue));
-            var autoNote = _lastAutoConfirmed.Count > 0
-                ? " " + ReferenceReview.AutoConfirmedSummary(_lastAutoConfirmed, tolerance)
-                : "";
+            var autoNote = ReferenceReview.ResolutionSummary(_lastResolved, _lastExtensionTolerance);
+            if (autoNote.Length > 0) autoNote = " " + autoNote;
             SetStatus($"VALIDATE: {movements.Count} movements " +
                       $"({movements.Count(m => m.Mode == MovementMode.Pedestrian)} crossings), " +
                       $"units={unitsName}, errors={errors}, warnings={warns}." + autoNote + " " +
@@ -1358,11 +1374,13 @@ public partial class IgWorkflowCommands
                     ["gap_cm"] = Math.Round(i.GapCentimetres, 2),
                 }).ToList();
                 payload["summary_he"] = ReferenceReview.HebrewSummary(pending);
-                payload["auto_confirm_tolerance_m"] = AutoConfirmTolerance(SidecarPath(doc.Database));
-                payload["auto_confirmed"] = _lastAutoConfirmed.Select(i => new Dictionary<string, object?>
+                payload["auto_extend_tolerance_m"] = AutoConfirmTolerance(SidecarPath(doc.Database));
+                payload["auto_resolved"] = _lastResolved.Select(r => new Dictionary<string, object?>
                 {
-                    ["movement"] = i.MovementId, ["curveId"] = i.CurveId, ["handle"] = i.Handle,
-                    ["gap_cm"] = Math.Round(i.GapCentimetres, 2),
+                    ["movement"] = r.Issue.MovementId, ["curveId"] = r.Issue.CurveId, ["handle"] = r.Issue.Handle,
+                    ["gap_cm"] = Math.Round(r.Issue.GapCentimetres, 2), ["kind"] = r.Kind.ToString(),
+                    ["extension_cm"] = r.Extension is null ? null : Math.Round(r.Extension.LengthMeters * 100, 2),
+                    ["reason"] = r.Reason,
                 }).ToList();
 
                 RunPipeline(analyzeOnly: true);

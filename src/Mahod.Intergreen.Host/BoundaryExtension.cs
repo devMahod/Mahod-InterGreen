@@ -68,7 +68,7 @@ public static class BoundaryExtension
     }
 
     /// <summary>Unit vector pointing out of the curve at the given end, along that end's tangent.</summary>
-    internal static (double X, double Y)? OutwardTangent(ISegment2D segment, bool atStart)
+    public static (double X, double Y)? OutwardTangent(ISegment2D segment, bool atStart)
     {
         switch (segment)
         {

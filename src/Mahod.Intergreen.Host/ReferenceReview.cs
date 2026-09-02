@@ -80,6 +80,32 @@ public static class ReferenceReview
             : $"{auto.Count} קווי גבול ({names}) אושרו אוטומטית — פער עד {cm:F0} ס\"מ מקו העצירה.";
     }
 
+    /// <summary>Status clause for the whole tolerance pass: what was extended, what was confirmed beside the stop line's end.</summary>
+    public static string ResolutionSummary(IReadOnlyList<ReferenceResolution> resolved, double toleranceMeters)
+    {
+        var extended = resolved.Where(r => r.Kind == ReferenceResolutionKind.Extended).Select(r => r.Issue.MovementId).Distinct(StringComparer.Ordinal).ToList();
+        var confirmed = resolved.Where(r => r.Kind == ReferenceResolutionKind.Confirmed).Select(r => r.Issue.MovementId).Distinct(StringComparer.Ordinal).ToList();
+        if (extended.Count == 0 && confirmed.Count == 0) return "";
+        var cm = Math.Round(toleranceMeters * 100.0);
+        var parts = new List<string>();
+        if (extended.Count > 0)
+            parts.Add($"{(extended.Count == 1 ? "קו גבול אחד" : extended.Count + " קווי גבול")} ({string.Join(", ", extended)}) הוארך וירטואלית עד קו העצירה");
+        if (confirmed.Count > 0)
+            parts.Add($"{(confirmed.Count == 1 ? "קו גבול אחד" : confirmed.Count + " קווי גבול")} ({string.Join(", ", confirmed)}) עובר לצד קצה קו העצירה ואושר בקצהו");
+        return string.Join("; ", parts) + $" (סף {cm:F0} ס\"מ; השרטוט לא שונה).";
+    }
+
+    /// <summary>Status clause for boundaries the tolerance extended virtually — names the movements, says the DWG is untouched.</summary>
+    public static string ExtendedSummary(IReadOnlyList<ReferenceIssue> extended, double toleranceMeters)
+    {
+        if (extended.Count == 0) return "";
+        var names = string.Join(", ", extended.Select(i => i.MovementId).Distinct(StringComparer.Ordinal));
+        var cm = Math.Round(toleranceMeters * 100.0);
+        return extended.Count == 1
+            ? $"קו גבול אחד ({names}) הוארך וירטואלית עד קו העצירה (סף {cm:F0} ס\"מ; השרטוט לא שונה)."
+            : $"{extended.Count} קווי גבול ({names}) הוארכו וירטואלית עד קו העצירה (סף {cm:F0} ס\"מ; השרטוט לא שונה).";
+    }
+
     /// <summary>Widest gap first — that is the one most likely to be a real drawing defect.</summary>
     public static IReadOnlyList<ReferenceIssue> Sorted(IEnumerable<ReferenceIssue> issues) =>
         issues.OrderByDescending(i => i.GapMeters)
