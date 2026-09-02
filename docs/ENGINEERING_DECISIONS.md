@@ -306,5 +306,11 @@ Evidence, real geometry:
   the tolerance, so it stays with the engineer, and once confirmed the golden holds (168 / 37-7-0).
   Example 1 has no near-miss and is untouched (50 / 24-0-0 / W-L→S-T 5).
 
-Still open in WP2: an explicit palette action that writes the same extension into the DWG (with Undo), and
-a "show in drawing" for a pending reference so the engineer never needs the handle.
+The explicit half (commit aa79a4b): "הארך בשרטוט…" writes the last run's virtual extensions into the DWG on
+the engineer's click — Line endpoint moved / LWPolyline vertex added at the intersection, arcs left alone
+and named, one document lock, one transaction, one Undo, coordinates back through the run's unit scale;
+"הצג קו קצר…" zooms to a pending reference's short end with a transient marker (`ReferenceIssue.NearEnd`)
+so nobody needs a handle. Real hosts (`scripts/realhost_extend_in_dwg.py`, accoreconsole 2026 + 2027,
+Example 2 copy): S-L.b2 +4.37 cm written, re-validated with nothing virtual left, QSAVE, reopened in a
+fresh process with the tolerance OFF — the boundary meets its stop line for real; E-L.b1 (16.45 cm) stays
+with the engineer throughout, and the golden holds once she confirms it. PASS ×2.

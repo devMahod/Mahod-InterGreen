@@ -41,7 +41,7 @@ invariant (`Every_termination_candidate_lies_on_the_crossing_it_claims_to_stop_i
   boundary that runs past the stop line's end vertex — Lin's E-T, 4.7 cm beside it — cannot be extended
   and is confirmed the way she did by hand, recorded as automatic; ambiguous or wider gaps go to the
   engineer. Proven on Lin's geometry and in accoreconsole 2026/2027 on Example 2 (S-L.b2 +4.37 cm;
-  E-L.b1 at 16.45 cm rightly left pending). The explicit "extend in the DWG" action is still to come.
+  E-L.b1 at 16.45 cm rightly left pending). The explicit action exists too (commit aa79a4b): "הארך בשרטוט…" writes the extension into the DWG with one Undo, proven on a copy in both hosts (written, re-validated, saved, reopened).
 
 ## 4. WP3 colours — *accepted in part*
 
