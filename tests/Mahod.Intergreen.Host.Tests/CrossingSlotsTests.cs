@@ -68,13 +68,19 @@ public class CrossingSlotsTests
     }
 
     [Fact]
-    public void A_crossing_met_only_by_one_right_turn_is_that_turns_separate_crossing()
+    public void A_crossing_met_only_by_one_right_turn_gets_the_arm_slot_and_a_note_about_the_channelised_alternative()
     {
+        // geometry cannot tell a channelised right-turn crossing from an arm crossing on an approach that
+        // only turns right — so nothing is inferred: the arm slot is proposed, c9..c12 is offered in words
         var result = CrossingSlots.Assign(Map(
-            ("e", new[] { ("E-R", CrossingRole.Exiting) }),
-            ("f", new[] { ("N-R", CrossingRole.Entering) })));
-        Assert.Equal(new[] { 9 }, result.Single(r => r.Crossing == "e").Slots);
-        Assert.Equal(new[] { 12 }, result.Single(r => r.Crossing == "f").Slots);
+            ("e", new[] { ("E-R", CrossingRole.Exiting) }),        // E-R exits into the north arm
+            ("f", new[] { ("N-R", CrossingRole.Entering) })));     // N-R leaves the north stop line
+        var e = result.Single(r => r.Crossing == "e");
+        var f = result.Single(r => r.Crossing == "f");
+        Assert.Equal(new[] { 2 }, e.Slots);
+        Assert.Contains(e.Notes, n => n.Contains("c9"));
+        Assert.Equal(new[] { 1 }, f.Slots);
+        Assert.Contains(f.Notes, n => n.Contains("c12"));
     }
 
     [Fact]

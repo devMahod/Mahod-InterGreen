@@ -44,11 +44,14 @@ public static class TemplateWorkbook
         string outputPath,
         NewProjectInputs inputs,
         IReadOnlyCollection<string> movementsInDrawing,
-        IReadOnlyCollection<string> crossingsInDrawing)
+        IReadOnlyCollection<string> crossingsInDrawing,
+        bool overwrite = false)
     {
         if (Path.GetFullPath(templatePath) == Path.GetFullPath(outputPath))
             throw new InvalidOperationException("the template itself must never be written to");
-        File.Copy(templatePath, outputPath, overwrite: true);
+        if (!overwrite && File.Exists(outputPath))
+            throw new InvalidOperationException($"'{outputPath}' already exists; an engineer's workbook is never replaced silently");
+        File.Copy(templatePath, outputPath, overwrite);
 
         var warnings = new List<string>();
         var movementsWritten = new List<string>();

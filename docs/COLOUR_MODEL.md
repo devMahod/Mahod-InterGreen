@@ -31,3 +31,22 @@ Entities are always `ByLayer` (colour index 256) — the colour lives on the lay
 
 Open point for the client: diagonal approaches (NE/SE/SW/NW, permitted by the naming rule) have no
 colours in any reference file.
+
+## Precedence note (2026-09-02, after the Codex review)
+
+The original Appendix B (`הגדרת פעולה.docx` p.6; `אפיון.xlsx` Sheet2!A60:A85) does exist and differs
+from the template and both examples for the **east** approach:
+
+| movement | Appendix B (original) | template + Example 1 + Example 2 (this model) |
+|---|---|---|
+| E-R | `FF7C80` | `FF0000` |
+| E-T | `CC0000` | `FF9999` |
+| E-L | `FF0000` | `FF33CC` |
+
+David's e-mail of 2026-08-27 (item 2) asks for the layer colours to match the Excel — and the Excel
+the engineers actually use is the template, identical in both examples. **The e-mail and the files in
+use take precedence over the older appendix**; this is a documented precedence decision, not a
+recovery of Appendix B. The RGB table is authoritative; the verbal "right dark / straight normal /
+left light" gloss is a description and is not enforced (E-L `FF33CC` is darker than E-T `FF9999`).
+Open with David in the r14 report: the east triple, and colours for bus/sherut layers, diagonals and
+U-turns (currently: template fills for bus/sherut in Excel, white layers in CAD; diagonals unassigned).

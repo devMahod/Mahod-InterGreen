@@ -114,13 +114,15 @@ public static class CrossingSlots
             {
                 notes.Add($"מעבר {crossing}: אף תנועת רכב לא חוצה אותו — לא הוקצתה משבצת בתבנית");
             }
-            else if (movements.Count == 1 && movements[0].EndsWith("-R", StringComparison.OrdinalIgnoreCase)
-                     && NewProjectDefaults.ApproachOf(movements[0]) is string rt)
-            {
-                wanted.Add(RightTurnSlot(rt));
-            }
             else
             {
+                // A crossing met by a single right turn may be that turn's own crossing on a channelised
+                // lane (c9..c12) — or simply an arm crossing on an approach that has only a right turn.
+                // Geometry cannot tell the two apart, so the arm slot is proposed and the engineer is told
+                // about the alternative; nothing is inferred silently.
+                if (movements.Count == 1 && movements[0].EndsWith("-R", StringComparison.OrdinalIgnoreCase)
+                    && NewProjectDefaults.ApproachOf(movements[0]) is string rt)
+                    notes.Add($"מעבר {crossing}: נחצה רק על ידי {movements[0]} — אם זה מעבר נפרד בנתיב פנייה ימינה מתועל, בחרו c{RightTurnSlot(rt)}");
                 foreach (var (movement, role) in hits)
                 {
                     var arm = role == CrossingRole.Entering ? NewProjectDefaults.ApproachOf(movement) : ExitArmOf(movement);

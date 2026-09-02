@@ -224,3 +224,61 @@ a visible error, accepts 15 cm → 0.150 m).
 **Assemblies changed.** `Mahod.Intergreen.Host` (SidecarStore numeric setting, ReferenceReview
 partition/summary), `Mahod.Intergreen.AutoCAD` (pipeline hook, dialog, smoke payload). No
 engineering assembly touched.
+
+## ED-017 — The project workbook is created from the client's blank template; crossing slots follow the template's map of the junction (David Suchinsky, 2026-08-27, item 4)
+
+**Source.** David's e-mail of 2026-08-27, item 4 ("propose a format to collect the non-drawing data")
+and the r14 directive: deliver the tool, not a questionnaire. The format IS the client's own
+`IG_matrix` template — the tool fills it from the drawing plus a one-screen form.
+
+**Rule.**
+
+- The workbook is a copy of the shipped blank template (`templates/IG_matrix_template.xlsx`, the
+  client's `05_intersectionName_IG_matrix_YYYY-MM-DD.xlsx`). Only cells an engineer types are written:
+  `Parameters` through-rows (interurban flag, fast speed) and constants, `Signal group key` numbers,
+  `Pedestrian Xing` letters and lengths. No row is deleted, no formula is rewritten; pairs the drawing
+  does not have are blanked and go inert through the template's own `IF(SUM($D:$K)=0,"")` guards.
+- **The `Pedestrian Xing` slots are positions in the junction, not a list.** The template's
+  `Input Distances` grid pairs c1 with N-R/N-T/N-L (north arm, entering side), c2 with E-R/S-T/W-L
+  (north arm, exit side), c3/c4 east, c5/c6 south, c7/c8 west, and c9..c12 with a separate crossing on
+  a channelised right turn (E-R, S-R, W-R, N-R) that replaces that turn's arm crossings. The letter an
+  engineer gives a crossing is arbitrary; its slot is where it is. The slot is derived from the drawing
+  (`Host/CrossingSlots`): which movements meet the crossing and whether within the half of the boundary
+  nearer the stop line (approach arm) or beyond (exit arm) — anchored at the stop line's station, not
+  the first vertex, because boundaries are not reliably drawn stop-line-first. A full-width crossing
+  occupies both halves of its arm with the same letter. One letter per slot; a second claimant is
+  reported for the engineer, never guessed.
+- Cached values of the template's derived formulas (turn speeds, slow speeds, `$I$7` Inbar addition,
+  pedestrian pair letters) are refreshed to exactly what Excel computes, because the engine reads
+  caches from a file Excel has not opened yet; `FullCalculationOnLoad` is set so Excel agrees on open.
+  Formula text is never touched; a formula whose shape is not the template's is left to Excel and
+  reported.
+
+**Evidence.** The engineers' own placements are reproduced: Example 1 (T-junction, no north approach)
+a..d in c2..c5 with c1 blank — from the real drawing's geometry; Example 2 full-width crossings in both
+halves (d,d,a,a,b,b,c,c). A workbook generated from Example 1's drawing and form inputs gives the
+engine exactly the hand-filled result: 50 conflicts, 24 VALID matrix cells, W-L→S-T 5, every conflict
+identical in status, FINAL IG and defining point; the same 40 live pairs; accepted by the same gate.
+Locked by `Regression.Tests/GeneratedWorkbookTests`, `Host.Tests/TemplateWorkbookTests`,
+`Host.Tests/CrossingSlotsTests` (418 tests green).
+
+**Assemblies changed.** `Mahod.Intergreen.Host` only (`TemplateWorkbook`, `CrossingSlots`,
+`NewProjectInputs`, `RuntimeRoots.BlankTemplatePath`); Host now references `Geometry` (read-only use of
+`PolyCurve2D`/`ReferenceStation`). No engineering assembly touched.
+
+### ED-016 amendment (2026-09-02, after the Codex review)
+
+- **Default is OFF.** `DefaultAutoConfirmToleranceMeters = 0`. A project that never set a tolerance keeps
+  r12/r13 behaviour — every near-miss waits for the engineer — so upgrading never changes a number.
+  David's 10 cm is `SuggestedAutoConfirmToleranceMeters`, offered by the dialog, typed by a person.
+- **Clamped on read** (`ReferenceReview.Clamp`): a hand-edited sidecar value above 50 cm or negative is
+  applied as 50 cm / 0 and shown as such — the status line and the engine can no longer disagree.
+- **Rounding is not immune to centimetres.** The earlier note "10 cm cannot change an intergreen" is
+  withdrawn: 0.007 s can cross a rounding boundary. Every automatic application is therefore logged
+  with its gap (REFERENCE_AUTO_CONFIRMED) and named in the Validate status line.
+- **Still open (WP2 rework, in progress):** David asked to *extend* the line to the stop line. Confirming
+  the drawn endpoint as the measurement origin is not that. The rework: a virtual extension along the
+  boundary's own end tangent to its unique intersection with the assigned stop line (extension length
+  measured along the tangent, not the perpendicular gap), applied before the engine runs so the
+  intersection is exact and no sidecar confirmation is needed; lowering the tolerance drops earlier
+  automatic entries; an explicit palette action writes the same extension into the DWG with Undo.

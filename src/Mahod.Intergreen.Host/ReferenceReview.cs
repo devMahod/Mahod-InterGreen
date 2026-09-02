@@ -36,11 +36,23 @@ public static class ReferenceReview
     public const string ToleranceSidecarKey = "autoConfirmEndpointToleranceMeters";
 
     /// <summary>
-    /// David's own suggested threshold — 10 cm. Drafting imprecision of this size is invisible at
-    /// drawing scale (Lin's two cases were 4.7 cm and 6.3 cm on 40–60 m lines) and cannot change an
-    /// intergreen: at 50 km/h, 10 cm is 0.007 s. Anything above still needs the engineer.
+    /// Off until the engineer turns it on. David asked for a threshold "the user defines (e.g. 10 cm)";
+    /// a project that never set one keeps r12/r13 behaviour — every near-miss waits for a person — so
+    /// no existing project changes its numbers by upgrading (ED-016, Codex review 2026-09-02).
     /// </summary>
-    public const double DefaultAutoConfirmToleranceMeters = 0.10;
+    public const double DefaultAutoConfirmToleranceMeters = 0.0;
+
+    /// <summary>
+    /// David's own example — 10 cm — offered by the dialog as the value to type. Drafting imprecision
+    /// of this size is invisible at drawing scale (Lin's two cases were 4.7 cm and 6.3 cm on 40–60 m
+    /// lines); at 50 km/h it is 0.007 s, which can still cross a rounding boundary, so every application
+    /// is logged with its gap.
+    /// </summary>
+    public const double SuggestedAutoConfirmToleranceMeters = 0.10;
+
+    /// <summary>The project setting as the engine must see it: never negative, never above the ceiling.</summary>
+    public static double Clamp(double toleranceMeters)
+        => double.IsFinite(toleranceMeters) ? Math.Clamp(toleranceMeters, 0.0, MaxAutoConfirmToleranceMeters) : 0.0;
 
     /// <summary>Hard ceiling for the project setting, so a typo cannot silently wave through a real gap.</summary>
     public const double MaxAutoConfirmToleranceMeters = 0.50;

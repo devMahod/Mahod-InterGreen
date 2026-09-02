@@ -27,7 +27,7 @@ namespace Mahod.Intergreen.AutoCAD2026;
 /// User-journey behavior (path handling, workflow gating, sidecar transactionality,
 /// export policy, logging) lives in Mahod.Intergreen.Host and is unit-tested there.
 /// </summary>
-public class IgWorkflowCommands
+public partial class IgWorkflowCommands
 {
     private static PaletteSet? _palette;
     private static ListView? _list;
@@ -51,10 +51,11 @@ public class IgWorkflowCommands
     /// <summary>What the project tolerance confirmed on the last run — shown in the status line.</summary>
     private static IReadOnlyList<ReferenceIssue> _lastAutoConfirmed = Array.Empty<ReferenceIssue>();
 
-    /// <summary>The project's auto-confirm tolerance, or David's 10 cm default when none is set.</summary>
+    /// <summary>The project's auto-confirm tolerance (0 = off, the default), clamped exactly as the engine applies it.</summary>
     private static double AutoConfirmTolerance(string sidecarPath)
-        => SidecarStore.GetDouble(SidecarStore.Load(sidecarPath).Data, ReferenceReview.ToleranceSidecarKey)
-           ?? ReferenceReview.DefaultAutoConfirmToleranceMeters;
+        => ReferenceReview.Clamp(
+            SidecarStore.GetDouble(SidecarStore.Load(sidecarPath).Data, ReferenceReview.ToleranceSidecarKey)
+            ?? ReferenceReview.DefaultAutoConfirmToleranceMeters);
 
     /// <summary>
     /// Project setting for ED-016: the gap in centimetres under which a near-miss reference is confirmed
@@ -273,7 +274,8 @@ public class IgWorkflowCommands
             {
                 Text = "קו גבול שנעצר לפני קו העצירה בפער קטן מהסף הזה יאושר אוטומטית כנקודת ייחוס, " +
                        "יירשם ביומן, והחישוב ימשיך. פער גדול יותר ימתין לאישורך ב\"נקודות ייחוס…\".\n" +
-                       $"ההגדרה נשמרת לפרויקט הזה בלבד. 0 = ללא אישור אוטומטי. מקסימום {ReferenceReview.MaxAutoConfirmToleranceMeters * 100:F0} ס\"מ.",
+                       $"ההגדרה נשמרת לפרויקט הזה בלבד. 0 = ללא אישור אוטומטי (ברירת המחדל). " +
+                       $"הערך שהציע דייויד: {ReferenceReview.SuggestedAutoConfirmToleranceMeters * 100:F0} ס\"מ. מקסימום {ReferenceReview.MaxAutoConfirmToleranceMeters * 100:F0} ס\"מ.",
                 TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 10),
             });
             var row = new WrapPanel();
@@ -459,6 +461,7 @@ public class IgWorkflowCommands
             => support.Children.Add(Make(label, gate, onClick, primary: false));
         Add("שרטוט DWG…", null, ChooseDrawing);
         Add("1. Setup — בחר קובץ Excel…", WorkflowAction.Setup, () => SetupCore(SetupInputMethod.Browse));
+        Add("Excel חדש מהשרטוט…", WorkflowAction.Setup, NewProjectFromDrawing);          // r14: David item 4
         Add("2. Validate", WorkflowAction.Validate, () => RunPipeline(analyzeOnly: false));
         Add("3. Analyze", WorkflowAction.Analyze, () => RunPipeline(analyzeOnly: true));
         Add("4. Show in drawing", WorkflowAction.Show, ShowSelected);

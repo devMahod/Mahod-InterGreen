@@ -346,7 +346,7 @@ public sealed class LegacyEnvelopeConflictStrategy : IConflictPointStrategy
                             $"{veh.MovementId}.b{i + 1}@{endName}", $"{ped.MovementId}.band",
                             Origin: "boundary-termination"));
                         // Two different situations look the same to the extension: the end already
-                        // sits on the far edge (Example 1, E-R→a: 0.30 m — nothing to extend to, the
+                        // sits on the far edge (Example 1, E-R→a: 2.6 cm — nothing to extend to, the
                         // drawn end IS the exit, and the engineer measured exactly that), or the far
                         // edge genuinely is not where the boundary is heading. Tell them apart.
                         var toNearestEdge = ped.Boundaries.Min(e => e.NearestStation(endPoint).Distance);

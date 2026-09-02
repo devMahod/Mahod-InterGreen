@@ -14,18 +14,30 @@ public class AutoConfirmToleranceTests
     private static ReferenceIssue Issue(string mv, string curve, double gapM) => new(mv, curve, "H", gapM);
 
     [Fact]
-    public void Default_tolerance_is_davids_ten_centimetres()
-        => Assert.Equal(0.10, ReferenceReview.DefaultAutoConfirmToleranceMeters, 9);
+    public void Automation_is_off_until_the_engineer_turns_it_on_and_the_dialog_suggests_davids_ten_centimetres()
+    {
+        Assert.Equal(0.0, ReferenceReview.DefaultAutoConfirmToleranceMeters);
+        Assert.Equal(0.10, ReferenceReview.SuggestedAutoConfirmToleranceMeters, 9);
+    }
 
     [Fact]
-    public void Lins_two_cases_fall_under_the_default_and_a_sixteen_cm_gap_does_not()
+    public void A_hand_edited_sidecar_value_is_clamped_the_way_the_engine_applies_it()
+    {
+        Assert.Equal(0.50, ReferenceReview.Clamp(2.0));
+        Assert.Equal(0.0, ReferenceReview.Clamp(-1.0));
+        Assert.Equal(0.0, ReferenceReview.Clamp(double.NaN));
+        Assert.Equal(0.07, ReferenceReview.Clamp(0.07), 9);
+    }
+
+    [Fact]
+    public void Lins_two_cases_fall_under_the_suggested_ten_centimetres_and_a_sixteen_cm_gap_does_not()
     {
         var (auto, pending) = ReferenceReview.Partition(new[]
         {
             Issue("E-T", "E-T.b1", 0.0474),
             Issue("N-R", "N-R.b2", 0.0625),
             Issue("E-L", "E-L.b1", 0.1645),
-        }, ReferenceReview.DefaultAutoConfirmToleranceMeters);
+        }, ReferenceReview.SuggestedAutoConfirmToleranceMeters);
         Assert.Equal(new[] { "N-R.b2", "E-T.b1" }, auto.Select(i => i.CurveId));
         Assert.Equal(new[] { "E-L.b1" }, pending.Select(i => i.CurveId));
     }

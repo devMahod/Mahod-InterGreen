@@ -111,3 +111,17 @@ Build script: `scratchpad/build_release_r13.py`. Delivery email: `Downloads/EMAI
 The installer variant stays unsent until Mahod holds a code-signing certificate, and the Parking
 detection should be reported to Microsoft as a false positive — both are Arthur's calls, unchanged
 from the section above.
+
+## Provenance of the r13 artifacts that exist (2026-09-02 note)
+
+Two different r13 packages were produced, on purpose, and both are legitimate:
+
+| artifact | contents | size | SHA-256 |
+|---|---|---|---|
+| installer-less package described above | bundle folder + INSTALL/UNINSTALL .ps1 + guide, **no executable** | 5.85 MB | `83E584342E923BE00F0F9C9EB69BF2AB17C97A601366CA160CF7C58EE4D9CFC7` |
+| `Downloads\Mahod_Intergreen_0.1.0-r13.zip` — the **staff ZIP Arthur asked for on 2026-08-26** ("exactly two files: the Setup exe + the updated PDF guide, double-click install, Always Load") | `Mahod_Intergreen_Setup_0.1.0-r13.exe` + guide PDF | 68,394,431 B | `7AD2B6955015AB8D89CE91E13ABD55EE68E8E177D9617B02EB5A804C1AD79B26` |
+
+The staff ZIP was scanned with `MpCmdRun -Scan -ScanType 3` before it was reported; its installer payload
+was hash-checked against `dist/` at build time. Neither has been sent to David. A reader who finds only
+the "no executable" sentence in the onboarding notes and then meets the 68 MB ZIP is looking at the
+second row, not at an unknown artifact.
