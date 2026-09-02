@@ -65,7 +65,7 @@ public partial class IgWorkflowCommands
         var scPath = SidecarPath(doc.Database);
         var current = AutoConfirmTolerance(scPath);
         var chosen = new WpfToleranceEditor().Choose(current);
-        if (chosen is null) { SetStatus("סף האישור האוטומטי לא שונה."); return; }
+        if (chosen is null) { SetStatus("סף ההארכה האוטומטית לא שונה."); return; }
         var store = SidecarStore.Load(scPath);
         SidecarStore.SetDouble(store.Data, ReferenceReview.ToleranceSidecarKey, chosen.Value);
         // Anything an earlier tolerance confirmed automatically (the pre-2026-09-02 mechanism) is no longer
@@ -270,7 +270,7 @@ public partial class IgWorkflowCommands
         {
             var win = new System.Windows.Window
             {
-                Title = "סף אישור אוטומטי לנקודות ייחוס",
+                Title = "סף הארכה אוטומטית לקו העצירה",
                 Width = 560, Height = 300, FlowDirection = System.Windows.FlowDirection.RightToLeft,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
                 ResizeMode = ResizeMode.NoResize,
@@ -278,8 +278,9 @@ public partial class IgWorkflowCommands
             var root = new StackPanel { Margin = new Thickness(14) };
             root.Children.Add(new TextBlock
             {
-                Text = "קו גבול שנעצר לפני קו העצירה בפער קטן מהסף הזה יאושר אוטומטית כנקודת ייחוס, " +
-                       "יירשם ביומן, והחישוב ימשיך. פער גדול יותר ימתין לאישורך ב\"נקודות ייחוס…\".\n" +
+                Text = "קו גבול שנעצר לפני קו העצירה בפער קטן מהסף הזה יוארך אוטומטית עד קו העצירה — לחישוב בלבד, " +
+                       "השרטוט לא משתנה — יירשם ביומן, והחישוב ימשיך. קו שעובר לצד קצה קו העצירה יאושר בקצהו. " +
+                       "פער גדול יותר ימתין לאישורך ב\"נקודות ייחוס…\". \"הארך בשרטוט…\" כותב את ההארכות גם לשרטוט, בלחיצה.\n" +
                        $"ההגדרה נשמרת לפרויקט הזה בלבד. 0 = ללא אישור אוטומטי (ברירת המחדל). " +
                        $"הערך שהציע דייויד: {ReferenceReview.SuggestedAutoConfirmToleranceMeters * 100:F0} ס\"מ. מקסימום {ReferenceReview.MaxAutoConfirmToleranceMeters * 100:F0} ס\"מ.",
                 TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 10),
@@ -402,6 +403,9 @@ public partial class IgWorkflowCommands
             TextWrapping = TextWrapping.Wrap,
             Margin = new Thickness(0, 0, 0, 8),
             Foreground = textBrush,
+            // Hebrew sentences with Latin tokens (DWG, Validate, Excel) reorder in an LTR block — seen in
+            // the r14 render of the shipped palette. The block is RTL; the buttons and the list stay LTR.
+            FlowDirection = System.Windows.FlowDirection.RightToLeft,
         };
         // Official Mahod logo (white variant for the dark palette) — embedded in the
         // plugin assembly, never read from a user folder at runtime. Uniform stretch
@@ -434,6 +438,7 @@ public partial class IgWorkflowCommands
             Margin = new Thickness(0, 0, 0, 8),
             FontWeight = FontWeights.SemiBold,
             Foreground = textBrush,
+            FlowDirection = System.Windows.FlowDirection.RightToLeft,
         };
         root.Children.Add(_drawingLabel);
         RefreshDrawingLabel();
@@ -496,6 +501,7 @@ public partial class IgWorkflowCommands
             Margin = new Thickness(0, 0, 0, 8),
             Opacity = 0.85,
             Foreground = textBrush,
+            FlowDirection = System.Windows.FlowDirection.RightToLeft,
         };
         root.Children.Add(_rulesLabel);
 

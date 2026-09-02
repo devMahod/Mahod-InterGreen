@@ -116,8 +116,8 @@ public static class ReferenceReview
               .ToList();
 
     public static string Line(ReferenceIssue issue) =>
-        $"{issue.MovementId} — {issue.CurveId} (handle {issue.Handle}): " +
-        $"חסרים {issue.GapCentimetres:F1} ס\"מ עד קו העצירה";
+        $"\u202A{issue.MovementId} — {issue.CurveId}\u202C: חסרים {issue.GapCentimetres:F1} ס\"מ עד קו העצירה " +
+        $"(handle \u202A{issue.Handle}\u202C)";
 
     /// <summary>
     /// The palette status line. Deliberately names the movements: "N errors" tells the engineer
@@ -139,7 +139,7 @@ public static class ReferenceReview
     /// <summary>Body of the confirmation dialog — states what confirming means, in engineering terms.</summary>
     public static string DialogExplanation(IReadOnlyList<ReferenceIssue> issues) =>
         "הקווים הבאים אינם חותכים את קו העצירה שלהם, ולכן אי אפשר למדוד מהם מרחק פינוי.\n" +
-        "הפערים קטנים מכדי להיראות בשרטוט — הם מופיעים כאן בסנטימטרים עם ה-handle של הקו.\n\n" +
+        "הפערים קטנים מכדי להיראות בשרטוט — \"הצג קו קצר…\" בפלטה מתקרב לקצה ומסמן אותו; ה-handle של הקו מופיע כאן לתמיכה.\n\n" +
         "אישור פירושו: להשתמש בקצה הקו המשורטט כנקודת ההתחלה של המדידה, במקום בחיתוך עם קו העצירה.\n" +
         "האישור נשמר בפרויקט הזה בלבד ונרשם ביומן. אפשר במקום זאת לתקן את השרטוט ולהריץ שוב.";
 }

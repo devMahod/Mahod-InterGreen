@@ -84,7 +84,8 @@ public static class SlotText
                 || n < 1 || n > CrossingSlots.SlotCount)
             {
                 slots = Array.Empty<int>();
-                error = $"'{raw}' אינו משבצת חוקית — יש לכתוב c1..c{CrossingSlots.SlotCount}";
+                // \u202A…\u202C (LRE…PDF) keeps each Latin token whole inside the Hebrew sentence
+                error = $"הערך \u202A'{raw}'\u202C אינו משבצת חוקית — יש לכתוב \u202Ac1..c{CrossingSlots.SlotCount}\u202C";
                 return false;
             }
             result.Add(n);

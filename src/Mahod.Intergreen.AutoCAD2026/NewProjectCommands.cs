@@ -168,10 +168,11 @@ public partial class IgWorkflowCommands
             var win = new Window
             {
                 Title = "פרויקט חדש — יצירת קובץ Excel מהשרטוט",
-                Width = 760, Height = 700, FlowDirection = System.Windows.FlowDirection.RightToLeft,
+                Width = 760, Height = 760, MinWidth = 620, MinHeight = 480,
+                FlowDirection = System.Windows.FlowDirection.RightToLeft,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
             };
-            var root = new StackPanel { Margin = new Thickness(14) };
+            var root = new StackPanel { Margin = new Thickness(14, 14, 14, 4) };
             root.Children.Add(new TextBlock
             {
                 Text = "נמצאו בשרטוט " + prefill.Movements.Count + " תנועות ו-" + prefill.Crossings.Count + " מעברי חצייה. " +
@@ -214,7 +215,7 @@ public partial class IgWorkflowCommands
             foreach (var m in prefill.Movements)
             {
                 var cell = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 2, 16, 2) };
-                cell.Children.Add(new TextBlock { Text = m + ":", Width = 70, Margin = new Thickness(0, 4, 4, 0) });
+                cell.Children.Add(new TextBlock { Text = m + ":", MinWidth = 40, Margin = new Thickness(0, 4, 4, 0) });
                 var box = new TextBox { Width = 50 };
                 cell.Children.Add(box);
                 sgPanel.Children.Add(cell);
@@ -259,14 +260,21 @@ public partial class IgWorkflowCommands
             var pathBox = new TextBox { Text = defaultPath, Margin = new Thickness(0, 0, 0, 6) };
             root.Children.Add(pathBox);
 
-            var error = new TextBlock { Foreground = System.Windows.Media.Brushes.DarkRed, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 0) };
-            root.Children.Add(error);
-            var buttons = new WrapPanel { Margin = new Thickness(0, 12, 0, 0) };
-            var ok = new Button { Content = "צור Excel והמשך ל-Validate", Width = 200, Margin = new Thickness(0, 0, 8, 0), IsDefault = true };
-            var cancel = new Button { Content = "ביטול", Width = 90, IsCancel = true };
+            // the buttons and the error line live OUTSIDE the scrolling area, so they are always visible —
+            // in the r14 render of a 7-movement / 4-crossing junction they were cut off at the bottom
+            var footer = new StackPanel { Margin = new Thickness(14, 4, 14, 12) };
+            var error = new TextBlock { Foreground = System.Windows.Media.Brushes.DarkRed, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 6) };
+            footer.Children.Add(error);
+            var buttons = new WrapPanel();
+            var ok = new Button { Content = "צור Excel והמשך ל-Validate", Width = 200, Height = 28, Margin = new Thickness(0, 0, 8, 0), IsDefault = true };
+            var cancel = new Button { Content = "ביטול", Width = 90, Height = 28, IsCancel = true };
             buttons.Children.Add(ok); buttons.Children.Add(cancel);
-            root.Children.Add(buttons);
-            win.Content = new ScrollViewer { Content = root, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
+            footer.Children.Add(buttons);
+            var dock = new DockPanel { LastChildFill = true };
+            DockPanel.SetDock(footer, Dock.Bottom);
+            dock.Children.Add(footer);
+            dock.Children.Add(new ScrollViewer { Content = root, VerticalScrollBarVisibility = ScrollBarVisibility.Auto });
+            win.Content = dock;
 
             (NewProjectInputs, string)? result = null;
             ok.Click += (_, _) =>
@@ -297,7 +305,7 @@ public partial class IgWorkflowCommands
                 {
                     var lenV = Num(lenBox, "אורך מעבר " + letter, 0.01);
                     if (!SlotText.TryParse(slotBox.Text, out var slots, out var slotError))
-                        problems.Add($"מעבר {letter}: {slotError}");
+                        problems.Add($"מעבר \u202A{letter}\u202C: {slotError}");
                     else if (slots.Count == 0)
                         problems.Add($"מעבר {letter}: אין משבצת בתבנית — יש לבחור לפי הזרוע (או להסיר את המעבר מהשרטוט)");
                     foreach (var s in slots)
