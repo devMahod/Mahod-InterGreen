@@ -1,16 +1,16 @@
-0.1.0-r14 packaging — 2026-09-02 20:01
+0.1.0-r14 packaging — 2026-09-02 21:24
   installer  Mahod_Intergreen_Setup_0.1.0-r14.exe  78656283 B  sha256 2ad861bb80d8c4c70c79454244f77c3d879664d2eadc0e98190ccd3b7acd3622
-  guide      guide_staff_r14.pdf  535974 B  sha256 220d32ceae6e9ac48ce79639c34e978b3264b098862f3bcb31b260c4bd3f06a9
-[PASS] staff ZIP C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14.zip  73580687 B  sha256 11c587b90b3667ed047578cc95f31cfd8a171bd5ed7648d3432e4df910fbe54c  files=['Mahod_Intergreen_Setup_0.1.0-r14.exe', 'Mahod_Intergreen_מדריך_מהיר.pdf']
-[PASS] no-installer ZIP C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14_ללא_מתקין.zip  7502940 B  sha256 d0e04e127da8e2ab501c18b0b5df53e54ae5aadea47712a977579418b7e2f815
+  guide      guide_staff_r14.pdf  540692 B  sha256 830736dba2529d803823a89637e9456e6fa93daf9cdcf872772e7cc1d1c11378
+[PASS] staff ZIP C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14.zip  73584732 B  sha256 b1f733e2abe95ba5120ce34f418d7b4cd5b8b05b55171bc40820503e60c23f8f  files=['Mahod_Intergreen_Setup_0.1.0-r14.exe', 'Mahod_Intergreen_מדריך_מהיר.pdf']
+[PASS] no-installer ZIP C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14_ללא_מתקין.zip  7506985 B  sha256 7dbf8da86d677c24b2695673d880393d5222a6f56224ccbc68c5a0ec29946007
   Defender Mahod_Intergreen_0.1.0-r14.zip: CLEAN (exit 0): Scan starting... Scan finished. Scanning C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14.zip found no threats.
   Defender Mahod_Intergreen_0.1.0-r14_ללא_מתקין.zip: CLEAN (exit 0): Scan starting... Scan finished. Scanning C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14_???_?????.zip found no threats.
 [PASS] Defender custom scan clean on both ZIPs
 
 SUMMARY
   staff ZIP        C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14.zip
-  staff sha256     11c587b90b3667ed047578cc95f31cfd8a171bd5ed7648d3432e4df910fbe54c
+  staff sha256     b1f733e2abe95ba5120ce34f418d7b4cd5b8b05b55171bc40820503e60c23f8f
   no-installer ZIP C:\Users\arthurf\Downloads\Mahod_Intergreen_0.1.0-r14_ללא_מתקין.zip
-  no-inst sha256   d0e04e127da8e2ab501c18b0b5df53e54ae5aadea47712a977579418b7e2f815
+  no-inst sha256   7dbf8da86d677c24b2695673d880393d5222a6f56224ccbc68c5a0ec29946007
   installer sha256 2ad861bb80d8c4c70c79454244f77c3d879664d2eadc0e98190ccd3b7acd3622
   RESULT           PASS
