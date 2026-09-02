@@ -96,6 +96,29 @@ public class CrossingSlotsTests
     }
 
     [Fact]
+    public void A_letter_that_sprawls_over_several_arms_loses_contested_slots_to_the_specific_crossing()
+    {
+        // Example 2's 'b': met from the east (its arm), but also by two north and two west movements —
+        // one letter drawn on several crossings. 'a' (north, two halves) and 'd' (west, two halves) keep
+        // their slots; 'b' keeps the east arm and is told about the rest.
+        var result = CrossingSlots.Assign(Map(
+            ("a", new[] { ("N-L", CrossingRole.Entering), ("N-T", CrossingRole.Entering), ("S-T", CrossingRole.Exiting) }),
+            ("b", new[] { ("E-L", CrossingRole.Entering), ("E-T", CrossingRole.Entering), ("N-L", CrossingRole.Entering),
+                          ("N-T", CrossingRole.Entering), ("W-R", CrossingRole.Entering), ("W-T", CrossingRole.Entering),
+                          ("S-R", CrossingRole.Exiting) }),
+            ("d", new[] { ("W-L", CrossingRole.Entering), ("W-T", CrossingRole.Entering), ("E-T", CrossingRole.Exiting) })));
+        var byName = result.ToDictionary(r => r.Crossing, r => r);
+        Assert.Equal(new[] { 1, 2 }, byName["a"].Slots);
+        Assert.Equal(new[] { 7, 8 }, byName["d"].Slots);
+        Assert.Equal(new[] { 3, 4 }, byName["b"].Slots);
+        Assert.Contains(byName["b"].Notes, n => n.Contains("c1") && n.Contains("a"));
+        Assert.Contains(byName["b"].Notes, n => n.Contains("c7") && n.Contains("d"));
+        Assert.Contains(byName["b"].Notes, n => n.Contains("זרועות שונות"));
+        Assert.Empty(byName["a"].Notes);
+        Assert.Empty(byName["d"].Notes);
+    }
+
+    [Fact]
     public void A_crossing_nothing_crosses_gets_no_slot_and_a_note()
     {
         var result = CrossingSlots.Assign(Map(("z", Array.Empty<(string, CrossingRole)>())));
@@ -148,6 +171,54 @@ public class CrossingSlotsTests
             new[] { ("S-T", (IReadOnlyList<PolyCurve2D>)new[] { reversed }, (PolyCurve2D?)null) },
             new[] { ("d", (IReadOnlyList<PolyCurve2D>)near) });
         Assert.Equal(new[] { ("S-T", CrossingRole.Exiting) }, withoutStopLine["d"]);
+    }
+
+    [Fact]
+    public void A_short_right_turn_meets_its_exit_crossing_early_but_the_stop_line_says_it_is_the_exit_arm()
+    {
+        // E-R: stop line on the east arm at x=20 (vertical), an 18 m turn into the north arm; the north-arm
+        // crossing 'a' is met 9 m along the boundary — exactly half — and 7.2 m from E's stop line.
+        var stop = PolyCurve2D.FromVertices(new[] { (new Point2D(20, 0), 0.0), (new Point2D(20, 6), 0.0) });
+        var boundary = PolyCurve2D.FromVertices(new[] { (new Point2D(20, 3), 0.0), (new Point2D(12, 3), 0.0), (new Point2D(12, 21), 0.0) });
+        PolyCurve2D Edge(double y) => PolyCurve2D.FromVertices(new[] { (new Point2D(8, y), 0.0), (new Point2D(16, y), 0.0) });
+        var a = new[] { Edge(12.0), Edge(14.5) };
+        // E has only this one movement, so topology cannot decide; the stop line is 7.2 m away → exit arm
+        var alone = CrossingSlots.RolesFromGeometry(
+            new[] { ("E-R", (IReadOnlyList<PolyCurve2D>)new[] { boundary }, (PolyCurve2D?)stop) },
+            new[] { ("a", (IReadOnlyList<PolyCurve2D>)a) });
+        Assert.Equal(new[] { ("E-R", CrossingRole.Exiting) }, alone["a"]);
+        Assert.Equal(new[] { 2 }, CrossingSlots.Assign(alone).Single().Slots);      // north arm, exit side
+
+        // with an E-T that does not meet 'a', topology decides the same way even if 'a' were near the stop line
+        var eT = PolyCurve2D.FromVertices(new[] { (new Point2D(20, 4.5), 0.0), (new Point2D(-20, 4.5), 0.0) });
+        var withSibling = CrossingSlots.RolesFromGeometry(
+            new[]
+            {
+                ("E-R", (IReadOnlyList<PolyCurve2D>)new[] { boundary }, (PolyCurve2D?)stop),
+                ("E-T", (IReadOnlyList<PolyCurve2D>)new[] { eT }, (PolyCurve2D?)stop),
+            },
+            new[] { ("a", (IReadOnlyList<PolyCurve2D>)a) });
+        Assert.Equal(new[] { ("E-R", CrossingRole.Exiting) }, withSibling["a"]);
+    }
+
+    [Fact]
+    public void Two_movements_of_one_approach_meeting_a_crossing_make_it_that_approachs_own_crossing()
+    {
+        // north approach, stop line at y=30 (horizontal), N-T southbound and N-L turning east; crossing right behind the stop line
+        var stop = PolyCurve2D.FromVertices(new[] { (new Point2D(-6, 30), 0.0), (new Point2D(6, 30), 0.0) });
+        var nT = PolyCurve2D.FromVertices(new[] { (new Point2D(-1.5, 30), 0.0), (new Point2D(-1.5, -10), 0.0) });
+        var nL = PolyCurve2D.FromVertices(new[] { (new Point2D(1.5, 30), 0.0), (new Point2D(1.5, 10), 0.0), (new Point2D(20, 10), 0.0) });
+        PolyCurve2D Edge(double y) => PolyCurve2D.FromVertices(new[] { (new Point2D(-5, y), 0.0), (new Point2D(5, y), 0.0) });
+        var roles = CrossingSlots.RolesFromGeometry(
+            new[]
+            {
+                ("N-T", (IReadOnlyList<PolyCurve2D>)new[] { nT }, (PolyCurve2D?)stop),
+                ("N-L", (IReadOnlyList<PolyCurve2D>)new[] { nL }, (PolyCurve2D?)stop),
+            },
+            new[] { ("a", (IReadOnlyList<PolyCurve2D>)new[] { Edge(28.0), Edge(25.5) }) });
+        Assert.Equal(2, roles["a"].Count);
+        Assert.All(roles["a"], r => Assert.Equal(CrossingRole.Entering, r.Role));
+        Assert.Equal(new[] { 1 }, CrossingSlots.Assign(roles).Single().Slots);
     }
 
     [Fact]

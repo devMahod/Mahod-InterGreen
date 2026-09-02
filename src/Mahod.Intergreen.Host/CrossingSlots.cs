@@ -102,8 +102,8 @@ public static class CrossingSlots
     public static IReadOnlyList<CrossingSlotAssignment> Assign(
         IReadOnlyDictionary<string, IReadOnlyList<(string Movement, CrossingRole Role)>> crossedBy)
     {
-        var owner = new Dictionary<int, string>();
-        var result = new List<CrossingSlotAssignment>();
+        // pass 1 — what each crossing claims
+        var claims = new List<(string Crossing, SortedSet<int> Wanted, List<string> Notes)>();
         foreach (var (crossing, hits) in crossedBy.OrderBy(kv => kv.Key, StringComparer.Ordinal))
         {
             var notes = new List<string>();
@@ -134,18 +134,34 @@ public static class CrossingSlots
                     wanted.Add(role == CrossingRole.Entering ? ApproachSlot(arm) : ExitSlot(arm));
                 }
                 if (wanted.Count > 2)
-                    notes.Add($"מעבר {crossing}: נחצה מזרועות שונות ({string.Join(", ", wanted.Select(s => "c" + s))}) — בדקו את השרטוט");
+                    notes.Add($"מעבר {crossing}: נחצה מזרועות שונות ({string.Join(", ", wanted.Select(s => "c" + s))}) — ייתכן שאותה אות משמשת ליותר ממעבר אחד; בדקו את השרטוט");
             }
+            claims.Add((crossing, wanted, notes));
+        }
 
+        // pass 2 — a slot holds one letter. A contested slot goes to the crossing with the more specific claim
+        // (fewest slots wanted): a clean two-half crossing beats a letter that sprawls over several arms
+        // (Example 2's 'b'). Ties go to the first letter. The loser is told, never silently dropped.
+        var owner = new Dictionary<int, string>();
+        foreach (var slot in claims.SelectMany(c => c.Wanted).Distinct().OrderBy(s => s))
+        {
+            var winner = claims.Where(c => c.Wanted.Contains(slot))
+                               .OrderBy(c => c.Wanted.Count)
+                               .ThenBy(c => c.Crossing, StringComparer.Ordinal)
+                               .First();
+            owner[slot] = winner.Crossing;
+        }
+        var result = new List<CrossingSlotAssignment>();
+        foreach (var (crossing, wanted, notes) in claims)
+        {
             var granted = new List<int>();
             foreach (var slot in wanted)
             {
-                if (owner.TryGetValue(slot, out var other))
+                if (owner[slot] != crossing)
                 {
-                    notes.Add($"מעבר {crossing}: המשבצת c{slot} כבר תפוסה על ידי {other} — יש להשלים ידנית בגיליון Pedestrian Xing");
+                    notes.Add($"מעבר {crossing}: המשבצת c{slot} שייכת למעבר {owner[slot]} — יש להשלים ידנית בגיליון Pedestrian Xing");
                     continue;
                 }
-                owner[slot] = crossing;
                 granted.Add(slot);
             }
             result.Add(new CrossingSlotAssignment(crossing, granted, notes));
@@ -154,46 +170,112 @@ public static class CrossingSlots
     }
 
     /// <summary>
-    /// Which crossings each vehicle movement meets, and where. A crossing met within the half of the
-    /// boundary nearer its stop line is on the movement's approach arm; beyond that, on its exit arm —
-    /// including the boundary that stops inside the crossing (Directive §21A), which has crossed the
-    /// near edge on the way in. Distances are taken from the stop line's station on the boundary, the
-    /// same origin the engine measures from, because boundaries are not reliably drawn stop-line-first
-    /// (Example 1 has an S-T boundary drawn from the north; Lin's 05293 several). Without a stop line
-    /// the curve's own start is the origin.
+    /// A crossing on a movement's own approach arm sits just behind its stop line — the stop line is set
+    /// back a metre or a few from the crossing, never more than this. Anything the boundary meets
+    /// further from its stop line is on the arm it exits into.
+    /// </summary>
+    public const double ApproachCrossingMaxSetbackMeters = 5.0;
+
+    /// <summary>
+    /// Which crossings each vehicle movement meets, and where. A movement meets a crossing when one of its
+    /// boundaries intersects an edge of it. The role comes from the junction's topology, not from a
+    /// distance along a polyline:
+    /// <list type="bullet">
+    /// <item>Two or more movements of the same approach meet the crossing → it is that approach's own
+    /// crossing, just behind their common stop line (<see cref="CrossingRole.Entering"/>). Two movements
+    /// of one approach never exit into the same arm, so nothing else can explain it.</item>
+    /// <item>One movement of an approach meets it while the approach has others that do not → it is on
+    /// the arm that movement exits into (<see cref="CrossingRole.Exiting"/>). Its siblings would have met
+    /// their own approach crossing too.</item>
+    /// <item>The approach has that single movement only (a T-junction arm with one turn) → decided by
+    /// whether the movement's stop line lies within <see cref="ApproachCrossingMaxSetbackMeters"/> of the
+    /// crossing and the crossing is met within the first <see cref="ApproachCrossingMaxStationMeters"/>
+    /// from the stop line; without a stop line, by the half of the curve nearer its first vertex.</item>
+    /// </list>
+    /// This is what the half-length and stop-line-setback heuristics got wrong on the real drawings: a
+    /// short right turn reaches its exit-arm crossing within the first half of its length and within a few
+    /// metres of its own stop line (Example 2 E-R × a, W-R × c), and boundaries are not reliably drawn
+    /// stop-line-first (Example 1 S-T, Lin's 05293, Example 2 W-R).
     /// </summary>
     public static IReadOnlyDictionary<string, IReadOnlyList<(string Movement, CrossingRole Role)>> RolesFromGeometry(
         IEnumerable<(string Movement, IReadOnlyList<PolyCurve2D> Boundaries, PolyCurve2D? StopLine)> vehicles,
         IEnumerable<(string Crossing, IReadOnlyList<PolyCurve2D> Edges)> crossings)
     {
+        var vehicleList = vehicles.ToList();
         var crossingList = crossings.ToList();
+        var byApproach = vehicleList.GroupBy(v => NewProjectDefaults.ApproachOf(v.Movement) ?? "")
+                                    .ToDictionary(g => g.Key, g => g.Select(v => v.Movement).ToList(), StringComparer.Ordinal);
         var hits = crossingList.ToDictionary(c => c.Crossing, _ => new List<(string, CrossingRole)>(), StringComparer.Ordinal);
-        foreach (var (movement, boundaries, stopLine) in vehicles)
+
+        foreach (var (crossing, edges) in crossingList)
         {
-            foreach (var (crossing, edges) in crossingList)
+            // which movements meet this crossing, and the geometry each one would fall back on
+            var met = new List<(string Movement, string Approach, PolyCurve2D? StopLine, double StationFromStopLine, double Fraction)>();
+            foreach (var (movement, boundaries, stopLine) in vehicleList)
             {
-                var roles = new HashSet<CrossingRole>();
+                double? station = null, fraction = null;
                 foreach (var boundary in boundaries)
                 {
-                    var length = boundary.TotalLength;
-                    if (length <= 0) continue;
-                    var origin = stopLine is null ? 0.0
-                        : ReferenceStation.Resolve(boundary, stopLine, 0.5)?.Station ?? 0.0;
-                    // the boundary runs from the stop line to the far end; the far end is whichever end is further
-                    var span = Math.Max(origin, length - origin);
-                    double? nearest = null;
+                    if (boundary.TotalLength <= 0) continue;
+                    var origin = stopLine is null ? 0.0 : ReferenceStation.Resolve(boundary, stopLine, 0.5)?.Station ?? 0.0;
                     foreach (var edge in edges)
                         foreach (var x in boundary.IntersectionsWith(edge))
                         {
-                            var d = Math.Abs(x.StationA - origin);
-                            nearest = nearest is double n ? Math.Min(n, d) : d;
+                            var s = Math.Abs(x.StationA - origin);
+                            var f = x.StationA / boundary.TotalLength;
+                            station = station is double a ? Math.Min(a, s) : s;
+                            fraction = fraction is double b ? Math.Min(b, f) : f;
                         }
-                    if (nearest is double s)
-                        roles.Add(s <= span / 2.0 ? CrossingRole.Entering : CrossingRole.Exiting);
                 }
-                foreach (var role in roles) hits[crossing].Add((movement, role));
+                if (station is null) continue;
+                met.Add((movement, NewProjectDefaults.ApproachOf(movement) ?? "", stopLine, station.Value, fraction!.Value));
+            }
+
+            foreach (var group in met.GroupBy(m => m.Approach, StringComparer.Ordinal))
+            {
+                var approachHas = group.Key.Length > 0 && byApproach.TryGetValue(group.Key, out var all) ? all.Count : 1;
+                var metCount = group.Count();
+                foreach (var m in group)
+                {
+                    CrossingRole role;
+                    if (m.Approach.Length == 0)
+                        role = m.Fraction <= 0.5 ? CrossingRole.Entering : CrossingRole.Exiting;            // diagonals: best effort
+                    else if (metCount >= 2)
+                        role = CrossingRole.Entering;
+                    else if (approachHas >= 2)
+                        role = CrossingRole.Exiting;
+                    else if (m.StopLine is not null)
+                        role = Distance(m.StopLine, edges) <= ApproachCrossingMaxSetbackMeters
+                               && m.StationFromStopLine <= ApproachCrossingMaxStationMeters
+                            ? CrossingRole.Entering : CrossingRole.Exiting;
+                    else
+                        role = m.Fraction <= 0.5 ? CrossingRole.Entering : CrossingRole.Exiting;
+                    hits[crossing].Add((m.Movement, role));
+                }
             }
         }
         return hits.ToDictionary(kv => kv.Key, kv => (IReadOnlyList<(string, CrossingRole)>)kv.Value, StringComparer.Ordinal);
+    }
+
+    /// <summary>A movement meets its own approach crossing within this distance of its stop line (setback plus crossing depth).</summary>
+    public const double ApproachCrossingMaxStationMeters = 8.0;
+
+    /// <summary>Smallest distance between a stop line and any edge of a crossing (sampled at ends and midpoints — enough for a setback test).</summary>
+    private static double Distance(PolyCurve2D stopLine, IReadOnlyList<PolyCurve2D> edges)
+    {
+        static IEnumerable<Point2D> Samples(PolyCurve2D c)
+        {
+            yield return c.Start;
+            yield return c.End;
+            yield return c.PointAtStation(c.TotalLength / 2.0);
+        }
+        var best = double.PositiveInfinity;
+        foreach (var edge in edges)
+        {
+            if (edge.IntersectionsWith(stopLine).Count > 0) return 0.0;
+            foreach (var p in Samples(stopLine)) best = Math.Min(best, edge.NearestStation(p).Distance);
+            foreach (var p in Samples(edge)) best = Math.Min(best, stopLine.NearestStation(p).Distance);
+        }
+        return best;
     }
 }
