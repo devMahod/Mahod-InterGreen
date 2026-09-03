@@ -78,7 +78,6 @@ def main():
            '<title>Mahod Intergreen — r14 — דו"ח לדייויד</title><style>' + CSS +
            ' body { font-size: 10pt; line-height: 1.34; } p { margin: 0 0 1.8mm 0; text-align: right; } h2 { margin-top: 3.5mm; } .foot { margin-top: 3mm; } h2 { page-break-after: avoid; } table { page-break-inside: avoid; }'
            '</style></head><body>' + body +
-           '<div class="foot">מהוד הנדסה בע"מ · Mahod Intergreen · Version 0.1.0-r14 · 3.9.2026</div>'
            '</body></html>')
     OUT_HTML.write_text(doc, encoding="utf-8")
     edge = Path(r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe")
