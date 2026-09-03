@@ -88,7 +88,8 @@ public partial class IgWorkflowCommands
         }
         SetStatus(built == 0
             ? "בניית התנועות הסתיימה — לא נבנתה תנועה."
-            : $"נבנו {built} תנועות/מעברים. עכשיו: \"Excel חדש מהשרטוט…\" (פרויקט חדש) או Setup עם Excel קיים, ואז Validate.");
+            : (built == 1 ? "נבנתה תנועה אחת." : $"נבנו {built} תנועות/מעברים.") +
+              " עכשיו: \"Excel חדש מהשרטוט…\" (פרויקט חדש) או Setup עם Excel קיים, ואז Validate.");
     }
 
     private static string? Keyword(Editor ed, string message, string keywords, string? defaultKeyword)

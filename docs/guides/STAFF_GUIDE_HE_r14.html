@@ -58,17 +58,17 @@
   <div class="two">
     <div>
       <h2>הפלטה</h2>
-      <p>שורת הסטטוס בעברית אומרת בכל רגע מה הצעד הבא. השורה העליונה של הכפתורים היא תהליך העבודה (1→5); השורה התחתונה — פעולות תמיכה.</p>
+      <p>שורת הסטטוס בעברית אומרת בכל רגע מה הצעד הבא. הכפתורים זורמים מימין לשמאל: קודם תהליך העבודה (1→5), מתחתיו פעולות התמיכה. הפלטה נגללת כשהיא קצרה מהתוכן, והרשימה נגללת בפני עצמה; בזמן חישוב הסמן מתחלף לשעון חול. ריחוף על שורה ברשימה מציג את המלל המלא.</p>
       <table>
         <tr><th>כפתור</th><th>מה הוא עושה</th></tr>
         <tr><td><span class="btn">שרטוט DWG…</span></td><td>בחירת שרטוט הצומת (או מעבר לשרטוט פתוח).</td></tr>
         <tr><td><span class="btn">בניית תנועות…</span></td><td>בונה את שכבות התנועות מקווי המתכנן (סעיף א').</td></tr>
         <tr><td><span class="btn">1. Setup — בחר קובץ Excel…</span></td><td>יש Excel לפרויקט? בוחרים אותו.</td></tr>
         <tr><td><span class="btn">Excel חדש מהשרטוט…</span></td><td>אין Excel? הכלי יוצר אותו מתבנית המחלקה (סעיף ב').</td></tr>
-        <tr><td><span class="btn">2. Validate</span></td><td>בדיקת השרטוט: תנועות, חציות, קווים קצרים.</td></tr>
+        <tr><td><span class="btn">2. Validate</span></td><td>בדיקת השרטוט: תנועות, חציות, קווים קצרים. הממצאים מופיעים ברשימה (קוד, חומרה, תנועה).</td></tr>
         <tr><td><span class="btn">3. Analyze</span></td><td>חישוב הקונפליקטים והמטריצה.</td></tr>
         <tr><td><span class="btn">4. Show in drawing</span></td><td>מציג את נקודות החישוב של השורה שנבחרה.</td></tr>
-        <tr><td><span class="btn">5. Export Excel</span></td><td>קובץ תוצאות חדש ליד המקור.</td></tr>
+        <tr><td><span class="btn">5. Export Excel</span></td><td>קובץ תוצאות חדש ליד המקור — נפתח באקסל אוטומטית.</td></tr>
         <tr><td><span class="btn">נקודות ייחוס…</span> <span class="btn">הצג קו קצר…</span><br><span class="btn">סף הארכה אוטומטית…</span> <span class="btn">הארך בשרטוט…</span></td><td>טיפול בקו גבול שאינו מגיע לקו העצירה (סעיף ג').</td></tr>
         <tr><td><span class="btn">בחירת חוקים…</span> <span class="btn">Clear QA</span> <span class="btn">Export Support Log</span></td><td>גרסת ההנחיות, ניקוי סימונים, לוג לתמיכה.</td></tr>
       </table>
@@ -134,10 +134,10 @@
 
   <h2>ד. חישוב, תצוגה וייצוא</h2>
   <ol>
-    <li><span class="btn">2. Validate</span> — כמה תנועות וחציות זוהו; שגיאות חוסמות ואזהרות בעברית.</li>
+    <li><span class="btn">2. Validate</span> — כמה תנועות וחציות זוהו; שגיאות חוסמות ואזהרות בעברית, ברשימה שמתחת לכפתורים (ריחוף = המלל המלא). Analyze מחליף את הרשימה בקונפליקטים; Validate נוסף מחזיר את הממצאים.</li>
     <li><span class="btn">3. Analyze</span> — לכל זוג תנועות (מפנה ← נכנסת): CD, ED, זמן הבין־ירוק והסטטוס. מרחק הפינוי של רכב מול מעבר חצייה נמדד עד הקצה הרחוק של המעבר (הנחיות יוני 2025, עמ' 157).</li>
     <li>בוחרים שורה ← <span class="btn">4. Show in drawing</span> — התצוגה מתקרבת, נקודות החישוב מסומנות, הנקודה הקובעת באדום. <span class="btn">Clear QA</span> מנקה את הסימונים; הם אינם נשמרים בשרטוט.</li>
-    <li><span class="btn">5. Export Excel</span> — קובץ תוצאות <b>חדש</b> (<span class="ltr">*_MAHOD_INTERGREEN.xlsx</span>) ליד המקור: הגיליונות המקוריים + שני גיליונות תוצאה של מהוד. Refresh באקסל שומר על התוצאה.</li>
+    <li><span class="btn">5. Export Excel</span> — קובץ תוצאות <b>חדש</b> (<span class="ltr">*_MAHOD_INTERGREEN.xlsx</span>) ליד המקור: הגיליונות המקוריים + שני גיליונות תוצאה של מהוד. הקובץ נפתח באקסל מיד; המטריצה מתרעננת בפתיחה, ו־Refresh שומר על התוצאה.</li>
   </ol>
 
   <h2>חשוב לדעת</h2>

@@ -387,17 +387,23 @@ public partial class IgWorkflowCommands
         }
         _palette.Visible = true;
         BindToActiveDrawing();
-        SetStatus("Setup → Validate → Analyze → Review → Export Excel.");
+        SetStatus("התהליך: 1 Setup ← 2 Validate ← 3 Analyze ← 4 Show in drawing ← 5 Export Excel. אין Excel לפרויקט? \"Excel חדש מהשרטוט…\".");
     }
 
-    private static StackPanel BuildPanel()
+    private static FrameworkElement BuildPanel()
     {
         // Deterministic palette colors: the hosted WPF visual does NOT inherit the
         // AutoCAD theme dictionary, so a bare TextBlock renders with WPF's default BLACK
         // foreground on the palette's black background — title/status/rules text were
         // invisible in the real host. Every text element gets an explicit foreground.
         var textBrush = System.Windows.Media.Brushes.White;
-        var root = new StackPanel { Margin = new Thickness(8), Background = System.Windows.Media.Brushes.Black };
+        // Hebrew UI: the panel flows right-to-left (buttons start at the right edge, like the text);
+        // the conflict list below is explicitly LTR because its columns are engineering symbols.
+        var root = new StackPanel
+        {
+            Margin = new Thickness(8), Background = System.Windows.Media.Brushes.Black,
+            FlowDirection = System.Windows.FlowDirection.RightToLeft,
+        };
         _status = new TextBlock
         {
             TextWrapping = TextWrapping.Wrap,
@@ -505,7 +511,11 @@ public partial class IgWorkflowCommands
         };
         root.Children.Add(_rulesLabel);
 
-        _list = new ListView { Height = 330 };
+        // grows with its rows up to a cap, then scrolls inside; the palette itself scrolls too (below)
+        _list = new ListView { MinHeight = 120, MaxHeight = 420, FlowDirection = System.Windows.FlowDirection.LeftToRight };
+        var rowStyle = new Style(typeof(ListViewItem));
+        rowStyle.Setters.Add(new Setter(FrameworkElement.ToolTipProperty, new System.Windows.Data.Binding("Detail")));
+        _list.ItemContainerStyle = rowStyle;
         var gv = new GridView();
         void Col(string h, string p, double w)
             => gv.Columns.Add(new GridViewColumn { Header = h, Width = w, DisplayMemberBinding = new System.Windows.Data.Binding(p) });
@@ -523,7 +533,15 @@ public partial class IgWorkflowCommands
         };
         root.Children.Add(_list);
         UpdateButtonStates();
-        return root;
+        // the palette can be shorter than its content: scroll it, and pin the content width to the palette
+        // width so nothing is clipped at the edge (Arthur, Civil 3D 2027, 2026-09-03)
+        return new ScrollViewer
+        {
+            Content = root,
+            VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+            HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
+            Background = System.Windows.Media.Brushes.Black,
+        };
     }
 
     private static void UpdateButtonStates()
@@ -565,6 +583,7 @@ public partial class IgWorkflowCommands
         }
         try
         {
+            System.Windows.Input.Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
             a();
         }
         catch (UserFacingException ux)
@@ -581,6 +600,7 @@ public partial class IgWorkflowCommands
         }
         finally
         {
+            System.Windows.Input.Mouse.OverrideCursor = null;
             UpdateButtonStates();
         }
     }
@@ -1007,13 +1027,16 @@ public partial class IgWorkflowCommands
                 SupportLog.Write("REFERENCE_ENDPOINT", ReferenceReview.Line(issue));
             var autoNote = ReferenceReview.ResolutionSummary(_lastResolved, _lastExtensionTolerance);
             if (autoNote.Length > 0) autoNote = " " + autoNote;
-            SetStatus($"VALIDATE: {movements.Count} movements " +
-                      $"({movements.Count(m => m.Mode == MovementMode.Pedestrian)} crossings), " +
-                      $"units={unitsName}, errors={errors}, warnings={warns}." + autoNote + " " +
+            SetStatus($"Validate: {movements.Count} תנועות ({movements.Count(m => m.Mode == MovementMode.Pedestrian)} מעברי חצייה), " +
+                      $"יחידות: {unitsName}, שגיאות: {errors}, אזהרות: {warns}." + autoNote + " " +
                       (_referenceIssues.Count > 0
-                          ? ReferenceReview.HebrewSummary(_referenceIssues) + " לחצי \"נקודות ייחוס…\"."
-                          : errors > 0 ? "Resolve errors via Setup/drawing before Analyze." : "Ready to Analyze."));
-            Populate(findings.Select(x => new ConflictRow(x.ConflictRef ?? "-", x.Severity.ToString(), "", "", "", x.Code)).ToList());
+                          ? ReferenceReview.HebrewSummary(_referenceIssues) + " לחצי \"נקודות ייחוס…\" או \"הצג קו קצר…\"."
+                          : errors > 0 ? "יש לתקן את השגיאות (Setup / שרטוט) לפני Analyze." : "אפשר להריץ Analyze."));
+            // the findings take the list until Analyze replaces them: code, Hebrew severity, full text on hover
+            Populate(findings.Select(x => new ConflictRow(x.Code, x.Severity switch
+                {
+                    Severity.Error => "שגיאה", Severity.Warning => "אזהרה", _ => "מידע",
+                }, "", "", "", x.ConflictRef ?? "", x.Message)).ToList());
             return;
         }
 
@@ -1057,14 +1080,17 @@ public partial class IgWorkflowCommands
             c.Id, c.Status, c.Points.Count.ToString(),
             c.Points.Count > 0 ? c.Points.Max(p => p.Cd).ToString("F2") : "",
             c.Points.Count > 0 ? c.Points.Min(p => p.Ed).ToString("F2") : "",
-            c.FinalIg?.ToString() ?? "—")).ToList());
-        SetStatus($"ANALYZE: {_lastOutput.Analysis.Conflicts.Count} conflicts, " +
-                  $"matrix {_lastOutput.Analysis.Matrix.Count(m => m.Status == "VALID")} VALID / " +
-                  $"{_lastOutput.Analysis.Matrix.Count(m => m.Status == "BLOCKED")} BLOCKED. " +
-                  "Select a conflict → Show in drawing; then Export Excel.");
+            c.FinalIg?.ToString() ?? "—",
+            $"{c.Id}: {c.Points.Count} נקודות מועמדות, הקובעת {c.DefiningPointId ?? "—"}; בין-ירוק {c.FinalIg?.ToString() ?? "—"} שנ'")).ToList());
+        var mValid = _lastOutput.Analysis.Matrix.Count(m => m.Status == "VALID");
+        var mReview = _lastOutput.Analysis.Matrix.Count(m => m.Status.StartsWith("REVIEW"));
+        var mBlocked = _lastOutput.Analysis.Matrix.Count(m => m.Status == "BLOCKED");
+        SetStatus($"Analyze: {_lastOutput.Analysis.Conflicts.Count} קונפליקטים; מטריצה: {mValid} תקינים" +
+                  (mReview > 0 ? $", {mReview} לבדיקה" : "") + (mBlocked > 0 ? $", {mBlocked} חסומים" : "") +
+                  ". בחרי שורה ← \"Show in drawing\"; ואז \"Export Excel\".");
     }
 
-    private sealed record ConflictRow(string Id, string Status, string Pts, string Cd, string Ed, string Ig);
+    private sealed record ConflictRow(string Id, string Status, string Pts, string Cd, string Ed, string Ig, string Detail = "");
 
     private static void Populate(List<ConflictRow> rows)
     {
@@ -1126,8 +1152,8 @@ public partial class IgWorkflowCommands
         doc.Editor.UpdateScreen();
         SupportLog.Write("SHOW_OK",
             $"{conflict.Id} points={conflict.Points.Count} governing={conflict.DefiningPointId ?? "-"} finalIg={conflict.FinalIg?.ToString() ?? "-"}");
-        SetStatus($"{conflict.Id}: {conflict.Points.Count} candidate points highlighted " +
-                  $"(red = governing {conflict.DefiningPointId}); Final IG = {conflict.FinalIg?.ToString() ?? "—"}.");
+        SetStatus($"{conflict.Id}: {conflict.Points.Count} נקודות חישוב מסומנות בשרטוט (באדום — הקובעת, {conflict.DefiningPointId}); " +
+                  $"בין-ירוק: {conflict.FinalIg?.ToString() ?? "—"} שנ'. \"Clear QA\" מנקה את הסימונים.");
     }
 
     [CommandMethod("IG_CLEAR_QA", CommandFlags.Modal)]
@@ -1527,12 +1553,32 @@ public partial class IgWorkflowCommands
         var export = WorkbookWriter.Export(_workbookPath, outPath, _lastOutput.Analysis, _lastModel);
         SupportLog.Write("EXPORT_DONE", $"{outPath} rows={export.RowsPopulated} multiPoint={export.MultiPointRows} cleared={export.RowsClearedNoEngineResult} pivotReset={export.PivotCachesReset} issues={export.StructuralIssues.Count}");
         foreach (var note in export.LegacyPivotNotes) SupportLog.Write("EXPORT_LEGACY_PIVOT_NOTE", note);
-        SetStatus(export.StructuralIssues.Count == 0
-            ? $"Excel exported → {Path.GetFileName(outPath)} ({export.RowsPopulated} rows from the engine" +
-              (export.RowsClearedNoEngineResult > 0 ? $", {export.RowsClearedNoEngineResult} rows cleared — no engine result, see QA column" : "") +
-              (export.LegacyPivotNotes.Count > 0 ? "; legacy Matrix source has pre-existing #REF! rows — 'MAHOD Matrix Status' is authoritative" : "") +
-              "). הקובץ נפתח ב-Excel כשהמטריצה מתרעננת אוטומטית."
-            : $"EXPORT VERIFICATION FAILED: {export.StructuralIssues.First()}");
+        if (export.StructuralIssues.Count > 0)
+        {
+            SetStatus($"הייצוא נכשל בבדיקת המבנה: {export.StructuralIssues.First()}");
+            return;
+        }
+        var opened = TryOpenInExcel(outPath);
+        SetStatus($"הייצוא נשמר: {Path.GetFileName(outPath)} — {export.RowsPopulated} שורות מהמנוע" +
+                  (export.RowsClearedNoEngineResult > 0 ? $", {export.RowsClearedNoEngineResult} שורות נוקו (אין תוצאת מנוע — ראי עמודת QA)" : "") +
+                  (export.LegacyPivotNotes.Count > 0 ? "; במקור יש שורות #REF! ישנות — גיליון 'MAHOD Matrix Status' הוא הקובע" : "") +
+                  (opened ? ". הקובץ נפתח באקסל; המטריצה מתרעננת בפתיחה." : ". הקובץ נשמר ליד המקור."));
+    }
+
+    /// <summary>Open the exported workbook with the user's Excel — a convenience only; the export is complete without it.</summary>
+    private static bool TryOpenInExcel(string path)
+    {
+        try
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(path) { UseShellExecute = true });
+            SupportLog.Write("EXPORT_OPENED", path);
+            return true;
+        }
+        catch (System.Exception ex)
+        {
+            SupportLog.Write("EXPORT_OPEN_FAILED", ex.Message);
+            return false;
+        }
     }
 
     private static void ExportSupportLog()
