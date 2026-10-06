@@ -1,0 +1,44 @@
+r15 release build — 2026-10-06 17:14
+[PASS] MahodRelease.props = 0.1.0-r15
+[PASS] source commit 07ed08778cb12b99db7a5482db4c56effc3f4e76
+[PASS] MAHOD_CAD_KEY present in the build environment (value not shown) — the usage key will be baked in
+[PASS] Contracts/Core/Reporting/Rules/Excel + rules/ SOURCE unchanged since accepted r11 (02c7a47)
+      Geometry source delta since r11 (re-shipped by decision, r13 §21A + r14 ED-015):
+ .../ConflictStrategies.cs                          | 187 +++++++++++++++++++--
+ 1 file changed, 170 insertions(+), 17 deletions(-)
+[PASS] host 2026 build (git-stamped)
+[PASS] host 2027 build (git-stamped)
+      staged Mahod.Intergreen.AutoCAD.dll -> Contents/2026  20aff12c7e93dd58
+      staged Mahod.Intergreen.Host.dll -> Contents/2026  260087ee17bce750
+      staged Mahod.Intergreen.Geometry.dll -> Contents/2026  66372899aaf13bd2
+      staged Mahod.Intergreen.AutoCAD.dll -> Contents/2027  2bc2587d82c8b82c
+      staged Mahod.Intergreen.Host.dll -> Contents/2027  260087ee17bce750
+      staged Mahod.Intergreen.Geometry.dll -> Contents/2027  66372899aaf13bd2
+[PASS] identity gate: 42 locked files in the stage byte-identical to dist; changed only ['Contents/2026/Mahod.Intergreen.AutoCAD.dll', 'Contents/2026/Mahod.Intergreen.Geometry.dll', 'Contents/2026/Mahod.Intergreen.Host.dll', 'Contents/2027/Mahod.Intergreen.AutoCAD.dll', 'Contents/2027/Mahod.Intergreen.Geometry.dll', 'Contents/2027/Mahod.Intergreen.Host.dll']
+[PASS] tracked dist/ untouched (stays the keyless r14 bundle); release bundle staged at build/out/r15/Mahod.Intergreen.bundle
+[PASS] PackageContents.xml stamped 0.1.0-r15, git 07ed087
+[PASS] 2026 AutoCAD.dll 0.1.0.15|0.1.0-r15 (engine 0.1.0, git 07ed08778cb12b99db7a5482db4c56effc3f4e76), host build 2026
+[PASS] 2027 AutoCAD.dll 0.1.0.15|0.1.0-r15 (engine 0.1.0, git 07ed08778cb12b99db7a5482db4c56effc3f4e76), host build 2027
+[PASS] 2026 Mahod.Intergreen.AutoCAD.dll: usage key baked in (checked as a boolean)
+[PASS] 2027 Mahod.Intergreen.AutoCAD.dll: usage key baked in (checked as a boolean)
+[PASS] usage key in no other staged file
+[PASS] usage key in no tracked file of the repo
+[PASS] payload bundle.zip == stage (49 entries, hash by hash) sha256 03c13ccd358d8e61f934ee1cf2adc1fa70e9650e01679f7a29c42a955866a799
+[PASS] installer Mahod_Intergreen_Setup_0.1.0-r15.exe  78485551 bytes  sha256 55a3f6e433a2a8f0ff4db824ca40a7a20da3c41cf71d05284324d809a149c7dc  version 0.1.0.15|0.1.0-r15 (engine 0.1.0, git 07ed08778cb12b99db7a5482db4c56effc3f4e76)
+
+SUMMARY
+  source commit      07ed08778cb12b99db7a5482db4c56effc3f4e76
+  release            0.1.0-r15
+  usage key baked    yes (2026 + 2027 host DLLs)
+  staged bundle      build/out/r15/Mahod.Intergreen.bundle (ignored; never commit)
+  installer          installer/out/Mahod_Intergreen_Setup_0.1.0-r15.exe
+  installer sha256   55a3f6e433a2a8f0ff4db824ca40a7a20da3c41cf71d05284324d809a149c7dc
+  payload sha256     03c13ccd358d8e61f934ee1cf2adc1fa70e9650e01679f7a29c42a955866a799 (49 entries)
+  2026 Mahod.Intergreen.AutoCAD.dll     20aff12c7e93dd58cd61efee7bb57a3f5cb487ac499d53cae51f919c29eb35db
+  2026 Mahod.Intergreen.Host.dll        260087ee17bce75051c5e81643003dcd1dc43ed58241845f962dd05309bd9fbb
+  2026 Mahod.Intergreen.Geometry.dll    66372899aaf13bd2e347634b7302885f88ae859c4af0479e661cb7adeed48c89
+  2027 Mahod.Intergreen.AutoCAD.dll     2bc2587d82c8b82cf50daaabf0f96e1528ced4e1c19dcace6f5792bf37f92dc7
+  2027 Mahod.Intergreen.Host.dll        260087ee17bce75051c5e81643003dcd1dc43ed58241845f962dd05309bd9fbb
+  2027 Mahod.Intergreen.Geometry.dll    66372899aaf13bd2e347634b7302885f88ae859c4af0479e661cb7adeed48c89
+  PackageContents    7ddf4fe150b8403bd13927d363006ba2ba6435f9bf4660a91b861adc822bd1a0
+  RESULT             PASS

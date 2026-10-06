@@ -99,6 +99,8 @@ host DLLs and the installer with `-p:MahodGitSha=$(git rev-parse HEAD)`. A build
 | r11 | `df96c36` | **ED-014**: legacy Matrix pivot never ships stale (refreshOnLoad, purged cache, cleared cells; real Excel open == Refresh == Refresh All == reopen); rows with no engine result are cleared and flagged, never mixed with manual values | Lin |
 | r12 | `7cd934d` | Validate names boundaries that stop short of their stop line (gap in cm, DWG handle); new palette button **נקודות ייחוס…** confirms them into the project sidecar. The engine always honoured `confirmedEndpointReferences`; the UI never exposed it — Example 2's golden only ever passed because a gate sidecar had been hand-edited | Lin: "conflicts not detected" |
 | **r13** | **`5e84331`** | **Directive §21A fix** in `Geometry/ConflictStrategies.cs`: a boundary-termination candidate must actually lie in the crossing it claims to stop in. The old rule took the end at `TotalLength` as the far end, true only for polylines drawn from the stop line outwards; reversed polylines put a phantom point on the stop line at distance 0, which maximises the intergreen and therefore always governed | Lin: b→S-L came out 6, her manual 3 |
+| r14 | `f6a06aa` | David's six items (see the r14 section at the end) | David 2026-08-27 |
+| r15 | `07ed087` | Mahod Impact usage counts only (see the r15 section at the end) — no engineering change | owner 2026-10-06 |
 
 Current: **0.1.0-r13**, source `5e84331`, artifacts `a2c405f`, latest commit `dec1776`. Lin ran r13
 on both reference projects and one of her own: correct. David has not yet received r13.
@@ -228,3 +230,9 @@ it; the open items in priority order; and anything in the code or docs that cont
 - Gates: `scripts/release_build.py r14` PASS (42 locked dist files byte-identical; only AutoCAD/Host/Geometry moved), `scripts/realhost_setup_accept.py` PASS x2, `scripts/realhost_{new_project,tolerance_pass,extend_in_dwg,build}.py` PASS x2 each, 450 tests.
 - Records: `docs/releases/RELEASE_BUILD_r14.txt`, `docs/releases/PACKAGE_r14.txt`, `docs/r14/CODEX_REVIEW_RESPONSE_2026-09-02.md`, `docs/r14/DAVID_REPORT_r14_HE.md` (the David-facing report, Hebrew).
 - Lin's geometry is now a fixture: `tests/fixtures/geometry/lin05293.iggeometry.json`.
+
+## r15 (2026-10-06) — Mahod Impact usage counts; nothing else
+
+- Source `07ed087` on local branch `feat/impact-usage` (not pushed). Release id 0.1.0-r15. Record: `docs/releases/RELEASE_NOTES_r15.md`, `RELEASE_BUILD_r15.txt`, `PACKAGE_r15.txt`. Installer sha256 55a3f6e433a2a8f0ff4db824ca40a7a20da3c41cf71d05284324d809a149c7dc; staff ZIP (exe + guide) sha256 0173da21a843b2405d9b73090f9036b68915d471fb0a50fe31d13de0dab85358, handed off in the MahodAI workspace (`handoff/desktop-usage-2026-10-06/`).
+- What changed: `src/Mahod.Intergreen.AutoCAD2026/Usage/` — MahodUsage.cs (byte-for-byte the MahodAI plugin's recorder, blob 85a350d) + IntergreenUsage (tool `intergreen`, feature `junction_intergreen`, same action names and unit key as the in-tree MahodAI copy, plugin 02d1601); hooks in Guard, ExportExcel, INTERGREEN, IG_CLEAR_QA, IG_SCAN, IG_EXPORT_GEOMETRY. Guide `docs/guides/STAFF_GUIDE_HE_r15.html` adds "מה נשלח ל־Mahod AI".
+- PUBLIC REPO: the products' usage key is baked only from `MAHOD_CAD_KEY` (`build/MahodUsageKey.targets`). `scripts/release_build.py` now stages the shipped bundle in the ignored `build/out/<rev>/` — `dist/` stays the keyless r14 bundle and is the identity baseline. Never commit build/out/, installer/out/ or the installer payload.

@@ -1,0 +1,15 @@
+0.1.0-r15 packaging — 2026-10-06 17:17
+  installer  Mahod_Intergreen_Setup_0.1.0-r15.exe  78485551 B  sha256 55a3f6e433a2a8f0ff4db824ca40a7a20da3c41cf71d05284324d809a149c7dc
+  guide      guide_staff_r15.pdf  556342 B  sha256 1d6cf3c6ce6fac5432a5a012f769af51ffa85bf0354ffd7900fccc1e0054e8bc
+[PASS] staff ZIP C:\WORK\mahod_ai_workspace\handoff\desktop-usage-2026-10-06\Mahod_Intergreen_0.1.0-r15.zip  73214668 B  sha256 0173da21a843b2405d9b73090f9036b68915d471fb0a50fe31d13de0dab85358  files=['Mahod_Intergreen_Setup_0.1.0-r15.exe', 'Mahod_Intergreen_מדריך_מהיר.pdf']
+  Defender Mahod_Intergreen_0.1.0-r15.zip: CLEAN (exit 0): Scan starting... Scan finished. Scanning C:\WORK\mahod_ai_workspace\handoff\desktop-usage-2026-10-06\Mahod_Intergreen_0.1.0-r15.zip found no threats.
+
+SUMMARY
+  staff ZIP        C:\WORK\mahod_ai_workspace\handoff\desktop-usage-2026-10-06\Mahod_Intergreen_0.1.0-r15.zip
+  staff bytes      73214668
+  staff sha256     0173da21a843b2405d9b73090f9036b68915d471fb0a50fe31d13de0dab85358
+  installer bytes  78485551
+  installer sha256 55a3f6e433a2a8f0ff4db824ca40a7a20da3c41cf71d05284324d809a149c7dc
+  guide bytes      556342
+  guide sha256     1d6cf3c6ce6fac5432a5a012f769af51ffa85bf0354ffd7900fccc1e0054e8bc
+  RESULT           PASS
