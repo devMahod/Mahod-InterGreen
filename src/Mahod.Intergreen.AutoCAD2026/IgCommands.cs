@@ -163,10 +163,12 @@ public class IgCommands
 
             tr.Commit();
             Log(ed, $"IG_SCAN OK → {outPath}");
+            IntergreenUsage.Command("ig_scan", ok: true); // r15: Mahod Impact usage (IntergreenUsage)
         }
         catch (System.Exception ex)
         {
             Log(ed, $"IG_SCAN ERROR: {ex.Message}");
+            IntergreenUsage.Command("ig_scan", ok: false); // r15: Mahod Impact usage
         }
     }
 
@@ -206,10 +208,12 @@ public class IgCommands
             Log(ed, $"  curves: {result.Curves.Count}  unsupported: {result.Unsupported.Count}  units: {result.InsUnits}");
             foreach (var u in result.Unsupported.Take(20))
                 Log(ed, $"  UNSUPPORTED {u.EntityType} on '{u.Layer}' ({u.Handle}): {u.Reason}");
+            IntergreenUsage.Command("ig_export_geometry", ok: true); // r15: Mahod Impact usage (IntergreenUsage)
         }
         catch (System.Exception ex)
         {
             Log(ed, $"IG_EXPORT_GEOMETRY ERROR: {ex.Message}");
+            IntergreenUsage.Command("ig_export_geometry", ok: false); // r15: Mahod Impact usage
         }
     }
 

@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\build\MahodRelease.props" />
+  <!-- r15: Mahod Impact usage key, baked from MAHOD_CAD_KEY at build time only (public repo: never commit a keyed build) -->
+  <Import Project="..\..\build\MahodUsageKey.targets" />
 
   <!-- ONE host codebase, version-correct builds (Multi-Host directive §4/§5):
          dotnet build -p:AutoCADVersion=2026  -> net8.0-windows  + Autodesk 2026 refs
@@ -23,6 +25,8 @@
     <DefineConstants>$(DefineConstants);ACADHOST$(AutoCADVersion)</DefineConstants>
     <BaseOutputPath>bin\host$(AutoCADVersion)\</BaseOutputPath>
     <BaseIntermediateOutputPath>obj\host$(AutoCADVersion)\</BaseIntermediateOutputPath>
+    <!-- r15: this project compiles Usage/MahodUsage.cs, so it takes the products' usage key (build/MahodUsageKey.targets) -->
+    <MahodUsageKeyed>true</MahodUsageKeyed>
     <DefaultItemExcludes>$(DefaultItemExcludes);bin/**;obj/**</DefaultItemExcludes>
   </PropertyGroup>
 

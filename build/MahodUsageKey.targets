@@ -1,0 +1,37 @@
+<Project>
+  <!--
+    r15 — Mahod Impact usage records (src/Mahod.Intergreen.AutoCAD2026/Usage/MahodUsage.cs, a
+    byte-for-byte copy of the MahodAI plugin's Utilities/MahodUsage.cs). The products' key for
+    MahodAI's usage route (the agent's USAGE_PRODUCT_KEY) is baked in from the build machine's
+    MAHOD_CAD_KEY environment variable — the same target as the MahodAI plugin's and Mahod
+    Culvert's Directory.Build.props. Imported ONLY by the host project (the one that compiles
+    MahodUsage.cs), which opts in with <MahodUsageKeyed>true</MahodUsageKeyed>; the six engineering
+    assemblies never see it.
+
+    THIS REPO IS PUBLIC: the key exists only in the environment of the build process and in the
+    generated obj/**/MahodUsageKey.g.cs (ignored). Never commit a keyed build — dist/ stays the
+    keyless r14 bundle and release builds are staged under build/out/ (see scripts/release_build.py).
+    Without the variable the build is complete and keyless: usage queues on the PC (30 days) and
+    is sent with the PC's MahodAI installation key when it has one. Only [A-Za-z0-9_-] is accepted.
+  -->
+  <Target Name="MahodUsageKey" BeforeTargets="CoreCompile"
+          Condition="'$(MahodUsageKeyed)' == 'true' AND '$(MAHOD_CAD_KEY)' != ''">
+    <Error Condition="!$([System.Text.RegularExpressions.Regex]::IsMatch('$(MAHOD_CAD_KEY)', '^[A-Za-z0-9_-]{16,128}$'))"
+           Text="MAHOD_CAD_KEY must be 16-128 characters of [A-Za-z0-9_-]." />
+    <PropertyGroup>
+      <MahodUsageKeyFile>$(IntermediateOutputPath)MahodUsageKey.g.cs</MahodUsageKeyFile>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(MahodUsageKeyFile)" Overwrite="true" WriteOnlyWhenDifferent="true"
+                      Lines="// &lt;auto-generated /&gt;;#nullable enable;namespace MahodAI.Civil3D.Plugin.Utilities { internal static partial class MahodUsage { static partial void BakedKey(ref string%3F key) { key = &quot;$(MAHOD_CAD_KEY)&quot;%3B } } }" />
+    <ItemGroup>
+      <Compile Include="$(MahodUsageKeyFile)" />
+      <FileWrites Include="$(MahodUsageKeyFile)" />
+    </ItemGroup>
+  </Target>
+
+  <!-- A build without the key must not reuse a keyed generated file left in obj/ by an earlier keyed build. -->
+  <Target Name="MahodUsageKeyClean" BeforeTargets="CoreCompile"
+          Condition="'$(MahodUsageKeyed)' == 'true' AND '$(MAHOD_CAD_KEY)' == ''">
+    <Delete Files="$(IntermediateOutputPath)MahodUsageKey.g.cs" />
+  </Target>
+</Project>

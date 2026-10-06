@@ -388,6 +388,7 @@ public partial class IgWorkflowCommands
         _palette.Visible = true;
         BindToActiveDrawing();
         SetStatus("התהליך: 1 Setup ← 2 Validate ← 3 Analyze ← 4 Show in drawing ← 5 Export Excel. אין Excel לפרויקט? \"Excel חדש מהשרטוט…\".");
+        IntergreenUsage.Command("intergreen", ok: true); // r15: Mahod Impact usage (IntergreenUsage)
     }
 
     private static FrameworkElement BuildPanel()
@@ -465,7 +466,7 @@ public partial class IgWorkflowCommands
                 VerticalContentAlignment = System.Windows.VerticalAlignment.Center,
             };
             if (primary) b.FontWeight = FontWeights.SemiBold;
-            b.Click += (_, _) => Guard(gate, onClick);
+            b.Click += (_, _) => Guard(gate, onClick, label); // r15: the label names the button for Impact usage
             // stage-gated actions are visually disabled until the state machine allows
             // them (Guard stays as the safety net for every path).
             if (gate is WorkflowAction ga && ga is not WorkflowAction.Setup and not WorkflowAction.ClearQa)
@@ -573,7 +574,10 @@ public partial class IgWorkflowCommands
 
     /// <summary>Workflow gate + safety net: gate message instead of crash for out-of-order
     /// actions; unexpected exceptions go to the log with a clean user message.</summary>
-    private static void Guard(WorkflowAction? gate, Action a)
+    /// <remarks>r15: <paramref name="usageLabel"/> (a palette button's label) records the button for
+    /// Mahod Impact usage (IntergreenUsage.Button); null (document activation) records nothing, and a
+    /// button refused by its gate ran nothing and records nothing.</remarks>
+    private static void Guard(WorkflowAction? gate, Action a, string? usageLabel = null)
     {
         if (gate is WorkflowAction g && State.Gate(g) is string blocked)
         {
@@ -581,10 +585,13 @@ public partial class IgWorkflowCommands
             SetStatus(blocked);
             return;
         }
+        var usageClock = System.Diagnostics.Stopwatch.StartNew(); // r15: Impact usage
+        bool usageOk = false; // r15: Impact usage
         try
         {
             System.Windows.Input.Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
             a();
+            usageOk = true; // r15: Impact usage
         }
         catch (UserFacingException ux)
         {
@@ -602,6 +609,8 @@ public partial class IgWorkflowCommands
         {
             System.Windows.Input.Mouse.OverrideCursor = null;
             UpdateButtonStates();
+            if (usageLabel != null) // r15: Impact usage
+                IntergreenUsage.Button(gate, usageLabel, usageOk, usageClock.ElapsedMilliseconds);
         }
     }
 
@@ -1157,7 +1166,11 @@ public partial class IgWorkflowCommands
     }
 
     [CommandMethod("IG_CLEAR_QA", CommandFlags.Modal)]
-    public void ClearQaCommand() => ClearQa();
+    public void ClearQaCommand()
+    {
+        ClearQa();
+        IntergreenUsage.Command("ig_clear_qa", ok: true); // r15: Mahod Impact usage (IntergreenUsage)
+    }
 
     /// <summary>Removes ONLY the tool-owned transient QA markers. They are never database
     /// entities, so user geometry cannot be touched by design.</summary>
@@ -1558,6 +1571,7 @@ public partial class IgWorkflowCommands
             SetStatus($"הייצוא נכשל בבדיקת המבנה: {export.StructuralIssues.First()}");
             return;
         }
+        IntergreenUsage.Exported(doc, _workbookPath); // r15: one priced junction for Mahod Impact
         var opened = TryOpenInExcel(outPath);
         SetStatus($"הייצוא נשמר: {Path.GetFileName(outPath)} — {export.RowsPopulated} שורות מהמנוע" +
                   (export.RowsClearedNoEngineResult > 0 ? $", {export.RowsClearedNoEngineResult} שורות נוקו (אין תוצאת מנוע — ראי עמודת QA)" : "") +

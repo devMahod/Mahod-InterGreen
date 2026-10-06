@@ -1,0 +1,2 @@
+# r15: the Mahod Impact usage recorder is a byte-for-byte copy of the MahodAI plugin file (see its test)
+src/Mahod.Intergreen.AutoCAD2026/Usage/MahodUsage.cs text eol=lf

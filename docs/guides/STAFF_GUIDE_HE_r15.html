@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Mahod Intergreen — מדריך מהיר</title>
+<style>
+  @page { size: A4; margin: 12mm 15mm 12mm 15mm; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Arial, "Noto Sans Hebrew", sans-serif; color: #111; font-size: 10.8pt; line-height: 1.42; direction: rtl; }
+  h1 { font-size: 24pt; margin: 0; color: #0b3d2e; letter-spacing: 0.2px; }
+  .sub { font-size: 13pt; color: #2f4f45; margin: 1mm 0 4mm 0; }
+  h2 { font-size: 13.5pt; margin: 5mm 0 2mm 0; color: #0b3d2e; border-bottom: 1.5px solid #0b3d2e; padding-bottom: 1mm; }
+  h3 { font-size: 11.5pt; margin: 4mm 0 1.5mm 0; color: #0b3d2e; }
+  ol, ul { margin: 0; padding-right: 7mm; }
+  li { margin-bottom: 1.5mm; }
+  .btn { display: inline-block; border: 1px solid #777; border-radius: 4px; padding: 0 2mm; background: #f2f2f2; font-size: 10.5pt; unicode-bidi: isolate; white-space: nowrap; }
+  .ltr { direction: ltr; unicode-bidi: embed; font-family: Consolas, "Courier New", monospace; font-size: 10.5pt; }
+  .note { border-right: 4px solid #0b3d2e; background: #f3f8f5; padding: 2.5mm 4mm; margin: 2mm 0 4mm 0; }
+  .warn { border-right: 4px solid #b3541e; background: #fdf4ee; padding: 2.5mm 4mm; margin: 3mm 0; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0; }
+  td, th { border: 1px solid #bbb; padding: 1.5mm 3mm; text-align: right; vertical-align: top; font-size: 10.2pt; }
+  th { background: #eef3f0; }
+  .pb { page-break-before: always; }
+  .shot { border: 1px solid #999; border-radius: 3px; display: block; margin: 2mm auto 1mm auto; max-width: 100%; page-break-inside: avoid; }
+  .cap { font-size: 9.5pt; color: #444; text-align: center; margin: 0 0 3mm 0; }
+  .two { display: flex; gap: 5mm; align-items: flex-start; }
+  .two > div { flex: 1; }
+  .foot { margin-top: 3mm; font-size: 9.5pt; color: #555; border-top: 1px solid #ccc; padding-top: 2mm; }
+  .kbd { direction: ltr; unicode-bidi: embed; font-family: Consolas, "Courier New", monospace; background: #f4f4f4; border: 1px solid #ccc; border-radius: 3px; padding: 0 1.5mm; }
+</style>
+</head>
+<body>
+  <h1>Mahod Intergreen</h1>
+  <div class="sub">כלי לחישוב ובקרת זמני בין־ירוק — מדריך מהיר, גרסה r15</div>
+
+  <div class="note">
+    הכלי מחשב את זמני הבין־ירוק ישירות מהשרטוט ומקובץ ה־Excel של הפרויקט, בתוך Civil 3D / AutoCAD.
+    הוא <b>לא משנה</b> את השרטוט ו<b>לא</b> את קובץ ה־Excel המקורי אלא אם ביקשתם זאת במפורש (ראו "הארך בשרטוט") — כל תוצר נכתב כקובץ חדש ליד הקיימים.
+  </div>
+
+  <div class="warn" style="border-right-color:#0b3d2e; background:#f3f8f5">
+    <b>מה חדש ב־r15:</b> רק ספירת שימוש ל־Mahod Impact — ראו "מה נשלח ל־Mahod AI" בסוף המדריך. החישוב, הפלטה, הקבצים והשרטוט — בדיוק כמו ב־r14.<br>
+    <b>מ־r14 (לעומת r13):</b>
+    <span class="btn">בניית תנועות…</span> (שכבות התנועות מקווי המתכנן, בצבעי המחלקה) ·
+    <span class="btn">Excel חדש מהשרטוט…</span> (קובץ IG_matrix מהתבנית + טופס קצר) ·
+    קו קצר: <span class="btn">הצג קו קצר…</span> <span class="btn">סף הארכה אוטומטית…</span> <span class="btn">הארך בשרטוט…</span> ·
+    מרחק פינוי של רכב מול מעבר חצייה נמדד עד הקצה הרחוק של המעבר (הנחיות 2025, עמ' 157) ·
+    שורת הסטטוס וההודעות בעברית מלאה.
+  </div>
+
+  <h2>התקנה</h2>
+  <ol>
+    <li>לסגור את כל חלונות AutoCAD / Civil 3D.</li>
+    <li>לחיצה כפולה על <span class="ltr">Mahod_Intergreen_Setup_0.1.0-r15.exe</span>. אם מותקנת גרסה קודמת (למשל r14) — היא מוחלפת אוטומטית.</li>
+    <li>לפתוח את Civil 3D (או AutoCAD). בפתיחה הראשונה תופיע שאלת אבטחה על טעינת התוסף — לבחור <span class="ltr">Always Load</span>.</li>
+    <li>בשורת הפקודה מקלידים <span class="kbd">INTERGREEN</span> ולוחצים Enter — נפתחת הפלטה.</li>
+  </ol>
+
+  <div class="two">
+    <div>
+      <h2>הפלטה</h2>
+      <p>שורת הסטטוס בעברית אומרת בכל רגע מה הצעד הבא. הכפתורים זורמים מימין לשמאל: קודם תהליך העבודה (1→5), מתחתיו פעולות התמיכה. הפלטה נגללת כשהיא קצרה מהתוכן, והרשימה נגללת בפני עצמה; בזמן חישוב הסמן מתחלף לשעון חול. ריחוף על שורה ברשימה מציג את המלל המלא.</p>
+      <table>
+        <tr><th>כפתור</th><th>מה הוא עושה</th></tr>
+        <tr><td><span class="btn">שרטוט DWG…</span></td><td>בחירת שרטוט הצומת (או מעבר לשרטוט פתוח).</td></tr>
+        <tr><td><span class="btn">בניית תנועות…</span></td><td>בונה את שכבות התנועות מקווי המתכנן (סעיף א').</td></tr>
+        <tr><td><span class="btn">1. Setup — בחר קובץ Excel…</span></td><td>יש Excel לפרויקט? בוחרים אותו.</td></tr>
+        <tr><td><span class="btn">Excel חדש מהשרטוט…</span></td><td>אין Excel? הכלי יוצר אותו מתבנית המחלקה (סעיף ב').</td></tr>
+        <tr><td><span class="btn">2. Validate</span></td><td>בדיקת השרטוט: תנועות, חציות, קווים קצרים. הממצאים מופיעים ברשימה (קוד, חומרה, תנועה).</td></tr>
+        <tr><td><span class="btn">3. Analyze</span></td><td>חישוב הקונפליקטים והמטריצה.</td></tr>
+        <tr><td><span class="btn">4. Show in drawing</span></td><td>מציג את נקודות החישוב של השורה שנבחרה.</td></tr>
+        <tr><td><span class="btn">5. Export Excel</span></td><td>קובץ תוצאות חדש ליד המקור — נפתח באקסל אוטומטית.</td></tr>
+        <tr><td><span class="btn">נקודות ייחוס…</span> <span class="btn">הצג קו קצר…</span><br><span class="btn">סף הארכה אוטומטית…</span> <span class="btn">הארך בשרטוט…</span></td><td>טיפול בקו גבול שאינו מגיע לקו העצירה (סעיף ג').</td></tr>
+        <tr><td><span class="btn">בחירת חוקים…</span> <span class="btn">Clear QA</span> <span class="btn">Export Support Log</span></td><td>גרסת ההנחיות, ניקוי סימונים, לוג לתמיכה.</td></tr>
+      </table>
+    </div>
+    <div style="flex: 0 0 62mm">
+      <img class="shot" src="img/palette.png" alt="הפלטה">
+      <div class="cap">הפלטה, לפני בחירת שרטוט</div>
+    </div>
+  </div>
+
+  <h2>א. בניית תנועות מקווי המתכנן</h2>
+  <p>קווי השפה וסימוני הנתיבים של מתכנן התנועה נשארים בשכבות שלו, כפי שהם. הכלי מעתיק את מה שמצביעים עליו לשכבות <span class="ltr">intergreen_*</span> בצבעי המחלקה, ומסדר את ההעתק להתחיל בקו העצירה. לוחצים <span class="btn">בניית תנועות…</span> ועונים בשורת הפקודה:</p>
+  <table>
+    <tr><th style="width:38%">השאלה בשורת הפקודה</th><th>התשובה</th></tr>
+    <tr><td><span class="ltr">גישת המוצא של התנועה [N/E/S/W] או Enter לסיום</span></td><td>N / E / S / W. Enter מסיים.</td></tr>
+    <tr><td><span class="ltr">סוג התנועה [R / T / L / P]</span></td><td>R ימינה, T ישר, L שמאלה; P = מעבר חצייה, ואז אות המעבר (a, b, …).</td></tr>
+    <tr><td>גבול התנועה הראשון / השני — בחרי את הקו</td><td>מצביעים על קו השפה או הסימון. לכל קו: הקישי ליד הקצה שעל קו העצירה (נקודת ההתחלה).</td></tr>
+    <tr><td>קו העצירה של הגישה — בחרי את הקו</td><td>מצביעים על קו העצירה (או Enter אם כבר קיים ב־<span class="ltr">intergreen_stopline</span>).</td></tr>
+  </table>
+  <ul>
+    <li>כל תנועה היא פעולה אחת — <span class="kbd">Undo</span> מבטל אותה במלואה. קווי המקור לא נערכים לעולם; קווים בתוך בלוקים או Xref אינם נבחרים.</li>
+    <li>צבעי השכבות = צבעי האקסל: צפון צהובים, מזרח אדומים, דרום כחולים, מערב ירוקים; מעברי חצייה וקווי עצירה לבנים.</li>
+    <li>השכבות שמהן נלקחו הקווים נשמרות בפרויקט ומוצגות בפרויקט הבא כמידע — אין בחירה אוטומטית.</li>
+  </ul>
+
+  <h2>ב. קובץ Excel חדש מהשרטוט</h2>
+  <p>לוחצים <span class="btn">Excel חדש מהשרטוט…</span>. הכלי קורא את השכבות ומציג טופס אחד. מה שהשרטוט יודע — כבר ממולא; מה שהוא לא יודע — מבקשים:</p>
+  <table>
+    <tr><th style="width:36%">בטופס</th><th>מקור</th></tr>
+    <tr><td>קבועים (מהירות ה"ר 1.2, תגובה 1.0, תאוטה 3.5, אורך רכב 12, ענבר)</td><td>ברירות המחדל של התבנית — ניתן לשנות.</td></tr>
+    <tr><td>מהירות הרכב המהיר ואופי הדרך — לכל גישה</td><td>מקלידים (ברירת מחדל 50 קמ"ש, עירוני).</td></tr>
+    <tr><td>מספר קבוצת אות לכל תנועה</td><td>מקלידים. ריק = שם התנועה.</td></tr>
+    <tr><td>אורך כל מעבר חצייה</td><td>מוצע מהשרטוט (ממוצע שני הקצוות) — לאישור.</td></tr>
+    <tr><td>מיקום המעבר בגיליון Pedestrian Xing (c1…c12)</td><td>מוצע מהשרטוט לפי הזרוע: c1/c3/c5/c7 צד הכניסה של צפון/מזרח/דרום/מערב, c2/c4/c6/c8 צד היציאה, c9…c12 פנייה ימינה מתועלת. מעבר ברוחב מלא תופס את שתי המשבצות של הזרוע (למשל c5, c6).</td></tr>
+  </table>
+  <img class="shot" src="img/newproject_form.png" alt="טופס פרויקט חדש" style="max-width: 90%">
+  <div class="cap">הטופס, ממולא מהשרטוט של צומת פינס–הבל–שם־טוב: 7 תנועות, 4 מעברי חצייה, המשבצות c2…c5</div>
+  <p>הקובץ נוצר מתבנית המחלקה — הנוסחאות אינן משתנות, שורות אינן נמחקות — נשמר ליד השרטוט ונרשם כ־Excel של הפרויקט. הטופס לא ייתן ליצור קובץ עם משבצת שאינה קיימת, שני מעברים על משבצת אחת, או שם של קובץ קיים:</p>
+  <img class="shot" src="img/newproject_form_error_crop.png" alt="הטופס מסרב למשבצת c13" style="max-width: 78%">
+  <div class="cap">ניסיון להזין c13 — הטופס נשאר פתוח ואומר מה לתקן</div>
+
+  <h2>ג. קו גבול שאינו מגיע לקו העצירה</h2>
+  <p>פער של סנטימטרים בין קצה קו הגבול לקו העצירה אינו נראה בשרטוט, אבל בלעדיו אי אפשר למדוד מרחק פינוי. אחרי Validate שורת הסטטוס אומרת איזו תנועה ובכמה ס"מ. ארבע דרכים לטפל:</p>
+  <table>
+    <tr><th style="width:30%">כפתור</th><th>מה קורה</th></tr>
+    <tr><td><span class="btn">הצג קו קצר…</span></td><td>מתקרב לקצה בשרטוט ומסמן אותו באדום. לחיצה נוספת — הבא. אפשר לתקן את השרטוט ולהריץ Validate שוב.</td></tr>
+    <tr><td><span class="btn">נקודות ייחוס…</span></td><td>מציג את הקווים עם הפער; אישור = להשתמש בקצה הקו כנקודת המדידה. נשמר לפרויקט, נרשם ביומן.</td></tr>
+    <tr><td><span class="btn">סף הארכה אוטומטית…</span></td><td>כבוי כברירת מחדל. אחרי הגדרת סף (למשל 10 ס"מ): פערים קטנים מהסף מוארכים אוטומטית עד קו העצירה <b>לחישוב בלבד</b>; קו שעובר לצד קצה קו העצירה מאושר בקצהו. הכול מופיע בשורת הסטטוס וביומן.</td></tr>
+    <tr><td><span class="btn">הארך בשרטוט…</span></td><td>כותב את ההארכות של הריצה האחרונה גם לשרטוט — רק בלחיצה, פעולה אחת, Undo מבטל. קשתות אינן מוארכות אוטומטית.</td></tr>
+  </table>
+  <div class="two">
+    <div>
+      <img class="shot" src="img/reference_confirmer.png" alt="נקודות ייחוס">
+      <div class="cap">נקודות ייחוס — שני הקווים הקצרים של צומת 05293 ועוד אחד</div>
+    </div>
+    <div>
+      <img class="shot" src="img/tolerance_editor.png" alt="סף הארכה אוטומטית">
+      <div class="cap">סף הארכה אוטומטית — 0 = כבוי; דייויד הציע 10 ס"מ</div>
+      <img class="shot" src="img/extension_picker.png" alt="הארך בשרטוט">
+      <div class="cap">הארך בשרטוט — הקווים שהוארכו וירטואלית, לבחירה</div>
+    </div>
+  </div>
+
+  <h2>ד. חישוב, תצוגה וייצוא</h2>
+  <ol>
+    <li><span class="btn">2. Validate</span> — כמה תנועות וחציות זוהו; שגיאות חוסמות ואזהרות בעברית, ברשימה שמתחת לכפתורים (ריחוף = המלל המלא). Analyze מחליף את הרשימה בקונפליקטים; Validate נוסף מחזיר את הממצאים.</li>
+    <li><span class="btn">3. Analyze</span> — לכל זוג תנועות (מפנה ← נכנסת): CD, ED, זמן הבין־ירוק והסטטוס. מרחק הפינוי של רכב מול מעבר חצייה נמדד עד הקצה הרחוק של המעבר (הנחיות יוני 2025, עמ' 157).</li>
+    <li>בוחרים שורה ← <span class="btn">4. Show in drawing</span> — התצוגה מתקרבת, נקודות החישוב מסומנות, הנקודה הקובעת באדום. <span class="btn">Clear QA</span> מנקה את הסימונים; הם אינם נשמרים בשרטוט.</li>
+    <li><span class="btn">5. Export Excel</span> — קובץ תוצאות <b>חדש</b> (<span class="ltr">*_MAHOD_INTERGREEN.xlsx</span>) ליד המקור: הגיליונות המקוריים + שני גיליונות תוצאה של מהוד. הקובץ נפתח באקסל מיד; המטריצה מתרעננת בפתיחה, ו־Refresh שומר על התוצאה.</li>
+  </ol>
+
+  <h2>חשוב לדעת</h2>
+  <ul>
+    <li><b>קובץ המקור לא נדרס.</b> ה־Excel והשרטוט המקוריים נשארים כפי שהם; "Excel חדש מהשרטוט" לעולם לא מחליף קובץ קיים.</li>
+    <li><b>השרטוט משתנה רק בלחיצה מפורשת</b> ("בניית תנועות" מעתיקה לשכבות חדשות; "הארך בשרטוט" מאריכה קווים שבחרתם) — תמיד עם Undo.</li>
+    <li><b>Rule Pack פעיל מוצג בפלטה</b>; שינוי דרך <span class="btn">בחירת חוקים…</span> הוא פעולה יזומה לפרויקט, לא שינוי שקט.</li>
+    <li>מעבר לשרטוט אחר מנקה את התצוגה וטוען את הפרויקט השמור של השרטוט החדש.</li>
+  </ul>
+
+  <h2>מה נשלח ל־Mahod AI</h2>
+  <p style="margin:0 0 1mm 0">מגרסה r15 הכלי מדווח ל־Mahod AI על השימוש בו, כדי ש־Mahod Impact (לוח המדידה של מהוד) יספור את העבודה שנעשתה בכלי:</p>
+  <ul style="font-size:10.2pt; line-height:1.36">
+    <li><b>אילו פעולות רצו</b> — כפתורי הפלטה והפקודות <span class="kbd">INTERGREEN</span> <span class="kbd">IG_CLEAR_QA</span> <span class="kbd">IG_SCAN</span> <span class="kbd">IG_EXPORT_GEOMETRY</span> — <b>כמה זמן</b> נמשכו <b>והאם הסתיימו או נכשלו</b> (ביטול אינו מסומן בנפרד; כפתור שנחסם בשלב העבודה לא נספר), וגם דרך ההפעלה (פלטה או פקודה), מספר גרסה ומזהה אקראי של פתיחת AutoCAD.</li>
+    <li><b>צומת שחושב:</b> כל ייצוא מטריצה של צומת (<span class="btn">5. Export Excel</span> שעבר את בדיקת המבנה) = יחידת עבודה אחת, במזהה מגובב חד־כיווני שנוצר במחשב מטביעת האצבע הפנימית של השרטוט ומשם קובץ ה־Excel — ייצוא חוזר של אותו צומת אינו צומת חדש, ומהמזהה אי אפשר לשחזר את השרטוט או את שם הקובץ.</li>
+    <li><b>לא נשלחים לעולם:</b> השרטוט, שם הקובץ או הנתיב, שכבות, ערכים מהחישוב, שם המשתמש ב־Windows או מזהה של המחשב. הבקשה לשרת מזדהה במפתח ההתקנה של MahodAI אם הוא מותקן במחשב, ואחרת במפתח המוצר.</li>
+    <li><b>תור במחשב:</b> הרשומות נכתבות קודם ל־<span class="ltr">%LOCALAPPDATA%\Mahod\cad-usage</span> ונשלחות ברקע, <b>לכל היותר פעם ב־15 דקות</b>; בלי רשת הן ממתינות — קובצי תור שלא עודכנו 30 יום נמחקים בניסיון השליחה, והתור מוגבל לחמישה מגה־בייט. השליחה אינה מעכבת את הפקודה ואינה משפיעה על החישוב. <b>כיבוי:</b> משתנה הסביבה <span class="ltr">MAHOD_USAGE_OFF=1</span>.</li>
+  </ul>
+
+  <h2>אם משהו משתבש</h2>
+  <div class="warn">
+    <ol>
+      <li><span class="btn">Export Support Log</span> — קובץ לוג על שולחן העבודה (רצף הפעולות וזהות הגרסה, ללא מידע אישי).</li>
+      <li>לשלוח את הלוג לארתור / לצוות הטכנולוגיה של מהוד, עם תיאור קצר (ואם יש — צילום מסך).</li>
+      <li>לא לשמור על גבי קובץ ה־Excel המקורי או השרטוט המקורי.</li>
+    </ol>
+  </div>
+
+  <p style="margin-top:3mm">בהצלחה! <b>צוות מהוד הנדסה</b></p>
+  <div class="foot">מהוד הנדסה בע"מ · <span dir="ltr" style="unicode-bidi:isolate">Mahod Intergreen · Version 0.1.0-r15</span> · צילומי המסך רונדרו מהתוסף עצמו, עם נתוני הדוגמאות של המחלקה</div>
+</body>
+</html>

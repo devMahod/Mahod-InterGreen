@@ -2,6 +2,11 @@
 """Package a built release for distribution — two artifacts, both Defender-scanned, both hash-recorded.
 
     python scripts/package_release.py r14 <guide.pdf>
+    python scripts/package_release.py r15 <guide.pdf> --out <dir> --staff-only
+
+  r15+: the bundle is the one release_build.py staged under build/out/<rev>/ (the host DLL carries the
+  Mahod Impact usage key, so it is never written into the tracked dist/ of this public repo). --out puts
+  the ZIPs in <dir> instead of Downloads; --staff-only makes only the staff ZIP.
 
   1. Staff ZIP  Downloads/Mahod_Intergreen_<ver>.zip — exactly two files: the installer exe and the guide
                 PDF (Arthur, 2026-08-26: "double-click install, Always Load; nothing else in it").
@@ -33,6 +38,11 @@ def sha(p):
     return h.hexdigest()
 
 
+def arg(name, default=None):
+    a = sys.argv[3:]
+    return a[a.index(name) + 1] if name in a and a.index(name) + 1 < len(a) else default
+
+
 def defender_scan(path):
     exe = Path(os.path.expandvars(r"%ProgramFiles%\Windows Defender\MpCmdRun.exe"))
     if not exe.exists():
@@ -50,6 +60,11 @@ def main():
     props = (REPO / "build/MahodRelease.props").read_text(encoding="utf-8")
     eng = re.search(r"<MahodEngineVersion>([\d.]+)</MahodEngineVersion>", props).group(1)
     ver = f"{eng}-{rev}"
+    out_dir = Path(arg("--out", str(DOWNLOADS)))
+    out_dir.mkdir(parents=True, exist_ok=True)
+    staff_only = "--staff-only" in sys.argv[3:]
+    staged = REPO / "build/out" / rev / "Mahod.Intergreen.bundle"
+    bundle = staged if staged.exists() else DIST
     exe = REPO / "installer/out" / f"Mahod_Intergreen_Setup_{ver}.exe"
     if not exe.exists(): print("installer not built:", exe); sys.exit(1)
     if not guide.exists(): print("guide missing:", guide); sys.exit(1)
@@ -58,7 +73,7 @@ def main():
     say(f"  guide      {guide.name}  {guide.stat().st_size} B  sha256 {sha(guide)}")
 
     # 1. staff ZIP — exactly two files
-    staff = DOWNLOADS / f"Mahod_Intergreen_{ver}.zip"
+    staff = out_dir / f"Mahod_Intergreen_{ver}.zip"
     if staff.exists(): staff.unlink()
     with zipfile.ZipFile(staff, "w", zipfile.ZIP_DEFLATED) as z:
         z.write(exe, exe.name)
@@ -69,7 +84,27 @@ def main():
     say(f"[PASS] staff ZIP {staff}  {staff.stat().st_size} B  sha256 {sha(staff)}  files={names}")
 
     # 2. no-installer ZIP — bundle + guide + instructions, nothing executable
-    noinst = DOWNLOADS / f"Mahod_Intergreen_{ver}_ללא_מתקין.zip"
+    if staff_only:
+        verdict = defender_scan(staff)
+        say(f"  Defender {staff.name}: {verdict}")
+        if not verdict.startswith("CLEAN"):
+            say("[FAIL] Defender did not return a clean verdict"); sys.exit(1)
+        say("")
+        say("SUMMARY")
+        say(f"  staff ZIP        {staff}")
+        say(f"  staff bytes      {staff.stat().st_size}")
+        say(f"  staff sha256     {sha(staff)}")
+        say(f"  installer bytes  {exe.stat().st_size}")
+        say(f"  installer sha256 {sha(exe)}")
+        say(f"  guide bytes      {guide.stat().st_size}")
+        say(f"  guide sha256     {sha(guide)}")
+        say("  RESULT           PASS")
+        out = REPO / "docs/releases" / f"PACKAGE_{rev}.txt"
+        out.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        print("record ->", out)
+        return
+
+    noinst = out_dir / f"Mahod_Intergreen_{ver}_ללא_מתקין.zip"
     if noinst.exists(): noinst.unlink()
     instructions = f"""﻿התקנה ידנית — Mahod Intergreen {ver}
 =========================================
@@ -87,11 +122,11 @@ def main():
 המדריך המהיר נמצא בקובץ ה-PDF שבזיפ.
 """
     with zipfile.ZipFile(noinst, "w", zipfile.ZIP_DEFLATED) as z:
-        for p in sorted(DIST.rglob("*")):
+        for p in sorted(bundle.rglob("*")):
             if p.is_file():
                 if p.suffix.lower() in BANNED and p.suffix.lower() != ".dll":
                     say(f"[FAIL] executable/script inside the bundle: {p}"); sys.exit(1)
-                z.write(p, "Mahod.Intergreen.bundle/" + p.relative_to(DIST).as_posix())
+                z.write(p, "Mahod.Intergreen.bundle/" + p.relative_to(bundle).as_posix())
         z.write(guide, "Mahod_Intergreen_מדריך_מהיר.pdf")
         z.writestr("קרא_אותי_התקנה.txt", instructions)
     say(f"[PASS] no-installer ZIP {noinst}  {noinst.stat().st_size} B  sha256 {sha(noinst)}")

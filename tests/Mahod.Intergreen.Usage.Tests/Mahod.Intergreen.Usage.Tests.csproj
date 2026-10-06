@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- r15: Mahod Impact usage records. Compiles the host's Autodesk-free usage files
+       (Usage/MahodUsage.cs + Usage/IntergreenUsage.cs) — never the AutoCAD host itself, and never
+       with the products' key (the key target is imported only by the host project). -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <!-- MahodUsage.AmbientDoor is set only by MahodAI's chat executor, which the standalone has not. -->
+    <NoWarn>$(NoWarn);CS0649</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.5.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\src\Mahod.Intergreen.AutoCAD2026\Usage\MahodUsage.cs" Link="Linked\MahodUsage.cs" />
+    <Compile Include="..\..\src\Mahod.Intergreen.AutoCAD2026\Usage\IntergreenUsage.cs" Link="Linked\IntergreenUsage.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Mahod.Intergreen.Host\Mahod.Intergreen.Host.csproj" />
+  </ItemGroup>
+
+</Project>

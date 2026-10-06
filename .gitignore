@@ -11,3 +11,6 @@ _scratch/
 docs/guides/out/
 __pycache__/
 docs/r14/out/
+
+# r15: release bundles carry the Mahod Impact usage key - staged here, NEVER committed (public repo)
+build/out/
