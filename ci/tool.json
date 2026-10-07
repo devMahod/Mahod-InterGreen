@@ -1,0 +1,7 @@
+{
+  "id": "intergreen",
+  "repo": "Mahod-InterGreen",
+  "name": "Mahod Intergreen",
+  "portal": { "card": "intergreen" },
+  "mahodai": { "sync": "none" }
+}
