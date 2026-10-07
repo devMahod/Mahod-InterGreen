@@ -3,5 +3,5 @@
   "repo": "Mahod-InterGreen",
   "name": "Mahod Intergreen",
   "portal": { "card": "intergreen" },
-  "mahodai": { "sync": "none" }
+  "mahodai": { "sync": "intergreen" }
 }
