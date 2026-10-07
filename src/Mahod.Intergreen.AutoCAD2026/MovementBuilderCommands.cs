@@ -9,6 +9,8 @@ using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.Runtime;
 using Mahod.Intergreen.Host;
 using Mahod.Intergreen.Reporting;
+// MahodAI edit: the MahodAI plugin compiles this file with WinForms and WPF implicit usings too; these aliases keep the types this file means (harmless standalone).
+using Color = Autodesk.AutoCAD.Colors.Color;
 
 namespace Mahod.Intergreen.AutoCAD2026;
 

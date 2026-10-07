@@ -35,7 +35,22 @@ public sealed record WorkbookConflictRow(
 /// </summary>
 public static class WorkbookReader
 {
+#if MAHOD_INTERGREEN_IN_PLUGIN
+    // MahodAI edit: AutoCAD 2026/2027 ship ClosedXML 0.102.2 / Open XML 2.16 in their program
+    // folder and the default load context binds those, which cannot read these workbooks (the
+    // #REF! pivot-cache items threw NotImplementedException). Inside the MahodAI plugin the
+    // reader therefore runs in the plugin's private load context on the bundle's ClosedXML
+    // (MahodAI Services/Excel/IsolatedExcel); the body below is the same reader, as ReadDirect.
+    // Standalone, IgApp's own load context solves the same problem.
     public static WorkbookModel Read(string path)
+        => MahodAI.Civil3D.Plugin.Services.Excel.IsolatedExcel.ShouldIsolate
+            ? MahodAI.Civil3D.Plugin.Services.Excel.IntergreenExcelBridge.ReadIsolated(path)
+            : ReadDirect(path);
+
+    public static WorkbookModel ReadDirect(string path)
+#else
+    public static WorkbookModel Read(string path)
+#endif
     {
         using var wb = new XLWorkbook(path);
 

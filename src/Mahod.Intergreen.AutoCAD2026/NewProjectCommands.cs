@@ -11,6 +11,12 @@ using Mahod.Intergreen.Excel;
 using Mahod.Intergreen.Geometry;
 using Mahod.Intergreen.Host;
 using Mahod.Intergreen.Reporting;
+// MahodAI edit: the MahodAI plugin compiles this file with WinForms and WPF implicit usings too; these aliases keep the types this file means (harmless standalone).
+using Panel = System.Windows.Controls.Panel;
+using TextBox = System.Windows.Controls.TextBox;
+using Button = System.Windows.Controls.Button;
+using CheckBox = System.Windows.Controls.CheckBox;
+using Orientation = System.Windows.Controls.Orientation;
 
 namespace Mahod.Intergreen.AutoCAD2026;
 

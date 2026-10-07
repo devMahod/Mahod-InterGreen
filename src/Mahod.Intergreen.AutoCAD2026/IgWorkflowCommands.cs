@@ -15,6 +15,15 @@ using Mahod.Intergreen.Geometry;
 using Mahod.Intergreen.Host;
 using Mahod.Intergreen.Reporting;
 using Mahod.Intergreen.Rules;
+// MahodAI edit: the MahodAI plugin compiles this file with WinForms and WPF implicit usings too; these aliases keep the types this file means (harmless standalone).
+using Button = System.Windows.Controls.Button;
+using ListView = System.Windows.Controls.ListView;
+using CheckBox = System.Windows.Controls.CheckBox;
+using ListBox = System.Windows.Controls.ListBox;
+using ListViewItem = System.Windows.Controls.ListViewItem;
+using MessageBox = System.Windows.MessageBox;
+using MessageBoxOptions = System.Windows.MessageBoxOptions;
+using TextBox = System.Windows.Controls.TextBox;
 
 [assembly: CommandClass(typeof(IgWorkflowCommands))]
 
@@ -483,7 +492,7 @@ public partial class IgWorkflowCommands
         Add("Excel חדש מהשרטוט…", WorkflowAction.Setup, NewProjectFromDrawing);          // r14: David item 4
         Add("2. Validate", WorkflowAction.Validate, () => RunPipeline(analyzeOnly: false));
         Add("3. Analyze", WorkflowAction.Analyze, () => RunPipeline(analyzeOnly: true));
-        Add("4. Show in drawing", WorkflowAction.Show, ShowSelected);
+        Add("4. Show in drawing", WorkflowAction.Show, () => ShowSelected()); // MahodAI edit: a lambda, since in-plugin ShowSelected has an optional parameter (no method-group conversion)
         Add("5. Export Excel", WorkflowAction.Export, ExportExcel);
         root.Children.Add(buttons);
         root.Children.Add(new Separator { Margin = new Thickness(0, 0, 0, 8) });
@@ -623,6 +632,11 @@ public partial class IgWorkflowCommands
 
     private static void SetStatus(string s)
     {
+#if MAHOD_INTERGREEN_IN_PLUGIN
+        // MahodAI edit: the palette's own status line, captured so a chat answer can quote it
+        // verbatim (the field lives in the MahodAI plugin's partial of this class).
+        _lastStatus = s;
+#endif
         if (_status is not null) _status.Text = s;
         AcadApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\n[INTERGREEN] " + s.Replace('\n', ' '));
     }
@@ -858,6 +872,12 @@ public partial class IgWorkflowCommands
             !(loaded.Data.TryGetValue("unitsConfirmed", out var uc) && uc.ValueKind == JsonValueKind.String
               && string.Equals(uc.GetString(), "meters", StringComparison.OrdinalIgnoreCase)))
         {
+#if MAHOD_INTERGREEN_IN_PLUGIN
+            // MahodAI edit: an engineer who confirmed metres in the MahodAI chat (its setup
+            // proposal asks) has answered this; the command-line prompt would wait unseen.
+            if (!_chatConfirmedMeters)
+            {
+#endif
             var keep = ed.GetKeywords(
                 $"\nDrawing INSUNITS is '{unitsName}'. Confirm the drawing unit", "Meters Abort");
             if (keep.Status != PromptStatus.OK || keep.StringResult != "Meters")
@@ -865,8 +885,15 @@ public partial class IgWorkflowCommands
                     "ההגדרה לא הושלמה: יש לאשר שהשרטוט במטרים (הניתוח נשאר חסום עד האישור).\n" +
                     "ההגדרות הקודמות לא השתנו.",
                     "units not confirmed");
+#if MAHOD_INTERGREEN_IN_PLUGIN
+            }
+#endif
             extras["unitsConfirmed"] = "meters";
+#if MAHOD_INTERGREEN_IN_PLUGIN
+            extras["unitsConfirmedBy"] = Environment.UserName + (_chatConfirmedMeters ? " via MahodAI chat" : " via INTERGREEN Setup");
+#else
             extras["unitsConfirmedBy"] = Environment.UserName + " via INTERGREEN Setup";
+#endif
         }
 
         var commit = SetupService.Commit(accept, scPath, drawingDir, extras);
@@ -1103,17 +1130,30 @@ public partial class IgWorkflowCommands
 
     private static void Populate(List<ConflictRow> rows)
     {
+#if MAHOD_INTERGREEN_IN_PLUGIN
+        _lastRows = rows; // MahodAI edit: kept for chat, which has no ListView to read the rows back from
+#endif
         if (_list is null) return;
         _list.ItemsSource = rows;
         State.HasSelection = false;
     }
 
     // ---- 4. Review: zoom + non-destructive transient highlight ----
+#if MAHOD_INTERGREEN_IN_PLUGIN
+    // MahodAI edit: chatRow is the MahodAI chat's choice of row (it has no ListView); the
+    // palette passes nothing and keeps reading its own selection.
+    private static void ShowSelected(ConflictRow? chatRow = null)
+#else
     private static void ShowSelected()
+#endif
     {
         var doc = AcadApp.DocumentManager.MdiActiveDocument
             ?? throw new UserFacingException("אין שרטוט פתוח.", "no active document");
+#if MAHOD_INTERGREEN_IN_PLUGIN
+        if (_lastOutput is null || (chatRow ?? _list?.SelectedItem) is not ConflictRow row)
+#else
         if (_lastOutput is null || _list?.SelectedItem is not ConflictRow row)
+#endif
             throw new UserFacingException("בחרי שורה ברשימת הקונפליקטים ואז Show.", "no selection");
         var conflict = _lastOutput.Analysis.Conflicts.FirstOrDefault(c => c.Id == row.Id);
         if (conflict is null || conflict.Points.Count == 0)

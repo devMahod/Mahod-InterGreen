@@ -6,9 +6,16 @@ using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Runtime;
 using Mahod.Intergreen.AutoCAD2026;
+// MahodAI edit: the MahodAI plugin compiles this file with WinForms and WPF implicit usings too; these aliases keep the types this file means (harmless standalone).
+using Application = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 
 [assembly: CommandClass(typeof(IgCommands))]
+#if !MAHOD_INTERGREEN_IN_PLUGIN
+// MahodAI edit: inside the MahodAI plugin Intergreen compiles into the plugin's own assembly,
+// which has exactly one IExtensionApplication (the plugin's) and resolves every bundle
+// dependency itself - so IgApp's isolated load context below exists only standalone.
 [assembly: ExtensionApplication(typeof(IgApp))]
+#endif
 
 namespace Mahod.Intergreen.AutoCAD2026;
 
@@ -29,6 +36,7 @@ namespace Mahod.Intergreen.AutoCAD2026;
 /// by another plugin, record a precise conflict diagnostic instead of failing later with
 /// an opaque exception.
 /// </summary>
+#if !MAHOD_INTERGREEN_IN_PLUGIN
 public class IgApp : IExtensionApplication
 {
     /// <summary>
@@ -76,6 +84,7 @@ public class IgApp : IExtensionApplication
 
     public void Terminate() { }
 }
+#endif
 
 /// <summary>
 /// Headless-safe commands (no UI, no palettes — they run in accoreconsole).

@@ -9,6 +9,10 @@ using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.GraphicsInterface;
 using Autodesk.AutoCAD.Runtime;
 using Mahod.Intergreen.Host;
+// MahodAI edit: the MahodAI plugin compiles this file with WinForms and WPF implicit usings too; these aliases keep the types this file means (harmless standalone).
+using Button = System.Windows.Controls.Button;
+using CheckBox = System.Windows.Controls.CheckBox;
+using ListBox = System.Windows.Controls.ListBox;
 
 namespace Mahod.Intergreen.AutoCAD2026;
 

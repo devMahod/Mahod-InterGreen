@@ -60,7 +60,23 @@ public static class WorkbookWriter
     public const string MatrixStatusSheet = "MAHOD Matrix Status";
     public const string QaColumnHeader = "MAHOD QA";
 
+#if MAHOD_INTERGREEN_IN_PLUGIN
+    // MahodAI edit: inside the MahodAI plugin the writer runs in the plugin's private load
+    // context on the bundle's ClosedXML / Open XML, not the host's older copies (see
+    // WorkbookReader.Read); the body below is the same writer, as ExportDirect.
     public static ExportResult Export(
+        string sourceWorkbookPath,
+        string outputPath,
+        AnalysisDocument analysis,
+        WorkbookModel sourceModel)
+        => MahodAI.Civil3D.Plugin.Services.Excel.IsolatedExcel.ShouldIsolate
+            ? MahodAI.Civil3D.Plugin.Services.Excel.IntergreenExcelBridge.ExportIsolated(sourceWorkbookPath, outputPath, analysis, sourceModel)
+            : ExportDirect(sourceWorkbookPath, outputPath, analysis, sourceModel);
+
+    public static ExportResult ExportDirect(
+#else
+    public static ExportResult Export(
+#endif
         string sourceWorkbookPath,
         string outputPath,
         AnalysisDocument analysis,
