@@ -14,8 +14,8 @@
     PUBLIC repository: the keyed bundle and setup stay in ignored folders (build/out/,
     installer/out/); the ZIP is written to -OutDir, outside the tree.
 
-    Tests: the five suites that need no client data. Excel.Tests and Host.Tests read the client's
-    workbooks from ..\materials\ (not in any repository) and are left to the release engineer.
+    Tests: Core, Geometry, Rules and Usage always; Regression, Excel and Host only when the client's
+    workbooks are in ..\materials\ beside the checkout (they are in no repository).
     release_build.py also needs the full history (its engine-freeze gate diffs against 02c7a47):
     the workflow checks out with fetch-depth 0.
 #>
@@ -43,8 +43,14 @@ if (-not (Test-Path (Join-Path $repo "docs\releases\RELEASE_NOTES_$rev.md"))) { 
 if ($problems) { $problems | ForEach-Object { Write-Host "  $_" }; throw "Mahod Intergreen $version is not ready - nothing was built" }
 Write-Host "Mahod Intergreen $version"
 
-# ---- 2. tests (no client data, no CAD host) ------------------------------------------------
-foreach ($t in 'Core', 'Geometry', 'Regression', 'Rules', 'Usage') {
+# ---- 2. tests (no CAD host) ----------------------------------------------------------------
+# Regression, Excel and Host read the client's workbooks from <repo>\..\materials\ (in no
+# repository). Put that folder beside the runner's checkout to run them; without it they are
+# skipped, said out loud.
+$suites = @('Core', 'Geometry', 'Rules', 'Usage')
+if (Test-Path (Join-Path (Split-Path -Parent $repo) 'materials\Inter-green Automation')) { $suites += 'Regression', 'Excel', 'Host' }
+else { Write-Host "NOTICE: ..\materials\Inter-green Automation not found beside the repo - Regression, Excel and Host tests NOT run" }
+foreach ($t in $suites) {
     $proj = Join-Path $repo "tests\Mahod.Intergreen.$t.Tests\Mahod.Intergreen.$t.Tests.csproj"
     & $dotnet test $proj -c Release --nologo
     if ($LASTEXITCODE -ne 0) { throw "Mahod.Intergreen.$t.Tests failed" }
